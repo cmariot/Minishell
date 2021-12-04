@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/04 09:21:49 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/04 15:30:08 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ CFLAGS			+= -I $(LIBFT_INCL)
 
 LFLAGS			= -Wall -Wextra -Werror
 LIB_LFLAGS		= -L $(LIBFT) -lft
+LIB_LFLAGS		+= -lreadline
+
 
 # Debug flag, use with 'make DEBUG=3'
 ifeq ($(DEBUG), 3)
@@ -53,7 +55,6 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
-				  ft_readline.c \
 				  get_env.c
 
 SRC				:= $(notdir $(SRCS))
@@ -92,7 +93,7 @@ $(OBJS_DIR)%.o : %.c
 		
 # Linking
 obj_link :
-		@printf "$(YE)$(NAME) compilation success.\n\n$(RC)"
+		@printf "$(YE)$(NAME) compilation success.\n\n"
 		@make -C $(LIBFT)
 		@printf "$(GR)Linking $(NAME) objects ...\n$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)$(RC)\n"
 

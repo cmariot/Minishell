@@ -6,32 +6,34 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 09:03:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/04 09:13:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/04 13:08:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* In the env array, check if the line begins by "PWD=",
-   if a line is found, get the line without it's 4 first characters.
-   Else, error. */
-char	*get_pwd(char **env)
+/* In the env array, get the value of the line which begins by "name=",
+ * for example, to get the value of PWD : get_env("PWD=", env),
+   if a line is found, get the line without it's firsts characters.
+   Else, return NULL. */
+char	*get_env(char *name, char **env)
 {
-	char	*pwd;
+	char	*value;
 	int		i;
 
 	i = 0;
-	pwd = NULL;
-	while (env[i])
+	value = NULL;
+	if (name && *env)
 	{
-		if (ft_memcmp(env[i], "PWD=", 4) == 0)
+		while (env[i])
 		{
-			pwd = ft_strdup(env[i] + 4);
-			break ;
+			if (ft_memcmp(env[i], name, ft_strlen(name)) == 0)
+			{
+				value = ft_strdup(env[i] + ft_strlen(name));
+				break ;
+			}
+			i++;
 		}
-		i++;
 	}
-	if (pwd == NULL)
-		return (NULL);
-	return (pwd);
+	return (value);
 }

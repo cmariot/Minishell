@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/04 09:18:38 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/04 12:55:36 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,7 +127,7 @@ obj_link :
 
 $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@ar rc ${NAME} ${OBJS}
-		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
+		@printf "$(GR)Success, $(NAME) is ready.\n\n"
 
 # Check 42 norm
 norm :

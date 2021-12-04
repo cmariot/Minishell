@@ -6,34 +6,62 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/04 09:32:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/04 16:22:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*get_promt(t_shell *ministruct)
+{
+	int		len;
+	int		i;
+	char	*current_directory;
+
+	i = ft_strlen(ministruct->pwd);
+	len = 0;
+	while (ministruct->pwd[i--] != '/')
+		len++;
+	current_directory = malloc(sizeof(char) * len - 1);
+	if (!current_directory)
+		return (ft_strdup("Default prompt: "));
+	printf("malloc de %d, cd[%d] = \\0\n", len - 1, len - 1);
+	i = ft_strlen(ministruct->pwd);
+	current_directory[len - 2] = '\0';
+	while (len - 1 > 0)
+	{
+		current_directory[len - 2] = ministruct->pwd[i - 1];
+		i--;
+		len--;
+	}
+	return (current_directory);
+}
+
+void	init_ministruct(char **env, t_shell *ministruct)
+{
+	ministruct->pwd = get_env("PWD=", env);
+	ministruct->prompt = get_promt(ministruct);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	ministruct;
-	char	*line;
 
 	if (argc && *argv && *env)
 	{
 		while (1)
 		{
-			ministruct.pwd = get_pwd(env);
-			if (ministruct.pwd == NULL)
-				return (-1);
-			line = ft_readline(ministruct.pwd);
-			if (ft_strcmp(line, "pwd") == 0)
+			init_ministruct(env, &ministruct);
+			ministruct.line = readline(ministruct.prompt);
+			if (ft_strcmp(ministruct.line, "pwd") == 0)
 				printf("%s\n", ministruct.pwd);
-			else if (ft_strcmp(line, "exit") == 0)
+			else if (ft_strcmp(ministruct.line, "exit") == 0)
 			{
-				free(line);
+				free(ministruct.line);
 				free(ministruct.pwd);
 				break ;
 			}
-			free(line);
+			free(ministruct.line);
 		}
 	}
 	return (0);
