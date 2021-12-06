@@ -6,12 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/06 08:59:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/06 09:26:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// The prompts is set as the name of the current directory.
 char	*get_prompt(t_shell *ministruct)
 {
 	int		len;
@@ -41,7 +42,9 @@ char	*get_prompt(t_shell *ministruct)
 	return (prompt);
 }
 
-void	init_ministruct(char **env, t_shell *ministruct)
+// If the values aren't NULL, free the structure variables,
+// Update yhe values on each loop.
+void	update_ministruct(char **env, t_shell *ministruct)
 {
 	if (ministruct->pwd != NULL)
 		free(ministruct->pwd);
@@ -51,17 +54,23 @@ void	init_ministruct(char **env, t_shell *ministruct)
 	ministruct->prompt = get_prompt(ministruct);
 }
 
+// Initialize the initial values of the structure to NULL
+void	init_ministruct(char **env, t_shell *ministruct)
+{
+	ministruct->prompt = NULL;
+	ministruct->pwd = NULL;
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	ministruct;
 
 	if (argc && *argv && *env)
 	{
-		ministruct.prompt = NULL;
-		ministruct.pwd = NULL;
+		init_ministruct(env, &ministruct);
 		while (1)
 		{
-			init_ministruct(env, &ministruct);
+			update_ministruct(env, &ministruct);
 			ministruct.line = readline(ministruct.prompt);
 			if (ft_strcmp(ministruct.line, "pwd") == 0)
 				printf("%s\n", ministruct.pwd);
