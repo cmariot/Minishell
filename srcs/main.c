@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/06 09:26:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/06 11:09:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	update_ministruct(char **env, t_shell *ministruct)
 }
 
 // Initialize the initial values of the structure to NULL
-void	init_ministruct(char **env, t_shell *ministruct)
+void	init_ministruct(t_shell *ministruct)
 {
 	ministruct->prompt = NULL;
 	ministruct->pwd = NULL;
@@ -67,11 +67,12 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc && *argv && *env)
 	{
-		init_ministruct(env, &ministruct);
+		init_ministruct(&ministruct);
 		while (1)
 		{
 			update_ministruct(env, &ministruct);
 			ministruct.line = readline(ministruct.prompt);
+			add_history(ministruct.line);
 			if (ft_strcmp(ministruct.line, "pwd") == 0)
 				printf("%s\n", ministruct.pwd);
 			else if (ft_strcmp(ministruct.line, "exit") == 0)
