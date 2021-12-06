@@ -43,6 +43,8 @@ char	*get_prompt(t_shell *ministruct)
 
 void	init_ministruct(char **env, t_shell *ministruct)
 {
+	if (ministruct->pwd != NULL)
+		free(ministruct->pwd);
 	ministruct->pwd = get_env("PWD=", env);
 	if (ministruct->prompt != NULL)
 		free(ministruct->prompt);
@@ -56,6 +58,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc && *argv && *env)
 	{
 		ministruct.prompt = NULL;
+		ministruct.pwd = NULL;
 		while (1)
 		{
 			init_ministruct(env, &ministruct);
