@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/06 11:09:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/07 10:09:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,18 @@ void	init_ministruct(t_shell *ministruct)
 	ministruct->pwd = NULL;
 }
 
+void	free_ministruct(t_shell *ministruct)
+{
+	free(ministruct->line);
+	free(ministruct->pwd);
+	free(ministruct->prompt);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	ministruct;
 
-	if (argc && *argv && *env)
+	if (argc == 1 && *argv && *env)
 	{
 		init_ministruct(&ministruct);
 		while (1)
@@ -77,13 +84,13 @@ int	main(int argc, char **argv, char **env)
 				printf("%s\n", ministruct.pwd);
 			else if (ft_strcmp(ministruct.line, "exit") == 0)
 			{
-				free(ministruct.line);
-				free(ministruct.pwd);
-				free(ministruct.prompt);
+				free_ministruct(&ministruct);
 				break ;
 			}
 			free(ministruct.line);
 		}
 	}
+	else if (argc > 1 && *argv && *env)
+		ft_putstr("-c option\n");
 	return (0);
 }
