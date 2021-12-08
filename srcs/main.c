@@ -6,13 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/07 10:09:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/08 09:22:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // The prompts is set as the name of the current directory.
+// UNAME, 
 char	*get_prompt(t_shell *ministruct)
 {
 	int		len;
@@ -72,7 +73,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_shell	ministruct;
 
-	if (argc == 1 && *argv && *env)
+	if (argc && *argv && *env)
 	{
 		init_ministruct(&ministruct);
 		while (1)
@@ -80,6 +81,8 @@ int	main(int argc, char **argv, char **env)
 			update_ministruct(env, &ministruct);
 			ministruct.line = readline(ministruct.prompt);
 			add_history(ministruct.line);
+			//parse
+			//execute
 			if (ft_strcmp(ministruct.line, "pwd") == 0)
 				printf("%s\n", ministruct.pwd);
 			else if (ft_strcmp(ministruct.line, "exit") == 0)
@@ -90,7 +93,5 @@ int	main(int argc, char **argv, char **env)
 			free(ministruct.line);
 		}
 	}
-	else if (argc > 1 && *argv && *env)
-		ft_putstr("-c option\n");
 	return (0);
 }
