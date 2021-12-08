@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/08 15:10:31 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/08 12:01:40 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/08 12:54:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include "libft.h"
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <dirent.h>
-# include <sys/ioctl.h>
-# include <termios.h>
-# include <term.h>
 # include <stdbool.h>
 
 typedef struct s_command_table {
+	char	**splitted_line;
 	char	*command;
 	char	**args;
 	bool	pipe;
@@ -40,17 +30,5 @@ typedef struct s_command_table {
 	bool	redir_out_append;
 	char	*filename;
 }	t_command_table;
-
-typedef struct s_shell {
-	char	**env;
-	char	*line;
-	char	*prompt;
-	char	*pwd;
-}	t_shell;
-
-// get_env.c
-char	*get_env(char *name, char **env);
-char	*ft_readline(char *prompt);
-char	**copy_array(char **array);
 
 #endif

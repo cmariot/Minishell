@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/07 10:09:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:22:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ void	update_ministruct(char **env, t_shell *ministruct)
 }
 
 // Initialize the initial values of the structure to NULL
-void	init_ministruct(t_shell *ministruct)
+void	init_ministruct(t_shell *ministruct, char **env)
 {
+	ministruct->env = copy_array(env);
 	ministruct->prompt = NULL;
 	ministruct->pwd = NULL;
 }
@@ -74,7 +75,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc == 1 && *argv && *env)
 	{
-		init_ministruct(&ministruct);
+		init_ministruct(&ministruct, env);
 		while (1)
 		{
 			update_ministruct(env, &ministruct);
