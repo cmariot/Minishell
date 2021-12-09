@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 10:21:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/09 14:07:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,19 @@ typedef struct s_shell {
 	char	*pwd;
 }	t_shell;
 
-// get_env.c
-char	*get_env(char *name, char **env);
+// env.c
+char	*get_env_value(char *name, char **env);
 t_list	*put_env_in_a_list(char **array);
-bool	already_in_list(t_list *env, char *value);
+bool	already_in_list(t_list *env, char *name);
+void	change_value(t_list *env, char *name, char *value);
+void	add_value(t_list **env, char *name, char *value);
+
+// ministruct_utils.c
+void	init_ministruct(t_shell *ministruct, char **env);
+void	update_ministruct(char **env, t_shell *ministruct);
+void	free_ministruct(t_shell *ministruct);
+
+// prompt.c
+char	*get_prompt(t_shell *ministruct);
 
 #endif

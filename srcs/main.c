@@ -6,69 +6,11 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 10:21:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/09 14:06:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// The prompts is set as the name of the current directory.
-// UNAME, 
-char	*get_prompt(t_shell *ministruct)
-{
-	int		len;
-	int		i;
-	char	*current_directory;
-	char	*prompt;
-
-	i = ft_strlen(ministruct->pwd);
-	if (i == 1 && ft_strcmp(ministruct->pwd, "/") == 0)
-		return (ft_strdup("/ ➤ "));
-	len = 0;
-	while (ministruct->pwd[i--] != '/')
-		len++;
-	current_directory = malloc(sizeof(char) * len);
-	if (!current_directory)
-		return (ft_strdup("Default prompt: "));
-	current_directory[len - 1] = '\0';
-	i = ft_strlen(ministruct->pwd);
-	while (len - 1 != 0)
-	{
-		current_directory[len - 2] = ministruct->pwd[i - 1];
-		len--;
-		i--;
-	}
-	prompt = ft_strjoin(current_directory, " ➤ ");
-	free(current_directory);
-	return (prompt);
-}
-
-// If the values aren't NULL, free the structure variables,
-// Update yhe values on each loop.
-void	update_ministruct(char **env, t_shell *ministruct)
-{
-	if (ministruct->pwd != NULL)
-		free(ministruct->pwd);
-	ministruct->pwd = get_env("PWD=", env);
-	if (ministruct->prompt != NULL)
-		free(ministruct->prompt);
-	ministruct->prompt = get_prompt(ministruct);
-}
-
-// Initialize the initial values of the structure to NULL
-void	init_ministruct(t_shell *ministruct, char **env)
-{
-	ministruct->env = put_env_in_a_list(env);
-	ministruct->prompt = NULL;
-	ministruct->pwd = NULL;
-}
-
-void	free_ministruct(t_shell *ministruct)
-{
-	free(ministruct->line);
-	free(ministruct->pwd);
-	free(ministruct->prompt);
-}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -80,12 +22,6 @@ int	main(int argc, char **argv, char **env)
 		while (1)
 		{
 			update_ministruct(env, &ministruct);
-			ministruct.line = readline(ministruct.prompt);
-			add_history(ministruct.line);
-			if (already_in_list(ministruct.env, ministruct.line) == TRUE)
-				printf("PRESENT\n");
-			else
-				printf("ABSENT\n");
 			if (ft_strcmp(ministruct.line, "pwd") == 0)
 				printf("%s\n", ministruct.pwd);
 			else if (ft_strcmp(ministruct.line, "exit") == 0)
@@ -93,7 +29,6 @@ int	main(int argc, char **argv, char **env)
 				free_ministruct(&ministruct);
 				break ;
 			}
-			free(ministruct.line);
 		}
 	}
 	return (0);
