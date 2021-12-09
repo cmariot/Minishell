@@ -6,11 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/12/08 09:22:24 by cmariot          ###   ########.fr       */
-=======
-/*   Updated: 2021/12/08 15:22:35 by cmariot          ###   ########.fr       */
->>>>>>> 817117ae0db16b021c495c6821c2c799ea9deb69
+/*   Updated: 2021/12/09 10:21:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +58,7 @@ void	update_ministruct(char **env, t_shell *ministruct)
 // Initialize the initial values of the structure to NULL
 void	init_ministruct(t_shell *ministruct, char **env)
 {
-	ministruct->env = copy_array(env);
+	ministruct->env = put_env_in_a_list(env);
 	ministruct->prompt = NULL;
 	ministruct->pwd = NULL;
 }
@@ -86,8 +82,10 @@ int	main(int argc, char **argv, char **env)
 			update_ministruct(env, &ministruct);
 			ministruct.line = readline(ministruct.prompt);
 			add_history(ministruct.line);
-			//parse
-			//execute
+			if (already_in_list(ministruct.env, ministruct.line) == TRUE)
+				printf("PRESENT\n");
+			else
+				printf("ABSENT\n");
 			if (ft_strcmp(ministruct.line, "pwd") == 0)
 				printf("%s\n", ministruct.pwd);
 			else if (ft_strcmp(ministruct.line, "exit") == 0)

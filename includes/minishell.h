@@ -6,11 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/12/07 17:58:53 by cmariot          ###   ########.fr       */
-=======
-/*   Updated: 2021/12/08 15:10:31 by cmariot          ###   ########.fr       */
->>>>>>> 817117ae0db16b021c495c6821c2c799ea9deb69
+/*   Updated: 2021/12/09 10:21:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +26,10 @@
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <term.h>
-<<<<<<< HEAD
-=======
 # include <stdbool.h>
+
+# define TRUE 0
+# define FALSE 1
 
 typedef struct s_command_table {
 	char	*command;
@@ -46,10 +43,9 @@ typedef struct s_command_table {
 	bool	redir_out_append;
 	char	*filename;
 }	t_command_table;
->>>>>>> 817117ae0db16b021c495c6821c2c799ea9deb69
 
 typedef struct s_shell {
-	char	**env;
+	t_list	*env;
 	char	*line;
 	char	*prompt;
 	char	*pwd;
@@ -57,7 +53,7 @@ typedef struct s_shell {
 
 // get_env.c
 char	*get_env(char *name, char **env);
-char	*ft_readline(char *prompt);
-char	**copy_array(char **array);
+t_list	*put_env_in_a_list(char **array);
+bool	already_in_list(t_list *env, char *value);
 
 #endif
