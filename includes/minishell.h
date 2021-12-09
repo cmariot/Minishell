@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 14:07:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/09 15:24:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include <term.h>
 # include <stdbool.h>
 
-# define TRUE 0
-# define FALSE 1
+# define FALSE 0
+# define TRUE 1
 
 typedef struct s_command_table {
 	char	*command;
