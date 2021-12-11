@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:04:13 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 12:46:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 13:28:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_name(char *env_line)
 	len = 0;
 	while (env_line[len] != '=')
 		len++;
-	name = ft_calloc(len, sizeof(char));
+	name = ft_calloc(len + 1, sizeof(char));
 	if (name == NULL)
 		return (NULL);
 	i = 0;
@@ -121,10 +121,17 @@ t_env	*save_env(char **env)
 	int		i;
 
 	i = 0;
-	while (env[i] != NULL)
+	while (env[i])
 	{
 		name = get_name(env[i]);
+		if (name == NULL)
+			break ;
 		value = get_value(env[i]);
+		if (value == NULL)
+		{
+			free(name);
+			break ;
+		}
 		if (i == 0)
 			env_list = ft_lstnew_env(name, value);
 		else
