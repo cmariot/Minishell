@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:52:50 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 12:59:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 13:36:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ void	update_ministruct(t_shell *ministruct)
 		free(ministruct->line);
 	ministruct->line = readline(ministruct->prompt);
 	if (rl_on_new_line() == 0)
+	{
 		add_history(ministruct->line);
-	parse_line(ministruct, ministruct->line);
+		parse_line(ministruct, ministruct->line);
+	}
 }
 
 // Free the structure elements before exit
