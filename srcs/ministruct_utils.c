@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:52:50 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 14:04:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 12:59:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,34 @@
 // Initialize the value of the structure to default value
 void	init_ministruct(t_shell *ministruct, char **env)
 {
-	ministruct->env = put_env_in_a_list(env);
+	ministruct->env = save_env(env);
+	ministruct->line = NULL;
 	ministruct->prompt = NULL;
 	ministruct->pwd = NULL;
-	ministruct->line = NULL;
+}
+
+/* In the env array, get the value of the line which begins by "name=",
+ * for example, to get the value of PWD : get_env("PWD=", env),
+   if a line is found, get the line without it's firsts characters.
+   Else, return NULL. */
+char	*get_env_value(char *name, t_env *env)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->name, name) == 0)
+			return (ft_strdup(env->value));
+		env = env->next;
+	}
+	return (NULL);
 }
 
 // If the values aren't NULL, free the structure variables,
 // Update yhe values on each loop.
-void	update_ministruct(char **env, t_shell *ministruct)
+void	update_ministruct(t_shell *ministruct)
 {
 	if (ministruct->pwd != NULL)
 		free(ministruct->pwd);
-	ministruct->pwd = get_env_value("PWD=", env);
+	ministruct->pwd = get_env_value("PWD", ministruct->env);
 	if (ministruct->prompt != NULL)
 		free(ministruct->prompt);
 	ministruct->prompt = get_prompt(ministruct);
@@ -36,6 +51,7 @@ void	update_ministruct(char **env, t_shell *ministruct)
 	ministruct->line = readline(ministruct->prompt);
 	if (rl_on_new_line() == 0)
 		add_history(ministruct->line);
+	parse_line(ministruct, ministruct->line);
 }
 
 // Free the structure elements before exit
@@ -44,5 +60,7 @@ void	free_ministruct(t_shell *ministruct)
 	free(ministruct->line);
 	free(ministruct->pwd);
 	free(ministruct->prompt);
-	ft_lstclear(&ministruct->env, free);
+	ft_lstclear_env(&ministruct->env, free);
+	free(ministruct->command.line);
+	ft_free_array(ministruct->command.line_splitted);
 }

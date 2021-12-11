@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/09 15:03:30 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/09 16:54:13 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,8 @@ endif
 SRCS			= main.c \
 				  env.c \
 				  ministruct_utils.c \
-				  prompt.c
+				  prompt.c \
+				  parse_line.c
 
 SRC				:= $(notdir $(SRCS))
 
