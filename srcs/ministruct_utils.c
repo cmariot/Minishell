@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:52:50 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 13:36:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 13:43:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ void	init_ministruct(t_shell *ministruct, char **env)
 	ministruct->line = NULL;
 	ministruct->prompt = NULL;
 	ministruct->pwd = NULL;
+	ministruct->command.line = NULL;
+	ministruct->command.line_splitted = NULL;
+	ministruct->command.command1 = NULL;
+	ministruct->command.command2 = NULL;
+	ministruct->command.args1 = NULL;
+	ministruct->command.args2 = NULL;
+	ministruct->command.filename = NULL;
 }
 
 /* In the env array, get the value of the line which begins by "name=",
