@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:55:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 14:22:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 19:54:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 // The prompts is set as the name of the current directory.
 char	*get_prompt(t_shell *ministruct)
 {
+	char	*prompt;
+	char	*current_directory;
 	int		len;
 	int		i;
-	char	*current_directory;
-	char	*prompt;
 
 	i = ft_strlen(ministruct->pwd);
 	if (i == 1 && ft_strcmp(ministruct->pwd, "/") == 0)
 		return (ft_strdup("/ ➤ "));
 	len = 0;
-	while (ministruct->pwd[i--] != '/')
+	while (ministruct->pwd[i] != '/' && i-- != -1)
 		len++;
 	current_directory = malloc(sizeof(char) * len);
 	if (!current_directory)

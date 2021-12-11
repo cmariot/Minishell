@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:52:50 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 13:43:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 20:03:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,19 @@ void	init_ministruct(t_shell *ministruct, char **env)
    Else, return NULL. */
 char	*get_env_value(char *name, t_env *env)
 {
+	char	*value;
+
+	value = NULL;
 	while (env)
 	{
 		if (ft_strcmp(env->name, name) == 0)
-			return (ft_strdup(env->value));
+		{
+			value = ft_strdup(env->value);
+			break ;
+		}
 		env = env->next;
 	}
-	return (NULL);
+	return (value);
 }
 
 // If the values aren't NULL, free the structure variables,

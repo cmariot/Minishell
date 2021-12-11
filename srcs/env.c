@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:04:13 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 13:28:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 20:04:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,9 @@ t_env	*save_env(char **env)
 			break ;
 		value = get_value(env[i]);
 		if (value == NULL)
-		{
 			free(name);
+		if (value == NULL)
 			break ;
-		}
 		if (i == 0)
 			env_list = ft_lstnew_env(name, value);
 		else
@@ -159,5 +158,45 @@ void	ft_lstclear_env(t_env **env, void (*del)(void *))
 		tmp = (*env)->next;
 		ft_lstdelone_env(*env, (del));
 		*env = tmp;
+	}
+}
+
+void	ft_setenv(t_env *env, char *name, char *value)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (env)
+	{
+		if (ft_strcmp(env->name, name) == 0)
+		{
+			free(env->value);
+			env->value = ft_strdup(value);
+			return ;
+		}
+		env = env->next;
+	}
+	env = tmp;
+	ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
+}
+
+void	ft_unsetenv(t_env *env, char *name)
+{
+	t_env	*tmp;
+
+	while (env->next)
+	{
+		if (ft_strcmp(env->name, name) == 0)
+		{
+			tmp = env->next;
+			free(env->name);
+			env->name = NULL;
+			free(env->value);
+			env->value = NULL;
+			free(env);
+			env = tmp;
+			return ;
+		}
+		env = env->next;
 	}
 }
