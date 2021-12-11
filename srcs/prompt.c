@@ -20,6 +20,8 @@ char	*get_prompt(t_shell *ministruct)
 	int		len;
 	int		i;
 
+	if (!ministruct->pwd)
+		return (ft_strdup("/ ➤ "));
 	i = ft_strlen(ministruct->pwd);
 	if (i == 1 && ft_strcmp(ministruct->pwd, "/") == 0)
 		return (ft_strdup("/ ➤ "));

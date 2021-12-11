@@ -107,7 +107,8 @@ void	print_env(t_env *env)
 		return ;
 	while (env)
 	{
-		printf("%s=%s\n", env->name, env->value);
+		if (env->name != NULL && env->value != NULL)
+			printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}
 }
@@ -182,20 +183,15 @@ void	ft_setenv(t_env *env, char *name, char *value)
 
 void	ft_unsetenv(t_env *env, char *name)
 {
-	t_env	*tmp;
-
-	while (env->next)
+	while (env)
 	{
 		if (ft_strcmp(env->name, name) == 0)
 		{
-			tmp = env->next;
 			free(env->name);
-			env->name = NULL;
 			free(env->value);
+			env->name = NULL;
 			env->value = NULL;
-			free(env);
-			env = tmp;
-			return ;
+			break ;
 		}
 		env = env->next;
 	}

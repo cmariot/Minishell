@@ -23,7 +23,7 @@ void	builtin(t_shell *ministruct)
 	else if (ft_strcmp(ministruct->line, "setenv") == 0)
 		ft_setenv(ministruct->env, "PWD", "/nouveau_prompt/test");
 	else if (ft_strcmp(ministruct->line, "unsetenv") == 0)
-		ft_unsetenv(ministruct->env, "PWD");
+		ft_unsetenv(ministruct->env, "LS_COLORS");
 }
 
 int	main(int argc, char **argv, char **env)
