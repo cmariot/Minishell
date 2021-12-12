@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/09 16:54:13 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/11 21:07:54 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,22 +32,23 @@ CC				= gcc
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
+CFLAGS			+= -g3
 
-LFLAGS			= -Wall -Wextra -Werror
+LFLAGS			= -Wall -Wextra -Werror -g3
 LIB_LFLAGS		= -L $(LIBFT) -lft
 LIB_LFLAGS		+= -lreadline
 
 
 # Debug flag, use with 'make DEBUG=3'
-ifeq ($(DEBUG), 3)
+ifeq ($(DEBUG), 1)
 	CFLAGS		+= -g3
 	LFLAGS		+= -g3
 endif
 
 # Optimisation flag, use with 'make OPTI=3'
-ifeq ($(OPTI), 3)
-	CFLAGS		+= -O3
-	LFLAGS		+= -O3
+ifeq ($(OPTI), 1)
+	CFLAGS		+= -O2 -O3
+	LFLAGS		+= -O2 -O3
 endif
 
 # **************************************************************************** #
