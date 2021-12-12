@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:04:13 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 20:04:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/12 12:25:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,14 +183,19 @@ void	ft_setenv(t_env *env, char *name, char *value)
 
 void	ft_unsetenv(t_env *env, char *name)
 {
+	t_env	*tmp;
+
 	while (env)
 	{
-		if (ft_strcmp(env->name, name) == 0)
+		tmp = env->next;
+		if (ft_strcmp(tmp->name, name) == 0)
 		{
-			free(env->name);
-			free(env->value);
-			env->name = NULL;
-			env->value = NULL;
+			env->next = tmp->next;
+			free(tmp->name);
+			free(tmp->value);
+			tmp->name = NULL;
+			tmp->value = NULL;
+			free(tmp);
 			break ;
 		}
 		env = env->next;

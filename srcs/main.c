@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 20:03:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 21:03:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	builtin(t_shell *ministruct)
 	else if (ft_strcmp(ministruct->line, "setenv") == 0)
 		ft_setenv(ministruct->env, "PWD", "/nouveau_prompt/test");
 	else if (ft_strcmp(ministruct->line, "unsetenv") == 0)
-		ft_unsetenv(ministruct->env, "LS_COLORS");
+		ft_unsetenv(ministruct->env, "PWD");
 }
 
 int	main(int argc, char **argv, char **env)
