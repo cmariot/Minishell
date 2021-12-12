@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:55:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 21:04:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/12 12:42:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,7 @@ char	*get_prompt(t_shell *ministruct)
 	current_directory[len - 1] = '\0';
 	i = ft_strlen(ministruct->pwd);
 	while (len - 1 != 0)
-	{
-		current_directory[len - 2] = ministruct->pwd[i - 1];
-		len--;
-		i--;
-	}
+		current_directory[len-- - 2] = ministruct->pwd[i-- - 1];
 	prompt = ft_strjoin(current_directory, " ➤ ");
 	free(current_directory);
 	return (prompt);
