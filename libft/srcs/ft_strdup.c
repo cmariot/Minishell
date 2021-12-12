@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 13:20:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/12 12:09:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ char	*ft_strdup(const char *src)
 		new[i] = src[i];
 		i++;
 	}
-	new[i] = '\0';
 	return (new);
 }
