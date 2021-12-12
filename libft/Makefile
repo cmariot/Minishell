@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/04 12:55:36 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/09 22:37:08 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRCS	= ft_atoi.c \
 		  ft_putstack.c \
 		  ft_putstr.c \
 		  ft_putstr_fd.c \
+		  ft_realloc.c \
 		  ft_split.c \
 		  ft_strchr.c \
 		  ft_strdup.c \

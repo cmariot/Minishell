@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 14:07:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/11 14:25:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@
 # include <term.h>
 # include <stdbool.h>
 
-# define TRUE 0
-# define FALSE 1
+# define FALSE 0
+# define TRUE 1
 
 typedef struct s_command_table {
-	char	*command;
-	char	**args;
+	char	*line;
+	char	**line_splitted;
+	char	*command1;
+	char	**args1;
 	bool	pipe;
 	char	*command2;
 	char	**args2;
@@ -44,26 +46,36 @@ typedef struct s_command_table {
 	char	*filename;
 }	t_command_table;
 
+typedef struct s_env {
+	char	*name;
+	char	*value;
+	void	*next;
+}	t_env;
+
 typedef struct s_shell {
-	t_list	*env;
-	char	*line;
-	char	*prompt;
-	char	*pwd;
+	char				*line;
+	char				*prompt;
+	char				*pwd;
+	t_env				*env;
+	t_command_table		command;
 }	t_shell;
 
 // env.c
-char	*get_env_value(char *name, char **env);
-t_list	*put_env_in_a_list(char **array);
-bool	already_in_list(t_list *env, char *name);
-void	change_value(t_list *env, char *name, char *value);
-void	add_value(t_list **env, char *name, char *value);
+t_env	*save_env(char **array);
+void	print_env(t_env *env);
+void	ft_lstclear_env(t_env **env, void (*del)(void *));
+void	ft_setenv(t_env *env, char *name, char *value);
+void	ft_unsetenv(t_env *env, char *name);
 
 // ministruct_utils.c
 void	init_ministruct(t_shell *ministruct, char **env);
-void	update_ministruct(char **env, t_shell *ministruct);
+void	update_ministruct(t_shell *ministruct);
 void	free_ministruct(t_shell *ministruct);
 
 // prompt.c
 char	*get_prompt(t_shell *ministruct);
+
+// parse_line.c
+int		parse_line(t_shell *ministruct, char *line);
 
 #endif

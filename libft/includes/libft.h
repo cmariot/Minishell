@@ -6,18 +6,19 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 13:34:23 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/04 09:17:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/09 22:38:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 50
 
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
@@ -60,6 +61,7 @@ void		ft_putnbr_fd(int n, int fd);
 void		ft_putstack(int *a, char c, int stack_size);
 void		ft_putstr(char *s);
 void		ft_putstr_fd(char *s, int fd);
+char		*ft_realloc(void *previous, char *new);
 char		**ft_split(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s1);
