@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 09:36:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/13 14:39:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ typedef struct s_command_table {
 	bool	pipe;
 	char	*command2;
 	char	**args2;
-	bool	redir_in;
-	bool	redir_out;
+	bool	input_redir;
+	bool	output_redir;
 	bool	heredoc;
 	char	*stop_heredoc;
-	bool	redir_out_append;
+	bool	output_redir_append;
+	char	*limiter;
 	char	*filename;
 }	t_command_table;
 
