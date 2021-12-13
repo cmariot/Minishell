@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 09:37:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/13 10:09:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@ int	parse_line(t_command_table *command, char *line)
 	if (line != NULL)
 		command->line_splitted = ft_split(line, ' ');
 	command->command1 = command->line_splitted[0];
-	printf("exec %s\n", command->command1);
 	return (0);
 }
