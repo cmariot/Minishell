@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 16:34:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:24:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,26 @@ void	print_command_table(t_command_table *command)
 		printf("\tline_splitted[%d] = [%s]\n", i, command->line_splitted[i]);
 		i++;
 	}
-	printf("PIPE = %d\n", command->pipe);
-	printf("INPUT_REDIR (<) = %d\n", command->input_redir);
-	printf("OUTPUT_REDIR (>) = %d\n", command->output_redir);
-	printf("OUTPUT_REDIR_APPEND (>>) = %d\n", command->output_redir_append);
+	printf("PIPE = %d\n", command->next_command->pipe);
+	printf("INPUT_REDIR (<) = %d\n", command->next_command->input_redir);
+	printf("OUTPUT_REDIR (>) = %d\n", command->next_command->output_redir);
+	printf("OUTPUT_REDIR_APPEND (>>) = %d\n", command->next_command->output_redir_append);
 	printf("HEREDOC (<<) = %d w/ LIMITER = %s\n",
-		command->heredoc, command->limiter);
+		command->next_command->heredoc, command->next_command->limiter);
 }
 
 void	get_booleans(char *splitted, t_command_table *command)
 {
 	if (ft_strnstr(splitted, "|", ft_strlen(splitted)) != 0)
-		command->pipe = 1;
+		command->next_command->pipe += 1;
 	else if (ft_strnstr(splitted, "<<", ft_strlen(splitted)) != 0)
-		command->heredoc = 1;
+		command->next_command->heredoc += 1;
 	else if (ft_strnstr(splitted, ">>", ft_strlen(splitted)) != 0)
-		command->output_redir_append = 1;
+		command->next_command->output_redir_append += 1;
 	else if (ft_strnstr(splitted, "<", ft_strlen(splitted)) != 0)
-		command->input_redir = 1;
+		command->next_command->input_redir += 1;
 	else if (ft_strnstr(splitted, ">", ft_strlen(splitted)) != 0)
-		command->output_redir = 1;
+		command->next_command->output_redir += 1;
 }
 
 // need to split with metacharacters :

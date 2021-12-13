@@ -6,19 +6,19 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:52:50 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 14:39:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:20:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	reset_booleans(t_shell *ministruct)
+void	reset_next_cmd(t_shell *ministruct)
 {
-	ministruct->command.pipe = 0;
-	ministruct->command.input_redir = 0;
-	ministruct->command.output_redir = 0;
-	ministruct->command.heredoc = 0;
-	ministruct->command.output_redir_append = 0;
+	ministruct->command.next_command->pipe = 0;
+	ministruct->command.next_command->input_redir = 0;
+	ministruct->command.next_command->output_redir = 0;
+	ministruct->command.next_command->heredoc = 0;
+	ministruct->command.next_command->output_redir_append = 0;
 }
 
 // Initialize the value of the structure to default value
@@ -31,12 +31,8 @@ void	init_ministruct(t_shell *ministruct, char **env)
 	ministruct->command.line = NULL;
 	ministruct->command.line_splitted = NULL;
 	ministruct->command.command1 = NULL;
-	ministruct->command.command2 = NULL;
 	ministruct->command.args1 = NULL;
-	ministruct->command.args2 = NULL;
-	ministruct->command.filename = NULL;
-	ministruct->command.limiter = NULL;
-	reset_booleans(ministruct);
+	reset_next_cmd(ministruct);
 }
 
 /* In the env array, get the value of the line which begins by "name=",
@@ -72,7 +68,7 @@ void	update_ministruct(t_shell *ministruct)
 	ministruct->prompt = get_prompt(ministruct);
 	if (ministruct->line != NULL)
 		free(ministruct->line);
-	reset_booleans(ministruct);
+	reset_next_cmd(ministruct);
 	ministruct->line = readline(ministruct->prompt);
 	if (rl_on_new_line() == 0)
 	{
