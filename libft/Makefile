@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/13 11:05:19 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/13 14:11:21 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJS_DIR	= objs/
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC		= gcc
+CC		= clang
 
 CFLAGS	= -Wall -Wextra -Werror
 CFLAGS	+= -I $(INCL_DIR)

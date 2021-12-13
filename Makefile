@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/13 08:37:00 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/13 14:11:00 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_INCL		= $(LIBFT)/includes/
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC			= gcc
+CC			= clang
 
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
