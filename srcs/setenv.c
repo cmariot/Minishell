@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   setenv.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/20 16:17:20 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 09:53:16 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/13 08:30:01 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/13 09:10:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/* Return the size of a linked list */
-
-int	ft_lstsize(t_list *lst)
+// If the element name is in the linked list env, change its value,
+// else add name and value
+void	ft_setenv(t_env *env, char *name, char *value)
 {
-	int	size;
+	t_env	*tmp;
 
-	size = 0;
-	while (lst)
+	tmp = env;
+	while (env)
 	{
-		lst = lst->next;
-		size++;
+		if (ft_strcmp(env->name, name) == 0)
+		{
+			free(env->value);
+			env->value = ft_strdup(value);
+			return ;
+		}
+		env = env->next;
 	}
-	return (size);
+	env = tmp;
+	ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
 }

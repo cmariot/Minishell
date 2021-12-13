@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/11 21:07:54 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/13 08:37:00 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,12 @@ LIBFT_INCL		= $(LIBFT)/includes/
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC				= gcc
+CC			= gcc
 
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
+# Delete the -g3 flag at the end of the project, it's used to have more information w/ valgrind
 CFLAGS			+= -g3
 
 LFLAGS			= -Wall -Wextra -Werror -g3
@@ -39,13 +40,13 @@ LIB_LFLAGS		= -L $(LIBFT) -lft
 LIB_LFLAGS		+= -lreadline
 
 
-# Debug flag, use with 'make DEBUG=3'
+# Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)
 	CFLAGS		+= -g3
 	LFLAGS		+= -g3
 endif
 
-# Optimisation flag, use with 'make OPTI=3'
+# Optimisation flag, use with 'make OPTI=1'
 ifeq ($(OPTI), 1)
 	CFLAGS		+= -O2 -O3
 	LFLAGS		+= -O2 -O3
@@ -56,21 +57,24 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
-				  env.c \
-				  ministruct_utils.c \
-				  prompt.c \
-				  parse_line.c
+			  env.c \
+			  setenv.c \
+			  unsetenv.c \
+			  list_t_env.c \
+			  ministruct_utils.c \
+			  prompt.c \
+			  parse_line.c
 
-SRC				:= $(notdir $(SRCS))
+SRC			:= $(notdir $(SRCS))
 
-OBJ				:= $(SRC:.c=.o)
+OBJ			:= $(SRC:.c=.o)
 
 OBJS			:= $(addprefix $(OBJS_DIR), $(OBJ))
 
 VPATH			:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
 
 # **************************************************************************** #
-#									COLORS                                     #
+#			   	   COLORS                                      #
 # **************************************************************************** #
 
 GR	= \033[32;1m
@@ -107,8 +111,7 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 
 # Check 42 norm 
 norm :
-		@make norm -C $(LIBFT)
-		@norminette srcs includes
+		@norminette
 
 # Remove object files
 clean :
