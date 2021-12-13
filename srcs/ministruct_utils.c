@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:52:50 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 09:36:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/13 11:18:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,3 +79,4 @@ void	free_ministruct(t_shell *ministruct)
 	free(ministruct->command.line);
 	ft_free_array(ministruct->command.line_splitted);
 }
+
