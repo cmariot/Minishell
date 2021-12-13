@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/11 14:25:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/13 09:36:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_command_table {
 	bool	redir_in;
 	bool	redir_out;
 	bool	heredoc;
+	char	*stop_heredoc;
 	bool	redir_out_append;
 	char	*filename;
 }	t_command_table;
@@ -60,22 +61,34 @@ typedef struct s_shell {
 	t_command_table		command;
 }	t_shell;
 
-// env.c
-t_env	*save_env(char **array);
-void	print_env(t_env *env);
-void	ft_lstclear_env(t_env **env, void (*del)(void *));
-void	ft_setenv(t_env *env, char *name, char *value);
-void	ft_unsetenv(t_env *env, char *name);
-
 // ministruct_utils.c
 void	init_ministruct(t_shell *ministruct, char **env);
 void	update_ministruct(t_shell *ministruct);
 void	free_ministruct(t_shell *ministruct);
 
+// list_t_env.c
+t_env	*ft_lstnew_env(void *name, char *value);
+void	ft_lstadd_back_env(t_env **alst, t_env *new);
+void	ft_lstdelone_env(t_env *env, void (*del)(void *));
+void	ft_lstclear_env(t_env **env, void (*del)(void *));
+t_env	*ft_lstlast_env(t_env *lst);
+
+// env.c
+t_env	*save_env(char **array);
+void	print_env(t_env *env);
+char	*get_name(char *env_line);
+char	*get_value(char *env_line);
+
+// setenv.c
+void	ft_setenv(t_env *env, char *name, char *value);
+
+// unsetenv.c
+void	ft_unsetenv(t_env *env, char *name);
+
 // prompt.c
 char	*get_prompt(t_shell *ministruct);
 
 // parse_line.c
-int		parse_line(t_shell *ministruct, char *line);
+int		parse_line(t_command_table *command, char *line);
 
 #endif

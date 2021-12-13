@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/11 21:07:54 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/13 08:37:00 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,9 @@ endif
 
 SRCS			= main.c \
 			  env.c \
+			  setenv.c \
+			  unsetenv.c \
+			  list_t_env.c \
 			  ministruct_utils.c \
 			  prompt.c \
 			  parse_line.c

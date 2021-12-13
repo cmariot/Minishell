@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/12 12:44:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/13 08:35:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	builtin(t_shell *ministruct)
 		exit(EXIT_SUCCESS);
 	}
 }
-
 
 int	main(int argc, char **argv, char **env)
 {
