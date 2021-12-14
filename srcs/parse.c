@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 18:29:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 20:48:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,21 @@ void	print_command_line(t_command_line *command_line)
 		printf("splitted_line[%d] = [%s]\n", i, command_line->splitted_line[i]);
 		i++;
 	}
-	printf("\n\nSTRUCT main :\n");
-	printf("\nmain.command = [%s]\n", command_line->main.command);
-	printf("\nmain.args :\n");
-	i = 0;
-	while (command_line->main.args[i])
+	if (command_line->main.command)
 	{
-		printf("command_line->main.args[%d] = [%s]\n",
-			i, command_line->main.args[i]);
-		i++;
+		printf("\n\nSTRUCT main :\n");
+		printf("\nmain.command = [%s]\n", command_line->main.command);
+		if (command_line->main.args)
+		{
+			printf("\nmain.args :\n");
+			i = 0;
+			while (command_line->main.args[i])
+			{
+				printf("command_line->main.args[%d] = [%s]\n",
+					i, command_line->main.args[i]);
+				i++;
+			}
+		}
 	}
 	printf("\n***************************\n");
 }
@@ -69,15 +75,19 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 	int	i;
 
 	main->command = ft_strdup(splitted_line[0]);
-	number_of_main_args = get_main_args_number(splitted_line + 1);
-	main->args = ft_calloc(number_of_main_args + 1, sizeof(char *));
-	if (!main->args)
-		return (0);
-	i = 0;
-	while (i < number_of_main_args)
+	number_of_main_args = 0;
+	if (splitted_line[1])
 	{
-		main->args[i] = ft_strdup(splitted_line[i + 1]);
-		i++;
+		number_of_main_args = get_main_args_number(splitted_line + 1);
+		main->args = ft_calloc(number_of_main_args + 1, sizeof(char *));
+		if (!main->args)
+			return (0);
+		i = 0;
+		while (i < number_of_main_args)
+		{
+			main->args[i] = ft_strdup(splitted_line[i + 1]);
+			i++;
+		}
 	}
 	return (number_of_main_args);
 }
@@ -92,8 +102,14 @@ void	parse(t_command_line *command_line)
 {
 	int	main_args_nb;
 
-	command_line->splitted_line = ft_split(command_line->line, ' ');
-	main_args_nb = put_in_main(command_line->splitted_line,
-			&command_line->main);
-	print_command_line(command_line);
+	if (command_line)
+	{
+		command_line->splitted_line = ft_split(command_line->line, ' ');
+		if (command_line->splitted_line)
+		{
+			main_args_nb = put_in_main(command_line->splitted_line,
+					&command_line->main);
+		}
+		print_command_line(command_line);
+	}
 }
