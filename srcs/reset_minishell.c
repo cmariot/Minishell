@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:17:49 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 16:20:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 17:26:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,7 @@ void	reset_minishell(t_command_line *command_line)
 	if (command_line->main.command != NULL)
 		free(command_line->main.command);
 	command_line->main.command = NULL;
+	if (command_line->main.args != NULL)
+		ft_free_array(command_line->main.args);
+	command_line->main.args = NULL;
 }
