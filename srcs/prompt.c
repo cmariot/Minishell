@@ -6,11 +6,31 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:55:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 11:54:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 14:29:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// In the env linked list, get a copy of the value
+// of the ele;emt which have name = "name",
+// if not found, return NULL. */
+char	*get_env_value(char *name, t_env *env)
+{
+	char	*value;
+
+	value = NULL;
+	while (env)
+	{
+		if (ft_strcmp(env->name, name) == 0)
+		{
+			value = ft_strdup(env->value);
+			break ;
+		}
+		env = env->next;
+	}
+	return (value);
+}
 
 int	current_directory_len(char *pwd)
 {

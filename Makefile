@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/14 12:33:31 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/14 14:21:22 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,13 +57,13 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
-			  env.c \
-			  setenv.c \
-			  unsetenv.c \
-			  list_t_env.c \
-			  ministruct_utils.c \
-			  prompt.c \
-			  parse_line.c
+				env_builtin.c \
+				env_list_utils.c \
+				free_at_exit.c \
+				get_command.c \
+				init_minishell.c \
+				parse_line.c \
+				prompt.c
 
 SRC			:= $(notdir $(SRCS))
 

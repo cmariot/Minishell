@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 12:33:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 14:29:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ void	builtin(char *command, t_shell *minishell)
 	}
 	else if (ft_strcmp(command, "env") == 0)
 	{
-		//env(minishell);
+		env_builtin(minishell->env);
 	}
 	else if (ft_strcmp(command, "setenv") == 0)
 	{
-		//setenv(ministruct->env, "PWD", "/test");
+		setenv_builtin(minishell->env, "PWD", "/test");
 	}
 	else if (ft_strcmp(command, "unsetenv") == 0)
 	{
-		//unsetenv(ministruct->env, "PWD");
+		unsetenv_builtin(minishell->env, "PWD");
 	}
 	else if (ft_strcmp(command, "exit") == 0)
 	{
@@ -54,6 +54,7 @@ int	main(int argc, char **argv, char **env)
 			get_command(&minishell, &minishell.command_line);
 			// parse()
 			// execute()
+			builtin(minishell.command_line.line, &minishell);
 		}
 	}
 	return (0);

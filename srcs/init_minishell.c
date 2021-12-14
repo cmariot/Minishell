@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 15:04:13 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 12:29:56 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/14 14:29:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,17 @@ t_env	*save_env(char **env)
 	return (env_list);
 }
 
-// print "name=value" for all the values of the linked list t_env
-void	print_env(t_env *env)
+// Initialize the value of the structure to default value
+void	init_minishell(t_shell *minishell, char **env)
 {
-	while (env)
-	{
-		ft_putstr(env->name);
-		write(1, "=", 1);
-		ft_putstr(env->value);
-		write(1, "\n", 1);
-		env = env->next;
-	}
+	minishell->env = save_env(env);
+	minishell->prompt = NULL;
+	minishell->command_line.line = NULL;
+	minishell->command_line.splitted_line = NULL;
+	minishell->command_line.command.command = NULL;
+	minishell->command_line.command.args = NULL;
+	minishell->command_line.number_of_pipes = 0;
+	minishell->command_line.pipe_command = NULL;
+	minishell->command_line.number_of_redirections = 0;
+	minishell->command_line.redirection = NULL;
 }
