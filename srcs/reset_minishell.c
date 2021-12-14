@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_at_exit.c                                     :+:      :+:    :+:   */
+/*   reset_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 14:29:29 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/14 15:17:49 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/14 16:20:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//// Free the structure elements before exit
-void	free_minishell(t_shell *minishell)
+void	reset_minishell(t_command_line *command_line)
 {
-	ft_lstclear_env(&minishell->env, free);
-	free(minishell->prompt);
-	free(minishell->command_line.line);
+	if (command_line->line != NULL)
+		free(command_line->line);
+	command_line->line = NULL;
+	ft_free_array(command_line->splitted_line);
+	if (command_line->main.command != NULL)
+		free(command_line->main.command);
+	command_line->main.command = NULL;
 }

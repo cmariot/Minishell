@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 15:52:09 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/14 16:22:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **env)
+//// Free the structure elements before exit
+void	free_minishell(t_shell *minishell)
 {
-	t_shell	minishell;
-
-	if (argc && *argv && *env)
-	{
-		init_minishell(&minishell, env);
-		while (1)
-		{
-			reset_minishell(&minishell.command_line);
-			get_command_line(&minishell, &minishell.command_line);
-			parse(&minishell.command_line);
-			if (builtin(minishell.command_line.line, &minishell))
-				break ;
-		}
-	}
-	return (0);
+	ft_lstclear_env(&minishell->env, free);
+	reset_minishell(&minishell->command_line);
 }

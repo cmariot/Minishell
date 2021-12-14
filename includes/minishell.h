@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 15:05:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 16:22:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ typedef struct s_pipe_command {
 
 //Sous-structure de t_command_line,
 //stocke la 1ère commande et ses arguments
-typedef struct s_first_command {
+typedef struct s_main_command {
 	char	*command;
 	char	**args;
-}	t_first_command;
+}	t_main_command;
 
 //Structure sauvegardant tous les éléments d'une ligne de commande
 typedef struct s_command_line {
 	char			*line;
 	char			**splitted_line;
-	t_first_command	command;
+	t_main_command	main;
 	int				number_of_pipes;
 	t_pipe_command	*pipe_command;
 	int				number_of_redirections;
@@ -80,13 +80,14 @@ typedef struct s_shell {
 
 // init_minishell.c
 void	init_minishell(t_shell *ministruct, char **env);
+void	reset_minishell(t_command_line *command_line);
 void	free_minishell(t_shell *ministruct);
 
 // env.c
 t_env	*save_env(char **array);
 
 // get_command.c
-void	get_command(t_shell *minishell, t_command_line *command_line);
+void	get_command_line(t_shell *minishell, t_command_line *command_line);
 char	*get_prompt(t_shell *ministruct);
 char	*get_env_value(char *name, t_env *env);
 
@@ -98,10 +99,10 @@ void	ft_lstclear_env(t_env **env, void (*del)(void *));
 t_env	*ft_lstlast_env(t_env *lst);
 
 // parse.c
-void	parse(t_shell *minishell, t_command_line *command_line);
+void	parse(t_command_line *command_line);
 
 // builtin.c
-void	builtin(char *command, t_shell *minishell);
+int		builtin(char *command, t_shell *minishell);
 
 // env_builtin.c
 void	env_builtin(t_env *env);

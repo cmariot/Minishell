@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/14 15:06:10 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/14 15:45:06 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,11 +57,13 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
+				builtin.c \
 				env_builtin.c \
 				env_list_utils.c \
-				free_at_exit.c \
 				get_command.c \
 				init_minishell.c \
+				reset_minishell.c \
+				free_minishell.c \
 				parse.c \
 				prompt.c \
 				pwd_builtin.c
@@ -110,6 +112,8 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
+leaks : all
+		valgrind --leak-check=full ./minishell
 # Check 42 norm 
 norm :
 		@norminette
