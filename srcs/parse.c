@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 20:48:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 20:58:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ void	parse(t_command_line *command_line)
 {
 	int	main_args_nb;
 
-	if (command_line)
+	if (command_line->line != NULL)
 	{
 		command_line->splitted_line = ft_split(command_line->line, ' ');
-		if (command_line->splitted_line)
+		if (command_line->splitted_line != NULL)
 		{
 			main_args_nb = put_in_main(command_line->splitted_line,
 					&command_line->main);
