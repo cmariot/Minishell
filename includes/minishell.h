@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 14:18:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:05:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_env	*save_env(char **array);
 // get_command.c
 void	get_command(t_shell *minishell, t_command_line *command_line);
 char	*get_prompt(t_shell *ministruct);
+char	*get_env_value(char *name, t_env *env);
 
 // env_list_utils.c
 t_env	*ft_lstnew_env(void *name, char *value);
@@ -96,12 +97,18 @@ void	ft_lstdelone_env(t_env *env, void (*del)(void *));
 void	ft_lstclear_env(t_env **env, void (*del)(void *));
 t_env	*ft_lstlast_env(t_env *lst);
 
+// parse.c
+void	parse(t_shell *minishell, t_command_line *command_line);
+
+// builtin.c
+void	builtin(char *command, t_shell *minishell);
+
 // env_builtin.c
 void	env_builtin(t_env *env);
 void	setenv_builtin(t_env *env, char *name, char *value);
 void	unsetenv_builtin(t_env *env, char *name);
 
-// parse_line.c
-//int		parse_line(t_command_table *command, char *line);
+// pwd_builtin.c
+void	pwd_builtin(t_shell *minishell);
 
 #endif

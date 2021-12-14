@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/14 14:21:22 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/14 15:06:10 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,8 +62,9 @@ SRCS			= main.c \
 				free_at_exit.c \
 				get_command.c \
 				init_minishell.c \
-				parse_line.c \
-				prompt.c
+				parse.c \
+				prompt.c \
+				pwd_builtin.c
 
 SRC			:= $(notdir $(SRCS))
 

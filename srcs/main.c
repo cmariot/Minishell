@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 14:29:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:06:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	builtin(char *command, t_shell *minishell)
 {
 	if (ft_strcmp(command, "pwd") == 0)
 	{
-		//pwd(minishell);
+		pwd_builtin(minishell);
 	}
 	else if (ft_strcmp(command, "env") == 0)
 	{
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 		while (1)
 		{
 			get_command(&minishell, &minishell.command_line);
-			// parse()
+			//parse(&minishell, &minishell.command_line);
 			// execute()
 			builtin(minishell.command_line.line, &minishell);
 		}
