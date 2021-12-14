@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:04:13 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 08:59:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 08:42:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_env	*save_env(char **env)
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (env[i++])
 	{
 		name = get_name(env[i]);
 		if (name == NULL)
@@ -37,7 +37,6 @@ t_env	*save_env(char **env)
 			ft_lstadd_back_env(&env_list, ft_lstnew_env(name, value));
 		free(name);
 		free(value);
-		i++;
 	}
 	return (env_list);
 }
@@ -92,12 +91,11 @@ char	*get_value(char *env_line)
 // print "name=value" for all the values of the linked list t_env
 void	print_env(t_env *env)
 {
-	if (!env)
-		return ;
 	while (env)
 	{
-		if (env->name != NULL && env->value != NULL)
-			printf("%s=%s\n", env->name, env->value);
+		ft_putstr(env->name);
+		ft_putstr("=");
+		ft_putstr(env->value);
 		env = env->next;
 	}
 }

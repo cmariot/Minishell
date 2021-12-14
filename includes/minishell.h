@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 14:39:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 09:18:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,41 +31,60 @@
 # define FALSE 0
 # define TRUE 1
 
-typedef struct s_command_table {
-	char	*line;
-	char	**line_splitted;
-	char	*command1;
-	char	**args1;
-	bool	pipe;
-	char	*command2;
-	char	**args2;
-	bool	input_redir;
-	bool	output_redir;
-	bool	heredoc;
-	char	*stop_heredoc;
-	bool	output_redir_append;
-	char	*limiter;
-	char	*filename;
-}	t_command_table;
-
+//Liste chainée dans laquelle on sauvegarde le char **env
 typedef struct s_env {
 	char	*name;
 	char	*value;
 	void	*next;
 }	t_env;
 
+// Sous-structure de t_command_line,
+// stocke, s'il y en a, la ou les redirections à effectuer
+// (on devra gérer aussi le cas heredoc, mais différemment)
+typedef struct s_redir {
+	char	*redirection_type;
+	char	*filename;
+}	t_redir;
+
+// Sous-structure de t_command_line,
+// stocke, s'il y en a, la ou les commandes qui suivent un pipe
+typedef struct s_pipe_command {
+	char	*command;
+	char	**args;
+}	t_pipe_command;
+
+//Sous-structure de t_command_line,
+//stocke la 1ère commande et ses arguments
+typedef struct s_first_command {
+	char	*command;
+	char	**args;
+}	t_first_command;
+
+//Structure sauvegardant tous les éléments d'une ligne de commande
+typedef struct s_command_line {
+	char			*command_line;
+	char			**splitted_command_line;
+	t_first_command	command;
+	int				number_of_pipes;
+	t_pipe_command	*pipe_command;
+	int				number_of_redirections;
+	t_redir			*redirection;
+}	t_command_line;
+
+//Structure principale
 typedef struct s_shell {
-	char				*line;
-	char				*prompt;
-	char				*pwd;
-	t_env				*env;
-	t_command_table		command;
+	t_env			*env;
+	char			*prompt;
+	char			*line;
+	int				number_of_command_lines;
+	t_command_line	*command_line;
 }	t_shell;
 
 // ministruct_utils.c
 void	init_ministruct(t_shell *ministruct, char **env);
 void	update_ministruct(t_shell *ministruct);
 void	free_ministruct(t_shell *ministruct);
+char	*get_env_value(char *name, t_env *env);
 
 // list_t_env.c
 t_env	*ft_lstnew_env(void *name, char *value);
@@ -90,6 +109,6 @@ void	ft_unsetenv(t_env *env, char *name);
 char	*get_prompt(t_shell *ministruct);
 
 // parse_line.c
-int		parse_line(t_command_table *command, char *line);
+//int		parse_line(t_command_table *command, char *line);
 
 #endif
