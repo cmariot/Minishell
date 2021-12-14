@@ -6,43 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:04:13 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 08:42:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 12:29:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Save the name and the value of char **env in a linked list
-t_env	*save_env(char **env)
-{
-	t_env	*env_list;
-	char	*name;
-	char	*value;
-	int		i;
-
-	i = 0;
-	while (env[i++])
-	{
-		name = get_name(env[i]);
-		if (name == NULL)
-			break ;
-		value = get_value(env[i]);
-		if (value == NULL)
-			free(name);
-		if (value == NULL)
-			break ;
-		if (i == 0)
-			env_list = ft_lstnew_env(name, value);
-		else
-			ft_lstadd_back_env(&env_list, ft_lstnew_env(name, value));
-		free(name);
-		free(value);
-	}
-	return (env_list);
-}
-
 // Return the name of a env[i] line
-char	*get_name(char *env_line)
+char	*get_name_in_env(char *env_line)
 {
 	char	*name;
 	int		len;
@@ -64,7 +35,7 @@ char	*get_name(char *env_line)
 }
 
 // Return the value of a env[i] line
-char	*get_value(char *env_line)
+char	*get_value_in_env(char *env_line)
 {
 	char	*value;
 	int		len;
@@ -88,14 +59,45 @@ char	*get_value(char *env_line)
 	return (value);
 }
 
+// Save the name and the value of char **env in a linked list
+t_env	*save_env(char **env)
+{
+	t_env	*env_list;
+	char	*name;
+	char	*value;
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		name = get_name_in_env(env[i]);
+		if (name == NULL)
+			break ;
+		value = get_value_in_env(env[i]);
+		if (value == NULL)
+			free(name);
+		if (value == NULL)
+			break ;
+		if (i == 0)
+			env_list = ft_lstnew_env(name, value);
+		else
+			ft_lstadd_back_env(&env_list, ft_lstnew_env(name, value));
+		free(name);
+		free(value);
+		i++;
+	}
+	return (env_list);
+}
+
 // print "name=value" for all the values of the linked list t_env
 void	print_env(t_env *env)
 {
 	while (env)
 	{
 		ft_putstr(env->name);
-		ft_putstr("=");
+		write(1, "=", 1);
 		ft_putstr(env->value);
+		write(1, "\n", 1);
 		env = env->next;
 	}
 }

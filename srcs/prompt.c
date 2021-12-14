@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:55:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 09:16:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/14 11:54:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,41 @@
 
 int	current_directory_len(char *pwd)
 {
-	int	len;
-	int	i;
+	int	pwd_last_index;
+	int	cd_len;
 
-	i = ft_strlen(pwd);
-	len = 0;
-	while (pwd[i - 1] != '/' && i < 1)
+	pwd_last_index = ft_strlen(pwd) - 1;
+	cd_len = 0;
+	while (pwd[pwd_last_index] != '/' && pwd_last_index >= 0)
 	{
-		len++;
-		i--;
+		cd_len++;
+		pwd_last_index--;
 	}
-	return (len);
+	return (cd_len);
 }
 
 // The prompts is set as the name of the current directory.
 char	*get_prompt(t_shell *minishell)
 {
 	char	*pwd;
+	int		pwd_last_index;
 	char	*current_directory;
+	int		cur_dir_len;
 	char	*prompt;
-	int		len;
-	int		i;
 
 	if (minishell->prompt != NULL)
 		free(minishell->prompt);
 	pwd = get_env_value("PWD", minishell->env);
 	if (pwd == NULL)
 		return (ft_strdup("Minishell ➤ "));
-	len = current_directory_len(pwd);
-	current_directory = ft_calloc(len + 1, sizeof(char));
+	cur_dir_len = current_directory_len(pwd);
+	current_directory = ft_calloc(cur_dir_len + 1, sizeof(char));
 	if (!current_directory)
 		return (ft_strdup("Minishell ➤ "));
-	i = ft_strlen(pwd);
-	while (len - 1 != 0)
+	pwd_last_index = ft_strlen(pwd) - 1;
+	while (cur_dir_len - 1 >= 0)
 	{
-		current_directory[len-- - 1] = pwd[i-- - 1];
+		current_directory[cur_dir_len-- - 1] = pwd[pwd_last_index--];
 	}
 	prompt = ft_strjoin(current_directory, " ➤ ");
 	free(current_directory);
