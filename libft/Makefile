@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/15 14:56:39 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/15 16:12:56 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRCS	= ft_atoi.c \
 		  ft_memcpy.c \
 		  ft_memmove.c \
 		  ft_memset.c \
+		  ft_print_array.c \
 		  ft_putchar.c \
 		  ft_putchar_fd.c \
 		  ft_putendl_fd.c \
