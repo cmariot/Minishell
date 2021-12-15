@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/15 00:07:43 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/15 14:35:06 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,8 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
 leaks : all
-		valgrind --leak-check=full ./minishell
+		valgrind --leak-check=full --show-leak-kinds=all ./minishell
+
 # Check 42 norm 
 norm :
 		@norminette

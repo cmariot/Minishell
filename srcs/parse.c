@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 10:49:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/15 14:29:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	print_command_line(t_command_line *command_line)
 		printf("\nmain.command = [%s]\n", command_line->main.command);
 		if (command_line->main.args)
 		{
-			printf("\nmain.args :\n");
 			i = 0;
 			while (command_line->main.args[i])
 			{
@@ -44,6 +43,11 @@ void	print_command_line(t_command_line *command_line)
 		{
 			printf("\ncommand_line->number_of_pipes = %d\n",
 				command_line->number_of_pipes);
+		}
+		if (command_line->number_of_redirections)
+		{
+			printf("\ncommand_line->number_of_redirections = %d\n",
+				command_line->number_of_redirections);
 		}
 	}
 	printf("\n***************************\n");
@@ -98,6 +102,7 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 }
 
 //Modifier le split pour ajouter le charset,
+//
 //verifier le charset pour la structure main
 //count the number of pipes
 //put in struct s_pipe_command
@@ -121,9 +126,15 @@ void	parse(t_command_line *command_line)
 				while (command_line->splitted_line[i])
 				{
 					if (ft_strcmp(command_line->splitted_line[i], "|") == 0)
-					{
 						command_line->number_of_pipes++;
-					}
+					else if (ft_strcmp(command_line->splitted_line[i], "<<") == 0)
+						command_line->number_of_redirections++;
+					else if (ft_strcmp(command_line->splitted_line[i], ">>") == 0)
+						command_line->number_of_redirections++;
+					else if (ft_strcmp(command_line->splitted_line[i], "<") == 0)
+						command_line->number_of_redirections++;
+					else if (ft_strcmp(command_line->splitted_line[i], ">") == 0)
+						command_line->number_of_redirections++;
 					i++;
 				}
 			}

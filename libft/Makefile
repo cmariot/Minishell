@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/13 14:11:21 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/15 14:56:39 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ SRCS	= ft_atoi.c \
 		  ft_lstnew.c \
 		  ft_lstsize.c \
 		  get_next_line.c \
+		  gnl_without_bn.c \
 		  ft_intlen.c
 
 SRC		:= $(notdir $(SRCS))
