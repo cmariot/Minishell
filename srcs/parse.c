@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 10:49:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/15 16:16:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,22 @@
 
 void	print_command_line(t_command_line *command_line)
 {
-	int	i;
-
 	printf("\n***************************\n");
 	printf("\nligne de commande : [%s]\n\n", command_line->line);
 	printf("splitted line :\n");
-	i = 0;
-	while (command_line->splitted_line[i])
-	{
-		printf("splitted_line[%d] = [%s]\n", i, command_line->splitted_line[i]);
-		i++;
-	}
+	ft_print_array("splitted_line", command_line->splitted_line);
 	if (command_line->main.command)
 	{
 		printf("\n\nSTRUCT main :\n");
 		printf("\nmain.command = [%s]\n", command_line->main.command);
 		if (command_line->main.args)
-		{
-			printf("\nmain.args :\n");
-			i = 0;
-			while (command_line->main.args[i])
-			{
-				printf("command_line->main.args[%d] = [%s]\n",
-					i, command_line->main.args[i]);
-				i++;
-			}
-		}
+			ft_print_array("command_line->main.args", command_line->main.args);
 		if (command_line->number_of_pipes)
-		{
 			printf("\ncommand_line->number_of_pipes = %d\n",
 				command_line->number_of_pipes);
-		}
+		if (command_line->number_of_redirections)
+			printf("\ncommand_line->number_of_redirections = %d\n",
+				command_line->number_of_redirections);
 	}
 	printf("\n***************************\n");
 }
@@ -97,6 +82,25 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 	return (number_of_main_args);
 }
 
+//Count the number of pipelines and the number of redirections
+void	count(char **splitted_line, int i, t_command_line *command_line)
+{
+	while (splitted_line[i])
+	{
+		if (ft_strcmp(splitted_line[i], "|") == 0)
+			command_line->number_of_pipes++;
+		else if (ft_strcmp(splitted_line[i], "<<") == 0)
+			command_line->number_of_redirections++;
+		else if (ft_strcmp(splitted_line[i], ">>") == 0)
+			command_line->number_of_redirections++;
+		else if (ft_strcmp(splitted_line[i], "<") == 0)
+			command_line->number_of_redirections++;
+		else if (ft_strcmp(splitted_line[i], ">") == 0)
+			command_line->number_of_redirections++;
+		i++;
+	}
+}
+
 //Modifier le split pour ajouter le charset,
 //verifier le charset pour la structure main
 //count the number of pipes
@@ -105,28 +109,17 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 //put in struct s_redir
 void	parse(t_command_line *command_line)
 {
-	int	main_args_nb;
-	int	i;
+	int	main_args;
 
-	if (command_line->line != NULL)
+	if (command_line->line)
 	{
 		command_line->splitted_line = ft_split(command_line->line, ' ');
-		if (command_line->splitted_line != NULL)
+		if (command_line->splitted_line)
 		{
-			main_args_nb = put_in_main(command_line->splitted_line,
+			main_args = put_in_main(command_line->splitted_line,
 					&command_line->main);
-			if (command_line->splitted_line[main_args_nb + 1] != NULL)
-			{
-				i = main_args_nb + 1;
-				while (command_line->splitted_line[i])
-				{
-					if (ft_strcmp(command_line->splitted_line[i], "|") == 0)
-					{
-						command_line->number_of_pipes++;
-					}
-					i++;
-				}
-			}
+			if (command_line->splitted_line[main_args + 1])
+				count(command_line->splitted_line, main_args + 1, command_line);
 		}
 		print_command_line(command_line);
 	}

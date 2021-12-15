@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/15 00:07:43 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/15 16:17:49 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
 # Delete the -g3 flag at the end of the project, it's used to have more information w/ valgrind
-CFLAGS			+= -g3
+CFLAGS			+= -g2
 
 LFLAGS			= -Wall -Wextra -Werror -g3
 LIB_LFLAGS		= -L $(LIBFT) -lft
@@ -62,7 +62,6 @@ SRCS			= main.c \
 				env_list_utils.c \
 				get_command.c \
 				init_minishell.c \
-				reset_minishell.c \
 				free_minishell.c \
 				parse.c \
 				prompt.c \
@@ -114,6 +113,7 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 
 leaks : all
 		valgrind --leak-check=full ./minishell
+
 # Check 42 norm 
 norm :
 		@norminette

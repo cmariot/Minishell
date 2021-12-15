@@ -6,10 +6,9 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 21:02:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/15 15:59:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 // Get the prompt and use readline to show the prompt and store the input line

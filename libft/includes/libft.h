@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 13:34:23 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 22:38:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/15 16:12:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 void		*ft_memmove(void *dst, const void *src, size_t len);
+void		ft_print_array(char *name, char **array);
 void		ft_putchar(char c);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putendl_fd(char *s, int fd);
@@ -64,6 +65,7 @@ void		ft_putstr_fd(char *s, int fd);
 char		*ft_realloc(void *previous, char *new);
 char		**ft_split(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
+char		*ft_strdel(char **adr_str);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
 size_t		ft_strlcat(char *dest, const char *src, size_t dest_size);
@@ -81,8 +83,6 @@ int			ft_toupper(int c);
 
 /* GET NEXT LINE */
 char		*get_next_line(int fd);
-void		ft_add_buf_to_str(char **str, void *buf);
-char		*ft_strdel(char **adr_str);
-char		*gnl_outpout(ssize_t read_return, char **str_input);
+char		*gnl_without_bn(int fd);
 
 #endif

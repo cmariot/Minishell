@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test_execve.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 13:48:00 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/15 12:31:23 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/15 14:19:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <unistd.h>
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell	minishell;
+	char	*path;
+	char	*args[2];
 
-	if (argc && *argv && *env)
+	if (argc && argv)
 	{
-		init_minishell(&minishell, env);
-		while (1)
-		{
-			get_command_line(&minishell, &minishell.command_line);
-			if (minishell.command_line.line != NULL)
-			{
-				parse(&minishell.command_line);
-				if (builtin(minishell.command_line.line, &minishell))
-					break ;
-				reset_minishell(&minishell.command_line);
-			}
-		}
+		path = "/usr/bin/ls";
+		args[0] = "-l";
+		args[1] = NULL;
+		execve(path, args, env);
 	}
 	return (0);
 }
