@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/14 15:45:06 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/15 00:07:43 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,8 @@ LIB_LFLAGS		+= -lreadline
 
 # Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -g3
-	LFLAGS		+= -g3
+	CFLAGS		+= -g
+	LFLAGS		+= -g 
 endif
 
 # Optimisation flag, use with 'make OPTI=1'

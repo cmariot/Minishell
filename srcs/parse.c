@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 20:58:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/15 10:49:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	print_command_line(t_command_line *command_line)
 					i, command_line->main.args[i]);
 				i++;
 			}
+		}
+		if (command_line->number_of_pipes)
+		{
+			printf("\ncommand_line->number_of_pipes = %d\n",
+				command_line->number_of_pipes);
 		}
 	}
 	printf("\n***************************\n");
@@ -101,6 +106,7 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 void	parse(t_command_line *command_line)
 {
 	int	main_args_nb;
+	int	i;
 
 	if (command_line->line != NULL)
 	{
@@ -109,6 +115,18 @@ void	parse(t_command_line *command_line)
 		{
 			main_args_nb = put_in_main(command_line->splitted_line,
 					&command_line->main);
+			if (command_line->splitted_line[main_args_nb + 1] != NULL)
+			{
+				i = main_args_nb + 1;
+				while (command_line->splitted_line[i])
+				{
+					if (ft_strcmp(command_line->splitted_line[i], "|") == 0)
+					{
+						command_line->number_of_pipes++;
+					}
+					i++;
+				}
+			}
 		}
 		print_command_line(command_line);
 	}
