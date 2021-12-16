@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_at_exit.c                                     :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 14:29:29 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/15 17:15:55 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/15 17:27:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-//// Free the structure elements before exit
-void	free_minishell(t_shell *minishell)
+// Print an integer on STDOUT
+
+void	ft_putnbr(int n)
 {
-	ft_lstclear_env(&minishell->env, free);
-	free(minishell->prompt);
-	free(minishell->command_line.line);
+	long	nb;
+
+	nb = n;
+	if (nb < 0)
+	{
+		ft_putchar('-');
+		nb = -nb;
+	}
+	if (nb >= 0 && nb <= 9)
+	{
+		ft_putchar('0' + nb);
+	}
+	else
+	{
+		ft_putnbr(nb / 10);
+		ft_putchar('0' + (nb % 10));
+	}
 }

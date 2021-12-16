@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_putarray.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 14:58:09 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 19:17:01 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/15 16:10:31 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/15 23:29:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* The calloc() function contiguously allocates enough
- * space for count objects that are size bytes of memory each
- * and returns a pointer to the allocated memory.
- * The allocated memory is filled with bytes of value zero. */
+// Print an array of char * like this :
+// name[i] = array[i]
 
-void	*ft_calloc(size_t count, size_t size)
+void	ft_putarray(char *name, char **array)
 {
-	char	*new;
-	size_t	i;
+	int	i;
 
-	new = malloc(size * count);
-	if (!new)
-		return (NULL);
 	i = 0;
-	while (i < count * size)
-		new[i++] = 0;
-	return (new);
+	while (array[i])
+	{
+		ft_putstr(name);
+		ft_putchar('[');
+		ft_putnbr(i);
+		ft_putstr("] = [");
+		ft_putstr(array[i]);
+		ft_putstr("]\n");
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:55:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 14:29:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/15 16:16:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ char	*get_prompt(t_shell *minishell)
 	int		cur_dir_len;
 	char	*prompt;
 
-	if (minishell->prompt != NULL)
-		free(minishell->prompt);
 	pwd = get_env_value("PWD", minishell->env);
 	if (pwd == NULL)
 		return (ft_strdup("Minishell ➤ "));
