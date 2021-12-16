@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/16 10:47:35 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/16 14:38:23 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRCS			= main.c \
 				parse_main_command.c \
 				parse_pipes.c \
 				print_structure.c \
-				pwd_builtin.c
+				pwd_builtin.c \
+				split.c
 
 SRC			:= $(notdir $(SRCS))
 

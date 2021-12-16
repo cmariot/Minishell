@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 11:33:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 14:17:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	parse(t_command_line *command_line)
 
 	if (command_line->line)
 	{
-		command_line->splitted_line = ft_split(command_line->line, ' ');
+		command_line->splitted_line = split_minishell(command_line->line);
 		if (command_line->splitted_line)
 		{
 			args_index = put_in_main(command_line->splitted_line,
