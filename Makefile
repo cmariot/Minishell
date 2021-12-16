@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/16 14:38:23 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/16 16:11:21 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,18 +27,15 @@ LIBFT_INCL		= $(LIBFT)/includes/
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC			= clang
+CC				= clang
 
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
-# Delete the -g3 flag at the end of the project, it's used to have more information w/ valgrind
-CFLAGS			+= -g2
 
 LFLAGS			= -Wall -Wextra -Werror -g3
 LIB_LFLAGS		= -L $(LIBFT) -lft
 LIB_LFLAGS		+= -lreadline
-
 
 # Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)
@@ -60,6 +57,7 @@ SRCS			= main.c \
 				builtin.c \
 				env_builtin.c \
 				env_list_utils.c \
+				execute.c \
 				get_command.c \
 				init_minishell.c \
 				free_minishell.c \
@@ -80,7 +78,7 @@ OBJS			:= $(addprefix $(OBJS_DIR), $(OBJ))
 VPATH			:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
 
 # **************************************************************************** #
-#			   	   COLORS                                      #
+#							 	   COLORS                                      #
 # **************************************************************************** #
 
 GR	= \033[32;1m

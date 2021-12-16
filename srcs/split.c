@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 12:14:11 by flee              #+#    #+#             */
-/*   Updated: 2021/12/16 14:37:29 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/16 15:05:57 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/16 15:11:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static int	ft_charset(char c, char *charset)
 {
@@ -98,7 +99,7 @@ static char	**ft_split_2(char *str, char *charset)
 
 	words = ft_count_word(str, charset);
 	array = malloc(sizeof(char **) * (words + 1));
-	if (!tab)
+	if (!array)
 		return (NULL);
 	index = -1;
 	i = 0;
@@ -124,13 +125,12 @@ char	**split_minishell(char *str)
 	array = ft_split_2(str, sep);
 	return (array);
 }
-/*
-int	main(int argc, char **argv)
+
+/*int	main(int argc, char **argv)
 {
 	char	*str;
 	char	**array;
 	int		i;
-
 	if (argc && argv)
 	{
 		str = "a b c | d e f > g h i";

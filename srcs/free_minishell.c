@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 11:02:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 15:37:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_pipes(t_pipe_command *pipe_command, t_command_line *command_line)
 			ft_free_array(pipe_command[i].args);
 		i++;
 	}
+	free(pipe_command);
 	command_line->number_of_pipes = 0;
 }
 
