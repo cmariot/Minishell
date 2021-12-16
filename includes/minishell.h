@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 14:01:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 11:06:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,37 +79,45 @@ typedef struct s_shell {
 }	t_shell;
 
 // init_minishell.c
-void	init_minishell(t_shell *ministruct, char **env);
-void	reset_minishell(t_command_line *command_line);
-void	free_minishell(t_shell *ministruct);
+void			init_minishell(t_shell *ministruct, char **env);
+void			reset_minishell(t_command_line *command_line);
+void			free_minishell(t_shell *ministruct);
 
-// env.c
-t_env	*save_env(char **array);
+// env.c		
+t_env			*save_env(char **array);
 
-// get_command.c
-void	get_command_line(t_shell *minishell, t_command_line *command_line);
-char	*get_prompt(t_shell *ministruct);
-char	*get_env_value(char *name, t_env *env);
+// get_c		ommand.c
+void			get_command_line(t_shell *minishell,
+					t_command_line *command_line);
+char			*get_prompt(t_shell *ministruct);
+char			*get_env_value(char *name, t_env *env);
 
-// env_list_utils.c
-t_env	*ft_lstnew_env(void *name, char *value);
-void	ft_lstadd_back_env(t_env **alst, t_env *new);
-void	ft_lstdelone_env(t_env *env, void (*del)(void *));
-void	ft_lstclear_env(t_env **env, void (*del)(void *));
-t_env	*ft_lstlast_env(t_env *lst);
+// env_l		ist_utils.c
+t_env			*ft_lstnew_env(void *name, char *value);
+void			ft_lstadd_back_env(t_env **alst, t_env *new);
+void			ft_lstdelone_env(t_env *env, void (*del)(void *));
+void			ft_lstclear_env(t_env **env, void (*del)(void *));
+t_env			*ft_lstlast_env(t_env *lst);
 
-// parse.c
-void	parse(t_command_line *command_line);
+// parse		.c
+void			parse(t_command_line *command_line);
 
-// builtin.c
-int		builtin(char *command, t_shell *minishell);
+// built		in.c
+int				builtin(char *command, t_shell *minishell);
 
-// env_builtin.c
-void	env_builtin(t_env *env);
-void	setenv_builtin(t_env *env, char *name, char *value);
-void	unsetenv_builtin(t_env *env, char *name);
+// env_b		uiltin.c
+void			env_builtin(t_env *env);
+void			setenv_builtin(t_env *env, char *name, char *value);
+void			unsetenv_builtin(t_env *env, char *name);
 
-// pwd_builtin.c
-void	pwd_builtin(t_shell *minishell);
+// pwd_b		uiltin.c
+void			pwd_builtin(t_shell *minishell);
+
+void			ft_putarray(char *name, char **array);
+
+int				put_in_main(char **splitted_line, t_main_command *main);
+void			print_command_line(t_command_line *command_line);
+t_pipe_command	*put_in_pipe(t_command_line *command_line,
+					char **splitted_line, int args_index);
 
 #endif

@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_execve.c                                      :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 12:31:23 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 14:19:11 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/15 17:15:55 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/15 17:27:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+// Print an integer on STDOUT
+
+void	ft_putnbr(int n)
 {
-	char	*path;
-	char	*args[2];
+	long	nb;
 
-	if (argc && argv)
+	nb = n;
+	if (nb < 0)
 	{
-		path = "/usr/bin/ls";
-		args[0] = "-l";
-		args[1] = NULL;
-		execve(path, args, env);
+		ft_putchar('-');
+		nb = -nb;
 	}
-	return (0);
+	if (nb >= 0 && nb <= 9)
+	{
+		ft_putchar('0' + nb);
+	}
+	else
+	{
+		ft_putnbr(nb / 10);
+		ft_putchar('0' + (nb % 10));
+	}
 }

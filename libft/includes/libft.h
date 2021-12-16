@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 13:34:23 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 16:12:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/15 17:23:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 void		*ft_memmove(void *dst, const void *src, size_t len);
-void		ft_print_array(char *name, char **array);
+void		ft_putarray(char *name, char **array);
 void		ft_putchar(char c);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putendl_fd(char *s, int fd);
+void		ft_putnbr(int n);
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putstack(int *a, char c, int stack_size);
 void		ft_putstr(char *s);

@@ -6,11 +6,27 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 16:17:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 11:02:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_pipes(t_pipe_command *pipe_command, t_command_line *command_line)
+{
+	int	i;
+
+	i = 0;
+	while (i < command_line->number_of_pipes)
+	{
+		if (pipe_command[i].command)
+			free(pipe_command[i].command);
+		if (pipe_command[i].args)
+			ft_free_array(pipe_command[i].args);
+		i++;
+	}
+	command_line->number_of_pipes = 0;
+}
 
 void	reset_minishell(t_command_line *command_line)
 {
@@ -24,7 +40,8 @@ void	reset_minishell(t_command_line *command_line)
 	if (command_line->main.args != NULL)
 		ft_free_array(command_line->main.args);
 	command_line->main.args = NULL;
-	command_line->number_of_pipes = 0;
+	if (command_line->number_of_pipes)
+		free_pipes(command_line->pipe_command, command_line);
 	command_line->number_of_redirections = 0;
 }
 
