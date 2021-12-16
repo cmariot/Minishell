@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/16 16:11:21 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/16 17:32:25 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,7 +136,7 @@ fclean :
 		@printf "Done\n"
 		@printf "$(RE)Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
+		@printf "Done\n$(RC)"
 		@make fclean -C $(LIBFT)
 
 print_divider :

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:34:44 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 10:36:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 17:29:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,15 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 
 	main->command = ft_strdup(splitted_line[0]);
 	number_of_main_args = 0;
-	if (splitted_line[1])
+	number_of_main_args = get_main_args_number(splitted_line + 1);
+	main->args = ft_calloc(number_of_main_args + 2, sizeof(char *));
+	if (!main->args)
+		return (0);
+	i = 0;
+	while (i < number_of_main_args + 1)
 	{
-		number_of_main_args = get_main_args_number(splitted_line + 1);
-		main->args = ft_calloc(number_of_main_args + 1, sizeof(char *));
-		if (!main->args)
-			return (0);
-		i = 0;
-		while (i < number_of_main_args)
-		{
-			main->args[i] = ft_strdup(splitted_line[i + 1]);
-			i++;
-		}
+		main->args[i] = ft_strdup(splitted_line[i]);
+		i++;
 	}
 	return (number_of_main_args);
 }
