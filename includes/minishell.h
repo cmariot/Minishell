@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 16:10:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:02:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,11 @@ t_pipe_command	*put_in_pipe(t_command_line *command_line,
 					char **splitted_line, int args_index);
 
 // split.c
-char			**split_minishell(char *str);
+char			**split_line(char *str);
 
 //execute.c
 void			execute(t_shell *minishell, t_command_line *command_line);
+
+int				ft_charset(char c, char *charset);
 
 #endif
