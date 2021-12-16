@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 18:22:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:04:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	fork_command(char **command_path, t_command_line *command_line, char **env)
    Check if the command exist and if it can be execute, if ok execute it.
    If it's execute, the child process stops.
    Else try the next path.  */
+
+//erreur a gerer : dossier en tant que commande principale
 int	try_command(char **path_array, t_command_line *command_line, char **env)
 {
 	char	*path_with_slash;
