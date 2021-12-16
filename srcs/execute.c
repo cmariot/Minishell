@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 16:32:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/16 18:22:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,21 @@ int	try_command(char **path_array, t_command_line *command_line, char **env)
 	return (42);
 }
 
-int	ft_envlstsize(t_env *lst)
+// Return the size of the linked list env
+int	ft_envlstsize(t_env *env)
 {
 	int	size;
 
 	size = 0;
-	while (lst)
+	while (env)
 	{
-		lst = lst->next;
+		env = env->next;
 		size++;
 	}
 	return (size);
 }
 
+// Get a char **env copy from the t_env *env linked list
 char	**envlist_to_array(t_env *envlist)
 {
 	char	**env;
@@ -108,28 +110,23 @@ char	**envlist_to_array(t_env *envlist)
 	return (env);
 }
 
-/* Get the line which contains all the path in env,
+/* Get env as a char **, the line which contains all the path in env,
    (type env in a terminal to see the env array)
    Split this line with the ':' delimiter,
    Try the command in all the possible path. */
 void	execute(t_shell *minishell, t_command_line *command_line)
 {
+	char	**env;
 	char	*path_value;
 	char	**path_array;
-	char	**env;
 
 	env = envlist_to_array(minishell->env);
-	if (!env)
-		return ;
 	path_value = get_env_value("PATH", minishell->env);
-	if (!path_value)
-		return ;
 	path_array = ft_split(path_value, ':');
-	free(path_value);
-	if (!path_array)
-		return ;
-	try_command(path_array, command_line, env);
+	if (try_command(path_array, command_line, env) == 42)
+		printf("minishell: %s: command not found\n", command_line->main.command);
 	ft_free_array(env);
-	free(path_array);
+	free(path_value);
+	ft_free_array(path_array);
 	return ;
 }
