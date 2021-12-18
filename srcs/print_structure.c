@@ -6,11 +6,25 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:36:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 10:54:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/18 16:13:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_redir(t_redir *redir)
+{
+	int	i;
+
+	i = 0;
+	while (redir[i].redirection_type)
+	{
+		printf("redirection[%d].redirection_type = %s\n",
+			i, redir[i].redirection_type);
+		printf("redirection[%d].filename = %s\n", i, redir[i].filename);
+		i++;
+	}
+}
 
 void	print_pipelines(t_pipe_command *pipe_command)
 {
@@ -53,8 +67,11 @@ void	print_command_line(t_command_line *command_line)
 			print_pipelines(command_line->pipe_command);
 		}
 		if (command_line->number_of_redirections)
+		{
 			printf("\ncommand_line->number_of_redirections = %d\n",
 				command_line->number_of_redirections);
+			print_redir(command_line->redirection);
+		}
 	}
 	printf("\n***************************\n\n");
 }

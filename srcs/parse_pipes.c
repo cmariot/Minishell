@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:44:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 11:05:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/18 15:05:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ t_pipe_command	*put_in_pipe(t_command_line *command_line,
 		if (splitted_line[args_index])
 			pipe[i].command = ft_strdup(splitted_line[args_index++]);
 		len = count_len(splitted_line, args_index);
-		pipe[i].args = ft_calloc(len + 1, sizeof(char *));
-		j = 0;
+		pipe[i].args = ft_calloc(len + 2, sizeof(char *));
+		j = 1;
+		pipe[i].args[0] = ft_strdup(pipe[i].command);
 		if (pipe[i].args)
-			while (j < len)
+			while (j < len + 1)
 				pipe[i].args[j++] = ft_strdup(splitted_line[args_index++]);
 		i++;
 		args_index++;

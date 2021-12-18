@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/18 11:32:07 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/18 14:34:44 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS			= main.c \
 				prompt.c \
 				parse_main_command.c \
 				parse_pipes.c \
+				parse_redirections.c \
 				print_structure.c \
 				pwd_builtin.c \
 				split.c
