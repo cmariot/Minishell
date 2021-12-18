@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 08:36:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/18 10:28:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ void	count(char **splitted_line, int i, t_command_line *command_line)
 void	parse(t_command_line *command_line)
 {
 	int	args_index;
-	int	i;
+	//int	i;
 
 	if (command_line->line)
 	{
 		command_line->splitted_line = ft_split(command_line->line, ' ');
-		command_line->splitted_line = split_line(command_line->line);
-		i = 0;
-		while (command_line->splitted_line[i])
-		{
-			printf("CL[%d] = [%s]\n", i, command_line->splitted_line[i]);
+		//command_line->splitted_line = split_line(command_line->line);
+		//i = 0;
+		//while (command_line->splitted_line[i])
+		//{
+		//	printf("CL[%d] = [%s]\n", i, command_line->splitted_line[i]);
 
-			i++;
-		}
+		//	i++;
+		//}
 		if (command_line->splitted_line)
 		{
 			args_index = put_in_main(command_line->splitted_line,

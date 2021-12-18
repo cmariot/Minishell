@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/16 19:00:27 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/18 10:43:57 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ CC				= clang
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
+
 
 LFLAGS			= -Wall -Wextra -Werror -g3
 LIB_LFLAGS		= -L $(LIBFT) -lft
@@ -67,8 +68,7 @@ SRCS			= main.c \
 				parse_pipes.c \
 				print_structure.c \
 				pwd_builtin.c \
-				split.c \
-				split_utils.c
+				split.c
 
 SRC			:= $(notdir $(SRCS))
 
@@ -115,7 +115,7 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
 leaks : all
-		valgrind --leak-check=full ./minishell
+		valgrind --leak-check=full --show-leak-kinds=all --suppressions=tests/.ignore_readline ./minishell
 
 # Check 42 norm 
 norm :
