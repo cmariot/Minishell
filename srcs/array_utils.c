@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_str_from_array.c                            :+:      :+:    :+:   */
+/*   array_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 08:38:12 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 11:18:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/18 11:39:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,77 +115,4 @@ int	nb_of_str2_in_str1(char *str1, char *str2)
 			i++;
 	}
 	return (nb);
-}
-
-char	**separate_str_in_array(char **old, char *sep)
-{
-	char	**new;
-	int		len;
-	int		i;
-
-	i = 0;
-	len = 0;
-	while (old[i++])
-		len += nb_of_str2_in_str1(old[i], sep) + 1;
-	new = ft_calloc(len + 1, sizeof(char *));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (old[i])
-	{
-		j = 0;
-		while (old[i][j])
-		{
-			if ()
-			j++;
-		}
-		i++;
-	}
-	return (new);
-}
-
-int	main(int argc, char **argv, char **env)
-{
-//	char	**old;
-//	int		len;
-//	int		i;
-//
-	if (argc && *argv && *env)
-	{
-//		len = 5;
-//		old = ft_calloc(len + 1, sizeof(char *));
-//		old[0] = ft_strdup("1");
-//		old[1] = ft_strdup("2");
-//		old[2] = ft_strdup("3");
-//		old[3] = ft_strdup("<");
-//		old[4] = ft_strdup("<");
-//		i = 0;
-//		while (old[i])
-//		{
-//			printf("old[%d] = [%s]\n", i, old[i]);
-//			i++;
-//		}
-//		old = remove_str_from_array(old, "3");
-//		printf("AFTER\n");
-//		i = 0;
-//		while (old[i])
-//		{
-//			printf("old[%d] = [%s]\n", i, old[i]);
-//			i++;
-//		}
-//		old = join_array_that_follow(old, "<");
-//		printf("AFTER 2\n");
-//		i = 0;
-//		while (old[i])
-//		{
-//			printf("old[%d] = [%s]\n", i, old[i]);
-//			i++;
-//		}
-//		ft_free_array(old);
-		int	nb;
-
-		nb = nb_of_str2_in_str1("4a|ald|lal|ala", "|");
-		printf("NB = %d\n", nb);
-	}
-	return (0);
 }

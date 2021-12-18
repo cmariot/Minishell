@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 19:02:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/18 11:35:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ typedef struct s_shell {
 void			init_minishell(t_shell *ministruct, char **env);
 void			reset_minishell(t_command_line *command_line);
 void			free_minishell(t_shell *ministruct);
+
+// array_utils.c
+char			**join_array_that_follow(char **old, char *str);
+char			**remove_str_from_array(char **old, char *str);
 
 // env.c		
 t_env			*save_env(char **array);
