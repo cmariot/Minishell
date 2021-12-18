@@ -6,15 +6,18 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:48:25 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 11:39:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/18 15:39:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //Count the number of pipelines and the number of redirections
-void	count(char **splitted_line, int i, t_command_line *command_line)
+void	count(char **splitted_line, t_command_line *command_line)
 {
+	int	i;
+
+	i = 0;
 	while (splitted_line[i])
 	{
 		if (ft_strcmp(splitted_line[i], "|") == 0)
@@ -29,6 +32,7 @@ void	count(char **splitted_line, int i, t_command_line *command_line)
 			command_line->number_of_redirections++;
 		i++;
 	}
+	return ;
 }
 
 // Pour le parsing on part sur un split de la ligne pour recuperer :
@@ -46,25 +50,23 @@ void	count(char **splitted_line, int i, t_command_line *command_line)
 void	parse(t_command_line *command_line)
 {
 	int	args_index;
-	//int	i;
 
 	if (command_line->line)
 	{
-		//command_line->splitted_line = ft_split(command_line->line, ' ');
-		command_line->splitted_line = split_line(command_line->line);
-		command_line->splitted_line = remove_str_from_array(command_line->splitted_line, " ");
-		command_line->splitted_line = join_array_that_follow(command_line->splitted_line, ">");
-		command_line->splitted_line = join_array_that_follow(command_line->splitted_line, "<");
+		command_line->splitted_line = ft_split(command_line->line, ' ');
 		if (command_line->splitted_line)
 		{
 			args_index = put_in_main(command_line->splitted_line,
 					&command_line->main);
 			if (command_line->splitted_line[args_index + 1])
-				count(command_line->splitted_line, args_index + 1,
+				count(command_line->splitted_line,
 					command_line);
 			if (command_line->number_of_pipes)
 				command_line->pipe_command = put_in_pipe(command_line,
 						command_line->splitted_line, args_index);
+			if (command_line->number_of_redirections)
+				command_line->redirection = put_in_redir(command_line,
+						command_line->splitted_line);
 		}
 		print_command_line(command_line);
 	}
