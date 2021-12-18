@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 19:04:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/17 21:29:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	fork_command(char **command_path, t_command_line *command_line, char **env)
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_putstr_fd("Error, during fork in try_command()\n", 2);
+		ft_putstr_fd("Error, fork failed\n", 2);
 		return (-1);
 	}
 	else if (pid == 0)

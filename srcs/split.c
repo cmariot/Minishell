@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:05:57 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 19:24:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/17 22:46:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_filltab(char *str, char *charset, int i, char *array)
 	return (array);
 }
 
-char	**ft_split_2(char *str, char *charset)
+char	**split_line(char *str)
 {
 	char	**array;
 	int		words;
@@ -82,7 +82,7 @@ char	**ft_split_2(char *str, char *charset)
 	int		i;
 	int		sizewords;
 
-	words = ft_count_word(str, charset);
+	words = ft_count_word(str, "\"\'><| ");
 	array = ft_calloc((words + 1), sizeof(char **));
 	if (!array)
 		return (NULL);
@@ -90,22 +90,12 @@ char	**ft_split_2(char *str, char *charset)
 	i = 0;
 	while (++index < words)
 	{
-		sizewords = ft_sizeof_word(&str[i], charset);
+		sizewords = ft_sizeof_word(&str[i], "\"\'><| ");
 		array[index] = ft_calloc((sizewords + 1), sizeof(char *));
 		if (!array[i])
 			return (NULL);
-		array[index] = ft_filltab(str, charset, i, array[index]);
+		array[index] = ft_filltab(str, "\"\'><| ", i, array[index]);
 		i += sizewords;
 	}
-	return (array);
-}
-
-char	**split_line(char *str)
-{
-	char	**array;
-	char	*sep;
-
-	sep = "\"\'><| ";
-	array = ft_split_2(str, sep);
 	return (array);
 }
