@@ -6,22 +6,22 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:36:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 16:13:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/18 17:33:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_redir(t_redir *redir)
+void	print_redir(t_redir *redir, int nb_of_redirection)
 {
 	int	i;
 
 	i = 0;
-	while (redir[i].redirection_type)
+	while (i < nb_of_redirection)
 	{
-		printf("redirection[%d].redirection_type = %s\n",
+		printf("redirection[%d].redirection_type = [%s]\n",
 			i, redir[i].redirection_type);
-		printf("redirection[%d].filename = %s\n", i, redir[i].filename);
+		printf("redirection[%d].filename = [%s]\n", i, redir[i].filename);
 		i++;
 	}
 }
@@ -70,7 +70,7 @@ void	print_command_line(t_command_line *command_line)
 		{
 			printf("\ncommand_line->number_of_redirections = %d\n",
 				command_line->number_of_redirections);
-			print_redir(command_line->redirection);
+			print_redir(command_line->redirection, command_line->number_of_redirections);
 		}
 	}
 	printf("\n***************************\n\n");
