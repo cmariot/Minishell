@@ -6,11 +6,28 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 10:44:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/19 13:43:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_redirections(t_redir *redirection, t_command_line *command_line)
+{
+	int	i;
+
+	i = 0;
+	while (i < command_line->number_of_redirections)
+	{
+		if (redirection[i].redirection_type)
+			free(redirection[i].redirection_type);
+		if (redirection[i].filename)
+			free(redirection[i].filename);
+		i++;
+	}
+	free(redirection);
+	command_line->number_of_redirections = 0;
+}
 
 void	free_pipes(t_pipe_command *pipe_command, t_command_line *command_line)
 {
@@ -43,7 +60,8 @@ void	reset_minishell(t_command_line *command_line)
 	command_line->main.args = NULL;
 	if (command_line->number_of_pipes)
 		free_pipes(command_line->pipe_command, command_line);
-	command_line->number_of_redirections = 0;
+	if (command_line->number_of_redirections)
+		free_redirections(command_line->redirection, command_line);
 }
 
 // Free the structure elements before exit
