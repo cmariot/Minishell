@@ -1,0 +1,11 @@
+#Commandes de base :
+
+// OK
+ls
+ls -l
+ls -la
+ls -l -a
+
+//command not found
+z
+z -z

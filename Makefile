@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/14 15:45:06 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/16 19:00:27 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,23 +27,20 @@ LIBFT_INCL		= $(LIBFT)/includes/
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC			= clang
+CC				= clang
 
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
-# Delete the -g3 flag at the end of the project, it's used to have more information w/ valgrind
-CFLAGS			+= -g3
 
 LFLAGS			= -Wall -Wextra -Werror -g3
 LIB_LFLAGS		= -L $(LIBFT) -lft
 LIB_LFLAGS		+= -lreadline
 
-
 # Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -g3
-	LFLAGS		+= -g3
+	CFLAGS		+= -g
+	LFLAGS		+= -g 
 endif
 
 # Optimisation flag, use with 'make OPTI=1'
@@ -60,13 +57,18 @@ SRCS			= main.c \
 				builtin.c \
 				env_builtin.c \
 				env_list_utils.c \
+				execute.c \
 				get_command.c \
 				init_minishell.c \
-				reset_minishell.c \
 				free_minishell.c \
 				parse.c \
 				prompt.c \
-				pwd_builtin.c
+				parse_main_command.c \
+				parse_pipes.c \
+				print_structure.c \
+				pwd_builtin.c \
+				split.c \
+				split_utils.c
 
 SRC			:= $(notdir $(SRCS))
 
@@ -77,7 +79,7 @@ OBJS			:= $(addprefix $(OBJS_DIR), $(OBJ))
 VPATH			:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
 
 # **************************************************************************** #
-#			   	   COLORS                                      #
+#							 	   COLORS                                      #
 # **************************************************************************** #
 
 GR	= \033[32;1m
@@ -114,6 +116,7 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 
 leaks : all
 		valgrind --leak-check=full ./minishell
+
 # Check 42 norm 
 norm :
 		@norminette
@@ -134,7 +137,7 @@ fclean :
 		@printf "Done\n"
 		@printf "$(RE)Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
+		@printf "Done\n$(RC)"
 		@make fclean -C $(LIBFT)
 
 print_divider :
