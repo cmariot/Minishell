@@ -109,6 +109,7 @@ void	parse(t_command_line *command_line)
 		{
 			main_args_nb = put_in_main(command_line->splitted_line,
 					&command_line->main);
+			printf("number of args for main cmd = %d\n", main_args_nb);
 		}
 		print_command_line(command_line);
 	}
