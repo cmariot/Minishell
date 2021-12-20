@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 15:05:57 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 10:38:48 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/14 12:14:11 by flee              #+#    #+#             */
+/*   Updated: 2021/12/20 14:23:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	**split_line(char *str)
 	int		i;
 	int		sizewords;
 
-	words = ft_count_word(str, "\"\'><| ");
+	words = ft_count_word(str, "\t\"\'><| ");
 	array = ft_calloc((words + 1), sizeof(char **));
 	if (!array)
 		return (NULL);
@@ -101,12 +101,207 @@ char	**split_line(char *str)
 	i = 0;
 	while (++index < words)
 	{
-		sizewords = ft_sizeof_word(&str[i], "\"\'><| ");
+		sizewords = ft_sizeof_word(&str[i], "\t\"\'><| ");
 		array[index] = ft_calloc((sizewords + 1), sizeof(char *));
 		if (!array[i])
 			return (NULL);
-		array[index] = ft_filltab(str, "\"\'><| ", i, array[index]);
+		array[index] = ft_filltab(str, "\t\"\'><| ", i, array[index]);
 		i += sizewords;
 	}
 	return (array);
+}
+
+int		ft_count_space(char **array)
+{
+	int i;
+	int words;
+
+	i = -1;
+	words = 0;
+	while (array[++i])
+	{
+		if (array[i][0] == '\"')
+		{
+			i++;
+			while(array[i][0] != '\"')
+				i++;
+			words++;
+		}
+		else if (array[i][0] == '\'')
+		{
+			i++;
+			while(array[i][0] != '\'')
+				i++;
+			words++;
+		}
+		else if (array[i][0] != ' ' && array[i][0] != '\t')
+			words++;
+	}
+	return (words);
+}
+
+int		ft_count_join(char **array, int pos)
+{
+	int i;
+
+	i = 1;
+	if (array[pos][0] == '\"')
+	{
+		pos++;
+		while(array[pos][0] != '\"')
+		{
+			pos++;
+			i++;
+		}
+		i++;
+	}
+	else if (array[pos][0] == '\'')
+	{
+		pos++;
+		while(array[pos][0] != '\'')
+		{
+			pos++;
+			i++;
+		}
+		i++;
+	}
+	return (i);
+}
+
+int 	find_pos(char **array, int pos)
+{
+	while ((array[pos][0] == ' ' || array[pos][0] == '\t') 
+			&& array[pos])
+		pos++;
+	return (pos);
+}
+
+//--------------------------------LIBFT---------------------------------//
+
+//size_t	ft_strlen (const char *str)
+//{
+//	int	i;
+//
+//	i = 0;
+//	if (str == NULL)
+//		return (0);
+//	while (str[i])
+//		i++;
+//	return (i);
+//}
+//
+//size_t	ft_strlcat(char *dst, const char *src, size_t size)
+//{
+//	size_t	destlen;
+//	size_t	srclen;
+//	size_t	index;
+//
+//	destlen = 0;
+//	srclen = ft_strlen(src);
+//	index = 0;
+//	while (dst[destlen] && destlen < size)
+//		destlen++;
+//	while ((src[index]) && ((destlen + index + 1) < size))
+//	{
+//		dst[destlen + index] = src[index];
+//		index++;
+//	}
+//	if (destlen != size)
+//		dst[destlen + index] = '\0';
+//	return (destlen + srclen);
+//}
+//
+//size_t	ft_strlcpy(char *dest, const char *src, unsigned int size)
+//{
+//	unsigned int	i;
+//	int				src_len;
+//
+//	i = 0;
+//	src_len = 0;
+//	if (src)
+//	{
+//		while (src[src_len])
+//			src_len++;
+//		if (size > 0)
+//		{
+//			while (src[i] && (i < (size - 1)))
+//			{
+//				dest[i] = src[i];
+//				i++;
+//			}
+//			dest[i] = '\0';
+//		}
+//	}
+//	return (src_len);
+//}
+//
+//char	*ft_strjoin(char *s1, char const *s2)
+//{
+//	int		cmpt1;
+//	int		cmpt2;
+//	char	*str;
+//
+//	cmpt1 = ft_strlen((char *)s1);
+//	cmpt2 = cmpt1 + ft_strlen((char *)s2);
+//	str = (char *)malloc(sizeof(char) * (cmpt2 + 1));
+//	if (!str)
+//		return (NULL);
+//	ft_strlcpy(str, (char *)s1, cmpt1 + 1);
+//	ft_strlcat(str, (char *)s2, cmpt2 + 1);
+//		return (str);
+//
+//	return (NULL);
+//}
+
+//--------------------------------LIBFT---------------------------------//
+
+char  *join_fill_array(char *finalarray,char **array, int pos, int join)
+{
+	while (join > 0)
+	{
+		finalarray = ft_strjoin(finalarray, array[pos]);
+		pos++;
+		join--;
+	}
+	return (finalarray);
+}
+
+void fill_finalarray(char **finalarray, char **array, int words)
+{
+	int i;
+	int pos;
+	int join;
+	
+	i = 0;
+	pos = 0;
+	while (i < words)
+	{
+		pos = find_pos(array, pos);
+		join = ft_count_join(array, pos);
+		finalarray[i] = join_fill_array(finalarray[i], array, pos, join);
+		pos += join;
+		i++;
+	}
+}
+
+char 	**ft_split_space(char **array)
+{
+	char	**finalarray;
+	int		words;
+
+	words = ft_count_space(array);
+	finalarray = (char **)malloc(sizeof(char *) * (words + 1));
+	fill_finalarray(finalarray, array, words);
+	return (finalarray);
+}
+
+char **split_all(char *line)
+{
+	char	**array;
+	char	**final_array;
+	
+	array = split_line(line);
+	final_array = ft_split_space(array);
+	ft_free_array(array);
+	return (final_array);
 }

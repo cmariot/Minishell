@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/20 11:10:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/20 14:10:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ t_redir			*put_in_redir(t_command_line *command_line,
 					char **splitted_line);
 
 // split.c
-char			**split_line(char *str);
+char			**ft_split_space(char **array);
 
 //execute.c
 void			execute(t_shell *minishell, t_command_line *command_line);

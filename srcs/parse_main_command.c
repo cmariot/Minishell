@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:34:44 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/20 11:09:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/20 14:09:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	put_in_main(char **splitted_line, t_main_command *main)
 	i = 0;
 	while (splitted_line[i])
 	{
+		//cas particuliers redirection ou pipe avant commande principale
 		if (ft_strcmp(splitted_line[i], "<<") == 0)
 			i += 2;
 		else
