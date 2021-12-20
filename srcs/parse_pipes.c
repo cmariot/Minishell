@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:44:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 15:05:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/20 11:27:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ int	count_len(char **splitted_line, int i)
 }
 
 t_pipe_command	*put_in_pipe(t_command_line *command_line,
-		char **splitted_line, int args_index)
+		char **splitted_line)
 {
 	t_pipe_command	*pipe;
 	int				len;
 	int				i;
+	int				pipe_index;
 	int				j;
 
 	len = command_line->number_of_pipes + 1;
@@ -48,20 +49,25 @@ t_pipe_command	*put_in_pipe(t_command_line *command_line,
 	if (!pipe)
 		return (NULL);
 	i = 0;
-	args_index += 2;
-	while (i < command_line->number_of_pipes)
+	pipe_index = 0;
+	while (splitted_line[i])
 	{
-		if (splitted_line[args_index])
-			pipe[i].command = ft_strdup(splitted_line[args_index++]);
-		len = count_len(splitted_line, args_index);
-		pipe[i].args = ft_calloc(len + 2, sizeof(char *));
-		j = 1;
-		pipe[i].args[0] = ft_strdup(pipe[i].command);
-		if (pipe[i].args)
-			while (j < len + 1)
-				pipe[i].args[j++] = ft_strdup(splitted_line[args_index++]);
+		if (ft_strcmp(splitted_line[i], "|") == 0)
+		{
+			printf("PIPE trouve\n");
+			pipe[pipe_index].command = ft_strdup(splitted_line[++i]);
+			printf("COMMANDE = %s\n", pipe[pipe_index].command);
+			len = count_len(splitted_line, i);
+			printf("NOMBRE D'ARGUMENTS = %d\n", len);
+			pipe[pipe_index].args = ft_calloc(len + 2, sizeof(char *));
+			j = 1;
+			pipe[pipe_index].args[0] = ft_strdup(pipe[pipe_index].command);
+			if (pipe[pipe_index].args)
+				while (j < len + 1)
+					pipe[pipe_index].args[j++] = ft_strdup(splitted_line[i++]);
+			pipe_index++;
+		}
 		i++;
-		args_index++;
 	}
 	return (pipe);
 }

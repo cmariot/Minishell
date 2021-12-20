@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 16:13:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/20 11:10:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,10 @@ void			pwd_builtin(t_shell *minishell);
 
 void			ft_putarray(char *name, char **array);
 
-int				put_in_main(char **splitted_line, t_main_command *main);
+void			put_in_main(char **splitted_line, t_main_command *main);
 void			print_command_line(t_command_line *command_line);
 t_pipe_command	*put_in_pipe(t_command_line *command_line,
-					char **splitted_line, int args_index);
+					char **splitted_line);
 
 t_redir			*put_in_redir(t_command_line *command_line,
 					char **splitted_line);
