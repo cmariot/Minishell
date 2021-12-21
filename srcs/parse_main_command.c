@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:34:44 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/20 14:09:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:24:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,35 @@ void	put_in_main(char **splitted_line, t_main_command *main)
 	int	i;
 
 	i = 0;
+	//cas particuliers redirection ou pipe avant commande principale
 	while (splitted_line[i])
 	{
-		//cas particuliers redirection ou pipe avant commande principale
 		if (ft_strcmp(splitted_line[i], "<<") == 0)
 			i += 2;
+		else if (ft_strcmp(splitted_line[i], ">>") == 0)
+			i += 2;
+		else if (ft_strcmp(splitted_line[i], ">") == 0)
+			i += 2;
+		else if (ft_strcmp(splitted_line[i], "<") == 0)
+			i += 2;
+		else if (ft_strcmp(splitted_line[i], "|") == 0)
+		{
+//			while (splitted_line[i])
+//			{
+//				if (ft_strcmp(splitted_line[i++], "|") == 0)
+//					break ;
+//				if (ft_strcmp(splitted_line[i++], "<<") == 0)
+//					break ;
+//				else if (ft_strcmp(splitted_line[i++], ">>") == 0)
+//					break ;
+//				else if (ft_strcmp(splitted_line[i++], ">") == 0)
+//					break ;
+//				else if (ft_strcmp(splitted_line[i++], "<") == 0)
+//					break ;
+//				i++;
+//			}
+			i++;
+		}
 		else
 			break ;
 	}
