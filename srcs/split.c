@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:14:11 by flee              #+#    #+#             */
-/*   Updated: 2021/12/21 13:55:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/21 14:16:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,6 @@ void fill_finalarray(char **finalarray, char **array, int words)
 	{
 		pos = find_pos(array, pos);
 		join = ft_count_join(array, pos);
-		printf("pos = %d join = %d\n", pos, join);
 		finalarray[i] = join_fill_array(finalarray[i], array, pos, join);
 		pos += join;
 		i++;
@@ -223,12 +222,90 @@ char 	**ft_split_space(char **array)
 	int		words;
 
 	words = ft_count_space(array);
-	printf("words = %d\n",words);
 	finalarray = (char **)malloc(sizeof(char *) * (words + 1));
 	fill_finalarray(finalarray, array, words);
 	return (finalarray);
 }
+//-------------------------------------HERDOC-----------------------------------------//
 
+int		ft_count_herdoc(char **array)
+{
+	int i;
+	int size;
+
+	i = 0;
+	size = 0;
+	while (array[i])
+	{
+		if (array[i][0] == '>' && array[i + 1])
+		{
+			if (array[i + 1][0] == '>')
+				i++;
+		}
+		if (array[i][0] == '<' && array[i + 1])
+		{
+			if (array[i + 1][0] == '<')
+				i ++;
+		}
+		i++;
+		size++;
+	}
+	return (size);
+}
+
+char 	**fill_newarray(char **newarray, char **array,int size)
+{
+	char *tmp;
+	int i;
+	int i_array;
+	int len;
+
+	i = 0;
+	i_array = 0;
+	while (i < size)
+	{
+		len = ft_strlen(array[i_array]);
+		newarray[i] = (char *)malloc(sizeof(char) * (len + 1));
+		ft_strlcpy(newarray[i], array[i_array], (len + 1));
+		if (array[i_array][0] == '>' && array[i_array + 1])
+		{
+			if (array[i_array + 1][0] == '>')
+			{
+				tmp = newarray[i];
+				newarray[i] = ft_strjoin(tmp, array[i_array + 1]);
+				free(tmp);
+				i_array++;
+			}
+		}
+		if (array[i_array][0] == '<' && array[i_array + 1])
+		{
+			if (array[i_array + 1][0] == '<')
+			{
+				tmp = newarray[i];
+				newarray[i] = ft_strjoin(tmp, array[i_array + 1]);
+				free(tmp);
+				i_array++;
+			}
+		}
+		i_array++;
+		i++;
+	}
+	newarray[i] = 0;
+	return(newarray);
+}
+
+char 	**join_herdoc(char **array)
+{
+	char	**newarray;
+	int 	size;
+
+	size = ft_count_herdoc(array);
+	newarray = (char **)malloc(sizeof(char *) * (size +1));
+	newarray = fill_newarray(newarray, array, size);
+	ft_free_array(array);
+	return (newarray);
+}
+//-------------------------------------------------------------------------------------//
 char **split_all(char *line)
 {
 	char	**array;
@@ -237,19 +314,9 @@ char **split_all(char *line)
 
 	sep = " \t|><\"\'";
 	array = split_line(line, sep);
-	int i = 0;
-	while (array[i])
-	{
-		printf("array[%d] = %s\n",i,array[i]);
-		i++;
-	}
-	i = 0;
+	array = join_herdoc(array);
 	final_array = ft_split_space(array);
-	while (final_array[i])
-	{
-		printf("final_array[%d] = %s\n",i,final_array[i]);
-		i++;
-	}
 	ft_free_array(array);
 	return (final_array);
 }
+
