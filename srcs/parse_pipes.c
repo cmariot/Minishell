@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:44:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/20 12:53:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/21 13:16:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	count_pipe_args(char **splitted_line, int i)
 	int	nf_of_args;
 
 	nf_of_args = 0;
-	printf("ON PART DE [%s]\n", splitted_line[i]);
 	while (splitted_line[i])
 	{
 		if (ft_strcmp(splitted_line[i], "|") == 0)

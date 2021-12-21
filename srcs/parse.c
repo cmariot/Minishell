@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/21 10:14:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/21 13:13:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,28 @@ void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
 	return ;
 }
 
-int	find_index(char **splitted_line, char *line)
-{
-	int	main_command_index;
-	int	i;
-
-	main_command_index = 0;
-	i = 0;
-	if (ft_strcmp(splitted_line[i], "|") == 0)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-		//On doit faire une clean exit ici.
-		return (-1);
-	}
-	if (ft_strcmp(splitted_line[i], "<<") == 0)
-	{
-		while (ft_strcmp(splitted_line[i], "<<") == 0)
-		{
-			main_command_index += 2;
-			i += 2;
-		}
-	}
-	printf("LINE = %s\n", line);
-	return (main_command_index);
-}
+//int	find_index(char **splitted_line)
+//{
+//	int	main_command_index;
+//	int	i;
+//
+//	main_command_index = 0;
+//	i = 0;
+//	if (ft_strcmp(splitted_line[i], "|") == 0)
+//	{
+//		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+//		return (-1);
+//	}
+//	if (ft_strcmp(splitted_line[i], "<<") == 0)
+//	{
+//		while (ft_strcmp(splitted_line[i], "<<") == 0)
+//		{
+//			main_command_index += 2;
+//			i += 2;
+//		}
+//	}
+//	return (main_command_index);
+//}
 
 // Pour le parsing on part sur un split de la ligne pour recuperer :
 //		1- la commande
@@ -78,21 +76,16 @@ int	find_index(char **splitted_line, char *line)
 //Enfin on cherche la commande principale
 int	parse(t_command_line *command_line)
 {
-	int	main_command_index;
+	//int	main_command_index;
 
 	if (command_line->line)
 	{
-		command_line->splitted_line = ft_split(command_line->line, ' ');
-		//array = ft_split_piscine(command_line->line, "\"\'><| \t");
-		//command_line->splitted_line = ft_split_space(array);
-		//ft_free_array(array);
-		//command_line->splitted_line = split_all(command_line->line);
+		command_line->splitted_line = split_all(command_line->line);
 		if (command_line->splitted_line)
 		{
-			main_command_index = find_index(command_line->splitted_line, command_line->line);
-			if (main_command_index == -1)
-				return (-1);
-			printf("MAIN_COMMAND INDEX = %d\n", main_command_index);
+			//main_command_index = find_index(command_line->splitted_line);
+			//if (main_command_index == -1)
+			//	return (-1);
 			count_pipe_and_redir(command_line->splitted_line,
 				command_line);
 			put_in_main(command_line->splitted_line,

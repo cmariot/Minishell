@@ -6,12 +6,11 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:14:11 by flee              #+#    #+#             */
-/*   Updated: 2021/12/21 09:41:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/21 13:55:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
-#include "stdlib.h"
+#include "minishell.h"
 
 int		ft_charset(char c, char *charset)
 {
@@ -39,7 +38,7 @@ int		ft_sizeof_word(char *str, char *charset)
 		++size;
 		++str;
 	}
-	if (*str != 0)
+	if (*str != 0 || sep)
 		size--;
 	return (size);
 }
@@ -69,7 +68,7 @@ int		ft_count_word(char *str, char *charset)
 	return (words);
 }
 
-char	*ft_filltab(char *str, char *charset, int i, char *tab)
+char	*ft_filltab(char *str, char *charset, int i, char *array)
 {
 	int size;
 	int index;
@@ -80,37 +79,38 @@ char	*ft_filltab(char *str, char *charset, int i, char *tab)
 	a = 0;
 	while (a < size)
 	{
-		tab[index] = str[i];
+		array[index] = str[i];
 		index++;
 		i++;
 		a++;
 	}
-	tab[size] = 0;
-	return(tab);
+	array[size] = 0;
+	return(array);
 }
 
-char	**ft_split_piscine(char *str, char *charset)
+char	**split_line(char *str, char *charset)
 {
-	char	**tab;
+	char	**array;
 	int		words;
 	int 	index;
 	int 	i;
+	int 	sizewords;
 
 	words = ft_count_word(str, charset);
-	tab = (char **)malloc(sizeof(char *) * (words + 1));
+	array = (char **)malloc(sizeof(char *) * (words + 1));
 	index = -1;
 	i = 0;
 	while (++index < words)
 	{
-		int sizewords = ft_sizeof_word(&str[i], charset);
-		tab[index] = (char *)malloc(sizeof(char) * (sizewords + 1));
-		tab[index] = ft_filltab(str, charset, i, tab[index]);
+		sizewords = ft_sizeof_word(&str[i], charset);
+		array[index] = (char *)malloc(sizeof(char) * (sizewords + 1));
+		array[index] = ft_filltab(str, charset, i, array[index]);
 		i += sizewords;
 	}
-	tab[index] = 0;
-	return (tab);
+	array[index] = 0;
+	return (array);
 }
-//------------------------------------------------------------------------------------------//
+
 int		ft_count_space(char **array)
 {
 	int i;
@@ -123,14 +123,14 @@ int		ft_count_space(char **array)
 		if (array[i][0] == '\"')
 		{
 			i++;
-			while(array[i][0] != '\"')
+			while(array[i][0] != '\"' && array[i])
 				i++;
 			words++;
 		}
 		else if (array[i][0] == '\'')
 		{
 			i++;
-			while(array[i][0] != '\'')
+			while(array[i][0] != '\'' && array[i])
 				i++;
 			words++;
 		}
@@ -170,96 +170,27 @@ int		ft_count_join(char **array, int pos)
 
 int 	find_pos(char **array, int pos)
 {
-	while ((array[pos][0] == ' ' || array[pos][0] == '\t')
+	while ((array[pos][0] == ' ' || array[pos][0] == '\t') 
 			&& array[pos])
 		pos++;
 	return (pos);
 }
 
-//--------------------------------LIBFT---------------------------------//
-
-size_t	ft_strlen (const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t	destlen;
-	size_t	srclen;
-	size_t	index;
-
-	destlen = 0;
-	srclen = ft_strlen(src);
-	index = 0;
-	while (dst[destlen] && destlen < size)
-		destlen++;
-	while ((src[index]) && ((destlen + index + 1) < size))
-	{
-		dst[destlen + index] = src[index];
-		index++;
-	}
-	if (destlen != size)
-		dst[destlen + index] = '\0';
-	return (destlen + srclen);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, unsigned int size)
-{
-	unsigned int	i;
-	int				src_len;
-
-	i = 0;
-	src_len = 0;
-	if (src)
-	{
-		while (src[src_len])
-			src_len++;
-		if (size > 0)
-		{
-			while (src[i] && (i < (size - 1)))
-			{
-				dest[i] = src[i];
-				i++;
-			}
-			dest[i] = '\0';
-		}
-	}
-	return (src_len);
-}
-
-char	*ft_strjoin(char *s1, char const *s2)
-{
-	int		cmpt1;
-	int		cmpt2;
-	char	*str;
-
-	cmpt1 = ft_strlen((char *)s1);
-	cmpt2 = cmpt1 + ft_strlen((char *)s2);
-	str = (char *)malloc(sizeof(char) * (cmpt2 + 1));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, (char *)s1, cmpt1 + 1);
-	ft_strlcat(str, (char *)s2, cmpt2 + 1);
-		return (str);
-
-	return (NULL);
-}
-
-//--------------------------------LIBFT---------------------------------//
-
 char  *join_fill_array(char *finalarray,char **array, int pos, int join)
 {
+	char 	*tmp;
+	int 	size;
+
+	size = ft_strlen(array[pos]);
+	finalarray = malloc(sizeof(char) * (size + 1));
+	ft_strlcpy(finalarray,array[pos], (size + 1));
+	join--;
+	pos++;
 	while (join > 0)
 	{
-		finalarray = ft_strjoin(finalarray, array[pos]);
+		tmp = finalarray;
+		finalarray = ft_strjoin(tmp, array[pos]);
+		free(tmp);
 		pos++;
 		join--;
 	}
@@ -271,18 +202,19 @@ void fill_finalarray(char **finalarray, char **array, int words)
 	int i;
 	int pos;
 	int join;
-
+	
 	i = 0;
 	pos = 0;
 	while (i < words)
 	{
 		pos = find_pos(array, pos);
 		join = ft_count_join(array, pos);
+		printf("pos = %d join = %d\n", pos, join);
 		finalarray[i] = join_fill_array(finalarray[i], array, pos, join);
-		printf("final = %s\n",finalarray[i]);
 		pos += join;
 		i++;
 	}
+	finalarray[i] = 0;
 }
 
 char 	**ft_split_space(char **array)
@@ -291,8 +223,33 @@ char 	**ft_split_space(char **array)
 	int		words;
 
 	words = ft_count_space(array);
-	printf("words = %d\n", words);
+	printf("words = %d\n",words);
 	finalarray = (char **)malloc(sizeof(char *) * (words + 1));
 	fill_finalarray(finalarray, array, words);
 	return (finalarray);
+}
+
+char **split_all(char *line)
+{
+	char	**array;
+	char 	*sep;
+	char	**final_array;
+
+	sep = " \t|><\"\'";
+	array = split_line(line, sep);
+	int i = 0;
+	while (array[i])
+	{
+		printf("array[%d] = %s\n",i,array[i]);
+		i++;
+	}
+	i = 0;
+	final_array = ft_split_space(array);
+	while (final_array[i])
+	{
+		printf("final_array[%d] = %s\n",i,final_array[i]);
+		i++;
+	}
+	ft_free_array(array);
+	return (final_array);
 }

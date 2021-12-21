@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/18 14:34:44 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/21 13:18:02 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,11 +60,10 @@ SRCS			= main.c \
 				env_builtin.c \
 				env_list_utils.c \
 				execute.c \
-				get_command.c \
+				get_command_line.c \
 				init_minishell.c \
 				free_minishell.c \
 				parse.c \
-				prompt.c \
 				parse_main_command.c \
 				parse_pipes.c \
 				parse_redirections.c \
