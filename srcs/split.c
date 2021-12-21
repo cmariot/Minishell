@@ -38,7 +38,7 @@ int		ft_sizeof_word(char *str, char *charset)
 		++size;
 		++str;
 	}
-	if (*str != 0)
+	if (*str != 0 || sep)
 		size--;
 	return (size);
 }
@@ -123,14 +123,14 @@ int		ft_count_space(char **array)
 		if (array[i][0] == '\"')
 		{
 			i++;
-			while(array[i][0] != '\"')
+			while(array[i][0] != '\"' && array[i])
 				i++;
 			words++;
 		}
 		else if (array[i][0] == '\'')
 		{
 			i++;
-			while(array[i][0] != '\'')
+			while(array[i][0] != '\'' && array[i])
 				i++;
 			words++;
 		}
@@ -178,16 +178,19 @@ int 	find_pos(char **array, int pos)
 
 char  *join_fill_array(char *finalarray,char **array, int pos, int join)
 {
-	int size;
+	char 	*tmp;
+	int 	size;
 
 	size = ft_strlen(array[pos]);
-	printf("len = %d\n",size);
 	finalarray = malloc(sizeof(char) * (size + 1));
 	ft_strlcpy(finalarray,array[pos], (size + 1));
 	join--;
+	pos++;
 	while (join > 0)
 	{
-		finalarray = ft_strjoin(finalarray, array[pos]);
+		tmp = finalarray;
+		finalarray = ft_strjoin(tmp, array[pos]);
+		free(tmp);
 		pos++;
 		join--;
 	}
@@ -211,6 +214,7 @@ void fill_finalarray(char **finalarray, char **array, int words)
 		pos += join;
 		i++;
 	}
+	finalarray[i] = 0;
 }
 
 char 	**ft_split_space(char **array)
@@ -246,5 +250,6 @@ char **split_all(char *line)
 		printf("final_array[%d] = %s\n",i,final_array[i]);
 		i++;
 	}
+	ft_free_array(array);
 	return (final_array);
 }
