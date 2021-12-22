@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:14:11 by flee              #+#    #+#             */
-/*   Updated: 2021/12/21 14:16:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 10:33:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,4 +319,3 @@ char **split_all(char *line)
 	ft_free_array(array);
 	return (final_array);
 }
-

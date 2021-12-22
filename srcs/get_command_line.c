@@ -6,14 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/21 13:12:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 11:08:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // In the env linked list, get a copy of the value
-// of the ele;emt which have name = "name",
+// of the elememt which have name = "name",
 // if not found, return NULL. */
 char	*get_env_value(char *name, t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/21 12:00:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 10:36:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,11 @@ char			**split_all(char *line);
 void			execute(t_shell *minishell, t_command_line *command_line);
 
 int				ft_charset(char c, char *charset);
+
+void			execute_pipelines(char **cmd_array, char **env);
+char			**envlist_to_array(t_env *envlist);
+
+// expand_env_variable.c
+void			expand_env_variable(char ***splitted_line, t_env *env);
 
 #endif
