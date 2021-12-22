@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 16:25:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 17:13:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,21 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 				command_line);
 			expand_env_variable(&command_line->splitted_line,
 				minishell->env);
-			put_in_main(command_line->splitted_line,
-				&command_line->main);
-			if (command_line->number_of_pipes)
-				command_line->pipe_command = put_in_pipe(command_line,
-						command_line->splitted_line);
-			if (command_line->number_of_redirections)
-				command_line->redirection = put_in_redir(command_line,
-						command_line->splitted_line);
-		print_command_line(&minishell->command_line);
+			if (put_in_main(command_line->splitted_line,
+				&command_line->main) != -1)
+			{
+				if (command_line->number_of_pipes)
+				{
+					command_line->pipe_command = put_in_pipe(command_line,
+							command_line->splitted_line);
+				}
+				if (command_line->number_of_redirections)
+					command_line->redirection = put_in_redir(command_line,
+							command_line->splitted_line);
+				print_command_line(&minishell->command_line);
+			}
+			else
+				return (-1);
 		}
 		else
 			return (-1);

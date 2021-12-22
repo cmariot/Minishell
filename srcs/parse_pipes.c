@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:44:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 14:43:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 16:45:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	create_pipe_struct(char **splitted_line, int i, t_pipe_command *pipe)
 	if (splitted_line[i + 1])
 		pipe->command = ft_strdup(splitted_line[i + 1]);
 	nb_of_args = count_pipe_args(splitted_line, i + 1);
+	if (nb_of_args == 0)
+		return (i + 1);
 	pipe->args = ft_calloc(nb_of_args + 1, sizeof(char *));
 	if (pipe->args)
 	{

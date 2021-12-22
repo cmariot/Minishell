@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:36:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 14:45:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 16:39:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,18 @@ void	print_pipelines(t_pipe_command *pipe_command, int nb_of_pipes)
 	printf("\ncommand_line->number_of_pipes = %d\n\n", nb_of_pipes);
 	while (i < nb_of_pipes)
 	{
-		printf("pipe_command[%d].command = [%s]\n", i, pipe_command[i].command);
-		j = 0;
-		while (pipe_command[i].args[j])
+		if (pipe_command[i].command)
+			printf("pipe_command[%d].command = [%s]\n",
+				i, pipe_command[i].command);
+		if (pipe_command[i].args)
 		{
-			printf("pipe_command[%d].args[%d] = [%s]\n",
-				i, j, pipe_command[i].args[j]);
-			j++;
+			j = 0;
+			while (pipe_command[i].args[j])
+			{
+				printf("pipe_command[%d].args[%d] = [%s]\n",
+					i, j, pipe_command[i].args[j]);
+				j++;
+			}
 		}
 		ft_putchar('\n');
 		i++;

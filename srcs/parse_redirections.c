@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 14:31:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 14:28:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 16:48:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	put_in_redir_struct(char *redir_type, char *filename, t_redir *redir)
 {
+	printf("FILENAME = %s\n", filename);
+	printf("REDIR = %s\n", redir_type);
 	redir->redirection_type = ft_strdup(redir_type);
 	redir->filename = ft_strdup(filename);
 }
@@ -34,7 +36,7 @@ t_redir	*put_in_redir(t_command_line *command_line,
 	j = 0;
 	while (splitted_line[i + 1])
 	{
-		if (ft_strcmp(splitted_line[i], "<<") == 0)
+		if (ft_strcmp(splitted_line[i], "<<") == 0 )
 			put_in_redir_struct("<<", splitted_line[i + 1], &redirs[j++]);
 		else if (ft_strcmp(splitted_line[i], ">>") == 0)
 			put_in_redir_struct(">>", splitted_line[i + 1], &redirs[j++]);
