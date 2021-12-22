@@ -118,6 +118,8 @@ char	**ft_split_space(char **array)
 	int		words;
 
 	words = ft_count_space(array);
+	if (words == 0)
+		return (NULL);
 	finalarray = ft_calloc((words + 1), sizeof(char *));
 	if (!finalarray)
 		return (NULL);

@@ -58,7 +58,7 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 	if (command_line->line)
 	{
 		command_line->splitted_line = split_command_line(command_line->line);
-		if (command_line->splitted_line)
+		if (command_line->splitted_line != NULL)
 		{
 			count_pipe_and_redir(command_line->splitted_line,
 				command_line);
@@ -72,8 +72,10 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 			if (command_line->number_of_redirections)
 				command_line->redirection = put_in_redir(command_line,
 						command_line->splitted_line);
-		}
 		print_command_line(&minishell->command_line);
+		}
+		else
+			return (-1);
 	}
 	return (0);
 }
