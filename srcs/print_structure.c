@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:36:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/18 17:33:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 14:45:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,36 @@ void	print_redir(t_redir *redir, int nb_of_redirection)
 {
 	int	i;
 
+	printf("command_line->number_of_redirections = %d\n\n", nb_of_redirection);
 	i = 0;
 	while (i < nb_of_redirection)
 	{
 		printf("redirection[%d].redirection_type = [%s]\n",
 			i, redir[i].redirection_type);
 		printf("redirection[%d].filename = [%s]\n", i, redir[i].filename);
+		ft_putchar('\n');
 		i++;
 	}
 }
 
-void	print_pipelines(t_pipe_command *pipe_command)
+void	print_pipelines(t_pipe_command *pipe_command, int nb_of_pipes)
 {
-	char	*name;
-	char	*tmp;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (pipe_command[i].command)
+	printf("\ncommand_line->number_of_pipes = %d\n\n", nb_of_pipes);
+	while (i < nb_of_pipes)
 	{
 		printf("pipe_command[%d].command = [%s]\n", i, pipe_command[i].command);
-		tmp = ft_itoa(i);
-		name = ft_strjoin("pipe_command[", tmp);
-		free(tmp);
-		tmp = ft_strjoin(name, "].arg");
-		ft_putarray(tmp, pipe_command[i].args);
+		j = 0;
+		while (pipe_command[i].args[j])
+		{
+			printf("pipe_command[%d].args[%d] = [%s]\n",
+				i, j, pipe_command[i].args[j]);
+			j++;
+		}
 		ft_putchar('\n');
-		free(tmp);
-		free(name);
 		i++;
 	}
 }
@@ -61,17 +63,11 @@ void	print_command_line(t_command_line *command_line)
 		if (command_line->main.args)
 			ft_putarray("command_line->main.args", command_line->main.args);
 		if (command_line->number_of_pipes)
-		{
-			printf("\ncommand_line->number_of_pipes = %d\n\n",
+			print_pipelines(command_line->pipe_command,
 				command_line->number_of_pipes);
-			print_pipelines(command_line->pipe_command);
-		}
 		if (command_line->number_of_redirections)
-		{
-			printf("\ncommand_line->number_of_redirections = %d\n",
+			print_redir(command_line->redirection,
 				command_line->number_of_redirections);
-			print_redir(command_line->redirection, command_line->number_of_redirections);
-		}
 	}
 	printf("\n***************************\n\n");
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/20 14:24:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 14:49:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,27 @@ void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
 //Si il y a des redirections on les parse
 //Si il y a des pipes on les parse
 //Enfin on cherche la commande principale
-void	parse(t_command_line *command_line)
+int	parse(t_command_line *command_line, t_shell *minishell)
 {
 	if (command_line->line)
 	{
-		//command_line->splitted_line = ft_split(command_line->line, ' ');
-		command_line->splitted_line = split_all(command_line->line);
+		command_line->splitted_line = split_command_line(command_line->line);
 		if (command_line->splitted_line)
 		{
 			count_pipe_and_redir(command_line->splitted_line,
 				command_line);
+			expand_env_variable(&command_line->splitted_line,
+				minishell->env);
 			put_in_main(command_line->splitted_line,
-					&command_line->main);
+				&command_line->main);
 			if (command_line->number_of_pipes)
 				command_line->pipe_command = put_in_pipe(command_line,
-					command_line->splitted_line);
+						command_line->splitted_line);
 			if (command_line->number_of_redirections)
 				command_line->redirection = put_in_redir(command_line,
 						command_line->splitted_line);
 		}
-		print_command_line(command_line);
+		print_command_line(&minishell->command_line);
 	}
+	return (0);
 }

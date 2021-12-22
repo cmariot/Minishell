@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/20 14:25:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 15:06:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 
 # define FALSE 0
 # define TRUE 1
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 //Liste chainée dans laquelle on sauvegarde le char **env
 typedef struct s_env {
@@ -104,7 +108,7 @@ void			ft_lstclear_env(t_env **env, void (*del)(void *));
 t_env			*ft_lstlast_env(t_env *lst);
 
 // parse		.c
-void			parse(t_command_line *command_line);
+int				parse(t_command_line *command_line, t_shell *minishell);
 
 // built		in.c
 int				builtin(char *command, t_shell *minishell);
@@ -128,11 +132,19 @@ t_redir			*put_in_redir(t_command_line *command_line,
 					char **splitted_line);
 
 // split.c
-char			**split_all(char *line);
+char			**split_command_line(char *line);
+char			**join_heredoc(char **array);
+char			**ft_split_space(char **array);
 
 //execute.c
 void			execute(t_shell *minishell, t_command_line *command_line);
 
 int				ft_charset(char c, char *charset);
+
+void			execute_pipelines(char **cmd_array, char **env);
+char			**envlist_to_array(t_env *envlist);
+
+// expand_env_variable.c
+void			expand_env_variable(char ***splitted_line, t_env *env);
 
 #endif
