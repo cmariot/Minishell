@@ -145,4 +145,7 @@ char			**envlist_to_array(t_env *envlist);
 // expand_env_variable.c
 void			expand_env_variable(char ***splitted_line, t_env *env);
 
+// check quote
+int			check_quote(char *line);
+
 #endif

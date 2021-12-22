@@ -53,6 +53,8 @@ void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
 //Enfin on cherche la commande principale
 int	parse(t_command_line *command_line, t_shell *minishell)
 {
+	if (check_quote(command_line->line) == 0)
+		return (-1);
 	if (command_line->line)
 	{
 		command_line->splitted_line = split_command_line(command_line->line);

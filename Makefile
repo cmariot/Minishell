@@ -69,7 +69,8 @@ SRCS			= main.c \
 				parse_redirections.c \
 				print_structure.c \
 				pwd_builtin.c \
-				split.c
+				split.c \
+				check_quote.c \
 
 SRC			:= $(notdir $(SRCS))
 
