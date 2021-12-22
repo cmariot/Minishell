@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char    *check_quote(char *line)
+int    check_quote(char *line)
 {
     int     i;
     char    c;
@@ -36,6 +36,6 @@ char    *check_quote(char *line)
             i++;
     }
     if (ok)
-        return (line);
-    return (NULL);   
+        return (1);
+    return (0);   
 }
