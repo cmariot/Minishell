@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/16 20:24:52 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/22 14:56:34 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,18 +140,18 @@ norm :
 
 # Remove object files
 clean :
-		@printf "$(RE)Removing $(OBJS_DIR) ... "
+		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n"
 
 # Remove object and binary files
 fclean:
-		@printf "$(RE)Removing ${NAME} ... "
+		@printf "Removing ${NAME} ... "
 		@rm -f ${NAME}
 		@printf "Done\n"
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
-		@printf "Done\n$(RC)"
+		@printf "Done\n)"
 
 # Remove all and recompile
 re :	 fclean all

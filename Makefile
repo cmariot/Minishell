@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/22 13:55:08 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/22 15:09:10 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,9 @@ SRCS			= main.c \
 				parse_redirections.c \
 				print_structure.c \
 				pwd_builtin.c \
-				split.c
+				split_command_line.c \
+				split_join_heredoc.c \
+				split_spaces.c
 
 SRC			:= $(notdir $(SRCS))
 
@@ -124,22 +126,24 @@ norm :
 
 # Remove object files
 clean :
-		@printf "$(RE)Removing $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
 		@printf "$(RE)make clean in $(LIBFT) ... "
 		@make clean -C $(LIBFT)
 		@printf "Done\n"
+		@printf "Removing $(OBJS_DIR) ... "
+		@rm -rf $(OBJS_DIR)
+		@printf "Done\n$(RC)"
 
 # Remove object and binary files
 fclean :
-		@printf "$(RE)Removing $(NAME) ... "
-		@rm -f $(NAME)
-		@printf "Done\n"
-		@printf "$(RE)Removing $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n$(RC)"
+		@printf "$(RE)make fclean in $(LIBFT) ... "
 		@make fclean -C $(LIBFT)
+		@printf "Done\n"
+		@printf "Removing $(OBJS_DIR) ... "
+		@rm -rf $(OBJS_DIR)
+		@printf "Done\n"
+		@printf "Removing $(NAME) ... "
+		@rm -f $(NAME)
+		@printf "Done\n$(RC)"
 
 print_divider :
 		@printf "\n"
