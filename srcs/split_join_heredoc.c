@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 15:11:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 15:44:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,34 @@ int	ft_charset(char c, char *charset)
 	return (0);
 }
 
-char	**fill_newarray(char **newarray, char **array, int size)
+void	fill(char **array, int *i_array, char **newarray, int *i)
 {
 	char	*tmp;
+
+	if (array[*i_array][0] == '>' && array[*i_array + 1])
+	{
+		if (array[*i_array + 1][0] == '>')
+		{
+			tmp = newarray[*i];
+			newarray[*i] = ft_strjoin(tmp, array[*i_array + 1]);
+			free(tmp);
+			i_array++;
+		}
+	}
+	if (array[*i_array][0] == '<' && array[*i_array + 1])
+	{
+		if (array[*i_array + 1][0] == '<')
+		{
+			tmp = newarray[*i];
+			newarray[*i] = ft_strjoin(tmp, array[*i_array + 1]);
+			free(tmp);
+			i_array++;
+		}
+	}
+}
+
+char	**fill_newarray(char **newarray, char **array, int size)
+{
 	int		i;
 	int		i_array;
 	int		len;
@@ -39,26 +64,7 @@ char	**fill_newarray(char **newarray, char **array, int size)
 		if (!newarray[i])
 			return (NULL);
 		ft_strlcpy(newarray[i], array[i_array], (len + 1));
-		if (array[i_array][0] == '>' && array[i_array + 1])
-		{
-			if (array[i_array + 1][0] == '>')
-			{
-				tmp = newarray[i];
-				newarray[i] = ft_strjoin(tmp, array[i_array + 1]);
-				free(tmp);
-				i_array++;
-			}
-		}
-		if (array[i_array][0] == '<' && array[i_array + 1])
-		{
-			if (array[i_array + 1][0] == '<')
-			{
-				tmp = newarray[i];
-				newarray[i] = ft_strjoin(tmp, array[i_array + 1]);
-				free(tmp);
-				i_array++;
-			}
-		}
+		fill(array, &i_array, newarray, &i);
 		i_array++;
 		i++;
 	}
