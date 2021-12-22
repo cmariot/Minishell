@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 10:36:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 13:45:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void			ft_lstclear_env(t_env **env, void (*del)(void *));
 t_env			*ft_lstlast_env(t_env *lst);
 
 // parse		.c
-int				parse(t_command_line *command_line);
+int				parse(t_command_line *command_line, t_shell *minishell);
 
 // built		in.c
 int				builtin(char *command, t_shell *minishell);
@@ -132,7 +132,7 @@ t_redir			*put_in_redir(t_command_line *command_line,
 					char **splitted_line);
 
 // split.c
-char			**split_all(char *line);
+char			**split_command_line(char *line);
 
 //execute.c
 void			execute(t_shell *minishell, t_command_line *command_line);

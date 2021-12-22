@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/21 20:07:01 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/22 13:55:08 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,6 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
-				array_utils.c \
 				builtin.c \
 				env_builtin.c \
 				env_list_utils.c \
@@ -70,7 +69,6 @@ SRCS			= main.c \
 				parse_redirections.c \
 				print_structure.c \
 				pwd_builtin.c \
-				execute_pipes.c \
 				split.c
 
 SRC			:= $(notdir $(SRCS))

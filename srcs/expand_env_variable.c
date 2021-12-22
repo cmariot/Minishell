@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 11:19:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 13:38:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	expand_env_variable(char ***splitted_line, t_env *env)
 		j = 0;
 		while ((*splitted_line)[i][j])
 		{
-			if ((*splitted_line)[i][j++] == '$')
+			if ((*splitted_line)[i][j] == '$')
 			{
+				j++;
 				new_value = get_env_value((*splitted_line)[i] + j, env);
 				if (new_value != NULL)
 				{
@@ -34,6 +35,7 @@ void	expand_env_variable(char ***splitted_line, t_env *env)
 					break ;
 				}
 			}
+			j++;
 		}
 		i++;
 	}

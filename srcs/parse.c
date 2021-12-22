@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/21 20:02:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 13:47:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,6 @@ void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
 	return ;
 }
 
-//int	find_index(char **splitted_line)
-//{
-//	int	main_command_index;
-//	int	i;
-//
-//	main_command_index = 0;
-//	i = 0;
-//	if (ft_strcmp(splitted_line[i], "|") == 0)
-//	{
-//		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-//		return (-1);
-//	}
-//	if (ft_strcmp(splitted_line[i], "<<") == 0)
-//	{
-//		while (ft_strcmp(splitted_line[i], "<<") == 0)
-//		{
-//			main_command_index += 2;
-//			i += 2;
-//		}
-//	}
-//	return (main_command_index);
-//}
-
 // Pour le parsing on part sur un split de la ligne pour recuperer :
 //		1- la commande
 //		2- les options
@@ -74,20 +51,17 @@ void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
 //Si il y a des redirections on les parse
 //Si il y a des pipes on les parse
 //Enfin on cherche la commande principale
-int	parse(t_command_line *command_line)
+int	parse(t_command_line *command_line, t_shell *minishell)
 {
-	//int	main_command_index;
-
 	if (command_line->line)
 	{
-		command_line->splitted_line = split_all(command_line->line);
+		command_line->splitted_line = split_command_line(command_line->line);
 		if (command_line->splitted_line)
 		{
-			//main_command_index = find_index(command_line->splitted_line);
-			//if (main_command_index == -1)
-			//	return (-1);
 			count_pipe_and_redir(command_line->splitted_line,
 				command_line);
+			expand_env_variable(&command_line->splitted_line,
+				minishell->env);
 			put_in_main(command_line->splitted_line,
 				&command_line->main);
 			if (command_line->number_of_pipes)
@@ -97,7 +71,7 @@ int	parse(t_command_line *command_line)
 				command_line->redirection = put_in_redir(command_line,
 						command_line->splitted_line);
 		}
-		print_command_line(command_line);
+		print_command_line(&minishell->command_line);
 	}
 	return (0);
 }
