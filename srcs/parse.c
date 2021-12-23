@@ -6,33 +6,49 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 19:28:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 11:01:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //Count the number of pipelines and the number of redirections
-void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
+//void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
+//{
+//	int	i;
+//
+//	i = 0;
+//	while (splitted_line[i])
+//	{
+//		if (ft_strcmp(splitted_line[i], "|") == 0)
+//			command_line->number_of_pipes++;
+//		else if (ft_strcmp(splitted_line[i], "<<") == 0)
+//			command_line->number_of_redirections++;
+//		else if (ft_strcmp(splitted_line[i], ">>") == 0)
+//			command_line->number_of_redirections++;
+//		else if (ft_strcmp(splitted_line[i], "<") == 0)
+//			command_line->number_of_redirections++;
+//		else if (ft_strcmp(splitted_line[i], ">") == 0)
+//			command_line->number_of_redirections++;
+//		i++;
+//	}
+//	return ;
+//}
+
+size_t	count_commands(char **splitted_line)
 {
+	int	number_of_commands;
 	int	i;
 
 	i = 0;
+	number_of_commands = 1;
 	while (splitted_line[i])
 	{
 		if (ft_strcmp(splitted_line[i], "|") == 0)
-			command_line->number_of_pipes++;
-		else if (ft_strcmp(splitted_line[i], "<<") == 0)
-			command_line->number_of_redirections++;
-		else if (ft_strcmp(splitted_line[i], ">>") == 0)
-			command_line->number_of_redirections++;
-		else if (ft_strcmp(splitted_line[i], "<") == 0)
-			command_line->number_of_redirections++;
-		else if (ft_strcmp(splitted_line[i], ">") == 0)
-			command_line->number_of_redirections++;
+			number_of_commands++;
 		i++;
 	}
-	return ;
+	return (number_of_commands);
 }
 
 // Pour le parsing on part sur un split de la ligne pour recuperer :
@@ -61,20 +77,21 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		command_line->splitted_line = split_command_line(command_line->line);
 		if (command_line->splitted_line == NULL)
 			return (-1);
-		count_pipe_and_redir(command_line->splitted_line,
-			command_line);
+//		count_pipe_and_redir(command_line->splitted_line,
+//			command_line);
 		expand_env_variable(&command_line->splitted_line,
 			minishell->env);
-		if (put_in_main(command_line->splitted_line,
-				&command_line->main) == -1)
-			return (-1);
-		if (command_line->number_of_pipes)
-			command_line->pipe_command = put_in_pipe(command_line,
-					command_line->splitted_line);
-		if (command_line->number_of_redirections)
-			command_line->redirection = put_in_redir(command_line,
-					command_line->splitted_line);
-		print_command_line(&minishell->command_line);
+		command_line->number_of_simple_commands = count_commands(command_line->splitted_line);
+//		if (put_in_main(command_line->splitted_line,
+//				&command_line->main) == -1)
+//			return (-1);
+//		if (command_line->number_of_pipes)
+//			command_line->pipe_command = put_in_pipe(command_line,
+//					command_line->splitted_line);
+//		if (command_line->number_of_redirections)
+//			command_line->redirection = put_in_redir(command_line,
+//					command_line->splitted_line);
+//		print_command_line(&minishell->command_line);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 22:03:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 10:47:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,22 @@ typedef struct s_main_command {
 	char	**args;
 }	t_main_command;
 
+typedef struct s_simple {
+	char	**command_array;
+} t_simple;
+
 //Structure sauvegardant tous les éléments d'une ligne de commande
 typedef struct s_command_line {
 	char			*line;
 	char			**splitted_line;
-	t_main_command	main;
-	int				number_of_pipes;
-	t_pipe_command	*pipe_command;
-	int				number_of_redirections;
-	t_redir			*redirection;
+	size_t			number_of_simple_commands;
+	t_simple		*command;
+	//t_main_command	main;
+	//int				number_of_pipes;
+	//t_pipe_command	*pipe_command;
+	//int				number_of_redirections;
+	//t_redir			*redirection;
+	
 }	t_command_line;
 
 //Structure principale
