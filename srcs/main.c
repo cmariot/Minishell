@@ -22,6 +22,12 @@ int	main(int argc, char **argv, char **env)
 		while (1)
 		{
 			get_command_line(&minishell, &minishell.command_line);
+			if (minishell.command_line.line == NULL)
+			{
+				printf("exit\n");
+				free_minishell(&minishell);
+				break;
+			}
 			if (minishell.command_line.line != NULL)
 			{
 				if (parse(&minishell.command_line, &minishell) == -1)
@@ -35,3 +41,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
+
+
