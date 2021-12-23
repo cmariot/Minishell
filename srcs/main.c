@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 10:46:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 11:16:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	main(int argc, char **argv, char **env)
 			{
 				if (parse(&minishell.command_line, &minishell) == -1)
 					continue ;
-				//if (builtin(minishell.command_line.line, &minishell))
-				//	break ;
+				if (builtin(minishell.command_line.line, &minishell))
+					break ;
 				//execute(&minishell, &minishell.command_line);
-				//reset_minishell(&minishell.command_line);
+				reset_minishell(&minishell.command_line);
 			}
 		}
 	}
