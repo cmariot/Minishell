@@ -6,11 +6,25 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 11:20:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 16:09:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_simple_commands(t_command_line *command_line)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < command_line->number_of_simple_commands)
+	{
+		ft_free_array(command_line->command[i].command_array);
+		i++;
+	}
+	free(command_line->command);
+	command_line->number_of_simple_commands = 0;
+}
 
 void	reset_minishell(t_command_line *command_line)
 {
@@ -18,7 +32,7 @@ void	reset_minishell(t_command_line *command_line)
 		free(command_line->line);
 	command_line->line = NULL;
 	ft_free_array(command_line->splitted_line);
-	command_line->number_of_simple_commands = 0;
+	free_simple_commands(command_line);
 }
 
 // Free the structure elements before exit

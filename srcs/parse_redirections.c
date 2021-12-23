@@ -5,46 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/18 14:31:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 10:45:46 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/23 17:39:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//void	put_in_redir_struct(char *redir_type, char *filename, t_redir *redir)
-//{
-//	printf("FILENAME = %s\n", filename);
-//	printf("REDIR = %s\n", redir_type);
-//	redir->redirection_type = ft_strdup(redir_type);
-//	redir->filename = ft_strdup(filename);
-//}
-//
-//t_redir	*put_in_redir(t_command_line *command_line,
-//		char **splitted_line)
-//{
-//	t_redir	*redirs;
-//	int		i;
-//	int		j;
-//	int		len;
-//
-//	len = command_line->number_of_redirections + 1;
-//	redirs = ft_calloc(len, sizeof(t_redir));
-//	if (!redirs)
-//		return (NULL);
-//	i = 0;
-//	j = 0;
-//	while (splitted_line[i + 1])
-//	{
-//		if (ft_strcmp(splitted_line[i], "<<") == 0 )
-//			put_in_redir_struct("<<", splitted_line[i + 1], &redirs[j++]);
-//		else if (ft_strcmp(splitted_line[i], ">>") == 0)
-//			put_in_redir_struct(">>", splitted_line[i + 1], &redirs[j++]);
-//		else if (ft_strcmp(splitted_line[i], ">") == 0)
-//			put_in_redir_struct(">", splitted_line[i + 1], &redirs[j++]);
-//		else if (ft_strcmp(splitted_line[i], "<") == 0)
-//			put_in_redir_struct("<", splitted_line[i + 1], &redirs[j++]);
-//		i++;
-//	}
-//	return (redirs);
-//}
+int	is_redirection(char *element)
+{
+	if (ft_strcmp(element, "<<") == 0)
+		return (1);
+	else if (ft_strcmp(element, "<<") == 0)
+		return (1);
+	else if (ft_strcmp(element, "<") == 0)
+		return (1);
+	else if (ft_strcmp(element, ">") == 0)
+		return (1);
+	else
+		return (0);
+}
+
+void	parse_redirections(t_command_line *command_line)
+{
+	size_t	i;
+	int		j;
+	int		number_of_redirections;
+
+	i = 0;
+	while (i < command_line->number_of_simple_commands)
+	{
+		number_of_redirections = 0;
+		j = 0;
+		while (command_line->command[i].command_array[j])
+		{
+			if (is_redirection(command_line->command[i].command_array[j]))
+				number_of_redirections++;
+			j++;
+		}
+		printf("NOMBRE DE REDIR DANS COMMANDE %lu = %d\n",
+			i, number_of_redirections);
+		i++;
+	}
+}

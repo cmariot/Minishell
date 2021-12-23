@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 11:21:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 17:37:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,14 @@ typedef struct s_env {
 	void	*next;
 }	t_env;
 
+typedef struct s_redir {
+	char	*redir_type;
+	char	*filename;
+}	t_redir;
+
 typedef struct s_simple {
 	char	**command_array;
+	t_redir	*redir;
 }	t_simple;
 
 //Structure sauvegardant tous les éléments d'une ligne de commande
@@ -73,31 +79,40 @@ char			**remove_str_from_array(char **old, char *str);
 // env.c		
 t_env			*save_env(char **array);
 
-// get_c		ommand.c
+// get_command.c
 void			get_command_line(t_shell *minishell,
 					t_command_line *command_line);
 char			*get_prompt(t_shell *ministruct);
 char			*get_env_value(char *name, t_env *env);
 
-// env_l		ist_utils.c
+// env_list_utils.c
 t_env			*ft_lstnew_env(void *name, char *value);
 void			ft_lstadd_back_env(t_env **alst, t_env *new);
 void			ft_lstdelone_env(t_env *env, void (*del)(void *));
 void			ft_lstclear_env(t_env **env, void (*del)(void *));
 t_env			*ft_lstlast_env(t_env *lst);
 
-// parse		.c
+// parse.c
 int				parse(t_command_line *command_line, t_shell *minishell);
 
-// built		in.c
+// parse_simple_commands.c
+void			get_simple_commands(t_command_line *command_line,
+					char **splitted_line);
+// parse_redirections.c
+void			parse_redirections(t_command_line *command_line);
+
+// print_structure.c
+void			print_command_line(t_command_line *command_line);
+
+// builtin.c
 int				builtin(char *command, t_shell *minishell);
 
-// env_b		uiltin.c
+// env_builtin.c
 void			env_builtin(t_env *env);
 void			setenv_builtin(t_env *env, char *name, char *value);
 void			unsetenv_builtin(t_env *env, char *name);
 
-// pwd_b		uiltin.c
+// pwd_builtin.c
 void			pwd_builtin(t_shell *minishell);
 
 void			ft_putarray(char *name, char **array);
