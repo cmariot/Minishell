@@ -47,27 +47,7 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 	if (command_line->line)
 	{
 		command_line->splitted_line = split_command_line(command_line->line);
-<<<<<<< HEAD
-		if (command_line->splitted_line != NULL)
-		{
-			count_pipe_and_redir(command_line->splitted_line,
-				command_line);
-			expand_env_variable(&command_line->splitted_line,
-				minishell->env);	
-			put_in_main(command_line->splitted_line,
-				&command_line->main);
-			if (command_line->number_of_pipes)
-				command_line->pipe_command = put_in_pipe(command_line,
-						command_line->splitted_line);
-			if (command_line->number_of_redirections)
-				command_line->redirection = put_in_redir(command_line,
-						command_line->splitted_line);
-		print_command_line(&minishell->command_line);
-		}
-		else
-=======
 		if (command_line->splitted_line == NULL)
->>>>>>> 9931fc6bb795fb7a30c125136a84844d749a4852
 			return (-1);
 		expand_env_variable(&command_line->splitted_line,
 			minishell->env);
