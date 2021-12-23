@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 15:05:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 22:07:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	**split_command_line(char *line)
 	char	**second_array;
 	char	**final_array;
 
-	first_array = split_line(line, " \t|><\"\'");
+	first_array = split_line(line, " \t|><\"\';");
 	if (!first_array)
 		return (NULL);
 	second_array = join_heredoc(first_array);

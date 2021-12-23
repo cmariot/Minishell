@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 16:04:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 11:14:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,6 @@ void	init_minishell(t_shell *minishell, char **env)
 	minishell->prompt = NULL;
 	minishell->command_line.line = NULL;
 	minishell->command_line.splitted_line = NULL;
-	minishell->command_line.main.command = NULL;
-	minishell->command_line.main.args = NULL;
-	minishell->command_line.number_of_pipes = 0;
-	minishell->command_line.pipe_command = NULL;
-	minishell->command_line.number_of_redirections = 0;
-	minishell->command_line.redirection = NULL;
+	minishell->command_line.number_of_simple_commands = 0;
+	minishell->command_line.command = NULL;
 }

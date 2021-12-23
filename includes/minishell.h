@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 15:06:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 11:21:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,37 +42,16 @@ typedef struct s_env {
 	void	*next;
 }	t_env;
 
-// Sous-structure de t_command_line,
-// stocke, s'il y en a, la ou les redirections à effectuer
-// (on devra gérer aussi le cas heredoc, mais différemment)
-typedef struct s_redir {
-	char	*redirection_type;
-	char	*filename;
-}	t_redir;
-
-// Sous-structure de t_command_line,
-// stocke, s'il y en a, la ou les commandes qui suivent un pipe
-typedef struct s_pipe_command {
-	char	*command;
-	char	**args;
-}	t_pipe_command;
-
-//Sous-structure de t_command_line,
-//stocke la 1ère commande et ses arguments
-typedef struct s_main_command {
-	char	*command;
-	char	**args;
-}	t_main_command;
+typedef struct s_simple {
+	char	**command_array;
+}	t_simple;
 
 //Structure sauvegardant tous les éléments d'une ligne de commande
 typedef struct s_command_line {
 	char			*line;
 	char			**splitted_line;
-	t_main_command	main;
-	int				number_of_pipes;
-	t_pipe_command	*pipe_command;
-	int				number_of_redirections;
-	t_redir			*redirection;
+	size_t			number_of_simple_commands;
+	t_simple		*command;
 }	t_command_line;
 
 //Structure principale
@@ -123,14 +102,6 @@ void			pwd_builtin(t_shell *minishell);
 
 void			ft_putarray(char *name, char **array);
 
-void			put_in_main(char **splitted_line, t_main_command *main);
-void			print_command_line(t_command_line *command_line);
-t_pipe_command	*put_in_pipe(t_command_line *command_line,
-					char **splitted_line);
-
-t_redir			*put_in_redir(t_command_line *command_line,
-					char **splitted_line);
-
 // split.c
 char			**split_command_line(char *line);
 char			**join_heredoc(char **array);
@@ -149,5 +120,6 @@ void			expand_env_variable(char ***splitted_line, t_env *env);
 
 // check quote
 int				check_quote(char *line);
+int				check_semicolon(char *line);
 
 #endif

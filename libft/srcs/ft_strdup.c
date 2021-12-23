@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/13 10:05:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 16:42:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*ft_strdup(const char *src)
 	int		i;
 
 	src_len = ft_strlen(src);
+	if (src_len == 0)
+		return (NULL);
 	new = ft_calloc(src_len + 1, sizeof(char));
 	if (new == NULL)
 		return (NULL);
