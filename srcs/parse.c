@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 17:13:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 19:28:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,28 @@ void	count_pipe_and_redir(char **splitted_line, t_command_line *command_line)
 //Enfin on cherche la commande principale
 int	parse(t_command_line *command_line, t_shell *minishell)
 {
-	if (check_quote(command_line->line) == 0)
+	if (!check_quote(command_line->line)
+		&& !check_semicolon(command_line->line))
 		return (-1);
 	if (command_line->line)
 	{
 		command_line->splitted_line = split_command_line(command_line->line);
-		if (command_line->splitted_line != NULL)
-		{
-			count_pipe_and_redir(command_line->splitted_line,
-				command_line);
-			expand_env_variable(&command_line->splitted_line,
-				minishell->env);
-			if (put_in_main(command_line->splitted_line,
-				&command_line->main) != -1)
-			{
-				if (command_line->number_of_pipes)
-				{
-					command_line->pipe_command = put_in_pipe(command_line,
-							command_line->splitted_line);
-				}
-				if (command_line->number_of_redirections)
-					command_line->redirection = put_in_redir(command_line,
-							command_line->splitted_line);
-				print_command_line(&minishell->command_line);
-			}
-			else
-				return (-1);
-		}
-		else
+		if (command_line->splitted_line == NULL)
 			return (-1);
+		count_pipe_and_redir(command_line->splitted_line,
+			command_line);
+		expand_env_variable(&command_line->splitted_line,
+			minishell->env);
+		if (put_in_main(command_line->splitted_line,
+				&command_line->main) == -1)
+			return (-1);
+		if (command_line->number_of_pipes)
+			command_line->pipe_command = put_in_pipe(command_line,
+					command_line->splitted_line);
+		if (command_line->number_of_redirections)
+			command_line->redirection = put_in_redir(command_line,
+					command_line->splitted_line);
+		print_command_line(&minishell->command_line);
 	}
 	return (0);
 }

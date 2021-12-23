@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 17:10:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/22 22:03:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,6 @@ void			expand_env_variable(char ***splitted_line, t_env *env);
 
 // check quote
 int				check_quote(char *line);
+int				check_semicolon(char *line);
 
 #endif

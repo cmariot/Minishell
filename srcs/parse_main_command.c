@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 10:34:44 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 17:18:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 09:10:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 	//cas particuliers redirection ou pipe avant commande principale
 	while (splitted_line[i])
 	{
+		printf("On est dans ce cas\n");
 		if (ft_strcmp(splitted_line[i], "<<") == 0)
 		{
 			//heredoc
@@ -66,14 +67,11 @@ int	put_in_main(char **splitted_line, t_main_command *main)
 		else
 			break ;
 	}
+	if (!splitted_line[i])
+		return (-1);
 	main->command = ft_strdup(splitted_line[i]);
 	number_of_main_args = 0;
 	number_of_main_args = get_main_args_number(splitted_line + 1, i);
-	if (number_of_main_args == 0)
-	{
-		printf("PROBLEME ICI\n");
-		return (-1);
-	}
 	main->args = ft_calloc(number_of_main_args + 2, sizeof(char *));
 	if (!main->args)
 		return (-1);
