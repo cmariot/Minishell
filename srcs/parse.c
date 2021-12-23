@@ -63,7 +63,7 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 			count_pipe_and_redir(command_line->splitted_line,
 				command_line);
 			expand_env_variable(&command_line->splitted_line,
-				minishell->env);
+				minishell->env);	
 			put_in_main(command_line->splitted_line,
 				&command_line->main);
 			if (command_line->number_of_pipes)
