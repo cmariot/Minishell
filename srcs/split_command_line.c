@@ -6,11 +6,22 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 23:38:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 00:28:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_charset(char c, char *charset)
+{
+	int	i;
+
+	i = -1;
+	while (charset[++i])
+		if (charset[i] == c)
+			return (1);
+	return (0);
+}
 
 int	ft_sizeof_word(char *str, char *charset)
 {
@@ -76,7 +87,6 @@ char	**split_line(char *str, char *charset)
 	{
 		sizewords = ft_sizeof_word(&str[i], charset);
 		array[index] = ft_substr(str, i, sizewords);
-		printf("SIZEWORD[%d] = %d\n", index, sizewords);
 		i += sizewords;
 		index++;
 	}

@@ -6,22 +6,11 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 00:06:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 00:27:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_charset(char c, char *charset)
-{
-	int	i;
-
-	i = -1;
-	while (charset[++i])
-		if (charset[i] == c)
-			return (1);
-	return (0);
-}
 
 int	ft_count_heredoc(char **array)
 {
@@ -65,7 +54,7 @@ char	**join_heredoc(char **array)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (j < size)
+	while (size--)
 	{
 		if (!ft_strcmp(array[j], "<") && !ft_strcmp(array[j + 1], "<"))
 		{
