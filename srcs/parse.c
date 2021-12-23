@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 14:43:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 14:54:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t	count_commands(char **splitted_line)
 
 int	fill_commands(t_simple command, char **splitted_line, size_t array_index)
 {
-	int	i;
+	//int	i;
 	int	len;
 
 	len = array_index;
@@ -54,6 +54,9 @@ int	fill_commands(t_simple command, char **splitted_line, size_t array_index)
 		len++;
 	}
 	printf("LEN = %d\n", len);
+	command.command_array = ft_calloc(len + 1, sizeof(char *));
+	if (!command_array)
+		return (array_index);
 	while (splitted_line[array_index])
 	{
 		printf("splitted_line[%lu] = %s\n", array_index, splitted_line[array_index]);
