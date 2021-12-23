@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 23:06:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 00:06:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	ft_count_heredoc(char **array)
 		size++;
 	i = 0;
 	join = 0;
-	while (i < size)
+	while (array[i + 1] != NULL)
 	{
 		if (ft_strcmp(array[i], "<") == 0 && ft_strcmp(array[i + 1], "<") == 0)
 		{
 			i++;
 			join++;
 		}
-		if (ft_strcmp(array[i], "<") == 0 && ft_strcmp(array[i + 1], "<") == 0)
+		if (ft_strcmp(array[i], ">") == 0 && ft_strcmp(array[i + 1], ">") == 0)
 		{
 			i++;
 			join++;
@@ -59,12 +59,13 @@ char	**join_heredoc(char **array)
 	int		j;
 
 	size = ft_count_heredoc(array);
+	printf("SIZE ici =%d\n", size);
 	newarray = ft_calloc((size + 1), sizeof(char *));
 	if (!newarray)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < size)
+	while (j < size)
 	{
 		if (!ft_strcmp(array[j], "<") && !ft_strcmp(array[j + 1], "<"))
 		{
