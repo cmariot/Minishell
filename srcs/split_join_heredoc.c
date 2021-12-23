@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 19:20:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 23:06:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,78 +23,63 @@ int	ft_charset(char c, char *charset)
 	return (0);
 }
 
-void	fill(char **array, int *i_array, char **newarray, int *i)
-{
-	if (array[*i_array][0] == '>' && array[*i_array + 1]
-		&& array[*i_array + 1][0] == '>')
-	{
-		free(newarray[*i]);
-		newarray[*i] = ft_strdup(">>");
-		//realloc array pour supprimer case + 1 ?
-		i_array++;
-	}
-	if (array[*i_array][0] == '<' && array[*i_array + 1]
-		&& array[*i_array + 1][0] == '<')
-	{
-		free(newarray[*i]);
-		newarray[*i] = ft_strdup("<<");
-		//realloc array pour supprimer case + 1
-		i_array++;
-	}
-}
-
-char	**fill_newarray(char **newarray, char **array, int size)
-{
-	int		i;
-	int		i_array;
-	int		len;
-
-	i = 0;
-	i_array = 0;
-	while (i < size)
-	{
-		len = ft_strlen(array[i_array]);
-		newarray[i] = ft_calloc((len + 1), sizeof(char));
-		if (!newarray[i])
-			return (NULL);
-		ft_strlcpy(newarray[i], array[i_array], (len + 1));
-		fill(array, &i_array, newarray, &i);
-		i_array++;
-		i++;
-	}
-	return (newarray);
-}
-
 int	ft_count_heredoc(char **array)
 {
-	int	i;
 	int	size;
+	int	i;
+	int	join;
 
-	i = 0;
 	size = 0;
-	while (array[i])
-	{
-		if (array[i][0] == '>' && array[i + 1])
-			if (array[i + 1][0] == '>')
-				i++;
-		if (array[i][0] == '<' && array[i + 1])
-			if (array[i + 1][0] == '<')
-				i ++;
+	while (array[size] != NULL)
 		size++;
+	i = 0;
+	join = 0;
+	while (i < size)
+	{
+		if (ft_strcmp(array[i], "<") == 0 && ft_strcmp(array[i + 1], "<") == 0)
+		{
+			i++;
+			join++;
+		}
+		if (ft_strcmp(array[i], "<") == 0 && ft_strcmp(array[i + 1], "<") == 0)
+		{
+			i++;
+			join++;
+		}
 		i++;
 	}
-	return (size);
+	return (size - join);
 }
 
 char	**join_heredoc(char **array)
 {
 	char	**newarray;
 	int		size;
+	int		i;
+	int		j;
 
 	size = ft_count_heredoc(array);
 	newarray = ft_calloc((size + 1), sizeof(char *));
 	if (!newarray)
 		return (NULL);
-	newarray = fill_newarray(newarray, array, size);
+	i = 0;
+	j = 0;
+	while (i < size)
+	{
+		if (!ft_strcmp(array[j], "<") && !ft_strcmp(array[j + 1], "<"))
+		{
+			newarray[i] = ft_strdup("<<");
+			j++;
+		}
+		else if (!ft_strcmp(array[j], ">") && !ft_strcmp(array[j + 1], ">"))
+		{
+			newarray[i] = ft_strdup(">>");
+			j++;
+		}
+		else
+			newarray[i] = ft_strdup(array[j]);
+		j++;
+		i++;
+	}
 	return (newarray);
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 22:07:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 23:38:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,6 @@ int	ft_sizeof_word(char *str, char *charset)
 	return (size);
 }
 
-char	*ft_filltab(char *str, char *charset, int i, char *array)
-{
-	int	size;
-	int	index;
-	int	a;
-
-	size = ft_sizeof_word(&str[i], charset);
-	index = 0;
-	a = 0;
-	while (a < size)
-	{
-		array[index] = str[i];
-		index++;
-		i++;
-		a++;
-	}
-	return (array);
-}
-
 int	ft_count_word(char *str, char *charset)
 {
 	int	words;
@@ -73,6 +54,7 @@ int	ft_count_word(char *str, char *charset)
 		}
 		++str;
 	}
+	printf("words = %d\n", words);
 	return (words);
 }
 
@@ -80,24 +62,23 @@ char	**split_line(char *str, char *charset)
 {
 	char	**array;
 	int		words;
-	int		index;
 	int		i;
+	int		index;
 	int		sizewords;
 
 	words = ft_count_word(str, charset);
 	array = ft_calloc((words + 1), sizeof(char *));
 	if (!array)
 		return (NULL);
-	index = -1;
+	index = 0;
 	i = 0;
-	while (++index < words)
+	while (index < words)
 	{
 		sizewords = ft_sizeof_word(&str[i], charset);
-		array[index] = ft_calloc((sizewords + 1), sizeof(char));
-		if (!array[index])
-			return (NULL);
-		array[index] = ft_filltab(str, charset, i, array[index]);
+		array[index] = ft_substr(str, i, sizewords);
+		printf("SIZEWORD[%d] = %d\n", index, sizewords);
 		i += sizewords;
+		index++;
 	}
 	return (array);
 }
@@ -107,15 +88,37 @@ char	**split_command_line(char *line)
 	char	**first_array;
 	char	**second_array;
 	char	**final_array;
+	int		i;
 
 	first_array = split_line(line, " \t|><\"\';");
 	if (!first_array)
 		return (NULL);
+	printf("FIRST_ARRAY\n");
+	i = 0;
+	while (first_array[i])
+	{
+		printf("ARRAY[%d] = %s\n", i, first_array[i]);
+		i++;
+	}
 	second_array = join_heredoc(first_array);
 	ft_free_array(first_array);
 	if (!second_array)
 		return (NULL);
+	printf("SECOND_ARRAY\n");
+	i = 0;
+	while (second_array[i])
+	{
+		printf("ARRAY[%d] = %s\n", i, second_array[i]);
+		i++;
+	}
 	final_array = ft_split_space(second_array);
 	ft_free_array(second_array);
+	printf("FINAL_ARRAY\n");
+	i = 0;
+	while (final_array[i])
+	{
+		printf("ARRAY[%d] = %s\n", i, final_array[i]);
+		i++;
+	}
 	return (final_array);
 }
