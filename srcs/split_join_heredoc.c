@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/22 15:44:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 19:20:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,21 @@ int	ft_charset(char c, char *charset)
 
 void	fill(char **array, int *i_array, char **newarray, int *i)
 {
-	char	*tmp;
-
-	if (array[*i_array][0] == '>' && array[*i_array + 1])
+	if (array[*i_array][0] == '>' && array[*i_array + 1]
+		&& array[*i_array + 1][0] == '>')
 	{
-		if (array[*i_array + 1][0] == '>')
-		{
-			tmp = newarray[*i];
-			newarray[*i] = ft_strjoin(tmp, array[*i_array + 1]);
-			free(tmp);
-			i_array++;
-		}
+		free(newarray[*i]);
+		newarray[*i] = ft_strdup(">>");
+		//realloc array pour supprimer case + 1 ?
+		i_array++;
 	}
-	if (array[*i_array][0] == '<' && array[*i_array + 1])
+	if (array[*i_array][0] == '<' && array[*i_array + 1]
+		&& array[*i_array + 1][0] == '<')
 	{
-		if (array[*i_array + 1][0] == '<')
-		{
-			tmp = newarray[*i];
-			newarray[*i] = ft_strjoin(tmp, array[*i_array + 1]);
-			free(tmp);
-			i_array++;
-		}
+		free(newarray[*i]);
+		newarray[*i] = ft_strdup("<<");
+		//realloc array pour supprimer case + 1
+		i_array++;
 	}
 }
 
@@ -81,17 +75,13 @@ int	ft_count_heredoc(char **array)
 	while (array[i])
 	{
 		if (array[i][0] == '>' && array[i + 1])
-		{
 			if (array[i + 1][0] == '>')
 				i++;
-		}
 		if (array[i][0] == '<' && array[i + 1])
-		{
 			if (array[i + 1][0] == '<')
 				i ++;
-		}
-		i++;
 		size++;
+		i++;
 	}
 	return (size);
 }

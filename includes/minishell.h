@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 17:37:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/23 19:08:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int				parse(t_command_line *command_line, t_shell *minishell);
 void			get_simple_commands(t_command_line *command_line,
 					char **splitted_line);
 // parse_redirections.c
-void			parse_redirections(t_command_line *command_line);
+int				parse_redirections(t_command_line *command_line);
 
 // print_structure.c
 void			print_command_line(t_command_line *command_line);
