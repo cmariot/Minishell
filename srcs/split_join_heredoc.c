@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 00:27:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 13:57:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	**join_heredoc(char **array)
 	int		j;
 
 	size = ft_count_heredoc(array);
-	printf("SIZE ici =%d\n", size);
 	newarray = ft_calloc((size + 1), sizeof(char *));
 	if (!newarray)
 		return (NULL);

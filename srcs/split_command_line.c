@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 00:28:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 13:56:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	ft_count_word(char *str, char *charset)
 		}
 		++str;
 	}
-	printf("words = %d\n", words);
 	return (words);
 }
 
@@ -98,36 +97,27 @@ char	**split_command_line(char *line)
 	char	**first_array;
 	char	**second_array;
 	char	**final_array;
-	int		i;
+	int	i;
 
 	first_array = split_line(line, " \t|><\"\';");
 	if (!first_array)
-		return (NULL);
-	printf("FIRST_ARRAY\n");
-	i = 0;
-	while (first_array[i])
 	{
-		printf("ARRAY[%d] = %s\n", i, first_array[i]);
-		i++;
+		printf("ERREUR 1\n");
+		return (NULL);
 	}
 	second_array = join_heredoc(first_array);
 	ft_free_array(first_array);
 	if (!second_array)
-		return (NULL);
-	printf("SECOND_ARRAY\n");
-	i = 0;
-	while (second_array[i])
 	{
-		printf("ARRAY[%d] = %s\n", i, second_array[i]);
-		i++;
+		printf("ERREUR 2\n");
+		return (NULL);
 	}
 	final_array = ft_split_space(second_array);
 	ft_free_array(second_array);
-	printf("FINAL_ARRAY\n");
 	i = 0;
 	while (final_array[i])
 	{
-		printf("ARRAY[%d] = %s\n", i, final_array[i]);
+		printf("FINALARRAY[%d] = %s\n", i, final_array[i]);
 		i++;
 	}
 	return (final_array);
