@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 19:08:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 19:53:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int	is_redirection(char *element)
 
 int	fill_redirections(t_redir *redir, char **array, int array_index)
 {
-	while (is_redirection(array[array_index]) != 1)
-		array_index++;
+	while (is_redirection(array[array_index]) != 1
+		&& array[array_index] != NULL)
+			array_index++;
 	if (!array[array_index + 1])
 	{
 		printf("Minishell: syntax error near unexpected token 'newline'\n");
