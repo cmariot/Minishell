@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:30:38 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 19:48:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 20:07:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_count_join(char **array, int pos)
 	if (ft_strcmp(array[pos], "\"") == 0)
 	{
 		pos++;
-		while (ft_strcmp(array[pos], "\"") != 0)
+		while (array[pos + 1] && ft_strcmp(array[pos], "\"") != 0)
 		{
 			pos++;
 			i++;
@@ -51,7 +51,7 @@ int	ft_count_join(char **array, int pos)
 	else if (ft_strcmp(array[pos], "'") == 0)
 	{
 		pos++;
-		while (ft_strcmp(array[pos], "'") != 0)
+		while (array[pos + 1] && ft_strcmp(array[pos], "'") != 0)
 		{
 			pos++;
 			i++;

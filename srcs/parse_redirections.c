@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 19:53:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 20:02:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	is_redirection(char *element)
 
 int	fill_redirections(t_redir *redir, char **array, int array_index)
 {
-	while (is_redirection(array[array_index]) != 1
-		&& array[array_index] != NULL)
+	while (array[array_index + 1] != NULL
+		&& is_redirection(array[array_index]) != 1)
 			array_index++;
-	if (!array[array_index + 1])
+	if (array[array_index + 1] == NULL)
 	{
 		printf("Minishell: syntax error near unexpected token 'newline'\n");
 		return (-1);
@@ -39,7 +39,8 @@ int	fill_redirections(t_redir *redir, char **array, int array_index)
 	else
 	{
 		redir->redir_type = ft_strdup(array[array_index]);
-		redir->filename = ft_strdup(array[array_index + 1]);
+		if (array[array_index + 1])
+			redir->filename = ft_strdup(array[array_index + 1]);
 		return (array_index + 2);
 	}
 }

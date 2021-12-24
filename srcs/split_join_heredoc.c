@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 13:57:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 20:10:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_count_heredoc(char **array)
 		size++;
 	i = 0;
 	join = 0;
-	while (array[i + 1] != NULL)
+	while (array[i + 2] != NULL)
 	{
 		if (ft_strcmp(array[i], "<") == 0 && ft_strcmp(array[i + 1], "<") == 0)
 		{
