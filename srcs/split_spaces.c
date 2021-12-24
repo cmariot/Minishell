@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:30:38 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 14:56:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:49:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ char	*join_fill_array(char *finalarray, char **array, int pos, int join)
 {
 	char	*tmp;
 
-	finalarray = ft_strdup(array[pos]);
-	join--;
-	pos++;
-	while (join > 0)
+	if (join == 1)
+		finalarray = ft_strdup(array[pos]);
+	else
 	{
-		tmp = ft_strjoin(finalarray, array[pos]);
-		finalarray = tmp;
-		free(tmp);
-		pos++;
-		join--;
+		finalarray = ft_strdup(array[pos]);
+		printf("1 : %s\n", finalarray);
+		while (join-- -1)
+		{
+			pos++;
+			tmp = ft_strjoin(finalarray, array[pos]);
+			free(finalarray);
+			finalarray = tmp;
+		}
 	}
 	return (finalarray);
 }
@@ -35,47 +38,46 @@ int	ft_count_join(char **array, int pos)
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(array[i], "\"") == 0)
+	if (ft_strcmp(array[pos], "\"") == 0)
 	{
 		pos++;
-		while (ft_strcmp(array[i], "\"") != 0)
+		while (ft_strcmp(array[pos], "\"") != 0)
 		{
 			pos++;
 			i++;
 		}
 		i++;
 	}
-	else if (ft_strcmp(array[i], "'") == 0)
+	else if (ft_strcmp(array[pos], "'") == 0)
 	{
 		pos++;
-		while (ft_strcmp(array[i], "'") != 0)
+		while (ft_strcmp(array[pos], "'") != 0)
 		{
 			pos++;
 			i++;
 		}
 		i++;
 	}
-	return (i);
+	return (i + 1);
 }
 
 // parse the " and the ' in the array
-char	**count_quotes_words(char **array, int *words)
+void	count_quotes_words(char ***array, int *words)
 {
-	if (ft_strcmp(*array, "\"") == 0)
+	if (ft_strcmp(**array, "\"") == 0)
 	{
-		array++;
-		while (ft_strcmp(*array, "\"") != 0)
-			array++;
+		(*array)++;
+		while (ft_strcmp(**array, "\"") != 0 && *array + 1 != NULL)
+			(*array)++;
 		words++;
 	}
-	else if (ft_strcmp(*array, "'") == 0)
+	else if (ft_strcmp(**array, "'") == 0)
 	{
-		array++;
-		while (ft_strcmp(*array, "'") != 0)
-			array++;
+		(*array)++;
+		while (ft_strcmp(**array, "'") != 0 && *array + 1 != NULL)
+			(*array)++;
 		words++;
 	}
-	return (array);
 }
 
 //count the number of words for the finalarray
@@ -87,7 +89,7 @@ int	ft_count_space(char **array)
 	while (*array != NULL)
 	{
 		if (ft_strcmp(*array, "\"") == 0 || ft_strcmp(*array, "'") == 0)
-			array = count_quotes_words(array, &words);
+			count_quotes_words(&array, &words);
 		else if (ft_strcmp(*array, " ") == 0 || ft_strcmp(*array, "\t") == 0)
 		{
 			while (ft_strcmp(*array, " ") == 0 || ft_strcmp(*array, "\t") == 0)
@@ -100,7 +102,6 @@ int	ft_count_space(char **array)
 	return (words);
 }
 
-//erreur : '>> test' -> SEGFAULT
 char	**ft_split_space(char **array)
 {
 	char	**finalarray;
@@ -115,14 +116,18 @@ char	**ft_split_space(char **array)
 		return (NULL);
 	i = 0;
 	pos = 0;
-	while (words--)
+	printf("WORDS = %d\n", words);
+	while (words-- && array[pos] != NULL)
 	{
 		while (ft_strcmp(array[pos], " ") == 0
 			|| ft_strcmp(array[pos], "\t") == 0)
 			pos++;
+		printf("On est a ARRAY[%d] = %s\n", pos, array[pos]);
 		join = ft_count_join(array, pos);
+		printf("on va JOIN = %d words\n", join);
 		finalarray[i] = join_fill_array(finalarray[i], array, pos, join);
-		pos += join + 1;
+		printf("RESULTAT = finalarray[%d] = %s\n", i, finalarray[i]);
+		pos += join;
 		i++;
 	}
 	return (finalarray);
