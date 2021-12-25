@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 14:27:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 15:49:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	reset_minishell(t_command_line *command_line)
 // Free the structure elements before exit
 void	free_minishell(t_shell *minishell)
 {
-	printf("EXIT\n");
 	ft_lstclear_env(&minishell->env, free);
 	close(0);
 	close(1);

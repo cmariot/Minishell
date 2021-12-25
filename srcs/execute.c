@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 14:15:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 15:56:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Create a new process in which the command is execute,
  * the parent process will wait the child exit to free command_path. */
 int	fork_command(char **command_path, t_command_line *command_line,
-		size_t command_index, char ***env)
+		size_t command_index, char **env)
 {
 	pid_t	pid;
 
@@ -28,8 +28,9 @@ int	fork_command(char **command_path, t_command_line *command_line,
 	else if (pid == 0)
 	{
 		execve(*command_path,
-			command_line->command[command_index].command_and_args, *env);
+			command_line->command[command_index].command_and_args, env);
 		ft_putstr_fd("Command execution error\n", 2);
+		//Faire une sortie propre dans ce cas
 		exit(-1);
 	}
 	else
@@ -37,8 +38,6 @@ int	fork_command(char **command_path, t_command_line *command_line,
 		waitpid(-1, &pid, 0);
 		if (*command_path != NULL)
 			free(*command_path);
-		if (*env != NULL)
-			ft_free_array(*env);
 		return (0);
 	}
 }
@@ -51,7 +50,7 @@ int	fork_command(char **command_path, t_command_line *command_line,
 
 //erreur a gerer : dossier en tant que commande principale
 int	try_command(char **path_array, t_command_line *command_line,
-	int command_index, char ***env)
+	int command_index, char **env)
 {
 	char	*path_with_slash;
 	char	*command_path;
@@ -103,17 +102,19 @@ char	**envlist_to_array(t_env *envlist)
 	int		i;
 
 	len = ft_envlstsize(envlist);
-	env = ft_calloc(len + 1, sizeof(char **));
+	if (len == 0)
+		return (NULL);
+	env = ft_calloc(len, sizeof(char **));
 	if (!env)
 		return (NULL);
 	i = 0;
-	while (envlist)
+	while (i < len)
 	{
 		tmp = ft_strjoin(envlist->name, "=");
 		env[i] = ft_strjoin(tmp, envlist->value);
 		free(tmp);
-		envlist = envlist->next;
 		i++;
+		envlist = envlist->next;
 	}
 	return (env);
 }
@@ -122,11 +123,14 @@ char	**envlist_to_array(t_env *envlist)
    (type env in a terminal to see the env array)
    Split this line with the ':' delimiter,
    Try the command in all the possible path. */
+
+// a verifier : modifier le path dans une commande, puis appeler une commande,
+// doit on mettre a jour path_array a chaque tour ?
 void	execute(t_shell *minishell, t_command_line *command_line)
 {
-	char	**env;
 	char	*path_value;
 	char	**path_array;
+	char	**env;
 	size_t	i;
 
 	i = 0;
@@ -135,12 +139,13 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	path_array = ft_split(path_value, ':');
 	while (i < command_line->number_of_simple_commands)
 	{
-		if (try_command(path_array, command_line, i, &env) == 42)
+		if (try_command(path_array, command_line, i, env) == 42)
 			printf("minishell: %s: command not found\n",
 				command_line->command[i].command_and_args[0]);
 		i++;
 	}
 	free(path_value);
 	ft_free_array(path_array);
+	//ft_free_array(env_cpy);
 	return ;
 }
