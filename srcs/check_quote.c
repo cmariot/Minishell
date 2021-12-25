@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 09:52:28 by flee              #+#    #+#             */
-/*   Updated: 2021/12/23 16:15:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 21:28:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int	check_quote(char *line)
 	}
 	if (ok)
 		return (1);
+	printf("Minishell does not interpret unclosed quotes.\n");
 	return (0);
 }

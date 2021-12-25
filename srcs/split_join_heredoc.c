@@ -6,36 +6,36 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 20:10:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 21:24:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_count_heredoc(char **array)
+size_t	ft_count_heredoc(char **array)
 {
-	int	size;
-	int	i;
-	int	join;
+	size_t	size;
+	size_t	join;
 
 	size = 0;
 	while (array[size] != NULL)
 		size++;
-	i = 0;
 	join = 0;
-	while (array[i + 2] != NULL)
+	while (*array != NULL)
 	{
-		if (ft_strcmp(array[i], "<") == 0 && ft_strcmp(array[i + 1], "<") == 0)
+		if (ft_strcmp(*array, "<") == 0 && *array + 1
+			&& ft_strcmp(*array + 1, "<") == 0)
 		{
-			i++;
+			array++;
 			join++;
 		}
-		if (ft_strcmp(array[i], ">") == 0 && ft_strcmp(array[i + 1], ">") == 0)
+		else if (ft_strcmp(*array, ">") == 0 && *array + 1
+			&& ft_strcmp(*array + 1, ">") == 0)
 		{
-			i++;
+			array++;
 			join++;
 		}
-		i++;
+		array++;
 	}
 	return (size - join);
 }
@@ -43,24 +43,24 @@ int	ft_count_heredoc(char **array)
 char	**join_heredoc(char **array)
 {
 	char	**newarray;
-	int		size;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
-	size = ft_count_heredoc(array);
-	newarray = ft_calloc((size + 1), sizeof(char *));
+	newarray = ft_calloc((ft_count_heredoc(array) + 1), sizeof(char *));
 	if (!newarray)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (size--)
+	while (array[j] != NULL)
 	{
-		if (!ft_strcmp(array[j], "<") && !ft_strcmp(array[j + 1], "<"))
+		if (!ft_strcmp(array[j], "<") && array[j + 1]
+			&& !ft_strcmp(array[j + 1], "<"))
 		{
 			newarray[i] = ft_strdup("<<");
 			j++;
 		}
-		else if (!ft_strcmp(array[j], ">") && !ft_strcmp(array[j + 1], ">"))
+		else if (!ft_strcmp(array[j], ">") && array[j + 1]
+			&& !ft_strcmp(array[j + 1], ">"))
 		{
 			newarray[i] = ft_strdup(">>");
 			j++;

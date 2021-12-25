@@ -6,12 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 11:37:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 21:33:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//a implementer les " et les ' : comportement bash a prendre comme reference mais voir comment ca fonctionne
 void	expand_env_variable(char ***splitted_line, t_env *env)
 {
 	char	*new_value;

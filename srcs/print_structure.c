@@ -6,11 +6,24 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:07:37 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 17:09:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 12:16:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_command_and_args(char **command_and_args, int command_index)
+{
+	int	i;
+
+	i = 0;
+	while (command_and_args[i])
+	{
+		printf("command_line.command[%d].command_and_args[%d] = [%s]\n",
+			command_index, i, command_and_args[i]);
+		i++;
+	}
+}
 
 void	print_simple_command(t_command_line *command_line)
 {
@@ -30,6 +43,7 @@ void	print_simple_command(t_command_line *command_line)
 				i, j, command_line->command[i].command_array[j]);
 			j++;
 		}
+		print_command_and_args(command_line->command[i].command_and_args, i);
 		ft_putchar('\n');
 		i++;
 	}

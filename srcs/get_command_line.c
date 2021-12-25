@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 15:02:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 11:40:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,17 @@ char	*get_prompt(t_shell *minishell)
 // Get the prompt and use readline to show the prompt and store the input line
 void	get_command_line(t_shell *minishell, t_command_line *command_line)
 {
-	minishell->prompt = get_prompt(minishell);
-	command_line->line = readline(minishell->prompt);
+	char	*prompt;
+
+	prompt = get_prompt(minishell);
+	command_line->line = readline(prompt);
 	if (rl_on_new_line() == 0)
-	{
 		add_history(command_line->line);
+	free(prompt);
+	if (minishell->command_line.line == NULL)
+	{
+		printf("exit\n");
+		free_minishell(minishell);
+		exit(EXIT_SUCCESS);
 	}
-	free(minishell->prompt);
 }

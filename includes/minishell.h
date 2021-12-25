@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 19:08:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 11:58:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_redir {
 
 typedef struct s_simple {
 	char	**command_array;
+	char	**command_and_args;
 	t_redir	*redir;
 }	t_simple;
 
@@ -63,7 +64,6 @@ typedef struct s_command_line {
 //Structure principale
 typedef struct s_shell {
 	t_env			*env;
-	char			*prompt;
 	t_command_line	command_line;
 }	t_shell;
 
@@ -100,6 +100,7 @@ void			get_simple_commands(t_command_line *command_line,
 					char **splitted_line);
 // parse_redirections.c
 int				parse_redirections(t_command_line *command_line);
+int				is_redirection(char *element);
 
 // print_structure.c
 void			print_command_line(t_command_line *command_line);
@@ -115,19 +116,14 @@ void			unsetenv_builtin(t_env *env, char *name);
 // pwd_builtin.c
 void			pwd_builtin(t_shell *minishell);
 
-void			ft_putarray(char *name, char **array);
-
 // split.c
 char			**split_command_line(char *line);
 char			**join_heredoc(char **array);
 char			**ft_split_space(char **array);
+int				ft_charset(char c, char *charset);
 
 //execute.c
 void			execute(t_shell *minishell, t_command_line *command_line);
-
-int				ft_charset(char c, char *charset);
-
-void			execute_pipelines(char **cmd_array, char **env);
 char			**envlist_to_array(t_env *envlist);
 
 // expand_env_variable.c
@@ -135,6 +131,5 @@ void			expand_env_variable(char ***splitted_line, t_env *env);
 
 // check quote
 int				check_quote(char *line);
-int				check_semicolon(char *line);
 
 #endif

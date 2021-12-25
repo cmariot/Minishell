@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 11:14:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 11:43:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ t_env	*save_env(char **env)
 	int		i;
 
 	i = 0;
+	if (!env)
+	{
+		//a verifier ... mais on doit gerer le cas
+		env_list = ft_lstnew_env(NULL, NULL);
+		return (env_list);
+	}
 	while (env[i])
 	{
 		name = get_name_in_env(env[i]);
@@ -93,7 +99,6 @@ t_env	*save_env(char **env)
 void	init_minishell(t_shell *minishell, char **env)
 {
 	minishell->env = save_env(env);
-	minishell->prompt = NULL;
 	minishell->command_line.line = NULL;
 	minishell->command_line.splitted_line = NULL;
 	minishell->command_line.number_of_simple_commands = 0;

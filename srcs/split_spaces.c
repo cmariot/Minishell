@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:30:38 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 20:07:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/24 21:01:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*join_fill_array(char *finalarray, char **array, int pos, int join)
 	else
 	{
 		finalarray = ft_strdup(array[pos]);
-		printf("1 : %s\n", finalarray);
 		while (join-- -1)
 		{
 			pos++;
@@ -116,17 +115,13 @@ char	**ft_split_space(char **array)
 		return (NULL);
 	i = 0;
 	pos = 0;
-	printf("WORDS = %d\n", words);
 	while (words-- && array[pos] != NULL)
 	{
 		while (ft_strcmp(array[pos], " ") == 0
 			|| ft_strcmp(array[pos], "\t") == 0)
 			pos++;
-		printf("On est a ARRAY[%d] = %s\n", pos, array[pos]);
 		join = ft_count_join(array, pos);
-		printf("on va JOIN = %d words\n", join);
 		finalarray[i] = join_fill_array(finalarray[i], array, pos, join);
-		printf("RESULTAT = finalarray[%d] = %s\n", i, finalarray[i]);
 		pos += join;
 		i++;
 	}
