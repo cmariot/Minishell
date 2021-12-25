@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 12:24:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 14:15:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /* Create a new process in which the command is execute,
  * the parent process will wait the child exit to free command_path. */
-int	fork_command(char **command_path, t_command_line *command_line, char **env)
+int	fork_command(char **command_path, t_command_line *command_line,
+		size_t command_index, char ***env)
 {
 	pid_t	pid;
 
@@ -26,7 +27,8 @@ int	fork_command(char **command_path, t_command_line *command_line, char **env)
 	}
 	else if (pid == 0)
 	{
-		execve(*command_path, command_line->command[0].command_and_args, env);
+		execve(*command_path,
+			command_line->command[command_index].command_and_args, *env);
 		ft_putstr_fd("Command execution error\n", 2);
 		exit(-1);
 	}
@@ -35,6 +37,8 @@ int	fork_command(char **command_path, t_command_line *command_line, char **env)
 		waitpid(-1, &pid, 0);
 		if (*command_path != NULL)
 			free(*command_path);
+		if (*env != NULL)
+			ft_free_array(*env);
 		return (0);
 	}
 }
@@ -46,31 +50,32 @@ int	fork_command(char **command_path, t_command_line *command_line, char **env)
    Else try the next path.  */
 
 //erreur a gerer : dossier en tant que commande principale
-int	try_command(char **path_array, t_command_line *command_line, char **env)
+int	try_command(char **path_array, t_command_line *command_line,
+	int command_index, char ***env)
 {
 	char	*path_with_slash;
 	char	*command_path;
-	int		i;
 
-	command_path = ft_strdup(command_line->command[0].command_and_args[0]);
+	command_path
+		= ft_strdup(command_line->command[command_index].command_and_args[0]);
 	if (access(command_path, F_OK) == 0)
 		if (access(command_path, X_OK) == 0)
-			if (fork_command(&command_path, command_line, env) == 0)
+			if (!fork_command(&command_path, command_line, command_index, env))
 				return (0);
 	free(command_path);
-	i = 0;
-	while (path_array[i])
+	while (*path_array)
 	{
-		path_with_slash = ft_strjoin(path_array[i], "/");
+		path_with_slash = ft_strjoin(*path_array, "/");
 		command_path = ft_strjoin(path_with_slash,
-				command_line->command[0].command_and_args[0]);
+				command_line->command[command_index].command_and_args[0]);
 		free(path_with_slash);
 		if (access(command_path, F_OK) == 0)
 			if (access(command_path, X_OK) == 0)
-				if (fork_command(&command_path, command_line, env) == 0)
+				if (!fork_command(&command_path, command_line,
+						command_index, env))
 					return (0);
 		free(command_path);
-		i++;
+		(path_array)++;
 	}
 	return (42);
 }
@@ -122,14 +127,19 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	char	**env;
 	char	*path_value;
 	char	**path_array;
+	size_t	i;
 
+	i = 0;
 	env = envlist_to_array(minishell->env);
 	path_value = get_env_value("PATH", minishell->env);
 	path_array = ft_split(path_value, ':');
-	if (try_command(path_array, command_line, env) == 42)
-		printf("minishell: %s: command not found\n",
-			command_line->command[0].command_and_args[0]);
-	ft_free_array(env);
+	while (i < command_line->number_of_simple_commands)
+	{
+		if (try_command(path_array, command_line, i, &env) == 42)
+			printf("minishell: %s: command not found\n",
+				command_line->command[i].command_and_args[0]);
+		i++;
+	}
 	free(path_value);
 	ft_free_array(path_array);
 	return ;

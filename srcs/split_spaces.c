@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:30:38 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 21:01:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 13:41:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	ft_count_space(char **array)
 				array++;
 			if (*array != NULL)
 				words++;
+			else if (*array == NULL)
+				break ;
 		}
 		array++;
 	}

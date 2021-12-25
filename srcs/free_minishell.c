@@ -6,20 +6,37 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/23 16:09:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 14:27:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//void	free_redir(t_redir **redir)
+//{
+//	size_t i;
+//
+//	i = 0;
+//	while ((*redir)++ != NULL)
+//	{
+//		if ((*redir)->redir_type)
+//			free((*redir)->redir_type);
+//		if ((*redir)->filename)
+//			free((*redir)->filename);
+//	}
+//	free(*redir);
+//}
 
 void	free_simple_commands(t_command_line *command_line)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < command_line->number_of_simple_commands)
+	while (i != command_line->number_of_simple_commands)
 	{
 		ft_free_array(command_line->command[i].command_array);
+		ft_free_array(command_line->command[i].command_and_args);
+		//free_redir(&command_line->command[i].redir);
 		i++;
 	}
 	free(command_line->command);
@@ -38,6 +55,7 @@ void	reset_minishell(t_command_line *command_line)
 // Free the structure elements before exit
 void	free_minishell(t_shell *minishell)
 {
+	printf("EXIT\n");
 	ft_lstclear_env(&minishell->env, free);
 	close(0);
 	close(1);
