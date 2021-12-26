@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/26 22:08:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/26 22:52:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ char	**envlist_to_array(t_env *envlist)
 	char	*tmp;
 	int		len;
 	int		i;
+	t_env	*envlist_cpy;
 
-	len = ft_envlstsize(envlist);
+	envlist_cpy = envlist;
+	len = ft_envlstsize(envlist_cpy);
 	if (len == 0)
 		return (NULL);
 	env = ft_calloc(len, sizeof(char **));
@@ -109,11 +111,11 @@ char	**envlist_to_array(t_env *envlist)
 	i = 0;
 	while (i < len)
 	{
-		tmp = ft_strjoin(envlist->name, "=");
-		env[i] = ft_strjoin(tmp, envlist->value);
+		tmp = ft_strjoin(envlist_cpy->name, "=");
+		env[i] = ft_strjoin(tmp, envlist_cpy->value);
 		free(tmp);
 		i++;
-		envlist = envlist->next;
+		envlist_cpy = envlist_cpy->next;
 	}
 	return (env);
 }
@@ -145,6 +147,6 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	}
 	free(path_value);
 	ft_free_array(path_array);
-	ft_free_array(&(*env));
+	ft_free_array(env);
 	return ;
 }
