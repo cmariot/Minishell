@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 15:56:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/26 16:08:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	fork_command(char **command_path, t_command_line *command_line,
 		execve(*command_path,
 			command_line->command[command_index].command_and_args, env);
 		ft_putstr_fd("Command execution error\n", 2);
-		//Faire une sortie propre dans ce cas
 		exit(-1);
 	}
 	else
@@ -131,10 +130,12 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	char	*path_value;
 	char	**path_array;
 	char	**env;
+	char	**env_cpy;
 	size_t	i;
 
 	i = 0;
 	env = envlist_to_array(minishell->env);
+	env_cpy = env;
 	path_value = get_env_value("PATH", minishell->env);
 	path_array = ft_split(path_value, ':');
 	while (i < command_line->number_of_simple_commands)
@@ -146,6 +147,6 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	}
 	free(path_value);
 	ft_free_array(path_array);
-	//ft_free_array(env_cpy);
+	ft_free_array(env_cpy);
 	return ;
 }
