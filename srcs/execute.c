@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 16:13:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 16:47:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,18 +146,20 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	size_t	i;
 
 	i = 0;
-	env_array = envlist_to_array(minishell->env);
-	path_value = get_env_value("PATH", minishell->env);
-	path_array = ft_split(path_value, ':');
 	while (i < command_line->number_of_simple_commands)
 	{
+		env_array = envlist_to_array(minishell->env);
+		path_value = get_env_value("PATH", minishell->env);
+		path_array = ft_split(path_value, ':');
 		if (try_command(path_array, command_line, i, env_array) == 42)
 			printf("minishell: %s: command not found\n",
 				command_line->command[i].command_and_args[0]);
+		free(path_value);
+		ft_free_array(path_array);
+		ft_lstclear_env(&minishell->env, free);
+		minishell->env = save_env(env_array);
+		ft_free_array(env_array);
 		i++;
 	}
-	free(path_value);
-	ft_free_array(path_array);
-	ft_free_array(env_array);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:07:37 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 13:44:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 16:41:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	print_simple_command(t_command_line *command_line)
 				i, j, command_line->command[i].command_array[j]);
 			j++;
 		}
-		printf("\nNombre de redirections pour la commande simple [%lu] = %lu\n\n",
-			i, command_line->command[i].number_of_redirections);
 		print_command_and_args(command_line->command[i].command_and_args, i);
 		if (command_line->command[i].number_of_redirections)
 			print_redirections(command_line, i);
