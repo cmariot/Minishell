@@ -50,12 +50,16 @@ void	print_simple_command(t_command_line *command_line)
 			j++;
 		}
 		print_command_and_args(command_line->command[i].command_and_args, i);
-		j = 0;
-		while (command_line->command[i].redir[j].filename)
-		{
-			print_redirections(command_line->command[i].redir[j], i, j);
-			j++;
-		}
+		printf("NOMBRE DE REDIRECTIONS POUR COMMAND_LINE [%lu] = %lu\n", i, command_line->command[i].number_of_redirections);
+		//if (command_line->command[i].redir[j].filename != NULL)
+		//{
+			//j = 0;
+			//while (command_line->command[i].redir[j].filename != NULL)
+			//{
+			//	print_redirections(command_line->command[i].redir[j], i, j);
+			//	j++;
+			//}
+		//}
 		ft_putchar('\n');
 		i++;
 	}

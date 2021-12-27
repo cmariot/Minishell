@@ -50,6 +50,7 @@ typedef struct s_redir {
 typedef struct s_simple {
 	char	**command_array;
 	char	**command_and_args;
+	size_t	number_of_redirections;
 	t_redir	*redir;
 }	t_simple;
 

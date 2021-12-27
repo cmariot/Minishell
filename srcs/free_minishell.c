@@ -42,7 +42,7 @@ void	free_simple_commands(t_command_line *command_line)
 	{
 		ft_free_array(command_line->command[i].command_array);
 		ft_free_array(command_line->command[i].command_and_args);
-		free_redirections(&command_line->command[i].redir);
+//		free_redirections(&command_line->command[i].redir);
 		i++;
 	}
 	free(command_line->command);

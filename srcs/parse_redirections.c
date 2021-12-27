@@ -50,32 +50,31 @@ int	fill_redirections(t_redir *redir, char **array, int array_index)
 int	parse_redirections(t_command_line *command_line)
 {
 	size_t	i;
-	int		j;
-	int		number_of_redirections;
+	size_t	j;
 	int		array_index;
 
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
-		number_of_redirections = 0;
+		command_line->command[i].number_of_redirections = 0;
 		j = 0;
 		while (command_line->command[i].command_array[j])
 		{
 			if (is_redirection(command_line->command[i].command_array[j]))
-				number_of_redirections++;
+				command_line->command[i].number_of_redirections++;
 			j++;
 		}
-		if (number_of_redirections == 0)
+		if (command_line->command[i].number_of_redirections == 0)
 		{
 			i++;
 			continue ;
 		}
-		command_line->command[i].redir = ft_calloc(number_of_redirections + 1,
+		command_line->command[i].redir = ft_calloc(command_line->command[i].number_of_redirections + 1,
 				sizeof(t_redir));
 		if (!command_line->command[i].redir)
 			return (-1);
 		j = 0;
-		while (j < number_of_redirections)
+		while (j < command_line->command[i].number_of_redirections)
 		{
 			array_index = fill_redirections(&command_line->command[i].redir[j],
 					command_line->command[i].command_array, array_index);
