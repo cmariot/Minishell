@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 14:33:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 11:11:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	is_redirection(char *element)
 		return (1);
 	else if (ft_strcmp(element, ">") == 0)
 		return (1);
+	else if (ft_strcmp(element, NULL) == 0)
+		return (2);
 	else
 		return (0);
 }

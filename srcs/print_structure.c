@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:07:37 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 12:16:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 11:05:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	print_command_and_args(char **command_and_args, int command_index)
 			command_index, i, command_and_args[i]);
 		i++;
 	}
+}
+
+void	print_redirections(t_redir redir, size_t i, size_t j)
+{
+	printf("command_line->command[%lu].redir[%lu].redir_type = [%s]\n", i, j, redir.redir_type);
+	printf("command_line->command[%lu].redir[%lu].filemame = [%s]\n", i, j, redir.filename);
 }
 
 void	print_simple_command(t_command_line *command_line)
@@ -44,6 +50,12 @@ void	print_simple_command(t_command_line *command_line)
 			j++;
 		}
 		print_command_and_args(command_line->command[i].command_and_args, i);
+		j = 0;
+		while (command_line->command[i].redir[j].filename)
+		{
+			print_redirections(command_line->command[i].redir[j], i, j);
+			j++;
+		}
 		ft_putchar('\n');
 		i++;
 	}

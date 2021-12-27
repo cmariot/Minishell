@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/26 22:52:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/26 22:54:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,8 @@ char	**envlist_to_array(t_env *envlist)
 	char	*tmp;
 	int		len;
 	int		i;
-	t_env	*envlist_cpy;
 
-	envlist_cpy = envlist;
-	len = ft_envlstsize(envlist_cpy);
+	len = ft_envlstsize(envlist);
 	if (len == 0)
 		return (NULL);
 	env = ft_calloc(len, sizeof(char **));
@@ -111,11 +109,11 @@ char	**envlist_to_array(t_env *envlist)
 	i = 0;
 	while (i < len)
 	{
-		tmp = ft_strjoin(envlist_cpy->name, "=");
-		env[i] = ft_strjoin(tmp, envlist_cpy->value);
+		tmp = ft_strjoin(envlist->name, "=");
+		env[i] = ft_strjoin(tmp, envlist->value);
 		free(tmp);
 		i++;
-		envlist_cpy = envlist_cpy->next;
+		envlist = envlist->next;
 	}
 	return (env);
 }
