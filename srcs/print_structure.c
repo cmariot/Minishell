@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:07:37 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 11:05:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 13:44:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,25 @@ void	print_command_and_args(char **command_and_args, int command_index)
 	}
 }
 
-void	print_redirections(t_redir redir, size_t i, size_t j)
+void	print_redirections(t_command_line *command_line, size_t i)
 {
-	printf("command_line->command[%lu].redir[%lu].redir_type = [%s]\n", i, j, redir.redir_type);
-	printf("command_line->command[%lu].redir[%lu].filemame = [%s]\n", i, j, redir.filename);
+	size_t	j;
+
+	j = 0;
+	while (j < command_line->command[i].number_of_redirections)
+	{
+		printf("command_line->command[%lu].redir[%lu].redir_type = [%s]\n",
+			i, j, command_line->command[i].redir[j].redir_type);
+		printf("command_line->command[%lu].redir[%lu].filename = [%s]\n",
+			i, j, command_line->command[i].redir[j].filename);
+		j++;
+	}
 }
 
 void	print_simple_command(t_command_line *command_line)
 {
 	size_t	i;
-	int		j;
+	size_t	j;
 
 	printf("\ncommand_line.number_of_simple_commands = %lu\n\n",
 		command_line->number_of_simple_commands);
@@ -45,21 +54,15 @@ void	print_simple_command(t_command_line *command_line)
 		j = 0;
 		while (command_line->command[i].command_array[j])
 		{
-			printf("command_line.command[%lu].command_array[%d] = %s\n",
+			printf("command_line.command[%lu].command_array[%lu] = %s\n",
 				i, j, command_line->command[i].command_array[j]);
 			j++;
 		}
+		printf("\nNombre de redirections pour la commande simple [%lu] = %lu\n\n",
+			i, command_line->command[i].number_of_redirections);
 		print_command_and_args(command_line->command[i].command_and_args, i);
-		printf("NOMBRE DE REDIRECTIONS POUR COMMAND_LINE [%lu] = %lu\n", i, command_line->command[i].number_of_redirections);
-		//if (command_line->command[i].redir[j].filename != NULL)
-		//{
-			//j = 0;
-			//while (command_line->command[i].redir[j].filename != NULL)
-			//{
-			//	print_redirections(command_line->command[i].redir[j], i, j);
-			//	j++;
-			//}
-		//}
+		if (command_line->command[i].number_of_redirections)
+			print_redirections(command_line, i);
 		ft_putchar('\n');
 		i++;
 	}

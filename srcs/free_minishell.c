@@ -6,31 +6,28 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 10:53:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 13:55:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_redirections(t_redir **redirection)
+void	free_redirections(t_redir **redirection, size_t number_of_redirections)
 {
 	size_t	i;
 
 	i = 0;
-	if (redirection[i])
+	while (i < number_of_redirections)
 	{
-		while (redirection[i]->filename != NULL)
-		{
-			if (redirection[i]->redir_type)
-				free(redirection[i]->redir_type);
-			redirection[i]->redir_type = NULL;
-			if (redirection[i]->filename)
-				free(redirection[i]->filename);
-			redirection[i]->filename = NULL;
-			i++;
-		}
-		free(redirection);
+		if (redirection[i]->redir_type)
+			free(redirection[i]->redir_type);
+		redirection[i]->redir_type = NULL;
+		if (redirection[i]->filename)
+			free(redirection[i]->filename);
+		redirection[i]->filename = NULL;
+		i++;
 	}
+	free(*redirection);
 }
 
 void	free_simple_commands(t_command_line *command_line)
@@ -42,7 +39,9 @@ void	free_simple_commands(t_command_line *command_line)
 	{
 		ft_free_array(command_line->command[i].command_array);
 		ft_free_array(command_line->command[i].command_and_args);
-//		free_redirections(&command_line->command[i].redir);
+		if (command_line->command[i].number_of_redirections)
+			free_redirections(&command_line->command[i].redir,
+				command_line->command[i].number_of_redirections);
 		i++;
 	}
 	free(command_line->command);
