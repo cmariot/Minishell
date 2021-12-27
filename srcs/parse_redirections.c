@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 13:59:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:31:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ int	fill_redirections(t_redir *redir, char **array, int array_index)
 	}
 }
 
+size_t	get_number_of_redir(char **command_array)
+{
+	size_t	number_of_redirections;
+	size_t	j;
+
+	number_of_redirections = 0;
+	j = 0;
+	while (command_array[j])
+		if (command_array[j++])
+			number_of_redirections++;
+	return (number_of_redirections);
+}
+
 //compte le nombre de redirection dans la commande simple
 //cree un tableau pour chaque redirection
 //remplir le tableau avec le type de redirection et le filename
@@ -59,20 +72,14 @@ int	parse_redirections(t_command_line *command_line)
 	size_t	j;
 	int		array_index;
 
-	i = 0;
-	while (i < command_line->number_of_simple_commands)
+	i = -1;
+	while (i++ < command_line->number_of_simple_commands)
 	{
 		array_index = 0;
-		command_line->command[i].number_of_redirections = 0;
-		j = 0;
-		while (command_line->command[i].command_array[j])
-			if (is_redirection(command_line->command[i].command_array[j++]))
-				command_line->command[i].number_of_redirections++;
+		command_line->command[i].number_of_redirections
+			= get_number_of_redir(command_line->command[i].command_array);
 		if (command_line->command[i].number_of_redirections == 0)
-		{
-			i++;
 			continue ;
-		}
 		command_line->command[i].redir
 			= ft_calloc(command_line->command[i].number_of_redirections + 1,
 				sizeof(t_redir));
@@ -80,14 +87,9 @@ int	parse_redirections(t_command_line *command_line)
 			return (-1);
 		j = 0;
 		while (j < command_line->command[i].number_of_redirections)
-		{
-			array_index = fill_redirections(&command_line->command[i].redir[j],
+			array_index
+				= fill_redirections(&command_line->command[i].redir[j++],
 					command_line->command[i].command_array, array_index);
-			if (array_index == -1)
-				return (-1);
-			j++;
-		}
-		i++;
 	}
 	return (0);
 }

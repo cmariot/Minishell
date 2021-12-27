@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/24 21:24:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:42:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,29 @@ size_t	ft_count_heredoc(char **array)
 	return (size - join);
 }
 
+bool	need_to_join(char *type, char **array, size_t *j)
+{
+	if (ft_strcmp("<<", type) == 0)
+	{
+		if (!ft_strcmp(array[*j], "<") && array[*j + 1]
+			&& !ft_strcmp(array[*j + 1], "<"))
+		{
+			(*j)++;
+			return (TRUE);
+		}
+	}
+	else if (ft_strcmp(">>", type) == 0)
+	{
+		if (!ft_strcmp(array[*j], ">") && array[*j + 1]
+			&& !ft_strcmp(array[*j + 1], ">"))
+		{
+			(*j)++;
+			return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
 char	**join_heredoc(char **array)
 {
 	char	**newarray;
@@ -53,18 +76,10 @@ char	**join_heredoc(char **array)
 	j = 0;
 	while (array[j] != NULL)
 	{
-		if (!ft_strcmp(array[j], "<") && array[j + 1]
-			&& !ft_strcmp(array[j + 1], "<"))
-		{
+		if (need_to_join("<<", array, &j) == TRUE)
 			newarray[i] = ft_strdup("<<");
-			j++;
-		}
-		else if (!ft_strcmp(array[j], ">") && array[j + 1]
-			&& !ft_strcmp(array[j + 1], ">"))
-		{
+		else if (need_to_join(">>", array, &j) == TRUE)
 			newarray[i] = ft_strdup(">>");
-			j++;
-		}
 		else
 			newarray[i] = ft_strdup(array[j]);
 		j++;

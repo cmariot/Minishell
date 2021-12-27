@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 15:57:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:52:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,17 @@ t_env	*save_env(char **env)
 	t_env	*env_list;
 	char	*name;
 	char	*value;
-	int		i;
 
-	i = 0;
 	env_list = NULL;
-	while (env[i])
+	while (*env != NULL)
 	{
-		name = get_name_in_env(env[i]);
+		name = get_name_in_env(*env);
 		if (!name)
-		{
-			i++;
 			continue ;
-		}
-		value = get_value_in_env(env[i]);
+		value = get_value_in_env(*env);
 		if (!value)
 		{
 			free(name);
-			i++;
 			continue ;
 		}
 		if (env_list == NULL)
@@ -71,7 +65,7 @@ t_env	*save_env(char **env)
 			ft_lstadd_back_env(&env_list, ft_lstnew_env(name, value));
 		free(name);
 		free(value);
-		i++;
+		env++;
 	}
 	return (env_list);
 }

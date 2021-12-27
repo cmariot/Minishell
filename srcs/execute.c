@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 17:19:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:50:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	char	**path_array;
 	char	**env_array;
 	size_t	i;
-	int		fd[2];
+//	int		fd[2];
 
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
@@ -153,21 +153,21 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 		path_value = get_env_value("PATH", minishell->env);
 		path_array = ft_split(path_value, ':');
 		//Pipe numero 0 :
-		if (i == 0 && command_line->number_of_simple_commands > 1)
-		{
-			// rediriger STDOUT de la commande 0 vers pipe FD[]
-			// prendre l'input de la commande 1 a partir de pipe FD[]
-		}
-		else if (i + 1 == command_line->number_of_simple_commands)
-		{
-			// rediriger l'output de la derniere commande vers STDOUT
-			//
-		}
-		else
-		{
-			// output = FD[]
-			// input = FD[]
-		}
+//		if (i == 0 && command_line->number_of_simple_commands > 1)
+//		{
+//			// rediriger STDOUT de la commande 0 vers pipe FD[]
+//			// prendre l'input de la commande 1 a partir de pipe FD[]
+//		}
+//		else if (i + 1 == command_line->number_of_simple_commands)
+//		{
+//			// rediriger l'output de la derniere commande vers STDOUT
+//			//
+//		}
+//		else
+//		{
+//			// output = FD[]
+//			// input = FD[]
+//		}
 		if (try_command(path_array, command_line, i, env_array) == 42)
 			printf("minishell: %s: command not found\n",
 				command_line->command[i].command_and_args[0]);
