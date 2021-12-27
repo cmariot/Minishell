@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 12:20:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 23:44:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,13 @@ size_t	get_len(char **command_array)
 	i = 0;
 	while (command_array[i])
 	{
-		if (is_redirection(command_array[i])
-			&& command_array[i + 1])
+		if (is_redirection(command_array[i]))
+		{
+			if (command_array[i + 1])
 				i += 2;
+			else if (command_array[i + 1] == NULL)
+				return (1);
+		}
 		else
 		{
 			len++;
