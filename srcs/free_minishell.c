@@ -6,18 +6,18 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 13:55:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 22:36:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_redirections(t_redir **redirection, size_t number_of_redirections)
+void	free_redirections(t_redir **redirection, size_t *number_of_redirections)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < number_of_redirections)
+	while (i + 1 < *number_of_redirections)
 	{
 		if (redirection[i]->redir_type)
 			free(redirection[i]->redir_type);
@@ -39,9 +39,9 @@ void	free_simple_commands(t_command_line *command_line)
 	{
 		ft_free_array(command_line->command[i].command_array);
 		ft_free_array(command_line->command[i].command_and_args);
-		if (command_line->command[i].number_of_redirections)
+		if (command_line->command[i].number_of_redirections > 1)
 			free_redirections(&command_line->command[i].redir,
-				command_line->command[i].number_of_redirections);
+				&command_line->command[i].number_of_redirections);
 		i++;
 	}
 	free(command_line->command);

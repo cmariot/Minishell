@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 09:52:28 by flee              #+#    #+#             */
-/*   Updated: 2021/12/24 21:28:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 19:06:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,27 @@ int	check_quote(char *line)
 {
 	int		i;
 	char	c;
-	int		ok;
+	bool	ok;
 
 	i = 0;
-	ok = 1;
+	ok = TRUE;
 	while (line[i] != '\0')
 	{
 		if ((line[i] == '\"' || line[i] == '\''))
 		{
-			ok = 0;
+			ok = FALSE;
 			c = line[i];
 			i++;
 			while (line[i] != c && line[i] != '\0')
 				i++;
 			if (line[i] == c)
-				ok = 1;
+				ok = TRUE;
 		}
-		if (line[i] != 0)
-			i++;
+		i++;
 	}
-	if (ok)
+	if (ok == TRUE)
 		return (1);
-	printf("Minishell does not interpret unclosed quotes.\n");
+	else
+		printf("Minishell does not interpret unclosed quotes.\n");
 	return (0);
 }

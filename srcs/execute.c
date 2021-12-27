@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 18:50:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 22:29:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,13 +156,15 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 //		if (i == 0 && command_line->number_of_simple_commands > 1)
 //		{
 //			// rediriger STDOUT de la commande 0 vers pipe FD[]
-//			// prendre l'input de la commande 1 a partir de pipe FD[]
+//			// prendre l'input de la commande 1 a partir de STDIN (ou filename si redirection in)
 //		}
+//		//Pour le dernier pipe
 //		else if (i + 1 == command_line->number_of_simple_commands)
 //		{
 //			// rediriger l'output de la derniere commande vers STDOUT
-//			//
+//			// 
 //		}
+//		//Pour les autres cas
 //		else
 //		{
 //			// output = FD[]
