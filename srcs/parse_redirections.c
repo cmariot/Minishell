@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 13:49:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 13:59:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ int	fill_redirections(t_redir *redir, char **array, int array_index)
 	}
 }
 
+//compte le nombre de redirection dans la commande simple
+//cree un tableau pour chaque redirection
+//remplir le tableau avec le type de redirection et le filename
 int	parse_redirections(t_command_line *command_line)
 {
 	size_t	i;
@@ -62,25 +65,19 @@ int	parse_redirections(t_command_line *command_line)
 		array_index = 0;
 		command_line->command[i].number_of_redirections = 0;
 		j = 0;
-		//compte le nombre de redirection dans la commande simple
 		while (command_line->command[i].command_array[j])
-		{
-			if (is_redirection(command_line->command[i].command_array[j]))
+			if (is_redirection(command_line->command[i].command_array[j++]))
 				command_line->command[i].number_of_redirections++;
-			j++;
-		}
 		if (command_line->command[i].number_of_redirections == 0)
 		{
 			i++;
 			continue ;
 		}
-		//printf("NB DE REDIR POUR [%lu] = %lu\n", i, command_line->command[i].number_of_redirections);
-		//cree un tableau pour chaque redirection
-		command_line->command[i].redir = ft_calloc(command_line->command[i].number_of_redirections + 1,
+		command_line->command[i].redir
+			= ft_calloc(command_line->command[i].number_of_redirections + 1,
 				sizeof(t_redir));
 		if (!command_line->command[i].redir)
 			return (-1);
-		//remplir le tableau avec le type de redirection et le filename
 		j = 0;
 		while (j < command_line->command[i].number_of_redirections)
 		{

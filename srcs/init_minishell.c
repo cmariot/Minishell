@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/25 11:43:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 14:33:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,11 @@ char	*get_name_in_env(char *env_line)
 {
 	char	*name;
 	int		len;
-	int		i;
 
 	len = 0;
 	while (env_line[len] != '=')
 		len++;
-	name = ft_calloc(len + 1, sizeof(char));
-	if (name == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		name[i] = env_line[i];
-		i++;
-	}
+	name = ft_substr(env_line, 0, len);
 	return (name);
 }
 
@@ -40,22 +31,12 @@ char	*get_value_in_env(char *env_line)
 	char	*value;
 	int		len;
 	int		equal_index;
-	int		i;
 
 	len = ft_strlen(env_line);
 	equal_index = 0;
 	while (env_line[equal_index] != '=')
 		equal_index++;
-	value = ft_calloc(len - equal_index, sizeof(char));
-	if (value == NULL)
-		return (NULL);
-	i = 0;
-	while (equal_index + 1 < len)
-	{
-		value[i] = env_line[equal_index + 1];
-		equal_index++;
-		i++;
-	}
+	value = ft_substr(env_line, equal_index + 1, len - 1);
 	return (value);
 }
 
@@ -77,13 +58,7 @@ t_env	*save_env(char **env)
 	while (env[i])
 	{
 		name = get_name_in_env(env[i]);
-		if (name == NULL)
-			break ;
 		value = get_value_in_env(env[i]);
-		if (value == NULL)
-			free(name);
-		if (value == NULL)
-			break ;
 		if (i == 0)
 			env_list = ft_lstnew_env(name, value);
 		else

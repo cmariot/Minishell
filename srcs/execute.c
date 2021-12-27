@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/26 22:54:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/27 14:33:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,22 +96,36 @@ int	ft_envlstsize(t_env *env)
 char	**envlist_to_array(t_env *envlist)
 {
 	char	**env;
-	char	*tmp;
-	int		len;
-	int		i;
+	char	*tmp1;
+	char	*tmp2;
+	size_t	len;
+	size_t	i;
 
 	len = ft_envlstsize(envlist);
 	if (len == 0)
 		return (NULL);
-	env = ft_calloc(len, sizeof(char **));
+	env = ft_calloc(len + 1, sizeof(char *));
 	if (!env)
 		return (NULL);
 	i = 0;
 	while (i < len)
 	{
-		tmp = ft_strjoin(envlist->name, "=");
-		env[i] = ft_strjoin(tmp, envlist->value);
-		free(tmp);
+		tmp1 = ft_strjoin(envlist->name, "=");
+		if (tmp1 == NULL)
+		{
+			printf("TMP1 PROBLEME\n");
+			break ;
+		}
+		tmp2 = ft_strjoin(tmp1, envlist->value);
+		if (tmp2 == NULL)
+		{
+			printf("TMP2 PROBLEME\n");
+			break ;
+		}
+		env[i] = ft_strdup(tmp2);
+		printf("env[%lu] = %s\n", i, env[i]);
+		free(tmp1);
+		free(tmp2);
 		i++;
 		envlist = envlist->next;
 	}
@@ -129,22 +143,23 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 {
 	char	*path_value;
 	char	**path_array;
-	char	**env;
+	char	**env_array;
 	size_t	i;
 
 	i = 0;
-	env = envlist_to_array(minishell->env);
-	path_value = get_env_value("PATH", minishell->env);
-	path_array = ft_split(path_value, ':');
 	while (i < command_line->number_of_simple_commands)
 	{
-		if (try_command(path_array, command_line, i, env) == 42)
+		env_array = envlist_to_array(minishell->env);
+		path_value = get_env_value("PATH", minishell->env);
+		path_array = ft_split(path_value, ':');
+		if (try_command(path_array, command_line, i, env_array) == 42)
 			printf("minishell: %s: command not found\n",
 				command_line->command[i].command_and_args[0]);
+		free(path_value);
+		ft_free_array(path_array);
+		ft_free_array(env_array);
+		printf("BOUCLE++\n");
 		i++;
 	}
-	free(path_value);
-	ft_free_array(path_array);
-	ft_free_array(env);
 	return ;
 }
