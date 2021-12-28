@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 12:40:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 12:59:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	get_len(char **command_array)
 				i += 2;
 			else if (command_array[i + 1] == NULL)
 			{
-				printf("Error\n");
+				printf("minishell: syntax error near %s token.\n",
+					command_array[i]);
 				return (-1);
 			}
 		}

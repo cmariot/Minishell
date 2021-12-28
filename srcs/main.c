@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 11:37:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 12:56:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int	main(int argc, char **argv, char **env)
 			get_command_line(&minishell, &minishell.command_line);
 			if (parse(&minishell.command_line, &minishell) == -1)
 			{
-				printf("On passe la en 1\n");
 				reset_minishell(&minishell.command_line);
 				continue ;
 			}
-			printf("On passe la en 2\n");
 			if (builtin(minishell.command_line.line, &minishell))
 				break ;
 			execute(&minishell, &minishell.command_line);
