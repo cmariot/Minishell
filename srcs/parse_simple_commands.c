@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 11:44:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 12:25:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,7 @@ size_t	get_len(char **command_array)
 			if (command_array[i + 1])
 				i += 2;
 			else if (command_array[i + 1] == NULL)
-			{
-				printf("minishell: syntax error near unexpected token %s\n",
-					command_array[i]);
 				return (0);
-			}
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 12:22:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 12:24:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,9 @@ int	parse_redirections(t_command_line *command_line)
 		j = 0;
 		array_index = 0;
 		while (j < command_line->command[i].number_of_redirections)
-			fill_redirections(&command_line->command[i].redir[j++],
-				&array_index, command_line->command[i].command_array);
+			if (fill_redirections(&command_line->command[i].redir[j++],
+					&array_index, command_line->command[i].command_array) == -1)
+				return (-1);
 		i++;
 	}
 	return (0);
