@@ -17,7 +17,7 @@ void	free_redirections(t_redir **redirection, size_t *number_of_redirections)
 	size_t	i;
 
 	i = 0;
-	while (i + 1 < *number_of_redirections)
+	while (i < *number_of_redirections)
 	{
 		if (redirection[i]->redir_type)
 			free(redirection[i]->redir_type);

@@ -36,8 +36,6 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array)
 	if (array[(*array_index) + 1] == NULL)
 	{
 		printf("Minishell: syntax error near redirection. (no filename ?)\n");
-		redir->redir_type = ft_strdup(array[*array_index]);
-		redir->filename = ft_strdup("empty");
 		return (-1);
 	}
 	else

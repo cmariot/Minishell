@@ -24,9 +24,11 @@ int	main(int argc, char **argv, char **env)
 			get_command_line(&minishell, &minishell.command_line);
 			if (parse(&minishell.command_line, &minishell) == -1)
 			{
+				printf("On passe la en 1\n");
 				reset_minishell(&minishell.command_line);
 				continue ;
 			}
+			printf("On passe la en 2\n");
 			if (builtin(minishell.command_line.line, &minishell))
 				break ;
 			execute(&minishell, &minishell.command_line);
