@@ -6,28 +6,34 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 12:46:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 14:09:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_redirections(t_redir **redirection, size_t *number_of_redirections)
+void	free_redirections(t_command_line *command_line, int j,
+		size_t *number_of_redirections)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < *number_of_redirections)
 	{
-		if (redirection[i]->redir_type)
-			free(redirection[i]->redir_type);
-		redirection[i]->redir_type = NULL;
-		if (redirection[i]->filename)
-			free(redirection[i]->filename);
-		redirection[i]->filename = NULL;
+		if (command_line->command[j].redir[i].redir_type != NULL)
+		{
+			free(command_line->command[j].redir[i].redir_type);
+		}
+		command_line->command[j].redir[i].redir_type = NULL;
+		if (command_line->command[j].redir[i].filename != NULL)
+		{
+			free(command_line->command[j].redir[i].filename);
+		}
+		command_line->command[j].redir[i].filename = NULL;
 		i++;
 	}
-	free(*redirection);
+	free(command_line->command[j].redir);
+	*number_of_redirections = 0;
 }
 
 void	free_simple_commands(t_command_line *command_line)
@@ -39,8 +45,8 @@ void	free_simple_commands(t_command_line *command_line)
 	{
 		ft_free_array(command_line->command[i].command_array);
 		ft_free_array(command_line->command[i].command_and_args);
-		if (command_line->command[i].number_of_redirections >= 1)
-			free_redirections(&command_line->command[i].redir,
+		if (command_line->command[i].number_of_redirections > 0)
+			free_redirections(command_line, i,
 				&command_line->command[i].number_of_redirections);
 		i++;
 	}
