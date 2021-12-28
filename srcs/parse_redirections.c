@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 23:35:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 11:21:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,10 @@ int	parse_redirections(t_command_line *command_line)
 		command_line->command[i].number_of_redirections
 			= get_number_of_redir(command_line->command[i].command_array);
 		if (command_line->command[i].number_of_redirections == 0)
+		{
 			i++;
-		if (command_line->command[i].number_of_redirections == 0)
 			continue ;
+		}
 		command_line->command[i].redir = ft_calloc(sizeof(t_redir),
 				command_line->command[i].number_of_redirections + 1);
 		if (!command_line->command[i].redir)
