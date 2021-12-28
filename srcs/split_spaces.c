@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:30:38 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 17:07:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 18:01:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ void	count_quotes_words(char ***array, int *words)
 		(*array)++;
 		while (ft_strcmp(**array, "\"") != 0 && (**array) != NULL)
 			(*array)++;
-		words++;
+		(*words)++;
 	}
 	else if (ft_strcmp(**array, "'") == 0)
 	{
 		(*array)++;
 		while (ft_strcmp(**array, "'") != 0 && (**array) != NULL)
 			(*array)++;
-		words++;
+		(*words)++;
 	}
 }
 

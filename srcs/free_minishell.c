@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 14:09:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 17:51:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	free_simple_commands(t_command_line *command_line)
 				&command_line->command[i].number_of_redirections);
 		i++;
 	}
-	free(command_line->command);
+	if (command_line->command)
+		free(command_line->command);
 	command_line->number_of_simple_commands = 0;
 }
 

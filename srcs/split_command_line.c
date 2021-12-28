@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 17:08:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 18:00:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,34 @@ char	**split_command_line(char *line)
 	char	**first_array;
 	char	**second_array;
 	char	**final_array;
+	int		i;
 
 	first_array = split_line(line, " \t|><\"\';");
+	i = 0;
+	while (first_array[i])
+	{
+		printf("1[%d] = %s\n", i, first_array[i]);
+		i++;
+	}
 	if (!first_array)
 		return (NULL);
 	second_array = join_heredoc(first_array);
+	i = 0;
+	while (second_array[i])
+	{
+		printf("2[%d] = %s\n", i, second_array[i]);
+		i++;
+	}
 	ft_free_array(first_array);
 	if (!second_array)
 		return (NULL);
 	final_array = ft_split_space(second_array);
+	i = 0;
+	while (final_array[i])
+	{
+		printf("3[%d] = %s\n", i, final_array[i]);
+		i++;
+	}
 	ft_free_array(second_array);
 	return (final_array);
 }
