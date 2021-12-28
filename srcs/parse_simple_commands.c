@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 12:59:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 17:08:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	fill_commands(t_simple *command, char **splitted_line, size_t array_index)
 	int	len;
 
 	len = 0;
-	while (splitted_line[array_index + len])
+	while (splitted_line[array_index + len] != NULL)
 	{
+		len++;
 		if (ft_strcmp(splitted_line[array_index + len], "|") == 0)
 			break ;
 		else if (ft_strcmp(splitted_line[array_index + len], ";") == 0)
 			break ;
-		len++;
 	}
 	command->command_array = ft_calloc(len + 1, sizeof(char **));
 	if (!command->command_array)
@@ -76,14 +76,10 @@ int	get_len(char **command_array)
 	{
 		if (is_redirection(command_array[i]))
 		{
-			if (command_array[i + 1])
+			if (command_array[i + 1] != NULL)
 				i += 2;
 			else if (command_array[i + 1] == NULL)
-			{
-				printf("minishell: syntax error near %s token.\n",
-					command_array[i]);
-				return (-1);
-			}
+				return (len + 1);
 		}
 		else
 		{
@@ -101,11 +97,9 @@ int	fill_command_and_args(t_simple *command)
 	size_t	j;
 
 	len = get_len(command->command_array);
-	if (len == -1)
-		return (-1);
-	else if (len == 0)
+	if (len == 0)
 	{
-		printf("Faire redirection\n");
+		printf("Gerer les redirections sans commande ici\n");
 		return (-1);
 	}
 	command->command_and_args = ft_calloc(len + 1, sizeof(char *));
