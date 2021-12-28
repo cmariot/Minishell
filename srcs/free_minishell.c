@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 22:36:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 12:46:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_simple_commands(t_command_line *command_line)
 	{
 		ft_free_array(command_line->command[i].command_array);
 		ft_free_array(command_line->command[i].command_and_args);
-		if (command_line->command[i].number_of_redirections > 1)
+		if (command_line->command[i].number_of_redirections >= 1)
 			free_redirections(&command_line->command[i].redir,
 				&command_line->command[i].number_of_redirections);
 		i++;
