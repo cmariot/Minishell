@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 11:21:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 12:22:09 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array)
 	if (array[(*array_index) + 1] == NULL)
 	{
 		printf("Minishell: syntax error near redirection. (no filename ?)\n");
+		redir->redir_type = ft_strdup(array[*array_index]);
+		redir->filename = ft_strdup("empty");
 		return (-1);
 	}
 	else

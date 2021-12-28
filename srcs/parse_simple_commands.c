@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 11:15:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 11:44:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ size_t	get_len(char **command_array)
 			if (command_array[i + 1])
 				i += 2;
 			else if (command_array[i + 1] == NULL)
+			{
+				printf("minishell: syntax error near unexpected token %s\n",
+					command_array[i]);
 				return (0);
+			}
 		}
 		else
 		{
@@ -90,7 +94,7 @@ size_t	get_len(char **command_array)
 	return (len);
 }
 
-void	fill_command_and_args(t_simple *command)
+int	fill_command_and_args(t_simple *command)
 {
 	size_t	len;
 	size_t	i;
@@ -98,10 +102,10 @@ void	fill_command_and_args(t_simple *command)
 
 	len = get_len(command->command_array);
 	if (len == 0)
-		return ;
+		return (-1);
 	command->command_and_args = ft_calloc(len + 1, sizeof(char *));
 	if (!command->command_and_args)
-		return ;
+		return (-1);
 	i = 0;
 	j = 0;
 	while (command->command_array[i])
@@ -110,6 +114,8 @@ void	fill_command_and_args(t_simple *command)
 		{
 			if (command->command_array[i + 1] != NULL)
 				i += 2;
+			else if (command->command_array[i + 1] == NULL)
+				return (0);
 		}
 		else
 		{
@@ -117,9 +123,10 @@ void	fill_command_and_args(t_simple *command)
 				= ft_strdup(command->command_array[i++]);
 		}
 	}
+	return (0);
 }
 
-void	get_simple_commands(t_command_line *command_line, char **splitted_line)
+int	get_simple_commands(t_command_line *command_line, char **splitted_line)
 {
 	size_t	i;
 	size_t	array_index;
@@ -135,7 +142,9 @@ void	get_simple_commands(t_command_line *command_line, char **splitted_line)
 	{
 		array_index = fill_commands(&command_line->command[i],
 				splitted_line, array_index);
-		fill_command_and_args(&command_line->command[i]);
+		if (fill_command_and_args(&command_line->command[i]) == -1)
+			return (-1);
 		i++;
 	}
+	return (0);
 }
