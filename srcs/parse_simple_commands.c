@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 12:25:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/28 12:40:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	fill_commands(t_simple *command, char **splitted_line, size_t array_index)
 	return (array_index + 1);
 }
 
-size_t	get_len(char **command_array)
+int	get_len(char **command_array)
 {
-	size_t	len;
+	int		len;
 	size_t	i;
 
 	len = 0;
@@ -79,7 +79,10 @@ size_t	get_len(char **command_array)
 			if (command_array[i + 1])
 				i += 2;
 			else if (command_array[i + 1] == NULL)
-				return (0);
+			{
+				printf("Error\n");
+				return (-1);
+			}
 		}
 		else
 		{
@@ -92,13 +95,18 @@ size_t	get_len(char **command_array)
 
 int	fill_command_and_args(t_simple *command)
 {
-	size_t	len;
+	int		len;
 	size_t	i;
 	size_t	j;
 
 	len = get_len(command->command_array);
-	if (len == 0)
+	if (len == -1)
 		return (-1);
+	else if (len == 0)
+	{
+		printf("Faire redirection\n");
+		return (-1);
+	}
 	command->command_and_args = ft_calloc(len + 1, sizeof(char *));
 	if (!command->command_and_args)
 		return (-1);
@@ -114,10 +122,8 @@ int	fill_command_and_args(t_simple *command)
 				return (0);
 		}
 		else
-		{
 			command->command_and_args[j++]
 				= ft_strdup(command->command_array[i++]);
-		}
 	}
 	return (0);
 }
