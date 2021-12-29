@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 22:58:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 23:17:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 					dup2(fd[1], STDOUT);
 					execute_cmd(minishell, command_line, i);
 					close(fd[0]);
+					free_minishell(minishell);
 					exit(EXIT_SUCCESS);
 				}
 				else
@@ -207,6 +208,7 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 				{
 					//sortie sur stdout
 					execute_cmd(minishell, command_line, i);
+					free_minishell(minishell);
 					exit(EXIT_SUCCESS);
 				}
 				else
@@ -215,6 +217,8 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 					close(fd[0]);
 					dup2(stdin_saved, 0);
 					dup2(stdout_saved, 1);
+					close(stdin_saved);
+					close(stdout_saved);
 				}
 			}
 			i++;
