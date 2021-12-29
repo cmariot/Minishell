@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 19:42:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 19:49:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 					ft_putstr_fd("ERROR fork()\n", 2);
 				else if (pid == 0)
 				{
+					dup2(STDOUT, fd[1]);
 					execute_cmd(minishell, command_line, i);
 					exit(EXIT_SUCCESS);
 				}
