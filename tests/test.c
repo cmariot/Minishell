@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 13:08:10 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 01:28:36 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/29 00:31:43 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/29 00:39:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-/* ft_bzero() writes n zeroed bytes to the string s. */
-
-void	ft_bzero(void *str, size_t bytes_nb)
+int	main(int argc, char **argv, char **env)
 {
 	size_t	i;
-	char	*dest;
+	char	**array;
 
-	i = 0;
-	dest = (char *)str;
-	while (i < bytes_nb)
+	if (argc && *argv && *env)
 	{
-		dest[i] = 0;
-		i++;
+		i = 0;
+		array = malloc(10 * sizeof(char *));
+		printf("%lu\n", sizeof(char **));
 	}
+	return (0);
 }
