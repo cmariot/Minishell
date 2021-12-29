@@ -12,17 +12,21 @@
 
 #include "minishell.h"
 
+t_shell	minishell;
+
 int	main(int argc, char **argv, char **env)
 {
-	t_shell	minishell;
 	struct	sigaction new_act;
 	struct	sigaction act;
+	int 	sig;
 
 	new_act.sa_sigaction = ft_handler;
     new_act.sa_flags = 0;
 	act.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &act, NULL);
-	sigaction(SIGINT, &new_act, NULL);
+	sig = sigaction(SIGQUIT, &act, NULL);
+	sig = sigaction(SIGINT, &new_act, NULL);
+	if (sig == -1)
+		return (EXIT_FAILURE);
 	if (argc && *argv && *env)
 	{
 		init_minishell(&minishell, env);

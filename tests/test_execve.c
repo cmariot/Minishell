@@ -24,9 +24,9 @@ int	main(int argc, char **argv, char **env)
 	{
 		path = "/bin/echo";
 		args[0] = "-e";
-		args[1] = " ";
+		args[1] = "";
 		args[2] = "test1.txt";
-		args[3] = " ";
+		args[3] = "";
 		args[4] = NULL;
 		ret = execve(path, args, env);
 		printf("Retour execve = %d\n", ret);
