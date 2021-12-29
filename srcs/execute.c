@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 20:07:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 22:30:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,13 @@ char	**envlist_to_array(t_env *envlist)
 	return (env);
 }
 
+/* Get env as a char **, the line which contains all the path in env,
+   (type env in a terminal to see the env array)
+   Split this line with the ':' delimiter,
+   Try the command in all the possible path. */
+
+// a verifier : modifier le path dans une commande, puis appeler une commande,
+// doit on mettre a jour path_array a chaque tour ?
 void	execute_cmd(t_shell *minishell, t_command_line *command_line, size_t i)
 {
 	char	*path_value;
@@ -150,24 +157,22 @@ void	execute_cmd(t_shell *minishell, t_command_line *command_line, size_t i)
 	ft_free_array(env_array);
 
 }
-/* Get env as a char **, the line which contains all the path in env,
-   (type env in a terminal to see the env array)
-   Split this line with the ':' delimiter,
-   Try the command in all the possible path. */
 
-// a verifier : modifier le path dans une commande, puis appeler une commande,
-// doit on mettre a jour path_array a chaque tour ?
 void	execute(t_shell *minishell, t_command_line *command_line)
 {
 	size_t	i;
 	int		fd[2];
 	int		pid;
+	int		stdin_saved;
+	int		stdout_saved;
 
 	i = 0;
 	if (command_line->number_of_simple_commands == 1)
 		execute_cmd(minishell, command_line, i);
 	else
 	{
+		stdin_saved = dup(STDIN);
+		stdout_saved = dup(STDOUT);
 		while (i < command_line->number_of_simple_commands)
 		{
 			if (i < command_line->number_of_simple_commands - 1)
@@ -179,11 +184,10 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 					ft_putstr_fd("ERROR fork()\n", 2);
 				else if (pid == 0)
 				{
-					close(fd[0]);
 					//sortie de commande 1 sur fd[1]
 					dup2(fd[1], STDOUT);
 					execute_cmd(minishell, command_line, i);
-					ft_putstr_fd("COMMANDE OK\n", 2);
+					close(fd[0]);
 					exit(EXIT_SUCCESS);
 				}
 				else
@@ -203,18 +207,18 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 				{
 					//sortie sur stdout
 					execute_cmd(minishell, command_line, i);
-					close(fd[0]);
-					ft_putstr_fd("DERNIERE COMMANDE OK\n", 2);
 					exit(EXIT_SUCCESS);
 				}
 				else
 				{
 					waitpid(pid, &pid, 0);
+					close(fd[0]);
+					dup2(stdin_saved, 0);
+					dup2(stdout_saved, 1);
 				}
 			}
 			i++;
 		}
 	}
-	printf("SORTIE OK\n");
 	return ;
 }

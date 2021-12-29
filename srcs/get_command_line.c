@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 23:28:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 22:22:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 	command_line->line = readline(prompt);
 	if (rl_on_new_line() == 0)
 		add_history(command_line->line);
-	free(prompt);
+	if (prompt)
+		free(prompt);
 	if (minishell->command_line.line == NULL)
 	{
 		printf("exit\n");
