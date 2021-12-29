@@ -16,8 +16,9 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
     (void)info;
     (void)secret;
-    const char* prompt;
-    prompt = "\n";
 	if (sig == SIGINT)
-        readline(prompt);
+    {
+        write(0, "\n", 1);
+        write(0, "Minishell ➤  ",14);
+    }
 }

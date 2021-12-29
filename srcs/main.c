@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **env)
 		init_minishell(&minishell, env);
 		while (1)
 		{
-			sigaction(SIGINT, &new_act, NULL);
 			get_command_line(&minishell, &minishell.command_line);
 			if (parse(&minishell.command_line, &minishell) == -1)
 			{
