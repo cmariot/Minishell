@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/10 13:37:43 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 13:12:44 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/29 13:19:44 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/29 13:20:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
+#include <fcntl.h>
 
-/* ft_strlen() returns the len of a string */
-
-size_t	ft_strlen(const char *str)
+int	main(int argc, char **argv, char **env)
 {
-	const char	*s;
+	int		fd;
+	char	*line;
 
-	s = str;
-	while (*(++s))
-		;
-	return (s - str);
+	if (argc && *argv && *env)
+	{
+		fd = open(argv[1], O_RDONLY);
+		while (1)
+		{
+			line = gnl_without_bn(fd);
+			if (!line)
+				break ;
+			printf("LINE = [%s]\n", line);
+			free(line);
+		}
+		close(fd);
+	}
+	return (0);
 }
