@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 22:30:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 22:58:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	fork_command(char **command_path, t_command_line *command_line,
 	}
 	else
 	{
-		waitpid(-1, &pid, 0);
+		waitpid(pid, &pid, 0);
 		if (*command_path != NULL)
 			free(*command_path);
 		return (0);
@@ -92,12 +92,26 @@ int	ft_envlstsize(t_env *env)
 	return (size);
 }
 
+char	*fill_env_array(t_env *envlist)
+{
+	char	*tmp1;
+	char	*tmp2;
+
+	tmp1 = ft_strjoin(envlist->name, "=");
+	if (tmp1 == NULL)
+		return (NULL);
+	tmp2 = ft_strjoin(tmp1, envlist->value);
+	if (tmp2 == NULL)
+		return (tmp1);
+	free(tmp1);
+	return (tmp2);
+}
+
 // Get a char **env copy from the t_env *env linked list
 char	**envlist_to_array(t_env *envlist)
 {
 	char	**env;
-	char	*tmp1;
-	char	*tmp2;
+	char	*str;
 	size_t	i;
 
 	i = ft_envlstsize(envlist);
@@ -109,22 +123,9 @@ char	**envlist_to_array(t_env *envlist)
 	i = 0;
 	while (envlist->next != NULL)
 	{
-		tmp1 = ft_strjoin(envlist->name, "=");
-		if (tmp1 == NULL)
-		{
-			envlist = envlist->next;
-			continue ;
-		}
-		tmp2 = ft_strjoin(tmp1, envlist->value);
-		if (tmp2 == NULL)
-		{
-			free(tmp1);
-			envlist = envlist->next;
-			continue ;
-		}
-		env[i] = ft_strdup(tmp2);
-		free(tmp1);
-		free(tmp2);
+		str = fill_env_array(envlist);
+		if (str != NULL)
+			env[i] = str;
 		i++;
 		envlist = envlist->next;
 	}
@@ -155,7 +156,6 @@ void	execute_cmd(t_shell *minishell, t_command_line *command_line, size_t i)
 	ft_lstclear_env(&minishell->env, free);
 	minishell->env = save_env(env_array);
 	ft_free_array(env_array);
-
 }
 
 void	execute(t_shell *minishell, t_command_line *command_line)
