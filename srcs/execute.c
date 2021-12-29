@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 22:29:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 18:29:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,25 @@ char	**envlist_to_array(t_env *envlist)
 	return (env);
 }
 
+void	execute_cmd(t_shell *minishell, t_command_line *command_line, size_t i)
+{
+	char	*path_value;
+	char	**path_array;
+	char	**env_array;
+
+	env_array = envlist_to_array(minishell->env);
+	path_value = get_env_value("PATH", minishell->env);
+	path_array = ft_split(path_value, ':');
+	if (try_command(path_array, command_line, i, env_array) == 42)
+		printf("minishell: %s: command not found\n",
+			command_line->command[i].command_and_args[0]);
+	free(path_value);
+	ft_free_array(path_array);
+	ft_lstclear_env(&minishell->env, free);
+	minishell->env = save_env(env_array);
+	ft_free_array(env_array);
+
+}
 /* Get env as a char **, the line which contains all the path in env,
    (type env in a terminal to see the env array)
    Split this line with the ':' delimiter,
@@ -140,44 +159,13 @@ char	**envlist_to_array(t_env *envlist)
 // doit on mettre a jour path_array a chaque tour ?
 void	execute(t_shell *minishell, t_command_line *command_line)
 {
-	char	*path_value;
-	char	**path_array;
-	char	**env_array;
+
 	size_t	i;
-//	int		fd[2];
 
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
-		env_array = envlist_to_array(minishell->env);
-		path_value = get_env_value("PATH", minishell->env);
-		path_array = ft_split(path_value, ':');
-		//Pipe numero 0 :
-//		if (i == 0 && command_line->number_of_simple_commands > 1)
-//		{
-//			// rediriger STDOUT de la commande 0 vers pipe FD[]
-//			// prendre l'input de la commande 1 a partir de STDIN (ou filename si redirection in)
-//		}
-//		//Pour le dernier pipe
-//		else if (i + 1 == command_line->number_of_simple_commands)
-//		{
-//			// rediriger l'output de la derniere commande vers STDOUT
-//			// 
-//		}
-//		//Pour les autres cas
-//		else
-//		{
-//			// output = FD[]
-//			// input = FD[]
-//		}
-		if (try_command(path_array, command_line, i, env_array) == 42)
-			printf("minishell: %s: command not found\n",
-				command_line->command[i].command_and_args[0]);
-		free(path_value);
-		ft_free_array(path_array);
-		ft_lstclear_env(&minishell->env, free);
-		minishell->env = save_env(env_array);
-		ft_free_array(env_array);
+		execute_cmd(minishell, command_line, i);
 		i++;
 	}
 	return ;

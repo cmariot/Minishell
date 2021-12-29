@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 17:51:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 14:34:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	free_redirections(t_command_line *command_line, int j,
 		command_line->command[j].redir[i].filename = NULL;
 		i++;
 	}
-	free(command_line->command[j].redir);
+	if (command_line->command[j].redir)
+		free(command_line->command[j].redir);
 	*number_of_redirections = 0;
 }
 
