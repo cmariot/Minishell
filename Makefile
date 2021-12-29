@@ -71,7 +71,8 @@ SRCS			= main.c \
 				check_quote.c \
 				split_command_line.c \
 				split_join_heredoc.c \
-				split_spaces.c
+				split_spaces.c \
+				handler.c \
 
 SRC			:= $(notdir $(SRCS))
 

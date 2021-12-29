@@ -27,6 +27,8 @@
 # include <termios.h>
 # include <term.h>
 # include <stdbool.h>
+# include <sys/types.h>
+# include <time.h>
 
 # define FALSE 0
 # define TRUE 1
@@ -133,5 +135,8 @@ void			expand_env_variable(char ***splitted_line, t_env *env);
 
 // check quote
 int				check_quote(char *line);
+
+// handler signal
+void	ft_handler(int sig, siginfo_t *info, void *secret);
 
 #endif

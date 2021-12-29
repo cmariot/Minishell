@@ -15,12 +15,20 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	minishell;
+	struct	sigaction new_act;
+	struct	sigaction act;
 
+	new_act.sa_sigaction = ft_handler;
+    new_act.sa_flags = 0;
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &act, NULL);
+	sigaction(SIGINT, &new_act, NULL);
 	if (argc && *argv && *env)
 	{
 		init_minishell(&minishell, env);
 		while (1)
 		{
+			sigaction(SIGINT, &new_act, NULL);
 			get_command_line(&minishell, &minishell.command_line);
 			if (parse(&minishell.command_line, &minishell) == -1)
 			{
