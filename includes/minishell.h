@@ -140,4 +140,7 @@ int				check_quote(char *line);
 // handler signal
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
+// cd
+void 			do_cd(t_shell *minishell);
+
 #endif

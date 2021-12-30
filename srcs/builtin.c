@@ -27,6 +27,8 @@ int	builtin(char *command, t_shell *minishell)
 		setenv_builtin(minishell->env, "PWD", "/test");
 	else if (ft_strcmp(command, "unsetenv") == 0)
 		unsetenv_builtin(minishell->env, "PWD");
+	else if (ft_strcmp(command, "cd") == 0)
+		do_cd(minishell);
 	else if (ft_strcmp(command, "exit") == 0)
 	{
 		free_minishell(minishell);
