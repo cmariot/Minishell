@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 18:08:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 11:49:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,6 @@ int				check_quote(char *line);
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
 // cd
-void 			do_cd(t_shell *minishell);
+void			do_cd(t_shell *minishell);
 
 #endif

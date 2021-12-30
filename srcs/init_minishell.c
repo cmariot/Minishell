@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 14:48:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 11:59:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@ t_env	*save_env(char **env)
 		if (!name)
 			continue ;
 		value = get_value_in_env(*env);
-//		if (!value)
-//		{
-//			free(name);
-//			continue ;
-//		}
 		if (env_list == NULL)
 			env_list = ft_lstnew_env(name, value);
 		else

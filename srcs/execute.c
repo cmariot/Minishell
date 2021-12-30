@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 11:21:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 12:31:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,80 +158,93 @@ void	execute_cmd(t_shell *minishell, t_command_line *command_line, size_t i)
 	ft_free_array(env_array);
 }
 
-void	execute(t_shell *minishell, t_command_line *command_line)
+void	firsts_pipes(t_shell *minishell, t_command_line *command_line, size_t i, int *backup_fd)
 {
-	size_t	i;
 	int		fd[2];
 	int		pid;
-	int		stdin_saved;
-	int		stdout_saved;
 
-	i = 0;
-	if (command_line->number_of_simple_commands == 1)
+	if (pipe(fd) == -1)
+		ft_putstr_fd("ERROR pipe()\n", 2);
+	pid = fork();
+	if (pid == -1)
+		ft_putstr_fd("ERROR fork()\n", 2);
+	else if (pid == 0)
+	{
+		close(fd[0]);
+		dup2(fd[1], STDOUT);
 		execute_cmd(minishell, command_line, i);
+		close(fd[1]);
+		close(0);
+		close(1);
+		close(2);
+		close(backup_fd[0]);
+		close(backup_fd[1]);
+		free_minishell(minishell);
+		exit(EXIT_SUCCESS);
+	}
 	else
 	{
-		stdin_saved = dup(STDIN);
-		stdout_saved = dup(STDOUT);
-		while (i < command_line->number_of_simple_commands)
-		{
-			if (i < command_line->number_of_simple_commands - 1)
-			{
-				if (pipe(fd) == -1)
-					ft_putstr_fd("ERROR pipe()\n", 2);
-				pid = fork();
-				if (pid == -1)
-					ft_putstr_fd("ERROR fork()\n", 2);
-				else if (pid == 0)
-				{
-					close(fd[0]);
-					dup2(fd[1], STDOUT);
-					execute_cmd(minishell, command_line, i);
-					close(fd[1]);
-					close(0);
-					close(1);
-					close(2);
-					close(stdin_saved);
-					close(stdout_saved);
-					free_minishell(minishell);
-					exit(EXIT_SUCCESS);
-				}
-				else
-				{
-					waitpid(pid, &pid, 0);
-					close(fd[1]);
-					dup2(fd[0], STDIN);
-					close(fd[0]);
-				}
-			}
-			else
-			{
-				pid = fork();
-				if (pid == -1)
-					ft_putstr_fd("ERROR fork()\n", 2);
-				else if (pid == 0)
-				{
-					execute_cmd(minishell, command_line, i);
-					close(fd[0]);
-					close(fd[1]);
-					close(stdin_saved);
-					close(stdout_saved);
-					free_minishell(minishell);
-					exit(EXIT_SUCCESS);
-				}
-				else
-				{
-					waitpid(pid, &pid, 0);
-					close(fd[0]);
-					close(fd[1]);
-					dup2(stdin_saved, 0);
-					dup2(stdout_saved, 1);
-					close(stdin_saved);
-					close(stdout_saved);
-				}
-			}
-			i++;
-		}
+		waitpid(pid, &pid, 0);
+		close(fd[1]);
+		dup2(fd[0], STDIN);
+		close(fd[0]);
 	}
+}
+
+//reussir a fermer les fd commentes ?
+void	last_pipe(t_shell *minishell, t_command_line *command_line, size_t i, int *backup_fd)
+{
+	int		pid;
+
+	pid = fork();
+	if (pid == -1)
+		ft_putstr_fd("ERROR fork()\n", 2);
+	else if (pid == 0)
+	{
+		execute_cmd(minishell, command_line, i);
+	//	close(fd[0]);
+	//	close(fd[1]);
+		close(backup_fd[0]);
+		close(backup_fd[1]);
+		free_minishell(minishell);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		waitpid(pid, &pid, 0);
+	//	close(fd[0]);
+	//	close(fd[1]);
+		dup2(backup_fd[0], 0);
+		dup2(backup_fd[1], 1);
+		close(backup_fd[0]);
+		close(backup_fd[1]);
+	}
+}
+
+void	create_pipeline(t_command_line *command_line, t_shell *minishell)
+{
+	size_t	i;
+	int		backup_fd[2];
+
+	backup_fd[0] = dup(STDIN);
+	backup_fd[1] = dup(STDOUT);
+	i = 0;
+	while (i < command_line->number_of_simple_commands)
+	{
+		if (i < command_line->number_of_simple_commands - 1)
+			firsts_pipes(minishell, command_line, i, backup_fd);
+		else
+			last_pipe(minishell, command_line, i, backup_fd);
+		i++;
+	}
+
+}
+
+void	execute(t_shell *minishell, t_command_line *command_line)
+{
+	if (command_line->number_of_simple_commands == 1)
+		execute_cmd(minishell, command_line, 0);
+	else
+		create_pipeline(command_line, minishell);
 	return ;
 }

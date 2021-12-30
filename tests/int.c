@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 00:40:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 16:15:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 11:58:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 		printf("MAX UNSIGNED CHAR = %d\n", UCHAR_MAX);
 		printf("\n");
 		printf("MIN SHORT INT = %d\n", SHRT_MIN);
-		printf("MAX SHORT INT = %d\n", SHRT_MAX); 
+		printf("MAX SHORT INT = %d\n", SHRT_MAX);
 		printf("\n");
 		printf("MIN INT = %d\n", INT_MIN);
 		printf("MAX INT = %d\n", INT_MAX);
