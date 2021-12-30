@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   do_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2021/12/29 13:48:20 by flee             ###   ########.fr       */
+/*   Updated: 2021/12/30 17:38:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void    do_cd(t_shell *minishell)
 {
     char        *path;
     int         ret;
-    size_t      size = 99;
-    char        buf[99];
+    char        buf[255];
     char        *cwd;
 
     if (minishell->command_line.number_of_simple_commands != 2)
@@ -46,8 +45,9 @@ void    do_cd(t_shell *minishell)
         else
             ret = chdir(get_env_value("HOME", minishell->env));
         if (ret != 0)
-            ft_putstr("No such file or directory");
+            printf("minishell: cd: %s: No such file or directory\n",
+				minishell->command_line.command->command_and_args[1]);
     }
-    cwd = getcwd(buf, size);
+    cwd = getcwd(buf, 255);
     setenv_builtin(minishell->env, "PWD", cwd);
 }

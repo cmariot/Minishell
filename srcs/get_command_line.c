@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 22:22:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 17:29:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 	if (!minishell->command_line.line)
 	{
 		printf("exit\n");
-		free_minishell(minishell);
+		ft_lstclear_env(&minishell->env, free);
+		close(0);
+		close(1);
+		close(2);
 		exit(EXIT_SUCCESS);
 	}
 	if (rl_on_new_line() == 0)
