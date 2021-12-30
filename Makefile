@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/30 11:25:19 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/30 14:00:20 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRCS			= main.c \
 				builtin.c \
 				env_builtin.c \
 				env_list_utils.c \
+				env_array_utils.c \
 				execute.c \
 				expand_env_variable.c \
 				get_command_line.c \
@@ -66,6 +67,7 @@ SRCS			= main.c \
 				parse.c \
 				parse_simple_commands.c \
 				parse_redirections.c \
+				pipeline.c \
 				print_structure.c \
 				pwd_builtin.c \
 				check_quote.c \
@@ -119,9 +121,8 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
-#		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=tests/.ignore_readline --track-origins=yes ./minishell
 leaks : all
-		valgrind --leak-check=full --show-leak-kinds=all --suppressions=tests/.ignore_readline --track-origins=yes ./minishell
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=tests/.ignore_readline --track-origins=yes ./minishell
 
 # Check 42 norm 
 norm :
