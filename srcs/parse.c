@@ -28,7 +28,7 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 			return (-1);
 		if (parse_redirections(command_line) == -1)
 			return (-1);
-		//print_command_line(command_line);
+		print_command_line(command_line);
 	}
 	return (0);
 }
