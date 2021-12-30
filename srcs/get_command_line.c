@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 17:29:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 18:10:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,11 @@ char	*get_prompt(t_shell *minishell)
 	if (!current_directory)
 		return (ft_strdup("Minishell ➤ "));
 	pwd_last_index = ft_strlen(pwd) - 1;
-	while (cur_dir_len - 1 >= 0)
-	{
-		current_directory[cur_dir_len-- - 1] = pwd[pwd_last_index--];
-	}
+	if (cur_dir_len - 1 == 0)
+		current_directory = ft_strdup("/");
+	else
+		while (cur_dir_len - 1 >= 0)
+			current_directory[cur_dir_len-- - 1] = pwd[pwd_last_index--];
 	prompt = ft_strjoin(current_directory, " ➤ ");
 	free(current_directory);
 	free(pwd);

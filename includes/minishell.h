@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 14:02:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 18:45:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_env			*ft_lstlast_env(t_env *lst);
 
 // parse.c
 int				parse(t_command_line *command_line, t_shell *minishell);
+size_t			count_commands(char **splitted_line);
 
 // parse_simple_commands.c
 int				get_simple_commands(t_command_line *command_line,
@@ -144,7 +145,7 @@ void			expand_env_variable(char ***splitted_line, t_env *env);
 int				check_quote(char *line);
 
 // handler signal
-int		   		signal_catcher(void);
+int				signal_catcher(void);
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
 // cd

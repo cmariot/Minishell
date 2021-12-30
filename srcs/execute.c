@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 17:11:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 18:32:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,27 +112,27 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	char	**env_array;
 	int		builtin_ret;
 
-	builtin_ret = command_is_builtin(minishell, command_line->command[i].command_and_args);
+	builtin_ret = command_is_builtin(minishell,
+			command_line->command[i].command_and_args);
 	if (builtin_ret)
 	{
 		if (builtin_ret == 2)
 			exit(EXIT_SUCCESS);
+		return ;
 	}
-	else
-	{
-		env_array = envlist_to_array(minishell->env);
-		path_value = get_env_value("PATH", minishell->env);
-		path_array = ft_split(path_value, ':');
-		if (try_command_with_path(path_array, command_line, i, env_array) == 42)
-			printf("minishell: %s: command not found\n",
-			   	command_line->command[i].command_and_args[0]);
-		free(path_value);
-		ft_free_array(path_array);
-		ft_lstclear_env(&minishell->env, free);
-		minishell->env = save_env(env_array);
-		ft_free_array(env_array);
-	}
+	env_array = envlist_to_array(minishell->env);
+	path_value = get_env_value("PATH", minishell->env);
+	path_array = ft_split(path_value, ':');
+	if (try_command_with_path(path_array, command_line, i, env_array) == 42)
+		printf("minishell: %s: command not found\n",
+			command_line->command[i].command_and_args[0]);
+	free(path_value);
+	ft_free_array(path_array);
+	ft_lstclear_env(&minishell->env, free);
+	minishell->env = save_env(env_array);
+	ft_free_array(env_array);
 }
+
 /* If only one simple command -> execute,
  * else, create a pipeline */
 void	execute(t_shell *minishell, t_command_line *command_line)
