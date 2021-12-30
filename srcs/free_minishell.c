@@ -44,8 +44,10 @@ void	free_simple_commands(t_command_line *command_line)
 	i = 0;
 	while (i != command_line->number_of_simple_commands)
 	{
-		ft_free_array(command_line->command[i].command_array);
-		ft_free_array(command_line->command[i].command_and_args);
+		if (command_line->command[i].command_array != NULL)
+			ft_free_array(command_line->command[i].command_array);
+		if (command_line->command[i].command_and_args != NULL)
+			ft_free_array(command_line->command[i].command_and_args);
 		if (command_line->command[i].number_of_redirections > 0)
 			free_redirections(command_line, i,
 				&command_line->command[i].number_of_redirections);
@@ -61,7 +63,8 @@ void	reset_minishell(t_command_line *command_line)
 	if (command_line->line)
 		free(command_line->line);
 	command_line->line = NULL;
-	ft_free_array(command_line->splitted_line);
+	if (command_line->splitted_line != NULL)
+		ft_free_array(command_line->splitted_line);
 	free_simple_commands(command_line);
 }
 

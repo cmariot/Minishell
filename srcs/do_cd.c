@@ -34,18 +34,20 @@ void    do_cd(t_shell *minishell)
     char        buf[99];
     char        *cwd;
 
-    printf("enter do_cd\n");
     if (minishell->command_line.number_of_simple_commands != 2)
-        printf("ERROR\n");
-    path = minishell->command_line.command->command_and_args[1];
-    printf("path = %s\n",path);
-    if (path[0] == '~')
-        path = new_path(minishell, path);
-    ret = chdir(path);
+    {
+        path = minishell->command_line.command->command_and_args[1];
+        if (path)
+        {
+            if (path[0] == '~')
+                path = new_path(minishell, path);
+            ret = chdir(path);
+        }
+        else
+            ret = chdir(get_env_value("HOME", minishell->env));
+        if (ret != 0)
+            ft_putstr("No such file or directory");
+    }
     cwd = getcwd(buf, size);
-    printf("cwd = %s\n", cwd);
-    if (ret == 0)
-        printf("done\n");
-    else
-        printf("fuck\n");   
+    setenv_builtin(minishell->env, "PWD", cwd);
 }

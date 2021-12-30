@@ -15,16 +15,17 @@
 /* Free an array of char *, and free the array itself */
 void	ft_free_array(char **array)
 {
-	int	i;
+	int i;
 
-	if (array == NULL)
-		return ;
-	i = 0;
-	while (array[i])
+	if (array != NULL)
 	{
-		free(array[i]);
-		i++;
+		i = 0;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+		return;
 	}
-	free(array);
-	return ;
 }

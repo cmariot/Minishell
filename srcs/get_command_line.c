@@ -83,14 +83,14 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 	if (command_line->line != NULL)
 		free(command_line->line);
 	command_line->line = readline(prompt);
-	if (rl_on_new_line() == 0)
-		add_history(command_line->line);
 	if (prompt)
 		free(prompt);
-	if (minishell->command_line.line == NULL)
+	if (!minishell->command_line.line)
 	{
 		printf("exit\n");
 		free_minishell(minishell);
 		exit(EXIT_SUCCESS);
 	}
+	if (rl_on_new_line() == 0)
+		add_history(command_line->line);
 }
