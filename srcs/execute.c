@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 18:32:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 19:21:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,17 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
  * Else return 0. */
 int	command_is_builtin(t_shell *minishell, char **command_and_args)
 {
-	if (ft_strcmp(command_and_args[0], "pwd") == 0)
+	if (ft_strcmp(command_and_args[0], "cd") == 0)
+		do_cd(minishell);
+	else if (ft_strcmp(command_and_args[0], "echo") == 0)
+	{
+	}
+	else if (ft_strcmp(command_and_args[0], "exit") == 0)
+	{
+		free_minishell(minishell);
+		return (2);
+	}
+	else if (ft_strcmp(command_and_args[0], "pwd") == 0)
 		pwd_builtin(minishell);
 	else if (ft_strcmp(command_and_args[0], "env") == 0)
 		env_builtin(minishell->env);
@@ -91,13 +101,6 @@ int	command_is_builtin(t_shell *minishell, char **command_and_args)
 		setenv_builtin(minishell->env, "PWD", "/test");
 	else if (ft_strcmp(command_and_args[0], "unsetenv") == 0)
 		unsetenv_builtin(minishell->env, "PWD");
-	else if (ft_strcmp(command_and_args[0], "cd") == 0)
-		do_cd(minishell);
-	else if (ft_strcmp(command_and_args[0], "exit") == 0)
-	{
-		free_minishell(minishell);
-		return (2);
-	}
 	else
 		return (0);
 	return (1);

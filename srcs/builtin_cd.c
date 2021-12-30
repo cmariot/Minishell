@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2021/12/30 18:34:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 19:19:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	do_cd(t_shell *minishell)
 	char		buf[255];
 	char		*cwd;
 
+	//pourquoi cette condition ?
 	if (minishell->command_line.number_of_simple_commands != 2)
 	{
 		path = minishell->command_line.command->command_and_args[1];

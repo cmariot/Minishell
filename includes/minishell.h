@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 18:45:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 18:50:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void			create_pipeline(t_command_line *command_line,
 					t_shell *minishell);
 
 // pwd_builtin.c
-void			pwd_builtin(t_shell *minishell);
+int				pwd_builtin(t_shell *minishell);
 
 // split.c
 char			**split_command_line(char *line);

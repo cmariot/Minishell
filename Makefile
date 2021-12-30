@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/30 16:04:46 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/30 19:26:52 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,25 +55,26 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
-				env_builtin.c \
-				env_list_utils.c \
-				env_array_utils.c \
-				execute.c \
-				expand_env_variable.c \
-				get_command_line.c \
-				init_minishell.c \
-				free_minishell.c \
-				parse.c \
-				parse_simple_commands.c \
-				parse_redirections.c \
-				pipeline.c \
-				print_structure.c \
-				pwd_builtin.c \
-				split_command_line.c \
-				split_join_heredoc.c \
-				split_spaces.c \
-				signal.c \
-				do_cd.c \
+				  builtin_cd.c \
+				  builtin_echo.c \
+				  builtin_env.c \
+				  builtin_pwd.c \
+				  env_list_utils.c \
+				  env_array_utils.c \
+				  execute.c \
+				  expand_env_variable.c \
+				  get_command_line.c \
+				  init_minishell.c \
+				  free_minishell.c \
+				  parse.c \
+				  parse_simple_commands.c \
+				  parse_redirections.c \
+				  pipeline.c \
+				  print_structure.c \
+				  split_command_line.c \
+				  split_join_heredoc.c \
+				  split_spaces.c \
+				  signal.c
 
 SRC			:= $(notdir $(SRCS))
 
