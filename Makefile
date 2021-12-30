@@ -72,7 +72,7 @@ SRCS			= main.c \
 				split_command_line.c \
 				split_join_heredoc.c \
 				split_spaces.c \
-				handler.c \
+				signal.c \
 				do_cd.c \
 
 SRC			:= $(notdir $(SRCS))

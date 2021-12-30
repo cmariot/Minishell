@@ -138,6 +138,7 @@ void			expand_env_variable(char ***splitted_line, t_env *env);
 int				check_quote(char *line);
 
 // handler signal
+int		   		signal_catcher(void);
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
 // cd
