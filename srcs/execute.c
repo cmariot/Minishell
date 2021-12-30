@@ -188,7 +188,13 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 					dup2(fd[1], STDOUT);
 					execute_cmd(minishell, command_line, i);
 					close(fd[0]);
-					//free_minishell(minishell);
+					close(fd[1]);
+					close(0);
+					close(1);
+					close(2);
+					close(stdin_saved);
+					close(stdout_saved);
+					free_minishell(minishell);
 					exit(EXIT_SUCCESS);
 				}
 				else
@@ -208,7 +214,13 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 				{
 					//sortie sur stdout`
 					execute_cmd(minishell, command_line, i);
-					//free_minishell(minishell);
+					close(0);
+					close(1);
+					close(2);
+					close(fd[0]);
+					close(stdin_saved);
+					close(stdout_saved);
+					free_minishell(minishell);
 					exit(EXIT_SUCCESS);
 				}
 				else

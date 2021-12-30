@@ -119,7 +119,7 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
 leaks : all
-		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=tests/.ignore_readline ./minishell
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=tests/.ignore_readline --track-origins=yes ./minishell
 
 # Check 42 norm 
 norm :
