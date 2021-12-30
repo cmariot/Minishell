@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/30 14:00:20 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/30 14:06:24 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,6 @@ SRCS			= main.c \
 				pipeline.c \
 				print_structure.c \
 				pwd_builtin.c \
-				check_quote.c \
 				split_command_line.c \
 				split_join_heredoc.c \
 				split_spaces.c \

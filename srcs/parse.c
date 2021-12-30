@@ -6,11 +6,41 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 23:01:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 14:06:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Minishell should not interpret unclosed quotes
+int	check_quote(char *line)
+{
+	int		i;
+	char	c;
+	bool	ok;
+
+	i = 0;
+	ok = TRUE;
+	while (line[i] != '\0')
+	{
+		if ((line[i] == '\"' || line[i] == '\''))
+		{
+			ok = FALSE;
+			c = line[i];
+			i++;
+			while (line[i] != c && line[i] != '\0')
+				i++;
+			if (line[i] == c)
+				ok = TRUE;
+		}
+		i++;
+	}
+	if (ok == TRUE)
+		return (1);
+	else
+		printf("minishell does not interpret unclosed quotes.\n");
+	return (0);
+}
 
 int	parse(t_command_line *command_line, t_shell *minishell)
 {
