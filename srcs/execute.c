@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 14:00:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 15:48:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,31 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 	return (42);
 }
 
+/* Execute the builtin and return 1 if the command is a builtin,
+ * if it's the exit builtin, return 2.
+ * Else return 0. */
+int	command_is_builtin(t_shell *minishell, char **command_and_args)
+{
+	if (ft_strcmp(command_and_args[0], "pwd") == 0)
+		pwd_builtin(minishell);
+	else if (ft_strcmp(command_and_args[0], "env") == 0)
+		env_builtin(minishell->env);
+	else if (ft_strcmp(command_and_args[0], "setenv") == 0)
+		setenv_builtin(minishell->env, "PWD", "/test");
+	else if (ft_strcmp(command_and_args[0], "unsetenv") == 0)
+		unsetenv_builtin(minishell->env, "PWD");
+	else if (ft_strcmp(command_and_args[0], "cd") == 0)
+		do_cd(minishell);
+	else if (ft_strcmp(command_and_args[0], "exit") == 0)
+	{
+		free_minishell(minishell);
+		return (2);
+	}
+	else
+		return (0);
+	return (1);
+}
+
 // a verifier : modifier le path dans une commande, puis appeler une commande,
 // doit on mettre a jour path_array a chaque tour ?
 void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
@@ -85,11 +110,25 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	char	*path_value;
 	char	**path_array;
 	char	**env_array;
+	int		builtin_ret;
 
 	env_array = envlist_to_array(minishell->env);
 	path_value = get_env_value("PATH", minishell->env);
 	path_array = ft_split(path_value, ':');
-	if (try_command_with_path(path_array, command_line, i, env_array) == 42)
+	builtin_ret = command_is_builtin(minishell, command_line->command[i].command_and_args);
+	if (builtin_ret)
+	{
+		printf("BUILTIN !\n");
+		if (builtin_ret == 2)
+		{
+			ft_free_array(env_array);
+			free(path_value);
+			ft_free_array(path_array);
+			exit(EXIT_SUCCESS);
+		}
+	}
+	else if (try_command_with_path(path_array, command_line, i, env_array)
+		== 42)
 		printf("minishell: %s: command not found\n",
 			command_line->command[i].command_and_args[0]);
 	free(path_value);
