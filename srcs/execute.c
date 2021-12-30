@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 01:05:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 11:21:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,10 +184,9 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 					ft_putstr_fd("ERROR fork()\n", 2);
 				else if (pid == 0)
 				{
-					//sortie de commande 1 sur fd[1]
+					close(fd[0]);
 					dup2(fd[1], STDOUT);
 					execute_cmd(minishell, command_line, i);
-					close(fd[0]);
 					close(fd[1]);
 					close(0);
 					close(1);
@@ -201,8 +200,8 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 				{
 					waitpid(pid, &pid, 0);
 					close(fd[1]);
-					//entree de la commande suivante sur fd[0]
 					dup2(fd[0], STDIN);
+					close(fd[0]);
 				}
 			}
 			else
@@ -212,12 +211,9 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 					ft_putstr_fd("ERROR fork()\n", 2);
 				else if (pid == 0)
 				{
-					//sortie sur stdout`
 					execute_cmd(minishell, command_line, i);
-					close(0);
-					close(1);
-					close(2);
 					close(fd[0]);
+					close(fd[1]);
 					close(stdin_saved);
 					close(stdout_saved);
 					free_minishell(minishell);
@@ -227,6 +223,7 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 				{
 					waitpid(pid, &pid, 0);
 					close(fd[0]);
+					close(fd[1]);
 					dup2(stdin_saved, 0);
 					dup2(stdout_saved, 1);
 					close(stdin_saved);
