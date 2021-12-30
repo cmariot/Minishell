@@ -16,30 +16,27 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
     (void)info;
     (void)secret;
-    size_t      size;
-    char        buf[99];
-    char        *cwd;
-    int         len;
-    size_t      i;
-
-    if (sig != kill)
+    if (sig == SIGINT)
     {
-        i = 0;
+        size_t size;
+        char buf[99];
+        char *cwd;
+        int len;
+        size_t i;
+    
+        i = 0; 
         size = 99;
         cwd = getcwd(buf, size);
-	    if (sig == SIGINT)
+        len = ft_strlen(cwd) - 1;
+        while (cwd[len] != '/' && len > -1)
         {
-            len = ft_strlen(cwd);
-            while (cwd[len] != '/' && len > 0)
-            {
-                len--;
-                i++;
-            }
-            cwd = ft_substr(cwd, ++len, i);
+            len--;
+            i++;
         }
+        cwd = ft_substr(cwd, ++len, --i);
         write(0, "\n", 1);
         ft_putstr_fd(cwd, 0);
-        write(0, " ➤ ", 5);
+        write(0, " ➤ ", 6);
         free(cwd);
     }
 }
