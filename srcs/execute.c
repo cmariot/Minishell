@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 15:48:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 16:04:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 	return (42);
 }
 
-/* Execute the builtin and return 1 if the command is a builtin,
+/* If the command is a builtin execute it and return 1,
  * if it's the exit builtin, return 2.
  * Else return 0. */
 int	command_is_builtin(t_shell *minishell, char **command_and_args)
@@ -118,7 +118,6 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	builtin_ret = command_is_builtin(minishell, command_line->command[i].command_and_args);
 	if (builtin_ret)
 	{
-		printf("BUILTIN !\n");
 		if (builtin_ret == 2)
 		{
 			ft_free_array(env_array);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 15:07:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 15:59:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	pwd_builtin(t_shell *minishell)
 	if (pwd != NULL)
 	{
 		ft_putstr(pwd);
-		write(1, "\n", 1);
+		ft_putstr("\n");
 		free(pwd);
 	}
 }
