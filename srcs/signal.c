@@ -16,6 +16,7 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
     (void)info;
     (void)secret;
+<<<<<<< HEAD
     size_t      size;
     char        buf[99];
     char        *cwd;
@@ -39,6 +40,31 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 	ft_putstr_fd(cwd, 0);
 	write(0, " ➤ ", 5);
 	free(cwd);
+=======
+    if (sig == SIGINT)
+    {
+        size_t size;
+        char buf[99];
+        char *cwd;
+        int len;
+        size_t i;
+    
+        i = 0; 
+        size = 99;
+        cwd = getcwd(buf, size);
+        len = ft_strlen(cwd) - 1;
+        while (cwd[len] != '/' && len > -1)
+        {
+            len--;
+            i++;
+        }
+        cwd = ft_substr(cwd, ++len, --i);
+        write(0, "\n", 1);
+        ft_putstr_fd(cwd, 0);
+        write(0, " ➤ ", 6);
+        free(cwd);
+    }
+>>>>>>> 321d0eab9565b1e4ea034cdf03279fc9183a36a3
 }
 
 int     signal_catcher(void)
