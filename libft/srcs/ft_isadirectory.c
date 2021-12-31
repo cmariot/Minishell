@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putarray.c                                      :+:      :+:    :+:   */
+/*   ft_isadirectory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 16:10:31 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 14:37:04 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/31 14:52:22 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/31 15:02:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// Print an array of char * like this :
-// name[i] = array[i]
-
-void	ft_putarray(char *name, char **array)
+/* Check if path is a directory */
+bool	ft_isadirectory(char *path)
 {
-	int	i;
+	DIR	*fd_dir;
 
-	i = 0;
-	while (array[i])
+	fd_dir = opendir(path);
+	if (fd_dir == NULL)
 	{
-		ft_putstr(name);
-		ft_putchar('[');
-		ft_putnbr(i);
-		ft_putstr("] = [");
-		ft_putstr(array[i]);
-		ft_putstr("]\n");
-		i++;
+		return (FALSE);
+	}
+	else
+	{
+		closedir(fd_dir);
+		return (TRUE);
 	}
 }

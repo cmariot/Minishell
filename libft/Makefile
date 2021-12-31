@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/22 16:51:31 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/31 15:05:23 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS	= ft_atoi.c \
 		  ft_calloc.c \
 		  ft_free_array.c \
 		  ft_itoa.c \
+		  ft_isadirectory.c \
 		  ft_isalnum.c \
 		  ft_isalpha.c \
 		  ft_isascii.c \

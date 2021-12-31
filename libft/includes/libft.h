@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 13:34:23 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 17:23:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/31 15:14:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,16 @@
 
 # define BUFFER_SIZE 50
 
+# define TRUE 1
+# define FALSE 0
+
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <sys/types.h>
+# include <dirent.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -33,6 +39,7 @@ void		ft_bzero(void *b, size_t n);
 void		*ft_calloc(size_t count, size_t size);
 void		ft_free_array(char **array);
 size_t		ft_intlen(int n);
+bool		ft_isadirectory(char *path);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 10:48:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/31 15:30:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
    If it's execute, the child process stops.
    Else try the next path.  */
 
-//erreur a gerer : dossier en tant que commande principale
 int	try_command_with_path(char **path_array, t_command_line *command_line,
 	int command_index, char **env)
 {
@@ -56,8 +55,9 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 
 	command_path
 		= ft_strdup(command_line->command[command_index].command_and_args[0]);
-	if (access(command_path, F_OK) == 0)
-		if (access(command_path, X_OK) == 0)
+	//check if the command begins with "./" or "../.." before to exec
+	if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
+		if (ft_isadirectory(command_path) == FALSE)
 			if (!execute_cmnd(&command_path, command_line, command_index, env))
 				return (0);
 	free(command_path);
@@ -67,8 +67,8 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 		command_path = ft_strjoin(path_with_slash,
 				command_line->command[command_index].command_and_args[0]);
 		free(path_with_slash);
-		if (access(command_path, F_OK) == 0)
-			if (access(command_path, X_OK) == 0)
+		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
+			if (ft_isadirectory(command_path) == FALSE)
 				if (!execute_cmnd(&command_path, command_line,
 						command_index, env))
 					return (0);
