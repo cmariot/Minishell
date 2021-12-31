@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/30 19:26:52 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/30 21:09:30 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS			= main.c \
 				  init_minishell.c \
 				  free_minishell.c \
 				  parse.c \
+				  parse_pipes.c \
 				  parse_simple_commands.c \
 				  parse_redirections.c \
 				  pipeline.c \
