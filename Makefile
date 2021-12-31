@@ -67,6 +67,7 @@ SRCS			= main.c \
 				  init_minishell.c \
 				  free_minishell.c \
 				  parse.c \
+				  parse_pipes.c \
 				  parse_simple_commands.c \
 				  parse_redirections.c \
 				  pipeline.c \
