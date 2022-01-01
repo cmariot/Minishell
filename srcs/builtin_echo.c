@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 10:35:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 13:54:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 20:44:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	builtin_echo(char **command_and_args)
 	}
 	if (check_n_option(*command_and_args, &n_option) == TRUE)
 		command_and_args++;
-	last_index = ft_arraylen(command_and_args) - 2;
+	last_index = ft_arraylen(command_and_args) - 1;
 	i = 0;
 	while (command_and_args[i] != NULL)
 	{
