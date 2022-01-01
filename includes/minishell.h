@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 10:47:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 20:11:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char			**remove_str_from_array(char **old, char *str);
 
 // env.c		
 t_env			*save_env(char **array);
+bool			contains_equal(char *str, t_env *env);
 
 // get_command.c
 void			get_command_line(t_shell *minishell,
@@ -105,7 +106,7 @@ size_t			count_commands(char **splitted_line);
 
 // parse_simple_commands.c
 int				get_simple_commands(t_command_line *command_line,
-					char **splitted_line);
+					char **splitted_line, t_env *env);
 // parse_redirections.c
 int				parse_redirections(t_command_line *command_line);
 int				is_redirection(char *element);
@@ -142,7 +143,7 @@ char			**envlist_to_array(t_env *envlist);
 void			make_pipe(t_shell *minishell, t_command_line *command_line);
 
 // expand_env_variable.c
-void			expand_env_variable(char ***splitted_line, t_env *env);
+void			expand_env_variable(char **splitted_line, t_env *env);
 
 // check quote
 int				check_quote(char *line);
@@ -154,4 +155,9 @@ void			ft_handler(int sig, siginfo_t *info, void *secret);
 // cd
 void			do_cd(t_shell *minishell);
 
+//remove_comments.c
+char			**remove_comments(char **splitted_line);
+
+size_t			ft_arraylen(char **array);
+bool			ft_isadirectory(char *path);
 #endif

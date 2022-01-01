@@ -6,19 +6,19 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 10:35:53 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 13:20:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 13:54:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	get_array_len(char **array)
+size_t	ft_arraylen(char **array)
 {
 	size_t	len;
 
 	len = 0;
-	while (array[len++])
-		;
+	while (array[len] != NULL)
+		len++;
 	return (len);
 }
 
@@ -54,7 +54,7 @@ int	builtin_echo(char **command_and_args)
 	}
 	if (check_n_option(*command_and_args, &n_option) == TRUE)
 		command_and_args++;
-	last_index = get_array_len(command_and_args) - 2;
+	last_index = ft_arraylen(command_and_args) - 2;
 	i = 0;
 	while (command_and_args[i] != NULL)
 	{

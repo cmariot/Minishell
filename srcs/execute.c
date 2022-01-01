@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 15:30:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 20:06:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 	command_path
 		= ft_strdup(command_line->command[command_index].command_and_args[0]);
 	//check if the command begins with "./" or "../.." before to exec
-	if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
-		if (ft_isadirectory(command_path) == FALSE)
-			if (!execute_cmnd(&command_path, command_line, command_index, env))
-				return (0);
+	if (ft_strlen(command_path) > 2 && command_path[0] == '.' && command_path[1] == '/')
+	{
+		command_path += 2;
+		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
+			if (ft_isadirectory(command_path) == FALSE)
+				if (!execute_cmnd(&command_path, command_line, command_index, env))
+					return (0);
+	}
 	free(command_path);
 	while (*path_array)
 	{
@@ -90,16 +94,12 @@ int	command_is_builtin(t_shell *minishell, char **command_and_args)
 	else if (ft_strcmp(command_and_args[0], "exit") == 0)
 	{
 		free_minishell(minishell);
-		return (2);
+		exit(EXIT_SUCCESS);
 	}
 	else if (ft_strcmp(command_and_args[0], "pwd") == 0)
 		pwd_builtin(minishell);
 	else if (ft_strcmp(command_and_args[0], "env") == 0)
 		env_builtin(minishell->env);
-	else if (ft_strcmp(command_and_args[0], "setenv") == 0)
-		setenv_builtin(minishell->env, "PWD", "/test");
-	else if (ft_strcmp(command_and_args[0], "unsetenv") == 0)
-		unsetenv_builtin(minishell->env, "PWD");
 	else
 		return (0);
 	return (1);
@@ -112,16 +112,12 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	char	*path_value;
 	char	**path_array;
 	char	**env_array;
-	int		builtin_ret;
 
-	builtin_ret = command_is_builtin(minishell,
-			command_line->command[i].command_and_args);
-	if (builtin_ret)
-	{
-		if (builtin_ret == 2)
-			exit(EXIT_SUCCESS);
+	if (command_line->command[i].command_and_args == NULL)
 		return ;
-	}
+	if (command_is_builtin(minishell,
+			command_line->command[i].command_and_args))
+		return ;
 	env_array = envlist_to_array(minishell->env);
 	path_value = get_env_value("PATH", minishell->env);
 	path_array = ft_split(path_value, ':');
@@ -130,8 +126,6 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 			command_line->command[i].command_and_args[0]);
 	free(path_value);
 	ft_free_array(path_array);
-	ft_lstclear_env(&minishell->env, free);
-	minishell->env = save_env(env_array);
 	ft_free_array(env_array);
 }
 

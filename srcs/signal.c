@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2021/12/30 18:37:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/31 16:11:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 			i++;
 		}
 		cwd = ft_substr(cwd, ++len, --i);
+		//FD 0 ?
 		write(0, "\n", 1);
 		ft_putstr_fd(cwd, 0);
 		write(0, " ➤ ", 6);

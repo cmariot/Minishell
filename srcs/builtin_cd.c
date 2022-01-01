@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2021/12/31 13:20:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 14:58:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,23 @@ char	*expand_tilde(t_shell *minishell, char *path)
 	return (new_path);
 }
 
-void	go_home(t_shell *minishell, char *directory_path)
+void	go_home(t_shell *minishell)
 {
 	char		*home;
 
 	home = get_env_value("HOME", minishell->env);
 	if (home == NULL)
 		return ;
-	if (access(directory_path, F_OK) == 0)
+	if (access(home, F_OK) == 0)
 	{
-		if (access(directory_path, X_OK) == 0)
-			chdir(directory_path);
+		//verif is a directory a faire
+		if (access(home, X_OK) == 0)
+			chdir(home);
 		else
-			printf("minishell: cd: %s: Permission denied\n",
-				minishell->command_line.command->command_and_args[1]);
+			printf("minishell: cd: %s: Permission denied\n", home);
 	}
 	else
-		printf("minishell: cd: %s: No such file or directory\n",
-			minishell->command_line.command->command_and_args[1]);
+		printf("minishell: cd: %s: No such file or directory\n", home);
 }
 
 /* Dans le man cd :
@@ -63,9 +62,9 @@ void	do_cd(t_shell *minishell)
 	char		*directory_path;
 	char		*cwd;
 
-	directory_path = minishell->command_line.command->command_and_args[1];
-	if (directory_path)
+	if (minishell->command_line.command->command_and_args[1] != NULL)
 	{
+		directory_path = minishell->command_line.command->command_and_args[1];
 		if (directory_path[0] == '~')
 			directory_path = expand_tilde(minishell, directory_path);
 		if (access(directory_path, F_OK) == 0)
@@ -80,9 +79,9 @@ void	do_cd(t_shell *minishell)
 			printf("minishell: cd: %s: No such file or directory\n",
 				minishell->command_line.command->command_and_args[1]);
 	}
-	else if (!directory_path)
-		go_home(minishell, directory_path);
-	cwd = getcwd(NULL, 1);
+	else
+		go_home(minishell);
+	cwd = getcwd(NULL, 255);
 	setenv_builtin(minishell->env, "PWD", cwd);
 	free(cwd);
 }

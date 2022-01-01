@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_builtin.c                                      :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:03:11 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 14:29:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 13:21:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,38 @@ void	unsetenv_builtin(t_env *env, char *name)
 		}
 		env = env->next;
 	}
+}
+
+void	save_in_env(char *str, size_t i, t_env *env)
+{
+	char	*name;
+	char	*value;
+
+	name = ft_substr(str, 0, i);
+	value = ft_strdup(str + i + 1);
+	setenv_builtin(env, name, value);
+	free(name);
+	free(value);
+}
+
+/* During the parsing, if an argument conains an equal -> save in env */
+bool	contains_equal(char *str, t_env *env)
+{
+	int	i;
+	int	min_len;
+
+	min_len = ft_strlen(str) - 2;
+	if (min_len <= 0)
+		return (FALSE);
+	i = 1;
+	while (i <= min_len)
+	{
+		if (str[i] == '=')
+		{
+			save_in_env(str, i, env);
+			return (TRUE);
+		}
+		i++;
+	}
+	return (FALSE);
 }
