@@ -6,12 +6,13 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/02 13:43:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 16:43:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//gestion d'erreur a voir ?
 char	*expand_tilde(t_shell *minishell, char *path)
 {
 	char	*home;
@@ -26,6 +27,7 @@ char	*expand_tilde(t_shell *minishell, char *path)
 	return (new_path);
 }
 
+//valeur de retour ?
 void	go_home(t_shell *minishell)
 {
 	char		*home;
@@ -35,14 +37,48 @@ void	go_home(t_shell *minishell)
 		return ;
 	if (access(home, F_OK) == 0)
 	{
-		//verif is a directory a faire
-		if (access(home, X_OK) == 0)
-			chdir(home);
+		if (ft_isadirectory(home) == TRUE)
+		{
+			if (access(home, X_OK) == 0)
+			{
+				chdir(home);
+				return ;
+			}
+			else
+				printf("minishell: cd: %s: Permission denied\n", home);
+		}
 		else
-			printf("minishell: cd: %s: Permission denied\n", home);
+			printf("minishell: cd: not a directory: %s\n", home);
 	}
 	else
 		printf("minishell: cd: %s: No such file or directory\n", home);
+	return ;
+}
+
+void	go_to_directory(char *directory_path, t_shell *minishell)
+{
+	if (directory_path[0] == '~')
+		directory_path = expand_tilde(minishell, directory_path);
+	if (access(directory_path, F_OK) == 0)
+	{
+		if (ft_isadirectory(directory_path) == TRUE)
+		{
+			if (access(directory_path, X_OK) == 0)
+			{
+				chdir(directory_path);
+				return ;
+			}
+			else
+				printf("minishell: cd: %s: Permission denied\n",
+					minishell->command_line.command->command_and_args[1]);
+		}
+		else
+			printf("minishell: cd: not a directory: %s\n", directory_path);
+	}
+	else
+		printf("minishell: cd: %s: No such file or directory\n",
+			minishell->command_line.command->command_and_args[1]);
+	return ;
 }
 
 /* Dans le man cd :
@@ -59,26 +95,11 @@ void	go_home(t_shell *minishell)
  */
 void	do_cd(t_shell *minishell)
 {
-	char		*directory_path;
 	char		*cwd;
 
 	if (minishell->command_line.command->command_and_args[1] != NULL)
-	{
-		directory_path = minishell->command_line.command->command_and_args[1];
-		if (directory_path[0] == '~')
-			directory_path = expand_tilde(minishell, directory_path);
-		if (access(directory_path, F_OK) == 0)
-		{
-			if (access(directory_path, X_OK) == 0)
-				chdir(directory_path);
-			else
-				printf("minishell: cd: %s: Permission denied\n",
-					minishell->command_line.command->command_and_args[1]);
-		}
-		else
-			printf("minishell: cd: %s: No such file or directory\n",
-				minishell->command_line.command->command_and_args[1]);
-	}
+		go_to_directory(minishell->command_line.command->command_and_args[1],
+			minishell);
 	else
 		go_home(minishell);
 	cwd = getcwd(NULL, 255);

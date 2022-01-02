@@ -3,6 +3,9 @@ A FAIRE :
 - [ ] executer les commandes seulement si on a le ./ avant le nom de la commande ou un nom de dossier
 - [ ] voir le man de echo pour verifier tous les cas
 - [ ] voir le man de cd pour verifier tous les cas
+- [ ] valeurs de retour des builtins
+- [ ] redirection de l'output > et >>
+- [ ] redirection de l'input < et <<
 
 DONE :
 - [X] les commandes d'un seul caractere ne renvoient pas de message d'erreur : fix

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 23:41:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 16:21:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		command_line->splitted_line = split_command_line(command_line->line);
 		if (command_line->splitted_line == NULL)
 			return (-1);
+		//ouvrir/creer fichiers redirection ici ?
 		expand_env_variable(command_line->splitted_line,
 			minishell->env);
 		if (get_simple_commands(command_line,
