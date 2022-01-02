@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 14:33:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 23:40:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	current_directory_len(char *pwd)
 }
 
 // The prompts is set as the name of the current directory.
-char	*get_prompt(t_shell *minishell)
+char	*get_prompt(void)
 {
 	char	*pwd;
 	int		pwd_last_index;
@@ -56,19 +56,18 @@ char	*get_prompt(t_shell *minishell)
 	int		cur_dir_len;
 	char	*prompt;
 
-	pwd = get_env_value("PWD", minishell->env);
+	pwd = getcwd(NULL, 255);
 	if (pwd == NULL)
 		return (ft_strdup("Minishell ➤ "));
 	cur_dir_len = current_directory_len(pwd);
+	if (cur_dir_len == 0)
+		return (ft_strdup("/ ➤ "));
 	current_directory = ft_calloc(cur_dir_len + 1, sizeof(char));
 	if (!current_directory)
 		return (ft_strdup("Minishell ➤ "));
 	pwd_last_index = ft_strlen(pwd) - 1;
-	if (cur_dir_len - 1 == 0)
-		current_directory = ft_strdup("/");
-	else
-		while (cur_dir_len - 1 >= 0)
-			current_directory[cur_dir_len-- - 1] = pwd[pwd_last_index--];
+	while (cur_dir_len - 1 >= 0)
+		current_directory[cur_dir_len-- - 1] = pwd[pwd_last_index--];
 	prompt = ft_strjoin(current_directory, " ➤ ");
 	free(current_directory);
 	free(pwd);
@@ -80,7 +79,7 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 {
 	char	*prompt;
 
-	prompt = get_prompt(minishell);
+	prompt = get_prompt();
 	if (command_line->line != NULL)
 		free(command_line->line);
 	command_line->line = readline(prompt);

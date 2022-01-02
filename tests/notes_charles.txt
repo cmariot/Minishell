@@ -1,4 +1,5 @@
 A FAIRE :
+- [ ] verifier leaks export et unset
 - [ ] executer les commandes seulement si on a le ./ avant le nom de la commande ou un nom de dossier
 - [ ] voir le man de echo pour verifier tous les cas
 - [ ] voir le man de cd pour verifier tous les cas
@@ -8,3 +9,5 @@ DONE :
 - [X] commentaires : si un mot commence par # on ignore la fin de la ligne
 - [X] env a sauvegarder dans le cas ou on a un ou plusieurs 'name=value' dans les premiers elements de la ligne de commande
 - [X] env a sauvegarder correctement entre chaque nouvelle commande
+- [X] export
+- [X] unset : 1er element de la liste a supprimer pose probleme : ok

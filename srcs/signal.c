@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2021/12/31 16:11:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 23:29:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
 	size_t	size;
-	char	buf[99];
+	char	buf[255];
 	char	*cwd;
 	int		len;
 	size_t	i;
@@ -25,7 +25,7 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 	if (sig == SIGINT)
 	{
 		i = 0;
-		size = 99;
+		size = 255;
 		cwd = getcwd(buf, size);
 		len = ft_strlen(cwd) - 1;
 		while (cwd[len] != '/' && len > -1)
@@ -33,11 +33,10 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 			len--;
 			i++;
 		}
-		cwd = ft_substr(cwd, ++len, --i);
-		//FD 0 ?
-		write(0, "\n", 1);
-		ft_putstr_fd(cwd, 0);
-		write(0, " ➤ ", 6);
+		cwd = ft_substr(cwd, ++len, i);
+		write(1, "\n", 1);
+		ft_putstr_fd(cwd, 1);
+		write(1, " ➤ ", 6);
 		free(cwd);
 	}
 }

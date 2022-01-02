@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:03:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 13:21:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 14:14:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	env_builtin(t_env *env)
 
 // If the element name is in the linked list env, change its value,
 // else add name and value
-void	setenv_builtin(t_env *env, char *name, char *value)
+void	add_to_env(t_env *env, char *name, char *value)
 {
 	t_env	*tmp;
 
@@ -46,6 +46,34 @@ void	setenv_builtin(t_env *env, char *name, char *value)
 	ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
 }
 
+void	export_builtin(t_env *env, char **args)
+{
+	size_t	i;
+	size_t	j;
+	char	*name;
+	char	*value;
+
+	i = 0;
+	while (args[i] != NULL)
+	{
+		if (ft_strlen(args[i]) > 2)
+		{
+			j = 0;
+			while (args[i][j] && args[i][j] != '=')
+				j++;
+			name = ft_substr(args[i], 0, j);
+			value = ft_strdup(args[i] + j + 1);
+			if (ft_strcmp(name, "") != 0 && value)
+				add_to_env(env, name, value);
+			if (name)
+				free(name);
+			if (value)
+				free(value);
+		}
+		i++;
+	}
+}
+
 // Delete an element of the linked list that store 
 // the name and the value of env.
 
@@ -53,25 +81,61 @@ void	setenv_builtin(t_env *env, char *name, char *value)
 // Create a new link : previous_of_element->next_of_element
 // free the name and the value, set them to NULL, and free the element
 
-void	unsetenv_builtin(t_env *env, char *name)
+void	remove_first_element(t_env **env)
 {
 	t_env	*tmp;
 
-	while (env)
+	tmp = (*env)->next;
+	ft_lstdelone_env(*env, free);
+	*env = tmp;
+}
+
+t_env *unset_builtin(t_env *env, char **names)
+{
+	size_t	i;
+	t_env	*env_backup;
+	t_env	*tmp;
+
+	if (*names == NULL)
+		return (env);
+	i = 0;
+	env_backup = env;
+	while (names[i] != NULL)
 	{
-		tmp = env->next;
-		if (ft_strcmp(tmp->name, name) == 0)
+		if (*names[i] == '/')
 		{
-			env->next = tmp->next;
-			free(tmp->name);
-			tmp->name = NULL;
-			free(tmp->value);
-			tmp->value = NULL;
-			free(tmp);
-			break ;
+			printf("minishell: unset: '%s': not a valid identifier.\n", names[i]);
+			i++;
+			continue ;
 		}
-		env = env->next;
+		// faire cas 1er element de la liste a supprimer ici
+		if (ft_strcmp(env->name, names[i]) == 0)
+		{
+			printf("SUPPRIMER 1er maillon ... \n");
+			remove_first_element(&env);
+			printf("env->name = %s\n", env->name);
+			i++;
+			continue ;
+		}
+		while (env->next != NULL)
+		{
+			tmp = env->next;
+			if (ft_strcmp(tmp->name, names[i]) == 0)
+			{
+				env->next = tmp->next;
+				free(tmp->name);
+				tmp->name = NULL;
+				free(tmp->value);
+				tmp->value = NULL;
+				free(tmp);
+				break ;
+			}
+			env = env->next;
+		}
+		env = env_backup;
+		i++;
 	}
+	return (env);
 }
 
 void	save_in_env(char *str, size_t i, t_env *env)
@@ -81,7 +145,7 @@ void	save_in_env(char *str, size_t i, t_env *env)
 
 	name = ft_substr(str, 0, i);
 	value = ft_strdup(str + i + 1);
-	setenv_builtin(env, name, value);
+	add_to_env(env, name, value);
 	free(name);
 	free(value);
 }

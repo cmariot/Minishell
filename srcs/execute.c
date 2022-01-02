@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 20:06:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 14:15:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,10 @@ int	command_is_builtin(t_shell *minishell, char **command_and_args)
 		pwd_builtin(minishell);
 	else if (ft_strcmp(command_and_args[0], "env") == 0)
 		env_builtin(minishell->env);
+	else if (ft_strcmp(command_and_args[0], "unset") == 0)
+		minishell->env = unset_builtin(minishell->env, command_and_args + 1);
+	else if (ft_strcmp(command_and_args[0], "export") == 0)
+		export_builtin(minishell->env, command_and_args + 1);
 	else
 		return (0);
 	return (1);

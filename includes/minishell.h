@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 20:11:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 14:15:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ bool			contains_equal(char *str, t_env *env);
 // get_command.c
 void			get_command_line(t_shell *minishell,
 					t_command_line *command_line);
-char			*get_prompt(t_shell *ministruct);
+char			*get_prompt(void);
 char			*get_env_value(char *name, t_env *env);
 
 // env_list_utils.c
@@ -119,8 +119,9 @@ int				builtin(char *command, t_shell *minishell);
 
 // env_builtin.c
 void			env_builtin(t_env *env);
-void			setenv_builtin(t_env *env, char *name, char *value);
-void			unsetenv_builtin(t_env *env, char *name);
+void			export_builtin(t_env *env, char **args);
+t_env			*unset_builtin(t_env *env, char **names);
+void			add_to_env(t_env *env, char *name, char *value);
 
 // pipielne.c
 void			create_pipeline(t_command_line *command_line,

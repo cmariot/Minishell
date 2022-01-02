@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/01 14:58:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 13:43:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ void	do_cd(t_shell *minishell)
 	else
 		go_home(minishell);
 	cwd = getcwd(NULL, 255);
-	setenv_builtin(minishell->env, "PWD", cwd);
+	add_to_env(minishell->env, "PWD", cwd);
 	free(cwd);
 }
