@@ -11,4 +11,4 @@ DONE :
 - [X] export
 - [X] unset : 1er element de la liste a supprimer pose probleme : ok
 - [X] verifier leaks export et unset
-- [X] cas particuliers d'execution de commande avec chemin absolu, check le ./
+- [X] cas particuliers d'execution de commande avec chemin absolu, check le ./ et execution dans des dossiers distants

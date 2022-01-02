@@ -1,0 +1,10 @@
+#Test du builtin echo
+echo
+echo -n
+echo A
+echo -n A
+echo 1 2 3 
+echo -n 1 2 3 
+echo $PWD
+echo "test"
+echo 'test'

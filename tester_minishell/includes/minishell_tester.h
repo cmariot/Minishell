@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl_without_bn.c                                   :+:      :+:    :+:   */
+/*   minishell_tester.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/12 14:35:22 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 21:26:01 by cmariot          ###   ########.fr       */
+/*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/02 23:25:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MINISHELL_TESTER_H
+# define MINISHELL_TESTER_H
 
-char	*gnl_without_bn(int fd)
-{
-	char	*gnl_line;
-	char	*new_line;
+# include "libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
-	gnl_line = get_next_line(fd);
-	if (gnl_line)
-	{
-		new_line = ft_substr(gnl_line, 0, ft_strlen(gnl_line) - 1);
-		free(gnl_line);
-		return (new_line);
-	}
-	else
-	{
-		return (NULL);
-	}
-}
+# define FALSE 0
+# define TRUE 1
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
+
+char		*gnl_without_bn(int fd);
+
+#endif
