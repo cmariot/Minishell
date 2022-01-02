@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 14:15:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 17:32:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,33 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	}
 }
 
+int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
+		char **env)
+{
+	char	*command_path;
+
+	command_path = command_line->command[command_index].command_and_args[0];
+	if (ft_strlen(command_path) > 2 && command_path[0] == '.'
+		&& command_path[1] == '/')
+	{
+		command_path += 2;
+		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
+			if (ft_isadirectory(command_path) == FALSE)
+				if (!execute_cmnd(&command_path, command_line,
+						command_index, env))
+					return (0);
+	}
+	else
+	{
+		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
+			if (ft_isadirectory(command_path) == FALSE)
+				if (!execute_cmnd(&command_path, command_line,
+						command_index, env))
+					return (0);
+	}
+	return (1);
+}
+
 /* For all the possible path of env,
    Put a '/' and the command at the end of the path,
    Check if the command exist and if it can be execute, if ok execute it.
@@ -53,18 +80,8 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 	char	*path_with_slash;
 	char	*command_path;
 
-	command_path
-		= ft_strdup(command_line->command[command_index].command_and_args[0]);
-	//check if the command begins with "./" or "../.." before to exec
-	if (ft_strlen(command_path) > 2 && command_path[0] == '.' && command_path[1] == '/')
-	{
-		command_path += 2;
-		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
-			if (ft_isadirectory(command_path) == FALSE)
-				if (!execute_cmnd(&command_path, command_line, command_index, env))
-					return (0);
-	}
-	free(command_path);
+	if (command_in_absolute_path(command_line, command_index, env) == 0)
+		return (0);
 	while (*path_array)
 	{
 		path_with_slash = ft_strjoin(*path_array, "/");
@@ -128,7 +145,8 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	if (try_command_with_path(path_array, command_line, i, env_array) == 42)
 		printf("minishell: %s: command not found\n",
 			command_line->command[i].command_and_args[0]);
-	free(path_value);
+	if (path_value)
+		free(path_value);
 	ft_free_array(path_array);
 	ft_free_array(env_array);
 }
