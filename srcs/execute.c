@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 17:32:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 17:35:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
 		&& command_path[1] == '/')
 	{
 		command_path += 2;
+		printf("COMMANDE = [%s]\n", command_path);
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
 				if (!execute_cmnd(&command_path, command_line,
