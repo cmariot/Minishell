@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 17:35:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 18:00:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,36 @@ int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
 		char **env)
 {
 	char	*command_path;
+	size_t	len;
 
-	command_path = command_line->command[command_index].command_and_args[0];
+	command_path
+		= ft_strdup(command_line->command[command_index].command_and_args[0]);
 	if (ft_strlen(command_path) > 2 && command_path[0] == '.'
 		&& command_path[1] == '/')
 	{
-		command_path += 2;
-		printf("COMMANDE = [%s]\n", command_path);
-		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
-			if (ft_isadirectory(command_path) == FALSE)
+		if (access(command_path + 2, F_OK) == 0
+			&& access(command_path + 2, X_OK) == 0)
+			if (ft_isadirectory(command_path + 2) == FALSE)
 				if (!execute_cmnd(&command_path, command_line,
 						command_index, env))
 					return (0);
 	}
 	else
 	{
+		//verifier cette partie pas sur que bash fonctionne reellement comme ca
+		len = 0;
+		while (command_path[len] != '/' && command_path[len])
+			len++;
+		if (len == ft_strlen(command_path))
+			return (1);
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
 				if (!execute_cmnd(&command_path, command_line,
 						command_index, env))
 					return (0);
 	}
+	if (command_path != NULL)
+		free(command_path);
 	return (1);
 }
 
