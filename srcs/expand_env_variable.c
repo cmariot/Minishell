@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 21:28:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 11:04:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ void	expand_env_variable(char **splitted_line, t_env *env)
 		if (splitted_line[i][0] == '$')
 		{
 			name = ft_strdup(splitted_line[i] + 1);
+			//gestion du $?, qui renvoie l'exit status du pipeline 
+			//de premier plan le plus récemment exécuté.
+			if (ft_strcmp("?", name) == 0)
+			{
+				free(splitted_line[i]);
+				splitted_line[i] = ft_itoa(999);
+				i++;
+				continue ;
+			}
 			value = get_env_value(name, env);
 			if (value != NULL)
 			{

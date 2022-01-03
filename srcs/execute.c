@@ -6,11 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 18:00:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 11:52:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_status = 0;
 
 /* Create a new process in which the command is execute,
  * the parent process will wait the child exit to free command_path. */
@@ -18,6 +20,7 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 		size_t command_index, char **env)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -27,18 +30,21 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	}
 	else if (pid == 0)
 	{
-		execve(*command_path,
+		status = execve(*command_path,
 			command_line->command[command_index].command_and_args, env);
-		ft_putstr_fd("Command execution error\n", 2);
-		exit(-1);
+		exit(status);
 	}
-	else
+	waitpid(pid, &status, 0);
+	if (*command_path != NULL)
+		free(*command_path);
+	g_exit_status = 0;
+	if (WIFEXITED(status))
 	{
-		waitpid(pid, &pid, 0);
-		if (*command_path != NULL)
-			free(*command_path);
-		return (0);
+		printf("WXITSTATUS\n");
+		g_exit_status = WEXITSTATUS(status);
 	}
+	printf("EXIT_STATUS = %d\n", g_exit_status);
+	return (g_exit_status);
 }
 
 int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
@@ -61,7 +67,6 @@ int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
 	}
 	else
 	{
-		//verifier cette partie pas sur que bash fonctionne reellement comme ca
 		len = 0;
 		while (command_path[len] != '/' && command_path[len])
 			len++;
@@ -103,7 +108,8 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 				if (!execute_cmnd(&command_path, command_line,
 						command_index, env))
 					return (0);
-		free(command_path);
+		if (command_path != NULL)
+			free(command_path);
 		(path_array)++;
 	}
 	return (42);
@@ -153,8 +159,11 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	path_value = get_env_value("PATH", minishell->env);
 	path_array = ft_split(path_value, ':');
 	if (try_command_with_path(path_array, command_line, i, env_array) == 42)
+	{
 		printf("minishell: %s: command not found\n",
 			command_line->command[i].command_and_args[0]);
+		printf("EXIT_STATUS = 127\n");
+	}
 	if (path_value)
 		free(path_value);
 	ft_free_array(path_array);

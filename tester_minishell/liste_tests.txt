@@ -1,4 +1,8 @@
 #Test du builtin echo
+cd /
+echo $PWD
+echo $PWD $HOME
+echo$PWD$HOME
 echo
 echo -n
 echo A
@@ -6,5 +10,5 @@ echo -n A
 echo 1 2 3 
 echo -n 1 2 3 
 echo $PWD
-echo "test"
 echo 'test'
+aaaaaaaaa

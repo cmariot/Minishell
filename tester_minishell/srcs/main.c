@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 23:49:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 00:57:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	fork_command(char *command, char **command_and_args, char **env)
 {
 	pid_t	pid;
+	int		status;
+	int		exit_status;
 
 	pid = fork();
 	if (pid == -1)
@@ -30,14 +32,21 @@ int	fork_command(char *command, char **command_and_args, char **env)
 	}
 	else
 	{
-		waitpid(pid, &pid, 0);
-		return (0);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			exit_status = WEXITSTATUS(status);
+			return (exit_status);
+		}
+		else
+			return (0);
 	}
 }
 
 int	fork_redirection(int fd_new_file, char *command_path, char **command_and_args, char **env)
 {
 	pid_t	pid;
+	int		exit_status;
 
 	pid = fork();
 	if (pid == -1)
@@ -48,7 +57,8 @@ int	fork_redirection(int fd_new_file, char *command_path, char **command_and_arg
 	else if (pid == 0)
 	{
 		dup2(fd_new_file, 1);
-		fork_command(command_path, command_and_args, env);
+		exit_status = fork_command(command_path, command_and_args, env);
+		printf("exit status = %d", exit_status);
 		exit(1);
 	}
 	else
