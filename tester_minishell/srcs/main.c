@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 14:36:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:50:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	fork_command(char *command, char **command_and_args, char **env)
 	else
 	{
 		waitpid(pid, &status, 0);
+		usleep(10000);
 		if (WIFEXITED(status))
 		{
 			exit_status = WEXITSTATUS(status);
@@ -76,7 +77,7 @@ char	*execute_with_bash(char *commande, int number, char **env)
 	char	*command_and_args[4];
 
 	tmp = ft_itoa(number);
-	new_file = ft_strjoin("test_bash_", tmp);
+	new_file = ft_strjoin(".test_bash_", tmp);
 	free(tmp);
 	fd_new_file = open(new_file, O_RDWR | O_CREAT, 0644);
 	command_and_args[0] = "/bin/bash";
@@ -96,7 +97,7 @@ char	*execute_with_minishell(char *commande, int number, char **env)
 	char	*command_and_args[4];
 
 	tmp = ft_itoa(number);
-	new_file = ft_strjoin("test_minishell_", tmp);
+	new_file = ft_strjoin(".test_minishell_", tmp);
 	free(tmp);
 	fd_new_file = open(new_file, O_RDWR | O_CREAT, 0644);
 	command_and_args[0] = "../minishell";

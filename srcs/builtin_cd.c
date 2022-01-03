@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/03 14:15:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:54:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	go_to_dir(char *directory_path, t_shell *minishell)
 {
 	if (directory_path[0] == '~')
 		directory_path = expand_tilde(minishell, directory_path);
-	else if (access(directory_path, F_OK) != 0)
+	if (access(directory_path, F_OK) != 0)
 		printf("minishell: cd: %s: No such file or directory\n",
 			minishell->command_line.command->command_and_args[1]);
 	else if (ft_isadirectory(directory_path) == FALSE)

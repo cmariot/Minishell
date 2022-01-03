@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 14:30:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 15:48:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,63 @@ void	remove_from_array(char **splitted_line, int i)
 	splitted_line[j] = NULL;
 }
 
+size_t	get_env_name_len(char *name, size_t index)
+{
+	size_t	len;
+
+	len = 0;
+	while (name[index] != '\0' && name[index] != '$')
+	{
+		len++;
+		index++;
+	}
+	return (len);
+}
+
 // a implementer les " et les ' : comportement bash a
 //prendre comme reference mais voir comment ca fonctionne
 void	expand_env_variable(char **splitted_line, t_env *env)
 {
+	//fonction a revoir, surement plein de leaks ...
 	char	*value;
 	char	*name;
+	size_t	len;
+	size_t	index;
 	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (splitted_line[i])
 	{
+		name = NULL;
+		index = 0;
 		if (splitted_line[i][0] == '$' && splitted_line[i][1] != '\0')
 		{
-			name = ft_strdup(splitted_line[i] + 1);
-			if (ft_strcmp("?", name) == 0)
+			while (splitted_line[i][index] != '\0')
 			{
-				free(splitted_line[i]);
-				free(name);
-				splitted_line[i] = ft_itoa(return_global_exit_status());
-				i++;
-				continue ;
+				len = get_env_name_len(splitted_line[i] + 1, index);
+				if (name == NULL)
+				{
+					name = ft_substr(splitted_line[i], index + 1, len);
+					if (ft_strcmp("?", name) == 0)
+						value = ft_itoa(return_global_exit_status());
+					else
+						value = get_env_value(name, env);
+				}
+				else
+				{
+					free(name);
+					name = ft_substr(splitted_line[i], index, len + 1);
+					if (ft_strcmp("?", name) == 0)
+						tmp = ft_itoa(return_global_exit_status());
+					else
+						tmp = get_env_value(name, env);
+					value = ft_strjoin(value, tmp);
+				}
+				if (splitted_line[i][index + len + 1] == '\0')
+					break ;
+				index += len + 2;
 			}
-			value = get_env_value(name, env);
 			if (value)
 			{
 				free(splitted_line[i]);

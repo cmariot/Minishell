@@ -1,8 +1,7 @@
 #Test du builtin echo
-cd /
 echo $PWD
 echo $PWD $HOME
-echo$PWD$HOME
+echo $PWD$HOME
 echo
 echo -n
 echo A
@@ -11,5 +10,14 @@ echo 1 2 3
 echo -n 1 2 3 
 echo $PWD
 echo 'test'
-aaaaaaaaa
-ls dsjbs
+#Test des valeurs de retour
+ls
+ls shkfsdhkf
+ls -la kjdshkfh
+dkfjher
+cd
+cd ferferf
+cd ~
+cd /
+cd -p
+
