@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 15:48:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 16:06:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,15 @@ void	expand_env_variable(char **splitted_line, t_env *env)
 					else
 						tmp = get_env_value(name, env);
 					value = ft_strjoin(value, tmp);
+					if (tmp)
+						free(tmp);
 				}
 				if (splitted_line[i][index + len + 1] == '\0')
 					break ;
 				index += len + 2;
 			}
+			if (name)
+				free(name);
 			if (value)
 			{
 				free(splitted_line[i]);
