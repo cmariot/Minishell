@@ -1,0 +1,8 @@
+total 104
+-rw-r--r--  1 cmariot  staff   4201 Jan  2 23:36 Makefile
+drwxr-xr-x@ 3 cmariot  staff     96 Jan  2 23:52 includes
+-rw-r--r--  1 cmariot  staff    800 Jan  3 17:33 liste_tests.txt
+-rwxr-xr-x  1 cmariot  staff  38605 Jan  3 17:33 minishell_tester
+drwxr-xr-x@ 3 cmariot  staff     96 Jan  3 17:16 objs
+drwxr-xr-x@ 3 cmariot  staff     96 Jan  3 17:16 srcs
+exit status = 0

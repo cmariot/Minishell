@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 14:50:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 17:56:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	fork_command(char *command, char **command_and_args, char **env)
 	{
 		execve(command, command_and_args, env);
 		ft_putstr_fd("Command execution error\n", 2);
+		usleep(10000);
 		exit(1);
 	}
 	else
@@ -60,11 +61,13 @@ int	fork_redirection(int fd_new_file, char *command_path, char **command_and_arg
 		dup2(fd_new_file, 1);
 		exit_status = fork_command(command_path, command_and_args, env);
 		printf("exit status = %d", exit_status);
+		usleep(10000);
 		exit(1);
 	}
 	else
 	{
 		waitpid(pid, &pid, 0);
+		usleep(10000);
 		return (0);
 	}
 }
@@ -109,39 +112,65 @@ char	*execute_with_minishell(char *commande, int number, char **env)
 	return (new_file);
 }
 
+char	*file_to_str(char *file)
+{
+	int		file_descriptor;
+	int		read_return;
+	char	buf[255];
+	char	*str;
+	char	*tmp;
+
+	file_descriptor = open(file, O_RDONLY);
+	if (file_descriptor == -1)
+	{
+		ft_putstr_fd("Erreur, ouverture de fichier\n", 2);
+		return (NULL);
+	}
+	str = NULL;
+	while (1)
+	{
+		read_return = read(file_descriptor, buf, 255);
+		if (read_return == -1)
+		{
+			ft_putstr_fd("Erreur, lecture de fichier\n", 2);
+			return (NULL);
+		}
+		buf[read_return] = '\0';
+		if (str == NULL)
+			str = ft_strdup(buf);
+		else
+		{
+			tmp = ft_strjoin(str, buf);
+			free(str);
+			str = tmp;
+		}
+		if (read_return == 0)
+			break ;
+	}
+	close(file_descriptor);
+	return (str);
+}
+
 int	check_diff(char *file_bash, char *file_minishell)
 {
-	char	buf1[255];
-	char	buf2[255];
-	int		read_return;
-	int		fd_bash;
 	char	*bash_output;
-	int		fd_minishell;
 	char	*minishell_output;
 
-	fd_bash = open(file_bash, O_RDONLY);
-	read_return = read(fd_bash, buf1, 255);
-	buf1[read_return] = '\0';
-	bash_output = ft_strdup(buf1);
-	close(fd_bash);
+	bash_output = file_to_str(file_bash);
 	unlink(file_bash);
 
-	fd_minishell = open(file_minishell, O_RDONLY);
-	read_return = read(fd_minishell, buf2, 255);
-	buf2[read_return] = '\0';
-	minishell_output = ft_strdup(buf2);
-	close(fd_minishell);
+	minishell_output = file_to_str(file_minishell);
 	unlink(file_minishell);
 	if (ft_strcmp(bash_output, minishell_output) == 0)
 	{
-		printf("OK\n");
+		printf("✅ OK\n");
 		free(bash_output);
 		free(minishell_output);
 		return (0);
 	}
 	else
 	{
-		printf("\nKO\n\n");
+		printf("\n❌ KO\n\n");
 		printf("bash_output =\n[%s]\n", bash_output);
 		printf("\nminishell_output =\n[%s]\n\n", minishell_output);
 		free(bash_output);
@@ -178,15 +207,15 @@ int	main(int argc, char **argv, char **env)
 			test_line = gnl_without_bn(file_descriptor);
 			if (test_line == NULL)
 			{
-				printf("RESULTAT : %d/%d OK\n", numero_du_test - result, numero_du_test);
+				printf("\nRESULTAT : %d/%d OK\n\n", numero_du_test - result, numero_du_test);
 				close(file_descriptor);
 				return (0);
 			}
 			if (test_line[0] == '#')
-				printf("%s\n", test_line + 1);
+				printf("\n%s\n", test_line + 1);
 			else
 			{
-				printf("---------------------------------------\n");
+				printf("\n---------------------------------------\n\n");
 				printf("test_%d : [%s]\n", numero_du_test, test_line);
 				file_bash = execute_with_bash(test_line, numero_du_test, env);
 				file_minishell = execute_with_minishell(test_line, numero_du_test, env);

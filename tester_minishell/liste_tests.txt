@@ -2,6 +2,7 @@
 echo $PWD
 echo $PWD $HOME
 echo $PWD$HOME
+echo $PWDlol
 echo
 echo -n
 echo A
@@ -10,14 +11,65 @@ echo 1 2 3
 echo -n 1 2 3 
 echo $PWD
 echo 'test'
+ech""o test
+""echo test
+echo "" test
+echo $USER
+echo $USE""R
+echo ""$USER
+echo ''$USER
+echo "$"USER
+echo $""USER
+echo $''USER
+ec''ho test
+ ''echo test
+echo'' test
+echo '' test
+echo $USE''R
+echo ''$USER
+echo'$'USER
+echo $
+echo $""
+echo "" "" ""
+echo """"""
+echo $USER"" ''
+echo test""test
+echo test ""test
+echo test"" test
+echo test "'"test
+echo $$USER
+echo $$$USER
+echo $USER$USER
+echo $USER""$USER
+echo $USER" "$USER
+echo "|" ls
+echo test$1test
+echo $GTGRTGRT
+echo "$USER>>"
+echo "$USER11111:"
+echo "test$<test"
+echo $\"echo 
+echo "test$<test"
+echo test$<test
+echo "test$-r"
+echo "test$-?"
+echo $-1$USER
+echo $1
+echo "$1"
+echo  $"USER"
+echo  $'USER'
+echo "$NULL" test
+echo '"abc"'
+echo $NULL test
+echo test |cat
+echo koala ||| cat 
+export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+echo "$A'$B"'$C"$D'$E'"$F"'"'$G'$H"
+echo '  "abc" ' 
+echo " $ " | cat -e
+echo $:$= | cat -e
+export FOO=' " '
+echo " $FOO " | cat -e
+
 #Test des valeurs de retour
 ls
-ls shkfsdhkf
-ls -la kjdshkfh
-dkfjher
-cd
-cd ferferf
-cd ~
-cd /
-cd -p
-
