@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/01 13:34:41 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/03 13:51:30 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS			= main.c \
 				  execute.c \
 				  expand_env_variable.c \
 				  get_command_line.c \
+				  global_exit_status.c \
 				  init_minishell.c \
 				  free_minishell.c \
 				  parse.c \

@@ -12,3 +12,4 @@ echo -n 1 2 3
 echo $PWD
 echo 'test'
 aaaaaaaaa
+ls dsjbs

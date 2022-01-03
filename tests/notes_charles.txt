@@ -1,5 +1,6 @@
 A FAIRE :
 - [ ] valeurs de retour
+- [ ] double free avec commande mais arguments invalides : 'ls dsfsdf'
 - [ ] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
 - [ ] redirection de l'output > et >>
 - [ ] redirection de l'input < et <<

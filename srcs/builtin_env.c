@@ -6,14 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:03:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 14:14:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:19:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // print "name=value" for all the values of the linked list t_env
-void	env_builtin(t_env *env)
+int	builtin_env(t_env *env)
 {
 	while (env)
 	{
@@ -23,6 +23,7 @@ void	env_builtin(t_env *env)
 		write(1, "\n", 1);
 		env = env->next;
 	}
+	return (0);
 }
 
 // If the element name is in the linked list env, change its value,
@@ -46,7 +47,7 @@ void	add_to_env(t_env *env, char *name, char *value)
 	ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
 }
 
-void	export_builtin(t_env *env, char **args)
+int	builtin_export(t_env *env, char **args)
 {
 	size_t	i;
 	size_t	j;
@@ -72,6 +73,7 @@ void	export_builtin(t_env *env, char **args)
 		}
 		i++;
 	}
+	return (0);
 }
 
 // Delete an element of the linked list that store 
@@ -90,7 +92,7 @@ void	remove_first_element(t_env **env)
 	*env = tmp;
 }
 
-t_env *unset_builtin(t_env *env, char **names)
+t_env *builtin_unset(t_env *env, char **names)
 {
 	size_t	i;
 	t_env	*env_backup;
@@ -108,12 +110,9 @@ t_env *unset_builtin(t_env *env, char **names)
 			i++;
 			continue ;
 		}
-		// faire cas 1er element de la liste a supprimer ici
 		if (ft_strcmp(env->name, names[i]) == 0)
 		{
-			printf("SUPPRIMER 1er maillon ... \n");
 			remove_first_element(&env);
-			printf("env->name = %s\n", env->name);
 			i++;
 			continue ;
 		}
@@ -135,6 +134,7 @@ t_env *unset_builtin(t_env *env, char **names)
 		env = env_backup;
 		i++;
 	}
+	change_global_exit_status(0);
 	return (env);
 }
 

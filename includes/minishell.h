@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 01:17:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:20:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void			print_command_line(t_command_line *command_line);
 int				builtin(char *command, t_shell *minishell);
 
 // env_builtin.c
-void			env_builtin(t_env *env);
-void			export_builtin(t_env *env, char **args);
-t_env			*unset_builtin(t_env *env, char **names);
+int				builtin_env(t_env *env);
+int				builtin_export(t_env *env, char **args);
+t_env			*builtin_unset(t_env *env, char **names);
 void			add_to_env(t_env *env, char *name, char *value);
 
 // pipielne.c
@@ -128,7 +128,7 @@ void			create_pipeline(t_command_line *command_line,
 					t_shell *minishell);
 
 // pwd_builtin.c
-int				pwd_builtin(t_shell *minishell);
+int				builtin_pwd(t_shell *minishell);
 
 // split.c
 char			**split_command_line(char *line);
@@ -154,11 +154,15 @@ int				signal_catcher(void);
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
 // cd
-void			do_cd(t_shell *minishell);
+int				builtin_cd(t_shell *minishell);
 
 //remove_comments.c
 char			**remove_comments(char **splitted_line);
 
 size_t			ft_arraylen(char **array);
 bool			ft_isadirectory(char *path);
+
+int				return_global_exit_status(void);
+void			change_global_exit_status(int new_value);
+
 #endif

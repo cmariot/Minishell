@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 11:04:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:30:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,19 @@ void	expand_env_variable(char **splitted_line, t_env *env)
 	i = 0;
 	while (splitted_line[i])
 	{
-		if (splitted_line[i][0] == '$')
+		if (splitted_line[i][0] == '$' && splitted_line[i][1] != '\0')
 		{
 			name = ft_strdup(splitted_line[i] + 1);
-			//gestion du $?, qui renvoie l'exit status du pipeline 
-			//de premier plan le plus récemment exécuté.
 			if (ft_strcmp("?", name) == 0)
 			{
 				free(splitted_line[i]);
-				splitted_line[i] = ft_itoa(999);
+				free(name);
+				splitted_line[i] = ft_itoa(return_global_exit_status());
 				i++;
 				continue ;
 			}
 			value = get_env_value(name, env);
-			if (value != NULL)
+			if (value)
 			{
 				free(splitted_line[i]);
 				splitted_line[i] = value;
@@ -65,7 +64,7 @@ void	expand_env_variable(char **splitted_line, t_env *env)
 			else
 			{
 				remove_from_array(splitted_line, i);
-				i--;
+				continue ;
 			}
 		}
 		i++;
