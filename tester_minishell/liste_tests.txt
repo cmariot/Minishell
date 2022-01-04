@@ -152,3 +152,19 @@ unset /
 unset %
 unset >
 unset <
+export A
+export =
+export B
+export #
+export %
+export + 
+export -
+export A=
+export B=
+export #=
+export %=
+export += 
+export -=
+export A=b B=c
+export A=b B=
+export A= B=c

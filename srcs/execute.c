@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/04 08:59:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/04 16:51:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
 		while (command_path[len] != '/' && command_path[len])
 			len++;
 		if (len == ft_strlen(command_path))
+		{
+			free(command_path);
 			return (1);
+		}
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
 				if (!execute_cmnd(&command_path, command_line,
@@ -156,8 +159,9 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	path_array = ft_split(path_value, ':');
 	if (try_command_with_path(path_array, command_line, i, env_array) == 127)
 	{
-		printf("minishell: %s: command not found\n",
-			command_line->command[i].command_and_args[0]);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(command_line->command[i].command_and_args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		change_global_exit_status(127);
 	}
 	if (path_value != NULL)
