@@ -97,6 +97,7 @@ char	**split_command_line(char *line)
 	char	**first_array;
 	char	**second_array;
 	char	**third_array;
+	char	**fourth_array;
 	char	**final_array;
 
 	first_array = split_line(line, " \t|><\"\';");
@@ -111,16 +112,13 @@ char	**split_command_line(char *line)
 	third_array = join_quote(second_array);
 	ft_putarray("third", third_array);
 	ft_free_array(second_array);
-<<<<<<< HEAD
 	if (!second_array)
 		return (NULL);
-	final_array = trim_quote_space_del(third_array);
-	/*ft_free_array(third_array);
+	fourth_array = trim_quote_space_del(third_array);
+	ft_free_array(third_array);
 	if (!third_array)
-		return (NULL);*/
+		return (NULL);
+	final_array = remove_comments(fourth_array);
 	ft_putarray("final", final_array);
-=======
-	final_array = remove_comments(final_array);
->>>>>>> 9820f77681108e38f4ffb55fe3fc5263a6e44ac5
 	return (final_array);
 }
