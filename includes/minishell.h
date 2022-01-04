@@ -136,6 +136,7 @@ char			**split_command_line(char *line);
 char			**join_heredoc(char **array);
 char			**join_quote(char **array);
 char    		**trim_quote_space_del(char **array);
+char			**del_quote_command(char **array);
 int				ft_charset(char c, char *charset);
 
 //execute.c
