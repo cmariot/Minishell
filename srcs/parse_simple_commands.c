@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 14:48:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 21:25:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ int	get_len(char **command_array)
 			if (command_array[i + 1] != NULL)
 				i += 2;
 			else if (command_array[i + 1] == NULL)
+			{
 				return (len + 1);
+			}
 		}
 		else
 		{

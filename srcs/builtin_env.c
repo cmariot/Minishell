@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:03:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 14:19:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 21:49:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,15 @@ int	builtin_export(t_env *env, char **args)
 	{
 		if (ft_strlen(args[i]) > 2)
 		{
+			//not a valid identifier
+			if (args[i][0] == '-')
+				return (1);
 			j = 0;
 			while (args[i][j] && args[i][j] != '=')
 				j++;
+			//not a valid identifier
+			if (j == 0)
+				return (1);
 			name = ft_substr(args[i], 0, j);
 			value = ft_strdup(args[i] + j + 1);
 			if (ft_strcmp(name, "") != 0 && value)

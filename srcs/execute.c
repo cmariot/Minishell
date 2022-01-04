@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 14:17:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/04 08:59:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	command_is_builtin(t_shell *minishell, char **command_and_args)
 	else if (ft_strcmp(command_and_args[0], "echo") == 0)
 		change_global_exit_status(builtin_echo(command_and_args + 1));
 	else if (ft_strcmp(command_and_args[0], "exit") == 0)
-		free_minishell(minishell);
+		builtin_exit(minishell, command_and_args + 1);
 	else if (ft_strcmp(command_and_args[0], "pwd") == 0)
 		change_global_exit_status(builtin_pwd(minishell));
 	else if (ft_strcmp(command_and_args[0], "env") == 0)

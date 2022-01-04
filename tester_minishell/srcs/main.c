@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 17:56:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 21:38:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	fork_command(char *command, char **command_and_args, char **env)
 	{
 		execve(command, command_and_args, env);
 		ft_putstr_fd("Command execution error\n", 2);
-		usleep(10000);
 		exit(1);
 	}
 	else
@@ -62,6 +61,8 @@ int	fork_redirection(int fd_new_file, char *command_path, char **command_and_arg
 		exit_status = fork_command(command_path, command_and_args, env);
 		printf("exit status = %d", exit_status);
 		usleep(10000);
+		if (command_and_args[2])
+			free(command_and_args[2]);
 		exit(1);
 	}
 	else
@@ -212,7 +213,7 @@ int	main(int argc, char **argv, char **env)
 				return (0);
 			}
 			if (test_line[0] == '#')
-				printf("\n%s\n", test_line + 1);
+				printf("\n\n🤖 %s\n", test_line + 1);
 			else
 			{
 				printf("\n---------------------------------------\n\n");

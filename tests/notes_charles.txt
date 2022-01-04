@@ -1,7 +1,11 @@
 A FAIRE :
-- [ ] valeurs de retour
-- [ ] double free avec commande mais arguments invalides : 'ls dsfsdf'
 - [ ] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
+	- echo (depend du parsing)
+	- pwd
+	- env
+	- export
+	- unset
+	- cd
 - [ ] redirection de l'output > et >>
 - [ ] redirection de l'input < et <<
 
@@ -14,3 +18,4 @@ DONE :
 - [X] unset : 1er element de la liste a supprimer pose probleme : ok
 - [X] verifier leaks export et unset
 - [X] cas particuliers d'execution de commande avec chemin absolu, check le ./ et execution dans des dossiers distants
+- [X] valeurs de retour

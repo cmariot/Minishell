@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 10:35:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 20:44:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 18:36:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ bool	check_n_option(char *str_option, bool *n_option)
 	if (str_option[i] != '-')
 		return (FALSE);
 	i++;
+	if (str_option[i] != 'n')
+		return (FALSE);
 	while (str_option[i])
 	{
 		if (str_option[i] != 'n')
