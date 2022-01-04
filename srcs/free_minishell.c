@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 17:15:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:37:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,16 @@ void	free_redirections(t_command_line *command_line, int j,
 	while (i < *number_of_redirections)
 	{
 		if (command_line->command[j].redir[i].redir_type != NULL)
-		{
 			free(command_line->command[j].redir[i].redir_type);
-		}
 		command_line->command[j].redir[i].redir_type = NULL;
 		if (command_line->command[j].redir[i].filename != NULL)
-		{
 			free(command_line->command[j].redir[i].filename);
-		}
 		command_line->command[j].redir[i].filename = NULL;
 		i++;
 	}
 	if (command_line->command[j].redir)
 		free(command_line->command[j].redir);
+	command_line->command[j].redir = NULL;
 	*number_of_redirections = 0;
 }
 
@@ -46,8 +43,10 @@ void	free_simple_commands(t_command_line *command_line)
 	{
 		if (command_line->command[i].command_array != NULL)
 			ft_free_array(command_line->command[i].command_array);
+		command_line->command[i].command_array = NULL;
 		if (command_line->command[i].command_and_args != NULL)
 			ft_free_array(command_line->command[i].command_and_args);
+		command_line->command[i].command_and_args = NULL;
 		if (command_line->command[i].number_of_redirections > 0)
 			free_redirections(command_line, i,
 				&command_line->command[i].number_of_redirections);
@@ -55,6 +54,7 @@ void	free_simple_commands(t_command_line *command_line)
 	}
 	if (command_line->command)
 		free(command_line->command);
+	command_line->command = NULL;
 	command_line->number_of_simple_commands = 0;
 }
 
@@ -65,15 +65,19 @@ void	reset_minishell(t_command_line *command_line)
 	command_line->line = NULL;
 	if (command_line->splitted_line != NULL)
 		ft_free_array(command_line->splitted_line);
-	free_simple_commands(command_line);
+	command_line->splitted_line = NULL;
+	if (command_line)
+		free_simple_commands(command_line);
 }
 
 // Free the structure elements before exit
 void	free_minishell(t_shell *minishell)
 {
-	ft_lstclear_env(&minishell->env, free);
+	if (minishell->env)
+		ft_lstclear_env(&minishell->env, free);
+	reset_minishell(&minishell->command_line);
 	close(0);
 	close(1);
 	close(2);
-	reset_minishell(&minishell->command_line);
+	exit(return_global_exit_status());
 }

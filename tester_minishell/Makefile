@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/31 15:05:23 by cmariot          ###   ########.fr        #
+#    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
+#    Updated: 2022/01/04 10:35:08 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,93 +15,55 @@
 #                          PROJECT'S DIRECTORIES                               #
 # **************************************************************************** #
 
-NAME		= libft.a
-SRCS_DIR	= srcs
-INCL_DIR	= includes
-OBJS_DIR	= objs/
+NAME			= minishell_tester
+SRCS_DIR		= srcs
+OBJS_DIR		= objs/
+LIBFT			= ../libft
+LIBFT_INCL		= $(LIBFT)/includes/
 
 
 # **************************************************************************** #
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC		= clang
+CC				= clang
 
-CFLAGS	= -Wall -Wextra -Werror
-CFLAGS	+= -I $(INCL_DIR)
-CFLAGS	+= -g3
+CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			+= -I $(LIBFT_INCL)
+CFLAGS			+= -I ./includes
+
+
+LFLAGS			= -Wall -Wextra -Werror -g3
+LIB_LFLAGS		= -L $(LIBFT) -lft
+
+# Debug flag, use with 'make DEBUG=1'
+ifeq ($(DEBUG), 1)
+	CFLAGS		+= -g
+	LFLAGS		+= -g 
+endif
+
+# Optimisation flag, use with 'make OPTI=1'
+ifeq ($(OPTI), 1)
+	CFLAGS		+= -O2 -O3
+	LFLAGS		+= -O2 -O3
+endif
 
 # **************************************************************************** #
 #                                SOURCE FILES                                  #
 # **************************************************************************** #
 
-SRCS	= ft_atoi.c \
-		  ft_bzero.c \
-		  ft_calloc.c \
-		  ft_free_array.c \
-		  ft_itoa.c \
-		  ft_isadirectory.c \
-		  ft_isalnum.c \
-		  ft_isalpha.c \
-		  ft_isascii.c \
-		  ft_isdigit.c \
-		  ft_isprint.c \
-		  ft_memccpy.c \
-		  ft_memchr.c \
-		  ft_memcmp.c \
-		  ft_memcpy.c \
-		  ft_memmove.c \
-		  ft_memset.c \
-		  ft_putarray.c \
-		  ft_putchar.c \
-		  ft_putchar_fd.c \
-		  ft_putendl_fd.c \
-		  ft_putnbr.c \
-		  ft_putnbr_fd.c \
-		  ft_putstack.c \
-		  ft_putstr.c \
-		  ft_putstr_fd.c \
-		  ft_realloc.c \
-		  ft_split.c \
-		  ft_strchr.c \
-		  ft_strdup.c \
-		  ft_strjoin.c \
-		  ft_strlcat.c \
-		  ft_strlcpy.c \
-		  ft_strlen.c \
-		  ft_strmapi.c \
-		  ft_strcmp.c \
-		  ft_strncmp.c \
-		  ft_strnstr.c \
-		  ft_strrchr.c \
-		  ft_strtrim.c \
-		  ft_substr.c \
-		  ft_tolower.c \
-		  ft_toupper.c \
-		  ft_lstadd_back.c \
-		  ft_lstadd_front.c \
-		  ft_lstclear.c \
-		  ft_lstdelone.c \
-		  ft_lstiter.c \
-		  ft_lstlast.c \
-		  ft_lstmap.c \
-		  ft_lstnew.c \
-		  ft_lstsize.c \
-		  get_next_line.c \
-		  gnl_without_bn.c \
-		  ft_intlen.c
+SRCS			= main.c
 
-SRC		:= $(notdir $(SRCS))
+SRC				:= $(notdir $(SRCS))
 
-OBJ		:= $(SRC:.c=.o)
+OBJ				:= $(SRC:.c=.o)
 
-OBJS	:= $(addprefix $(OBJS_DIR), $(OBJ))
+OBJS			:= $(addprefix $(OBJS_DIR), $(OBJ))
 
-VPATH	:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
-
+VPATH			:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
 
 # **************************************************************************** #
-#									COLORS                                     #
+#							 	   COLORS                                      #
 # **************************************************************************** #
 
 GR	= \033[32;1m
@@ -119,42 +81,58 @@ all : $(NAME)
 
 # Compiling
 srcs_compil :
-		@printf "$(YE)Libft compilation ... \n$(RC)"
+		@printf "$(YE)Source code compilation ... \n"
 
 $(OBJS_DIR)%.o : %.c
 		@mkdir -p $(OBJS_DIR)
-		@${CC} ${CFLAGS} -c $< -o $@
-		@printf "$(YE)${CC} ${CFLAGS} -c $< -o $@\n$(RC)"
-
+		@$(CC) $(CFLAGS) -c $< -o $@
+		@printf "$(CC) $(CFLAGS) -c $< -o $@\n"
+		
 # Linking
 obj_link :
-		@printf "$(YE)Libft compilation success.\n\n$(RC)"
-		@printf "$(GR)Linking Libft objects ...\nar rc ${NAME} ${OBJS} $(RC)\n"
+		@printf "$(YE)$(NAME) compilation success.\n\n"
+		@make -C ..
+		@printf "$(GR)Linking $(NAME) objects ...\n$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)$(RC)\n"
 
 $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
-		@ar rc ${NAME} ${OBJS}
-		@printf "$(GR)Success, $(NAME) is ready.\n\n"
+		@$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)
+		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
-# Check 42 norm
+leaks : all
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes ./minishell_tester
+
+# Check 42 norm 
 norm :
-		@norminette srcs includes
+		@norminette
+
+test : all
+		@./minishell_tester
 
 # Remove object files
 clean :
+		@printf "$(RE)make clean in $(LIBFT) ... "
+		@make clean -C $(LIBFT)
+		@printf "Done\n"
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
+		@printf "Done\n$(RC)"
 
 # Remove object and binary files
-fclean:
-		@printf "Removing ${NAME} ... "
-		@rm -f ${NAME}
+fclean :
+		@printf "$(RE)make fclean in $(LIBFT) ... "
+		@make fclean -C $(LIBFT)
 		@printf "Done\n"
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
-		@printf "Done\n)"
+		@printf "Done\n"
+		@printf "Removing $(NAME) ... "
+		@rm -f $(NAME)
+		@printf "Done\n$(RC)"
+
+print_divider :
+		@printf "\n"
 
 # Remove all and recompile
-re :	 fclean all
+re :	 fclean print_divider all
 
 .PHONY : clean fclean

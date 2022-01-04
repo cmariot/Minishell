@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd_builtin.c                                      :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 19:00:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:18:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * if it fails try to get the pwd value with the getcdw function,
  * else return -1. */
 
-int	pwd_builtin(t_shell *minishell)
+int	builtin_pwd(t_shell *minishell)
 {
 	char	*pwd;
 
@@ -36,5 +36,5 @@ int	pwd_builtin(t_shell *minishell)
 		free(pwd);
 		return (0);
 	}
-	return (-1);
+	return (1);
 }

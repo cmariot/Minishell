@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 19:39:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 21:25:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@ int	fill_command_and_args(t_simple *command)
 
 	i = 0;
 	j = 0;
-	while (command->command_array[i])
+	if (command->command_array[i] != NULL)
 	{
-		if (is_redirection(command->command_array[i]))
+		while (command->command_array[i])
 		{
-			if (command->command_array[i + 1] != NULL)
-				i += 2;
-			else if (command->command_array[i + 1] == NULL)
-				return (-1);
+			if (is_redirection(command->command_array[i]))
+			{
+				if (command->command_array[i + 1] != NULL)
+					i += 2;
+				else if (command->command_array[i + 1] == NULL)
+					return (-1);
+			}
+			else
+				command->command_and_args[j++]
+					= ft_strdup(command->command_array[i++]);
 		}
-		else
-			command->command_and_args[j++]
-				= ft_strdup(command->command_array[i++]);
 	}
 	return (0);
 }
@@ -40,16 +43,18 @@ int	get_len(char **command_array)
 	int		len;
 	size_t	i;
 
-	len = 0;
 	i = 0;
-	while (command_array[i])
+	len = 0;
+	while (command_array[i] != NULL)
 	{
 		if (is_redirection(command_array[i]))
 		{
 			if (command_array[i + 1] != NULL)
 				i += 2;
 			else if (command_array[i + 1] == NULL)
+			{
 				return (len + 1);
+			}
 		}
 		else
 		{
@@ -66,10 +71,7 @@ int	get_command_and_args(t_simple *command)
 
 	len = get_len(command->command_array);
 	if (len == 0)
-	{
-		printf("Gerer les redirections sans commande ici\n");
-		return (-1);
-	}
+		return (0);
 	command->command_and_args = ft_calloc(len + 1, sizeof(char *));
 	if (!command->command_and_args)
 		return (-1);
@@ -91,35 +93,40 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 		else if (ft_strcmp(splitted_line[array_index + len], ";") == 0)
 			break ;
 	}
-	command->command_array = ft_calloc(len + 1, sizeof(char **));
+	command->command_array = ft_calloc(len + 1, sizeof(char *));
 	if (!command->command_array)
 		return (array_index);
 	i = 0;
 	while (i < len)
-	{
-		command->command_array[i] = ft_strdup(splitted_line[array_index++]);
-		i++;
-	}
+		command->command_array[i++] = ft_strdup(splitted_line[array_index++]);
 	return (array_index + 1);
 }
 
-/* Fill the simple commands array (simple commands are delimitated by '|' if there is,
- * or all the command if there isnt) :
+/* Fill the simple commands array (simple commands are
+ * delimitated by '|' if there is, or all the command
+ * if there isnt) :
  * count them, malloc the array of simple command, and on this array put :
  *	- all the elememt of the simple command in command
- *	- only the element which aren't linked to the redirections in command_and_args */
-int	get_simple_commands(t_command_line *command_line, char **splitted_line)
+ *	- only the element which aren't linked to the
+ *	redirections in command_and_args */
+int	get_simple_commands(t_command_line *command_line,
+		char **splitted_line, t_env *env)
 {
 	size_t	i;
 	size_t	array_index;
 
+	i = 0;
+	while (splitted_line[i] != NULL
+		&& contains_equal(splitted_line[i], env) == TRUE)
+		i++;
+	if (i >= 1)
+		return (0);
 	command_line->number_of_simple_commands
 		= count_commands(command_line->splitted_line);
 	command_line->command
 		= ft_calloc(command_line->number_of_simple_commands + 1,
 			sizeof(t_simple));
 	array_index = 0;
-	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
 		array_index = get_commands(&command_line->command[i],

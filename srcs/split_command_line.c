@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/29 12:37:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/01 14:02:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ char	**split_command_line(char *line)
 	third_array = join_quote(second_array);
 	ft_putarray("third", third_array);
 	ft_free_array(second_array);
+<<<<<<< HEAD
 	if (!second_array)
 		return (NULL);
 	final_array = trim_quote_space_del(third_array);
@@ -118,5 +119,8 @@ char	**split_command_line(char *line)
 	if (!third_array)
 		return (NULL);*/
 	ft_putarray("final", final_array);
+=======
+	final_array = remove_comments(final_array);
+>>>>>>> 9820f77681108e38f4ffb55fe3fc5263a6e44ac5
 	return (final_array);
 }

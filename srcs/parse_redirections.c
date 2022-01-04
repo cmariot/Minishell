@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 18:28:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 21:18:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array)
 	if (array[(*array_index) + 1] == NULL)
 	{
 		printf("minishell: syntax error near redirection.\n");
+		change_global_exit_status(2);
 		return (-1);
 	}
 	else
@@ -51,6 +52,21 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array)
 			*array_index += 1;
 		return (0);
 	}
+}
+
+//pour chaque redirection d'une commande simple, remplir la structure
+int	fill_redirection_array(t_command_line *command_line, size_t i)
+{
+	int		array_index;
+	size_t	j;
+
+	j = 0;
+	array_index = 0;
+	while (j < command_line->command[i].number_of_redirections)
+		if (fill_redirections(&command_line->command[i].redir[j++],
+				&array_index, command_line->command[i].command_array) == -1)
+			return (-1);
+	return (0);
 }
 
 size_t	get_number_of_redir(char **command_array)
@@ -71,21 +87,6 @@ size_t	get_number_of_redir(char **command_array)
 	return (number_of_redirections);
 }
 
-//pour chaque redirection d'une commande simple, remplir la structure
-int	fill_redirection_array(t_command_line *command_line, size_t i)
-{
-	int		array_index;
-	size_t	j;
-
-	j = 0;
-	array_index = 0;
-	while (j < command_line->command[i].number_of_redirections)
-		if (fill_redirections(&command_line->command[i].redir[j++],
-				&array_index, command_line->command[i].command_array) == -1)
-			return (-1);
-	return (0);
-}
-
 //compte le nombre de redirection dans la commande simple
 //cree un tableau pour chaque redirection
 //remplir le tableau avec le type de redirection et le filename
@@ -99,9 +100,10 @@ int	parse_redirections(t_command_line *command_line)
 		command_line->command[i].number_of_redirections
 			= get_number_of_redir(command_line->command[i].command_array);
 		if (command_line->command[i].number_of_redirections == 0)
+		{
 			i++;
-		if (command_line->command[i].number_of_redirections == 0)
 			continue ;
+		}
 		command_line->command[i].redir = ft_calloc(sizeof(t_redir),
 				command_line->command[i].number_of_redirections + 1);
 		if (!command_line->command[i].redir)

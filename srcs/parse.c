@@ -6,14 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 19:30:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/03 18:34:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Minishell should not interpret unclosed quotes
-int	check_quote(char *line)
+int	check_quotes(char *line)
 {
 	int		i;
 	char	c;
@@ -46,15 +46,16 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 {
 	if (command_line->line)
 	{
-		if (!check_quote(command_line->line))
+		if (!check_quotes(command_line->line))
 			return (-1);
 		command_line->splitted_line = split_command_line(command_line->line);
 		if (command_line->splitted_line == NULL)
 			return (-1);
-		expand_env_variable(&command_line->splitted_line,
+		//ouvrir/creer fichiers redirection ici ?
+		expand_env_variable(command_line->splitted_line,
 			minishell->env);
 		if (get_simple_commands(command_line,
-				command_line->splitted_line) == -1)
+				command_line->splitted_line, minishell->env) == -1)
 			return (-1);
 		if (parse_redirections(command_line) == -1)
 			return (-1);

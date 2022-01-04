@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putarray.c                                      :+:      :+:    :+:   */
+/*   global_exit_status.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 16:10:31 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 14:37:04 by cmariot          ###   ########.fr       */
+/*   Created: 2022/01/03 13:50:23 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/03 13:50:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-// Print an array of char * like this :
-// name[i] = array[i]
+int	g_exit_status = 0;
 
-void	ft_putarray(char *name, char **array)
+int	return_global_exit_status(void)
 {
-	int	i;
+	return (g_exit_status);
+}
 
-	i = 0;
-	while (array[i])
-	{
-		ft_putstr(name);
-		ft_putchar('[');
-		ft_putnbr(i);
-		ft_putstr("] = [");
-		ft_putstr(array[i]);
-		ft_putstr("]\n");
-		i++;
-	}
+void	change_global_exit_status(int new_value)
+{
+	g_exit_status = new_value;
 }

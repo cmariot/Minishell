@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putarray.c                                      :+:      :+:    :+:   */
+/*   minishell_tester.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 16:10:31 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/31 14:37:04 by cmariot          ###   ########.fr       */
+/*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/04 10:35:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MINISHELL_TESTER_H
+# define MINISHELL_TESTER_H
 
-// Print an array of char * like this :
-// name[i] = array[i]
+# include "libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
-void	ft_putarray(char *name, char **array)
-{
-	int	i;
+# define FALSE 0
+# define TRUE 1
 
-	i = 0;
-	while (array[i])
-	{
-		ft_putstr(name);
-		ft_putchar('[');
-		ft_putnbr(i);
-		ft_putstr("] = [");
-		ft_putstr(array[i]);
-		ft_putstr("]\n");
-		i++;
-	}
-}
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
+
+char		*gnl_without_bn(int fd);
+
+#endif
