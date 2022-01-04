@@ -96,16 +96,27 @@ char	**split_command_line(char *line)
 {
 	char	**first_array;
 	char	**second_array;
+	char	**third_array;
 	char	**final_array;
 
 	first_array = split_line(line, " \t|><\"\';");
+	ft_putarray("first", first_array);
 	if (!first_array)
 		return (NULL);
 	second_array = join_heredoc(first_array);
+	ft_putarray("second", second_array);
 	ft_free_array(first_array);
 	if (!second_array)
 		return (NULL);
-	final_array = ft_split_space(second_array);
+	third_array = join_quote(second_array);
+	ft_putarray("third", third_array);
 	ft_free_array(second_array);
+	if (!second_array)
+		return (NULL);
+	final_array = trim_quote_space_del(third_array);
+	/*ft_free_array(third_array);
+	if (!third_array)
+		return (NULL);*/
+	ft_putarray("final", final_array);
 	return (final_array);
 }

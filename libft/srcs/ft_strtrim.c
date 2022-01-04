@@ -29,5 +29,6 @@ char	*ft_strtrim(char const *str, char const *set)
 	new = ft_substr((char *)str, 0, end + 1);
 	if (!new)
 		return (NULL);
+	printf("new = %s\n", new);
 	return (new);
 }

@@ -74,7 +74,8 @@ SRCS			= main.c \
 				  print_structure.c \
 				  split_command_line.c \
 				  split_join_heredoc.c \
-				  split_spaces.c \
+				  join_quote.c \
+				  trim_quote_space_del.c \
 				  signal.c
 
 SRC			:= $(notdir $(SRCS))

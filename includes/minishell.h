@@ -128,7 +128,8 @@ int				pwd_builtin(t_shell *minishell);
 // split.c
 char			**split_command_line(char *line);
 char			**join_heredoc(char **array);
-char			**ft_split_space(char **array);
+char			**join_quote(char **array);
+char    		**trim_quote_space_del(char **array);
 int				ft_charset(char c, char *charset);
 
 //execute.c
