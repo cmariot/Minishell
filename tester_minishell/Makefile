@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/02 23:36:25 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/04 10:35:08 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME			= minishell_tester
 SRCS_DIR		= srcs
 OBJS_DIR		= objs/
 LIBFT			= ../libft
-LIBFT_INCL		= ../$(LIBFT)/includes/
+LIBFT_INCL		= $(LIBFT)/includes/
 
 
 # **************************************************************************** #
