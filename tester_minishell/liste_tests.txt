@@ -3,6 +3,7 @@ echo $PWD
 echo $PWD $HOME
 echo $PWD$HOME
 echo $PWDlol
+echo salut cest charles 
 echo
 echo -n
 echo -nnnnnnnnn
