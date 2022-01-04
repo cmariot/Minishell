@@ -125,4 +125,30 @@ exit -5
 exit +9
 exit 1000
 exit 2
+exit a 2
+exit "a" 2
+exit "2"
 exit 3 2 4
+#Test du builtin unset
+unset
+unset PWD
+unset $PWD
+unset PWD $PWD
+unset $PWD PWD
+unset HOME PWD USER
+unset /
+unset -
+unset -l
+unset +
+unset -l ls
+unset -
+unset unset
+unset export a=b
+unset GERGERGEG
+unset VEGER PWD
+unset $PWD ergergrg
+unset *
+unset /
+unset %
+unset >
+unset <

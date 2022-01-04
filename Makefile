@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/04 08:51:11 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/04 11:04:35 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRCS			= main.c \
 				  builtin_env.c \
 				  builtin_exit.c \
 				  builtin_pwd.c \
+				  builtin_unset.c \
 				  env_list_utils.c \
 				  env_array_utils.c \
 				  execute.c \

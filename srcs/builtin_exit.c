@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/04 09:29:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/04 10:57:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,47 +30,34 @@ bool	is_a_number(char *str_number)
 	return (TRUE);
 }
 
+void	exit_error_num_arg(char *arg)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+	change_global_exit_status(2);
+}
+
 void	builtin_exit(t_shell *minishell, char **args)
 {
-	int	exit_status;
-
 	if (args[0] == NULL)
-	{
 		change_global_exit_status(0);
-		free_minishell(minishell);
-	}
 	else if (args[1] == NULL)
 	{
 		if (is_a_number(args[0]) == TRUE)
-		{
-			exit_status = ft_atoi(args[0]);
-			change_global_exit_status(exit_status);
-			free_minishell(minishell);
-		}
+			change_global_exit_status(ft_atoi(args[0]));
 		else
-		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(args[0], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			change_global_exit_status(255);
-			free_minishell(minishell);
-		}
+			exit_error_num_arg(args[0]);
 	}
 	else
 	{
 		if (is_a_number(args[0]) == FALSE)
-		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(args[0], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			change_global_exit_status(255);
-			free_minishell(minishell);
-		}
+			exit_error_num_arg(args[0]);
 		else
 		{
-			change_global_exit_status(1);
 			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-			free_minishell(minishell);
+			change_global_exit_status(1);
 		}
 	}
+	free_minishell(minishell);
 }
