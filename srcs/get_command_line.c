@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   get_command_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 13:55:41 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 16:16:37 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/01 23:40:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // In the env linked list, get a copy of the value
-// of the ele;emt which have name = "name",
+// of the elememt which have name = "name",
 // if not found, return NULL. */
 char	*get_env_value(char *name, t_env *env)
 {
@@ -48,7 +48,7 @@ int	current_directory_len(char *pwd)
 }
 
 // The prompts is set as the name of the current directory.
-char	*get_prompt(t_shell *minishell)
+char	*get_prompt(void)
 {
 	char	*pwd;
 	int		pwd_last_index;
@@ -56,20 +56,44 @@ char	*get_prompt(t_shell *minishell)
 	int		cur_dir_len;
 	char	*prompt;
 
-	pwd = get_env_value("PWD", minishell->env);
+	pwd = getcwd(NULL, 255);
 	if (pwd == NULL)
 		return (ft_strdup("Minishell ➤ "));
 	cur_dir_len = current_directory_len(pwd);
+	if (cur_dir_len == 0)
+		return (ft_strdup("/ ➤ "));
 	current_directory = ft_calloc(cur_dir_len + 1, sizeof(char));
 	if (!current_directory)
 		return (ft_strdup("Minishell ➤ "));
 	pwd_last_index = ft_strlen(pwd) - 1;
 	while (cur_dir_len - 1 >= 0)
-	{
 		current_directory[cur_dir_len-- - 1] = pwd[pwd_last_index--];
-	}
 	prompt = ft_strjoin(current_directory, " ➤ ");
 	free(current_directory);
 	free(pwd);
 	return (prompt);
+}
+
+// Get the prompt and use readline to show the prompt and store the input line
+void	get_command_line(t_shell *minishell, t_command_line *command_line)
+{
+	char	*prompt;
+
+	prompt = get_prompt();
+	if (command_line->line != NULL)
+		free(command_line->line);
+	command_line->line = readline(prompt);
+	if (prompt)
+		free(prompt);
+	if (!minishell->command_line.line)
+	{
+		printf("exit\n");
+		ft_lstclear_env(&minishell->env, free);
+		close(0);
+		close(1);
+		close(2);
+		exit(EXIT_SUCCESS);
+	}
+	if (rl_on_new_line() == 0)
+		add_history(command_line->line);
 }

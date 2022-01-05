@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 16:04:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/30 11:59:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,11 @@ char	*get_name_in_env(char *env_line)
 {
 	char	*name;
 	int		len;
-	int		i;
 
 	len = 0;
-	while (env_line[len] != '=')
+	while (env_line[len] != '=' && env_line[len])
 		len++;
-	name = ft_calloc(len + 1, sizeof(char));
-	if (name == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		name[i] = env_line[i];
-		i++;
-	}
+	name = ft_substr(env_line, 0, len);
 	return (name);
 }
 
@@ -40,22 +31,12 @@ char	*get_value_in_env(char *env_line)
 	char	*value;
 	int		len;
 	int		equal_index;
-	int		i;
 
 	len = ft_strlen(env_line);
 	equal_index = 0;
-	while (env_line[equal_index] != '=')
+	while (env_line[equal_index] != '=' && env_line[equal_index])
 		equal_index++;
-	value = ft_calloc(len - equal_index, sizeof(char));
-	if (value == NULL)
-		return (NULL);
-	i = 0;
-	while (equal_index + 1 < len)
-	{
-		value[i] = env_line[equal_index + 1];
-		equal_index++;
-		i++;
-	}
+	value = ft_substr(env_line, equal_index + 1, len - 1);
 	return (value);
 }
 
@@ -65,26 +46,21 @@ t_env	*save_env(char **env)
 	t_env	*env_list;
 	char	*name;
 	char	*value;
-	int		i;
 
-	i = 0;
-	while (env[i])
+	env_list = NULL;
+	while (*env != NULL)
 	{
-		name = get_name_in_env(env[i]);
-		if (name == NULL)
-			break ;
-		value = get_value_in_env(env[i]);
-		if (value == NULL)
-			free(name);
-		if (value == NULL)
-			break ;
-		if (i == 0)
+		name = get_name_in_env(*env);
+		if (!name)
+			continue ;
+		value = get_value_in_env(*env);
+		if (env_list == NULL)
 			env_list = ft_lstnew_env(name, value);
 		else
 			ft_lstadd_back_env(&env_list, ft_lstnew_env(name, value));
 		free(name);
 		free(value);
-		i++;
+		env++;
 	}
 	return (env_list);
 }
@@ -93,13 +69,8 @@ t_env	*save_env(char **env)
 void	init_minishell(t_shell *minishell, char **env)
 {
 	minishell->env = save_env(env);
-	minishell->prompt = NULL;
 	minishell->command_line.line = NULL;
 	minishell->command_line.splitted_line = NULL;
-	minishell->command_line.main.command = NULL;
-	minishell->command_line.main.args = NULL;
-	minishell->command_line.number_of_pipes = 0;
-	minishell->command_line.pipe_command = NULL;
-	minishell->command_line.number_of_redirections = 0;
-	minishell->command_line.redirection = NULL;
+	minishell->command_line.number_of_simple_commands = 0;
+	minishell->command_line.command = NULL;
 }

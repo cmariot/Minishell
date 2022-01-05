@@ -5,56 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 10:36:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 10:54:03 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/23 17:07:37 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/01 20:42:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_pipelines(t_pipe_command *pipe_command)
+void	print_redirections(t_command_line *command_line, size_t i)
 {
-	char	*name;
-	char	*tmp;
-	int		i;
+	size_t	j;
+
+	j = 0;
+	while (j < command_line->command[i].number_of_redirections)
+	{
+		printf("command_line->command[%lu].redir[%lu].redir_type = [%s]\n",
+			i, j, command_line->command[i].redir[j].redir_type);
+		printf("command_line->command[%lu].redir[%lu].filename = [%s]\n",
+			i, j, command_line->command[i].redir[j].filename);
+		j++;
+	}
+}
+
+void	print_command_and_args(char **command_and_args, int command_index)
+{
+	int	i;
 
 	i = 0;
-	while (pipe_command[i].command)
+	while (command_and_args[i])
 	{
-		printf("pipe_command[%d].command = [%s]\n", i, pipe_command[i].command);
-		tmp = ft_itoa(i);
-		name = ft_strjoin("pipe_command[", tmp);
-		free(tmp);
-		tmp = ft_strjoin(name, "].arg");
-		ft_putarray(tmp, pipe_command[i].args);
-		ft_putchar('\n');
-		free(tmp);
-		free(name);
+		printf("command_line.command[%d].command_and_args[%d] = [%s]\n",
+			command_index, i, command_and_args[i]);
 		i++;
 	}
 }
 
+void	print_simple_command(t_command_line *command_line)
+{
+	size_t	i;
+
+	printf("\ncommand_line.number_of_simple_commands = %lu\n\n",
+		command_line->number_of_simple_commands);
+	i = 0;
+	while (i < command_line->number_of_simple_commands)
+	{
+		printf("command_line.command[%lu] :\n", i);
+		if (command_line->command[i].command_and_args != NULL)
+			print_command_and_args(command_line->command[i].command_and_args,
+				i);
+		printf("command_line->command[%lu].number_of_redirections = %lu\n",
+			i, command_line->command[i].number_of_redirections);
+		if (command_line->command[i].number_of_redirections)
+			print_redirections(command_line, i);
+		ft_putchar('\n');
+		i++;
+	}
+}
+
+/* Affichage de la ligne de commande reccuperee par readline
+ * 1- Ligne complete
+ * 2- Ligne splittee
+ * 3- Nombre de commandes simples (= commandes separees par des pipes)
+ * 4- Pour chaque commande simple :
+ *		- command_array = Commande, arguments et redirections
+ *		- command_and_args = Commande et arguments seulement
+ *		- redir = Type de redirection et filename */
 void	print_command_line(t_command_line *command_line)
 {
-	printf("\n***************************\n");
-	printf("\nligne de commande : [%s]\n\n", command_line->line);
-	printf("splitted line :\n");
-	ft_putarray("splitted_line", command_line->splitted_line);
-	if (command_line->main.command)
+	size_t	i;
+
+	printf("-------------------------------------------------\n\n");
+	printf("command_line.line = [%s]\n\n", command_line->line);
+	if (command_line->splitted_line != NULL)
 	{
-		printf("\ncommand_line->main.command = [%s]\n",
-			command_line->main.command);
-		if (command_line->main.args)
-			ft_putarray("command_line->main.args", command_line->main.args);
-		if (command_line->number_of_pipes)
+		i = 0;
+		while (command_line->splitted_line[i])
 		{
-			printf("\ncommand_line->number_of_pipes = %d\n\n",
-				command_line->number_of_pipes);
-			print_pipelines(command_line->pipe_command);
+			printf("command_line.splitted_line[%lu] = [%s]\n",
+				i, command_line->splitted_line[i]);
+			i++;
 		}
-		if (command_line->number_of_redirections)
-			printf("\ncommand_line->number_of_redirections = %d\n",
-				command_line->number_of_redirections);
 	}
-	printf("\n***************************\n\n");
+	if (command_line->number_of_simple_commands)
+		print_simple_command(command_line);
+	printf("-------------------------------------------------\n\n");
 }

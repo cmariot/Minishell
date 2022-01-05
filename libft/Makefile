@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/15 17:23:57 by cmariot          ###   ########.fr        #
+#    Updated: 2021/12/31 15:05:23 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS	= ft_atoi.c \
 		  ft_calloc.c \
 		  ft_free_array.c \
 		  ft_itoa.c \
+		  ft_isadirectory.c \
 		  ft_isalnum.c \
 		  ft_isalpha.c \
 		  ft_isascii.c \
@@ -140,18 +141,18 @@ norm :
 
 # Remove object files
 clean :
-		@printf "$(RE)Removing $(OBJS_DIR) ... "
+		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n"
 
 # Remove object and binary files
 fclean:
-		@printf "$(RE)Removing ${NAME} ... "
+		@printf "Removing ${NAME} ... "
 		@rm -f ${NAME}
 		@printf "Done\n"
-		@printf "$(RE)Removing $(OBJS_DIR) ... "
+		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
+		@printf "Done\n)"
 
 # Remove all and recompile
 re :	 fclean all

@@ -6,12 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 15:02:06 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/12 12:10:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/25 14:55:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// ft_strjoin() alloc new with the size of len and fill this thew string
+// with s1 and s2, it returns new;
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*new;

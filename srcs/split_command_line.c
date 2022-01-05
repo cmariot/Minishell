@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.c                                            :+:      :+:    :+:   */
+/*   split_command_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 15:05:57 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 19:02:35 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/05 15:28:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_charset(char c, char *charset)
+{
+	int	i;
+
+	i = -1;
+	while (charset[++i])
+		if (charset[i] == c)
+			return (1);
+	return (0);
+}
 
 int	ft_sizeof_word(char *str, char *charset)
 {
@@ -27,14 +38,11 @@ int	ft_sizeof_word(char *str, char *charset)
 		++size;
 		++str;
 	}
-	if (*str != 0)
+	if (*str != 0 || sep)
 		size--;
 	return (size);
 }
 
-// Tout ce qui est apres un charactere # est considere
-// comme un commentaire en bash, tester avec "echo abcd #efg",
-// on devrait s'arreter quand on voit le charactere '#'
 int	ft_count_word(char *str, char *charset)
 {
 	int	words;
@@ -60,52 +68,47 @@ int	ft_count_word(char *str, char *charset)
 	return (words);
 }
 
-char	*ft_filltab(char *str, char *charset, int i, char *array)
-{
-	int	size;
-	int	index;
-
-	size = ft_sizeof_word(&str[i], charset);
-	index = 0;
-	while (index < size)
-	{
-		array[index++] = str[i++];
-	}
-	return (array);
-}
-
-char	**ft_split_2(char *str, char *charset)
+char	**split_line(char *str, char *charset)
 {
 	char	**array;
 	int		words;
-	int		index;
 	int		i;
+	int		index;
 	int		sizewords;
 
 	words = ft_count_word(str, charset);
-	array = ft_calloc((words + 1), sizeof(char **));
+	array = ft_calloc((words + 1), sizeof(char *));
 	if (!array)
 		return (NULL);
-	index = -1;
+	index = 0;
 	i = 0;
-	while (++index < words)
+	while (index < words)
 	{
 		sizewords = ft_sizeof_word(&str[i], charset);
-		array[index] = ft_calloc((sizewords + 1), sizeof(char *));
-		if (!array[i])
-			return (NULL);
-		array[index] = ft_filltab(str, charset, i, array[index]);
+		array[index] = ft_substr(str, i, sizewords);
 		i += sizewords;
+		index++;
 	}
 	return (array);
 }
 
-char	**split_line(char *str)
+char	**split_command_line(char *line)
 {
-	char	**array;
-	char	*sep;
+	char	**first_array;
+	char	**second_array;
+	char	**final_array;
 
-	sep = "\"\'><| ";
-	array = ft_split_2(str, sep);
-	return (array);
+	//si separateur dans " ou ' -> ne pas split
+	first_array = split_line(line, " \t|><;");
+	if (!first_array)
+		return (NULL);
+	//quoting
+	//second_array = join_heredoc(first_array);
+	//ft_free_array(first_array);
+	if (!second_array)
+		return (NULL);
+	//final_array = ft_split_space(second_array);
+	//ft_free_array(second_array);
+	//final_array = remove_comments(final_array);
+	return (final_array);
 }

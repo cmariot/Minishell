@@ -1,0 +1,6 @@
+objs/
+*.o
+*.a
+minishell
+minishell_tester
+tester_minishell/log_tests/

@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_utils.c                                      :+:      :+:    :+:   */
+/*   minishell_tester.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 19:00:03 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/16 19:01:03 by cmariot          ###   ########.fr       */
+/*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/04 10:35:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_TESTER_H
+# define MINISHELL_TESTER_H
 
-int	ft_charset(char c, char *charset)
-{
-	int	i;
+# include "libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
-	i = -1;
-	while (charset[++i])
-		if (charset[i] == c)
-			return (1);
-	return (0);
-}
+# define FALSE 0
+# define TRUE 1
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
+
+char		*gnl_without_bn(int fd);
+
+#endif

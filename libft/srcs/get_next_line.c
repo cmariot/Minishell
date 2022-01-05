@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/15 15:33:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/02 21:24:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ char	*gnl_outpout(ssize_t read_return, char **str_input)
 	char	*tmp;
 	char	*str_return;
 
-	if (read_return == 0 && **str_input == '\0')
-	{
-		ft_strdel(str_input);
+	if (read_return == 0 && *str_input == NULL)
 		return (NULL);
-	}
 	len = 0;
 	while ((*str_input)[len] != '\n' && (*str_input)[len] != '\0')
 		len++;
@@ -73,6 +70,8 @@ char	*get_next_line(int fd)
 		read_return = read(fd, buf, BUFFER_SIZE);
 		if (read_return == -1)
 			return (NULL);
+		if (read_return == 0)
+			break ;
 		buf[read_return] = '\0';
 		if (str == NULL)
 			str = ft_strdup(buf);

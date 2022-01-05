@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/16 19:00:27 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/05 13:39:53 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
 
+
 LFLAGS			= -Wall -Wextra -Werror -g3
 LIB_LFLAGS		= -L $(LIBFT) -lft
 LIB_LFLAGS		+= -lreadline
@@ -54,21 +55,32 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
-				builtin.c \
-				env_builtin.c \
-				env_list_utils.c \
-				execute.c \
-				get_command.c \
-				init_minishell.c \
-				free_minishell.c \
-				parse.c \
-				prompt.c \
-				parse_main_command.c \
-				parse_pipes.c \
-				print_structure.c \
-				pwd_builtin.c \
-				split.c \
-				split_utils.c
+				  builtin_cd.c \
+				  builtin_echo.c \
+				  builtin_env.c \
+				  builtin_exit.c \
+				  builtin_export.c \
+				  builtin_pwd.c \
+				  builtin_unset.c \
+				  env_list_utils.c \
+				  env_array_utils.c \
+				  execute.c \
+				  expand_env_variable.c \
+				  get_command_line.c \
+				  global_exit_status.c \
+				  init_minishell.c \
+				  free_minishell.c \
+				  parse.c \
+				  parse_pipes.c \
+				  parse_simple_commands.c \
+				  parse_redirections.c \
+				  pipeline.c \
+				  print_structure.c \
+				  remove_comments.c \
+				  split_command_line.c \
+				  split_join_heredoc.c \
+				  split_spaces.c \
+				  signal.c
 
 SRC			:= $(notdir $(SRCS))
 
@@ -115,7 +127,7 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
 leaks : all
-		valgrind --leak-check=full ./minishell
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=tests/.ignore_readline --track-origins=yes ./minishell
 
 # Check 42 norm 
 norm :
@@ -123,22 +135,24 @@ norm :
 
 # Remove object files
 clean :
-		@printf "$(RE)Removing $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
 		@printf "$(RE)make clean in $(LIBFT) ... "
 		@make clean -C $(LIBFT)
 		@printf "Done\n"
+		@printf "Removing $(OBJS_DIR) ... "
+		@rm -rf $(OBJS_DIR)
+		@printf "Done\n$(RC)"
 
 # Remove object and binary files
 fclean :
-		@printf "$(RE)Removing $(NAME) ... "
-		@rm -f $(NAME)
-		@printf "Done\n"
-		@printf "$(RE)Removing $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n$(RC)"
+		@printf "$(RE)make fclean in $(LIBFT) ... "
 		@make fclean -C $(LIBFT)
+		@printf "Done\n"
+		@printf "Removing $(OBJS_DIR) ... "
+		@rm -rf $(OBJS_DIR)
+		@printf "Done\n"
+		@printf "Removing $(NAME) ... "
+		@rm -f $(NAME)
+		@printf "Done\n$(RC)"
 
 print_divider :
 		@printf "\n"

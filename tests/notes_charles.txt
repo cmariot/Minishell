@@ -1,0 +1,21 @@
+A FAIRE :
+- [ ] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
+	- echo (depend du parsing)
+	- pwd
+	- env
+	- export
+	- unset
+	- cd
+- [ ] redirection de l'output > et >>
+- [ ] redirection de l'input < et <<
+
+DONE :
+- [X] les commandes d'un seul caractere ne renvoient pas de message d'erreur : fix
+- [X] commentaires : si un mot commence par # on ignore la fin de la ligne
+- [X] env a sauvegarder dans le cas ou on a un ou plusieurs 'name=value' dans les premiers elements de la ligne de commande
+- [X] env a sauvegarder correctement entre chaque nouvelle commande
+- [X] export
+- [X] unset : 1er element de la liste a supprimer pose probleme : ok
+- [X] verifier leaks export et unset
+- [X] cas particuliers d'execution de commande avec chemin absolu, check le ./ et execution dans des dossiers distants
+- [X] valeurs de retour

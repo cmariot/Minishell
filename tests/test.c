@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd_builtin.c                                      :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 15:07:30 by cmariot          ###   ########.fr       */
+/*   Created: 2021/12/29 00:31:43 by cmariot           #+#    #+#             */
+/*   Updated: 2021/12/29 00:39:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-void	pwd_builtin(t_shell *minishell)
+int	main(int argc, char **argv, char **env)
 {
-	char	*pwd;
+	size_t	i;
+	char	**array;
 
-	pwd = get_env_value("PWD", minishell->env);
-	if (pwd != NULL)
+	if (argc && *argv && *env)
 	{
-		ft_putstr(pwd);
-		write(1, "\n", 1);
-		free(pwd);
+		i = 0;
+		array = malloc(10 * sizeof(char *));
+		printf("%lu\n", sizeof(char **));
 	}
+	return (0);
 }

@@ -1,0 +1,190 @@
+#Test du builtin echo
+echo $PWD
+echo $PWD $HOME
+echo $PWD$HOME
+echo $PWDlol
+echo salut cest charles 
+echo
+echo -n
+echo -nnnnnnnnn
+echo -nnLnnnnnnn
+echo -
+echo A
+echo -n A
+echo 1 2 3 
+echo -n 1 2 3 
+echo (1 2 3) 
+echo "(1 2 3)" 
+echo [1 2 3] 
+echo {1 2 3} 
+echo $PWD
+echo 'test'
+ech""o test
+""echo test
+echo "" test
+echo $USER
+echo $USE""R
+echo ""$USER
+echo ''$USER
+echo "$"USER
+echo $""USER
+echo $''USER
+ec''ho test
+ ''echo test
+echo'' test
+echo '' test
+echo $USE''R
+echo ''$USER
+echo'$'USER
+echo $
+echo $""
+echo "" "" ""
+echo """"""
+echo $USER"" ''
+echo test""test
+echo test ""test
+echo test"" test
+echo test "'"test
+echo $$USER
+echo $$$USER
+echo $USER$USER
+echo $USER""$USER
+echo $USER" "$USER
+echo "|" ls
+echo test$1test
+echo $GTGRTGRT
+echo "$USER>>"
+echo "$USER11111:"
+echo "test$<test"
+echo $\"echo 
+echo "test$<test"
+echo test$<test
+echo "test$-r"
+echo "test$-?"
+echo $-1$USER
+echo $1
+echo "$1"
+echo  $"USER"
+echo  $'USER'
+echo "$NULL" test
+echo '"abc"'
+echo $NULL test
+echo test |cat
+echo koala ||| cat 
+echo "$USER'$USER"'$USER"$USER'$USER'"$USER"'"'$USER'$H"
+echo '  "abc" ' 
+echo " $ " | cat -e
+echo $:$= | cat -e
+export FOO=' " '
+echo " $FOO " | cat -e
+export var="      folder     bbdfvb  "
+echo$var
+echo$var$HOME
+echo$HOME
+#Test des valeurs de retour
+ls
+#Test du builtin pwd
+pwd
+pwd -
+pwd arg
+pwd pwd pwd
+PWD
+p""wd
+ pwd
+	pwd
+pwd ~
+#Test du builtin export
+export A=1
+export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+export A=1 B
+export A=1 ls
+export A=2 | ls
+export A=
+export A 1
+export A1
+export	=2
+export "=3
+export '=3
+export -
+#Test des pipelines
+ls -la .. | grep l | wc -l 
+#Test du builtin exit
+exit
+exit -
+exit -f
+exit .
+exit ..
+exit exit
+ls -l | exit
+ls exit
+exit fkjdfhfjg
+exit a b c 
+exit 1
+exit 255
+exit 130
+exit -5
+exit +9
+exit 1000
+exit 2
+exit a 2
+exit "a" 2
+exit "2"
+exit 3 2 4
+exit +3
+exit 99999999999999999999999
+exit 999999999999999999999999999999999999999999999999999999
+exit -99999999999999999999999
+#Test du builtin unset
+unset
+unset PWD
+unset $PWD
+unset PWD $PWD
+unset $PWD PWD
+unset HOME PWD USER
+unset /
+unset -
+unset -l
+unset +
+unset -l ls
+unset -
+unset unset
+unset export a=b
+unset GERGERGEG
+unset VEGER PWD
+unset $PWD ergergrg
+unset *
+unset /
+unset %
+unset >
+unset <
+export A
+export =
+export B
+export #
+export %
+export + 
+export -
+export A=
+export B=
+export #=
+export %=
+export += 
+export -=
+export A=b B=c
+export A=b B=
+export A= B=c
+#Test du builtin cd
+cd
+cd - #ok, juste que OLDPWD n'est pas def direct dans bash
+cd -l
+cd ..
+cd ........
+cd /tmp
+cd /tmp/~/lol
+cd /
+cd +
+cd #
+cd ~/42
+cd ../Makefile
+cd /sgoinfre/goinfre/Perso/cmariot
+cd /sgoinfre/goinfre/Perso/abensett

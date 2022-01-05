@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 13:08:10 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/12 11:56:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/12/29 01:28:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 void	ft_bzero(void *str, size_t bytes_nb)
 {
-	char	*dest;
 	size_t	i;
+	char	*dest;
 
-	dest = (char *)str;
 	i = 0;
+	dest = (char *)str;
 	while (i < bytes_nb)
 	{
 		dest[i] = 0;
