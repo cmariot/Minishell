@@ -3,6 +3,7 @@ echo $PWD
 echo $PWD $HOME
 echo $PWD$HOME
 echo $PWDlol
+echo salut cest charles 
 echo
 echo -n
 echo -nnnnnnnnn
@@ -129,6 +130,10 @@ exit a 2
 exit "a" 2
 exit "2"
 exit 3 2 4
+exit +3
+exit 99999999999999999999999
+exit 999999999999999999999999999999999999999999999999999999
+exit -99999999999999999999999
 #Test du builtin unset
 unset
 unset PWD
@@ -168,3 +173,18 @@ export -=
 export A=b B=c
 export A=b B=
 export A= B=c
+#Test du builtin cd
+cd
+cd - #ok, juste que OLDPWD n'est pas def direct dans bash
+cd -l
+cd ..
+cd ........
+cd /tmp
+cd /tmp/~/lol
+cd /
+cd +
+cd #
+cd ~/42
+cd ../Makefile
+cd /sgoinfre/goinfre/Perso/cmariot
+cd /sgoinfre/goinfre/Perso/abensett

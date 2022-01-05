@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/04 10:57:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/05 14:55:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	builtin_exit(t_shell *minishell, char **args)
 		change_global_exit_status(0);
 	else if (args[1] == NULL)
 	{
+		//faire unsignel long itoa 
 		if (is_a_number(args[0]) == TRUE)
 			change_global_exit_status(ft_atoi(args[0]));
 		else

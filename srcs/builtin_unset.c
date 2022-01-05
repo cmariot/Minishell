@@ -5,12 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 11:00:05 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/05 13:36:54 by cmariot          ###   ########.fr       */
+/*   Created: 2022/01/05 10:39:32 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/05 13:42:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Delete an element of the linked list that store 
+// the name and the value of env.
+
+// Find the previous element of the element with name = "name" in the list,
+// Create a new link : previous_of_element->next_of_element
+// free the name and the value, set them to NULL, and free the element
 
 void	remove_first_element(t_env **env)
 {
