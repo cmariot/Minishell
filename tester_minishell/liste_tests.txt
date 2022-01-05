@@ -127,3 +127,16 @@ exit +9
 exit 1000
 exit 2
 exit 3 2 4
+#Test du builtin cd
+cd
+cd - #ok, juste que OLDPWD n'est pas def direct dans bash
+cd -l
+cd ..
+cd ........
+cd /tmp
+cd /tmp/~/lol
+cd /
+cd +
+cd #
+cd ~/42
+

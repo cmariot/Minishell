@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/04 08:50:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/05 11:17:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,21 +115,19 @@ int				is_redirection(char *element);
 void			print_command_line(t_command_line *command_line);
 
 // builtin.c
-int				builtin(char *command, t_shell *minishell);
 
 // env_builtin.c
+int				builtin(char *command, t_shell *minishell);
 int				builtin_env(t_env *env);
 int				builtin_export(t_env *env, char **args);
 t_env			*builtin_unset(t_env *env, char **names);
 void			builtin_exit(t_shell *minishell, char **args);
-void			add_to_env(t_env *env, char *name, char *value);
+int				builtin_pwd(t_shell *minishell);
+int				builtin_cd(t_shell *minishell);
 
 // pipielne.c
 void			create_pipeline(t_command_line *command_line,
 					t_shell *minishell);
-
-// pwd_builtin.c
-int				builtin_pwd(t_shell *minishell);
 
 // split.c
 char			**split_command_line(char *line);
@@ -145,25 +143,28 @@ char			**envlist_to_array(t_env *envlist);
 void			make_pipe(t_shell *minishell, t_command_line *command_line);
 
 // expand_env_variable.c
-void			expand_env_variable(char **splitted_line, t_env *env);
 
 // check quote
 int				check_quote(char *line);
+char			**remove_comments(char **splitted_line);
+void			add_to_env(t_env *env, char *name, char *value);
+void			expand_env_variable(char **splitted_line, t_env *env);
 
 // handler signal
 int				signal_catcher(void);
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
 // cd
-int				builtin_cd(t_shell *minishell);
 
 //remove_comments.c
-char			**remove_comments(char **splitted_line);
 
 size_t			ft_arraylen(char **array);
 bool			ft_isadirectory(char *path);
 
 int				return_global_exit_status(void);
 void			change_global_exit_status(int new_value);
+
+void			add_to_env(t_env *env, char *name, char *value);
+int				builtin_export(t_env *env, char **args);
 
 #endif
