@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_spaces.c                                     :+:      :+:    :+:   */
+/*   join_quote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:30:38 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/28 18:01:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 01:25:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 char	*join_fill_array(char *finalarray, char **array, int pos, int join)
 {
 	char	*tmp;
@@ -89,11 +89,11 @@ int	ft_count_space(char **array)
 	{
 		if (ft_strcmp(*array, "\"") == 0 || ft_strcmp(*array, "'") == 0)
 			count_quotes_words(&array, &words);
-		/*else if (ft_strcmp(*array, " ") == 0 || ft_strcmp(*array, "\t") == 0)
+		else if (ft_strcmp(*array, " ") == 0 || ft_strcmp(*array, "\t") == 0)
 		{
 			array++;
 			continue ;
-		}*/
+		}
 		else if (*array != NULL)
 			words++;
 		else if (*array == NULL)
@@ -119,13 +119,13 @@ char	**join_quote(char **array)
 	pos = 0;
 	while (words-- && array[pos] != NULL)
 	{
-		/*while (ft_strcmp(array[pos], " ") == 0
+		while (ft_strcmp(array[pos], " ") == 0
 			|| ft_strcmp(array[pos], "\t") == 0)
-			pos++;*/
+			pos++;
 		join = ft_count_join(array, pos);
 		finalarray[i] = join_fill_array(finalarray[i], array, pos, join);
 		pos += join;
 		i++;
 	}
 	return (finalarray);
-}
+}*/

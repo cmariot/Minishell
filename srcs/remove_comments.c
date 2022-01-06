@@ -6,12 +6,12 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 13:26:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 14:05:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 01:23:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 size_t	get_array_without_comment_len(char **array)
 {
 	size_t	len;
@@ -49,4 +49,4 @@ char	**remove_comments(char **splitted_line)
 	}
 	ft_free_array(splitted_line);
 	return (new_array);
-}
+}*/

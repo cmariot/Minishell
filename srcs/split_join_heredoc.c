@@ -6,12 +6,12 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:02:19 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/27 18:42:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 01:24:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 size_t	ft_count_heredoc(char **array)
 {
 	size_t	size;
@@ -86,4 +86,4 @@ char	**join_heredoc(char **array)
 		i++;
 	}
 	return (newarray);
-}
+}*/
