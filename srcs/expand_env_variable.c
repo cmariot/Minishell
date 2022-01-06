@@ -6,50 +6,18 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 19:37:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 23:51:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	save_in_env(char *str, size_t i, t_env *env)
-{
-	char	*name;
-	char	*value;
-
-	name = ft_substr(str, 0, i);
-	value = ft_strdup(str + i + 1);
-	add_to_env(env, name, value);
-	free(name);
-	free(value);
-}
-
-/* During the parsing, if an argument conains an equal -> save in env */
-bool	contains_equal(char *str, t_env *env)
-{
-	int	i;
-	int	min_len;
-
-	min_len = ft_strlen(str) - 2;
-	if (min_len <= 0)
-		return (FALSE);
-	i = 1;
-	while (i <= min_len)
-	{
-		if (str[i] == '=')
-		{
-			save_in_env(str, i, env);
-			return (TRUE);
-		}
-		i++;
-	}
-	return (FALSE);
-}
-
-size_t	get_env_name_len(char *name, size_t index)
+int	get_env_name_len(char *name, size_t index)
 {
 	size_t	len;
 
+	if (name[index] == '\'' || name[index] == '"')
+		return (-1);
 	len = 0;
 	while (name[index] != '\0' && name[index] != '$'
 		&& name[index] != '\'' && name[index] != '\"')
@@ -77,18 +45,39 @@ void	remove_name_from_str(char *name, char *str, size_t *i)
 
 void	add_value_to_str(char **str, char *name, char *value, size_t *i)
 {
-	size_t	str_len;
-	size_t	value_len;
-	size_t	name_len;
 	size_t	new_len;
 	char	*new_str;
 	size_t	j;
 	size_t	k;
 
-	str_len = ft_strlen(*str);
-	value_len = ft_strlen(value);
-	name_len = ft_strlen(name);
-	new_len = str_len - (name_len + 1) + value_len + 1;
+	new_len = ft_strlen(*str) - (ft_strlen(name) + 1) + ft_strlen(value) + 1;
+	new_str = ft_calloc(new_len, sizeof(char));
+	if (!new_str)
+		return ;
+	j = 0;
+	while (j < *i)
+	{
+		new_str[j] = (*str)[j];
+		j++;
+	}
+	k = 0;
+	while (k < ft_strlen(value))
+		new_str[j++] = value[k++];
+	k = 0;
+	while (j < new_len)
+		new_str[j++] = (*str)[(*i) + 1 + ft_strlen(name) + k++];
+	free(*str);
+	*str = new_str;
+	*i = ft_strlen(value) + *i - 1;
+}
+
+void	remove_from_str(char **str, size_t *i, size_t name_len)
+{
+	size_t	j;
+	char	*new_str;
+	size_t	new_len;
+
+	new_len = ft_strlen(*str) - name_len;
 	new_str = ft_calloc(new_len, sizeof(char));
 	if (!new_str)
 		return ;
@@ -101,31 +90,25 @@ void	add_value_to_str(char **str, char *name, char *value, size_t *i)
 			j++;
 		}
 	}
-	k = 0;
-	while (k < value_len)
-		new_str[j++] = value[k++];
-	k = 0;
-	while (j < new_len)
-		new_str[j++] = (*str)[(*i) + 1 + name_len + k++];
+	if (new_len > j)
+		while (j < new_len)
+			new_str[j++] = (*str)[*i + name_len++ + 1];
 	free(*str);
 	*str = new_str;
-	*i = value_len + *i;
+	(*i)--;
 }
 
-void	search_value(char **str, size_t *i, char *name, t_env *env)
+int	search_value(char **str, size_t *i, char *name, t_env *env)
 {
 	char	*value;
-	size_t	len;
 
 	value = get_env_value(name, env);
 	if (value == NULL)
 	{
-		len = *i + ft_strlen(name) + 1;
-		while (*i < len)
-		{
-			(*str)[*i] = 31;
-			(*i)++;
-		}
+		if (ft_strlen(*str) - 1 == ft_strlen(name))
+			return (-1);
+		else
+			remove_from_str(str, i, ft_strlen(name));
 	}
 	else
 	{
@@ -137,23 +120,63 @@ void	search_value(char **str, size_t *i, char *name, t_env *env)
 		else
 			add_value_to_str(str, name, value, i);
 	}
+	return (0);
 }
 
-void	expand_name(char **str, size_t *i, t_env *env)
+void	expand_exit_status(char **str, size_t *i, char *name)
 {
-	size_t	len;
+	int		exit_status;
+	char	*value;
+
+	exit_status = return_global_exit_status();
+	value = ft_itoa(exit_status);
+	if (ft_strlen(*str) - 1 == ft_strlen(name))
+	{
+		free(*str);
+		*str = ft_strdup(value);
+	}
+	else
+		add_value_to_str(str, name, value, i);
+}
+
+int	expand_name(char **str, size_t *i, t_env *env)
+{
+	int		len;
 	char	*name;
 
 	len = get_env_name_len((*str), *i + 1);
+	printf("LEN USER = %d\n", len);
 	if (len == 0)
-		return ;
+		return (0);
+	else if (len == -1)
+	{
+		remove_from_str(str, i, 0);
+		return (0);
+	}
 	name = ft_substr((*str), *i + 1, len);
 	if (ft_strcmp(name, "?") == 0)
-		printf("expansion exit status\n");
+	{
+		expand_exit_status(str, i, name);
+	}
 	else
 	{
-		search_value(str, i, name, env);
+		if (search_value(str, i, name, env) == -1)
+			return (-1);
 	}
+	return (0);
+}
+
+int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
+{
+	(*i)++;
+	while ((*str)[*i] != '"' && (*str)[*i])
+	{
+		if ((*str)[*i] == '$')
+			if (expand_name(str, i, env) == -1)
+				return (-1);
+		(*i)++;
+	}
+	return (0);
 }
 
 int	search_name(char **str, t_env *env)
@@ -166,17 +189,40 @@ int	search_name(char **str, t_env *env)
 		if ((*str)[i] == '\'')
 		{
 			i++;
-			while ((*str)[i] != '\'')
+			while ((*str)[i] != '\'' && (*str)[i])
 				i++;
-			i++;
 		}
-		if ((*str)[i] == '$')
+		else if ((*str)[i] == '"')
 		{
-			expand_name(str, &i, env);
+			expand_in_double_quotes(&i, str, env);
 		}
+		else if ((*str)[i] == '$')
+			if (expand_name(str, &i, env) == -1)
+				return (-1);
 		i++;
 	}
 	return (0);
+}
+
+void	remove_from_array(char **splitted_line, int i)
+{
+	int	j;
+
+	if (splitted_line[i + 1] == NULL)
+	{
+		free(splitted_line[i]);
+		splitted_line[i] = NULL;
+		return ;
+	}
+	j = i;
+	while (splitted_line[j + 1] != NULL)
+	{
+		free(splitted_line[j]);
+		splitted_line[j] = ft_strdup(splitted_line[j + 1]);
+		j++;
+	}
+	free(splitted_line[j]);
+	splitted_line[j] = NULL;
 }
 
 void	expand_env_variable(char **command_array, t_env *env)
@@ -186,7 +232,8 @@ void	expand_env_variable(char **command_array, t_env *env)
 	i = 0;
 	while (command_array[i] != NULL)
 	{
-		search_name(&command_array[i], env);
+		if (search_name(&command_array[i], env) == -1)
+			remove_from_array(command_array, i);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/05 15:20:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 21:15:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,10 @@ int	check_diff(char *file_bash, char *file_minishell)
 	char	*minishell_output;
 
 	bash_output = file_to_str(file_bash);
-	//unlink(file_bash);
+	unlink(file_bash);
 
 	minishell_output = file_to_str(file_minishell);
-	//unlink(file_minishell);
+	unlink(file_minishell);
 	if (ft_strcmp(bash_output, minishell_output) == 0)
 	{
 		printf("✅ OK\n");

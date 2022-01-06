@@ -6,11 +6,23 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/05 13:41:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 22:59:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	save_in_env(char *str, size_t i, t_env *env)
+{
+	char	*name;
+	char	*value;
+
+	name = ft_substr(str, 0, i);
+	value = ft_strdup(str + i + 1);
+	add_to_env(env, name, value);
+	free(name);
+	free(value);
+}
 
 // If the element name is in the linked list env, change its value,
 // else add name and value

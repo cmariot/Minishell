@@ -3,6 +3,21 @@ echo $PWD
 echo $PWD $HOME
 echo $PWD$HOME
 echo $PWDlol
+exho ""$PWD
+echo "$PWD"
+echo '$PWD'
+echo "'$PWD'"
+echo '"$PWD"'
+exho test""$PWD
+echo "$PWD"test
+echo test'$PWD'
+echo "test'$PWD'"
+echo test""$PWD$HOME
+echo "$PWD"test$HOME
+echo test'$PWD'$HOME
+echo "test'$PWD'"$HOME
+echo '"$PWD"$HOME'test
+echo $HOME'"$PWD"'test
 echo salut cest charles 
 echo
 echo -n
