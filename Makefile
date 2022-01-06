@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/05 13:39:53 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/06 02:14:01 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,10 +76,7 @@ SRCS			= main.c \
 				  parse_redirections.c \
 				  pipeline.c \
 				  print_structure.c \
-				  remove_comments.c \
 				  split_command_line.c \
-				  split_join_heredoc.c \
-				  join_quote.c \
 				  trim_quote_space_del.c \
 				  signal.c
 

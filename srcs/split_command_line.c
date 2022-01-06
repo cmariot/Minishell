@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:00:15 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 01:22:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 11:57:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 bool	is_blank(char *line, size_t i);
 bool	is_a_metacharacter(char *line, size_t *i, bool opt);
+void	parse_word(char *line, size_t *i);
 
 /* count the len of the word, like in parse_word() */
 
@@ -42,39 +43,9 @@ size_t	len_of_word(char *line, size_t *i)
 {
 	size_t	len;
 	size_t	i_backup;
-	char	quote_type;
-	size_t	i_plus_un;
 
 	i_backup = *i;
-	while (line[*i] != '\0' && line[*i] != '#')
-	{
-		if (line[*i] == '\'' || line[*i] == '"')
-		{
-			quote_type = line[*i];
-			(*i)++;
-			while (line[*i] != '\0' && line[*i] != '#')
-			{
-				if (line[*i] == quote_type && is_blank(line, (*i) + 1) == TRUE)
-					break ;
-				i_plus_un = *i + 1;
-				if (line[*i] == quote_type
-					&& is_a_metacharacter(line, &i_plus_un, FALSE) == TRUE)
-				{
-					*i = i_plus_un;
-					break ;
-				}
-				(*i)++;
-			}
-			if (line[*i] == quote_type)
-				(*i)++;
-			break ;
-		}
-		if (is_a_metacharacter(line, i, FALSE) == TRUE)
-			break ;
-		if (is_blank(line, *i) == TRUE)
-			break ;
-		(*i)++;
-	}
+	parse_word(line, i);
 	len = (*i) - i_backup;
 	return (len);
 }
@@ -124,9 +95,7 @@ char	*get_token_value(char *line, size_t *index)
 		while (is_blank(line, *index) == TRUE)
 			(*index)++;
 	first_index = *index;
-	//printf("[%s]\n", line + *index);
 	token_len = count_token_len(line, index);
-	//printf("TOKEN_LEN = %lu\n", token_len);
 	token = ft_substr(line, first_index, token_len);
 	return (token);
 }
@@ -147,6 +116,32 @@ void	fill_tokens_array(char **array, char *line, size_t number_of_tokens)
 	}
 }
 
+/* i++ until the end of the quote */
+
+void	parse_quotes(char *line, size_t *i)
+{
+	char	quote_type;
+	size_t	i_plus_un;
+
+	quote_type = line[*i];
+	(*i)++;
+	while (line[*i] != '\0')
+	{
+		if (line[*i] == quote_type && is_blank(line, (*i) + 1) == TRUE)
+			break ;
+		i_plus_un = *i + 1;
+		if (line[*i] == quote_type
+			&& is_a_metacharacter(line, &i_plus_un, FALSE) == TRUE)
+		{
+			*i = i_plus_un;
+			break ;
+		}
+		(*i)++;
+	}
+	if (line[*i] == quote_type)
+		(*i)++;
+}
+
 /* while the word isn't finished, i++ 
  * a word is finished when word[i] == blank or word[i] == metacharacter
  * if there is an opening quote in the word, the closing quote 
@@ -154,30 +149,11 @@ void	fill_tokens_array(char **array, char *line, size_t number_of_tokens)
 
 void	parse_word(char *line, size_t *i)
 {
-	char	quote_type;
-	size_t	i_plus_un;
-
-	while (line[*i] != '\0' && line[*i] != '#')
+	while (line[*i] != '\0')
 	{
 		if (line[*i] == '\'' || line[*i] == '"')
 		{
-			quote_type = line[*i];
-			(*i)++;
-			while (line[*i] != '\0' && line[*i] != '#')
-			{
-				if (line[*i] == quote_type && is_blank(line, (*i) + 1) == TRUE)
-					break ;
-				i_plus_un = *i + 1;
-				if (line[*i] == quote_type
-					&& is_a_metacharacter(line, &i_plus_un, FALSE) == TRUE)
-				{
-					*i = i_plus_un;
-					break ;
-				}
-				(*i)++;
-			}
-			if (line[*i] == quote_type)
-				(*i)++;
+			parse_quotes(line, i);
 			break ;
 		}
 		if (is_a_metacharacter(line, i, FALSE) == TRUE)
@@ -194,31 +170,29 @@ void	parse_word(char *line, size_t *i)
 
 bool	is_a_metacharacter(char *line, size_t *i, bool opt)
 {
-	bool	meta;
-
 	if (line[*i] == '<' && line[*i + 1] && line[*i + 1] == '<')
 	{
 		if (opt == TRUE)
-			(*i)++;
-		meta = TRUE;
+			(*i) += 2;
+		return (TRUE);
 	}
 	else if (line[*i] == '>' && line[*i + 1] && line[*i + 1] == '>')
 	{
 		if (opt == TRUE)
-			(*i)++;
-		meta = TRUE;
+			(*i) += 2;
+		return (TRUE);
 	}
 	else if (line[*i] == '<' || line[*i] == '>')
-		meta = TRUE;
+		;
 	else if (line[*i] == '|' || line[*i] == '&' || line[*i] == ';')
-		meta = TRUE;
+		;
 	else if (line[*i] == '(' || line[*i] == ')' || line[*i] == '\n')
-		meta = TRUE;
+		;
 	else
 		return (FALSE);
 	if (opt == TRUE)
 		(*i)++;
-	return (meta);
+	return (TRUE);
 }
 
 /* return true if line[i] == space or tab */
@@ -233,7 +207,8 @@ bool	is_blank(char *line, size_t i)
 		return (FALSE);
 }
 
-/* Count the number of tokens (= words + metacharacters), skip blank characters */
+/* Count the number of tokens (= words + metacharacters),
+ * skip blank characters */
 
 size_t	count_number_of_tokens(char *line)
 {
@@ -242,14 +217,16 @@ size_t	count_number_of_tokens(char *line)
 
 	number_of_tokens = 0;
 	i = 0;
-	while (line[i] != '\0' && line[i] != '#')
+	while (line[i] != '\0')
 	{
 		if (is_blank(line, i) == TRUE)
 			while (is_blank(line, i) == TRUE)
 				i++;
 		else
 		{
-			if (is_a_metacharacter(line, &i, TRUE) == TRUE)
+			if (line[i] == '#')
+				break ;
+			else if (is_a_metacharacter(line, &i, TRUE) == TRUE)
 				number_of_tokens++;
 			else
 			{
@@ -271,7 +248,6 @@ char	**get_tokens_array(char *line)
 	if (line == NULL)
 		return (NULL);
 	number_of_tokens = count_number_of_tokens(line);
-	//printf("NUMBER_OF_TOKENS = %lu\n", number_of_tokens);
 	array = ft_calloc(number_of_tokens + 1, sizeof(char *));
 	if (!array)
 		return (NULL);

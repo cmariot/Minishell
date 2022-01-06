@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/05 10:44:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 02:08:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ size_t	get_env_name_len(char *name, size_t index)
 void	expand_env_variable(char **splitted_line, t_env *env)
 {
 	//fonction a revoir, surement plein de leaks ...
+	//on doit parcourir tous les index des strings du tableau pour rechercher les $
 	char	*value;
 	char	*name;
 	size_t	len;

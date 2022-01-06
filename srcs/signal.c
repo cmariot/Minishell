@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/02 16:43:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 02:05:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 	}
 }
 
-//la valeur de retour peut etre utilisee pour afficher un nouveau prompt ?
-//par exemple si retour = 2 on fait un continue dans le main ?
-//parce-que la quand on fait plusieurs ctrl c ca exit 
 int	signal_catcher(void)
 {
 	struct sigaction	new_act;

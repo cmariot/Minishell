@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 00:10:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 11:42:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		command_line->splitted_line = split_command_line(command_line->line);
 		if (command_line->splitted_line == NULL)
 			return (-1);
-		//ouvrir/creer fichiers redirection ici ?
 		expand_env_variable(command_line->splitted_line,
 			minishell->env);
 		if (get_simple_commands(command_line,
@@ -59,7 +58,7 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 			return (-1);
 		if (parse_redirections(command_line) == -1)
 			return (-1);
-		//print_command_line(command_line);
+		print_command_line(command_line);
 	}
 	return (0);
 }

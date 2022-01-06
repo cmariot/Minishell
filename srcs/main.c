@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 11:23:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 02:12:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	non_interactive_mode(char *line, char **env)
 	free_minishell(&minishell);
 	return ;
 }
-
 
 /* En comportement interactif, un prompt est afiche et
  * on peut lancer des commandes */
