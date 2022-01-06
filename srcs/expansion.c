@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:22:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 17:07:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 19:26:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ int	expansion(t_command_line *command_line, t_env *env)
 	while (i < command_line->number_of_simple_commands)
 	{
 		expand_tilde(command_line->command[i].command_array, env);
-		//expand_parameters()
+		expand_env_variable(command_line->command[i].command_array, env);
 		//quote_removal()
+		//remove the str which contains only 31
 		i++;
 	}
 	return (0);

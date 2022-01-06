@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:07:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 16:15:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:12:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	print_simple_command(t_command_line *command_line)
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
-		ft_putarray("COMMAND_LINE->COMMAND[i].COMMAND_ARRAY",
-			command_line->command[i].command_array);
+		//ft_putarray("COMMAND_LINE->COMMAND[i].COMMAND_ARRAY",
+		//	command_line->command[i].command_array);
 		printf("command_line.command[%lu] :\n", i);
 		if (command_line->command[i].command_and_args != NULL)
 			print_command_and_args(command_line->command[i].command_and_args,

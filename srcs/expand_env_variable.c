@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 02:08:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 19:37:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,13 @@ bool	contains_equal(char *str, t_env *env)
 	return (FALSE);
 }
 
-void	remove_from_array(char **splitted_line, int i)
-{
-	int	j;
-
-	if (splitted_line[i + 1] == NULL)
-	{
-		free(splitted_line[i]);
-		splitted_line[i] = NULL;
-		return ;
-	}
-	j = i;
-	while (splitted_line[j + 1] != NULL)
-	{
-		free(splitted_line[j]);
-		splitted_line[j] = ft_strdup(splitted_line[j + 1]);
-		j++;
-	}
-	free(splitted_line[j]);
-	splitted_line[j] = NULL;
-}
-
 size_t	get_env_name_len(char *name, size_t index)
 {
 	size_t	len;
 
 	len = 0;
-	while (name[index] != '\0' && name[index] != '$')
+	while (name[index] != '\0' && name[index] != '$'
+		&& name[index] != '\'' && name[index] != '\"')
 	{
 		len++;
 		index++;
@@ -80,66 +60,133 @@ size_t	get_env_name_len(char *name, size_t index)
 	return (len);
 }
 
-// a implementer les " et les ' : comportement bash a
-//prendre comme reference mais voir comment ca fonctionne
-void	expand_env_variable(char **splitted_line, t_env *env)
+void	remove_name_from_str(char *name, char *str, size_t *i)
 {
-	//fonction a revoir, surement plein de leaks ...
-	//on doit parcourir tous les index des strings du tableau pour rechercher les $
+	size_t	name_len;
+	size_t	j;
+
+	name_len = ft_strlen(name);
+	j = *i;
+	while (str[name_len + j + 1] != '\0')
+	{
+		str[j] = str[name_len + j + 1];
+		str[name_len + j] = '\0';
+		j++;
+	}
+}
+
+void	add_value_to_str(char **str, char *name, char *value, size_t *i)
+{
+	size_t	str_len;
+	size_t	value_len;
+	size_t	name_len;
+	size_t	new_len;
+	char	*new_str;
+	size_t	j;
+	size_t	k;
+
+	str_len = ft_strlen(*str);
+	value_len = ft_strlen(value);
+	name_len = ft_strlen(name);
+	new_len = str_len - (name_len + 1) + value_len + 1;
+	new_str = ft_calloc(new_len, sizeof(char));
+	if (!new_str)
+		return ;
+	j = 0;
+	if (*i > 0)
+	{
+		while (j < *i)
+		{
+			new_str[j] = (*str)[j];
+			j++;
+		}
+	}
+	k = 0;
+	while (k < value_len)
+		new_str[j++] = value[k++];
+	k = 0;
+	while (j < new_len)
+		new_str[j++] = (*str)[(*i) + 1 + name_len + k++];
+	free(*str);
+	*str = new_str;
+	*i = value_len + *i;
+}
+
+void	search_value(char **str, size_t *i, char *name, t_env *env)
+{
 	char	*value;
-	char	*name;
 	size_t	len;
-	size_t	index;
-	int		i;
-	char	*tmp;
+
+	value = get_env_value(name, env);
+	if (value == NULL)
+	{
+		len = *i + ft_strlen(name) + 1;
+		while (*i < len)
+		{
+			(*str)[*i] = 31;
+			(*i)++;
+		}
+	}
+	else
+	{
+		if (ft_strlen(*str) - 1 == ft_strlen(name))
+		{
+			free(*str);
+			*str = ft_strdup(value);
+		}
+		else
+			add_value_to_str(str, name, value, i);
+	}
+}
+
+void	expand_name(char **str, size_t *i, t_env *env)
+{
+	size_t	len;
+	char	*name;
+
+	len = get_env_name_len((*str), *i + 1);
+	if (len == 0)
+		return ;
+	name = ft_substr((*str), *i + 1, len);
+	if (ft_strcmp(name, "?") == 0)
+		printf("expansion exit status\n");
+	else
+	{
+		search_value(str, i, name, env);
+	}
+}
+
+int	search_name(char **str, t_env *env)
+{
+	size_t	i;
 
 	i = 0;
-	while (splitted_line[i])
+	while ((*str)[i])
 	{
-		name = NULL;
-		index = 0;
-		if (splitted_line[i][0] == '$' && splitted_line[i][1] != '\0')
+		if ((*str)[i] == '\'')
 		{
-			while (splitted_line[i][index] != '\0')
-			{
-				len = get_env_name_len(splitted_line[i] + 1, index);
-				if (name == NULL)
-				{
-					name = ft_substr(splitted_line[i], index + 1, len);
-					if (ft_strcmp("?", name) == 0)
-						value = ft_itoa(return_global_exit_status());
-					else
-						value = get_env_value(name, env);
-				}
-				else
-				{
-					free(name);
-					name = ft_substr(splitted_line[i], index, len + 1);
-					if (ft_strcmp("?", name) == 0)
-						tmp = ft_itoa(return_global_exit_status());
-					else
-						tmp = get_env_value(name, env);
-					value = ft_strjoin(value, tmp);
-					if (tmp)
-						free(tmp);
-				}
-				if (splitted_line[i][index + len + 1] == '\0')
-					break ;
-				index += len + 2;
-			}
-			if (name)
-				free(name);
-			if (value)
-			{
-				free(splitted_line[i]);
-				splitted_line[i] = value;
-			}
-			else
-			{
-				remove_from_array(splitted_line, i);
-				continue ;
-			}
+			i++;
+			while ((*str)[i] != '\'')
+				i++;
+			i++;
 		}
+		if ((*str)[i] == '$')
+		{
+			expand_name(str, &i, env);
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	expand_env_variable(char **command_array, t_env *env)
+{
+	size_t	i;
+
+	i = 0;
+	while (command_array[i] != NULL)
+	{
+		search_name(&command_array[i], env);
 		i++;
 	}
 }
