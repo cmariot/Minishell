@@ -89,11 +89,11 @@ int	ft_count_space(char **array)
 	{
 		if (ft_strcmp(*array, "\"") == 0 || ft_strcmp(*array, "'") == 0)
 			count_quotes_words(&array, &words);
-		else if (ft_strcmp(*array, " ") == 0 || ft_strcmp(*array, "\t") == 0)
+		/*else if (ft_strcmp(*array, " ") == 0 || ft_strcmp(*array, "\t") == 0)
 		{
 			array++;
 			continue ;
-		}
+		}*/
 		else if (*array != NULL)
 			words++;
 		else if (*array == NULL)
@@ -103,7 +103,7 @@ int	ft_count_space(char **array)
 	return (words);
 }
 
-char	**ft_split_space(char **array)
+char	**join_quote(char **array)
 {
 	char	**finalarray;
 	int		words;
@@ -119,9 +119,9 @@ char	**ft_split_space(char **array)
 	pos = 0;
 	while (words-- && array[pos] != NULL)
 	{
-		while (ft_strcmp(array[pos], " ") == 0
+		/*while (ft_strcmp(array[pos], " ") == 0
 			|| ft_strcmp(array[pos], "\t") == 0)
-			pos++;
+			pos++;*/
 		join = ft_count_join(array, pos);
 		finalarray[i] = join_fill_array(finalarray[i], array, pos, join);
 		pos += join;
