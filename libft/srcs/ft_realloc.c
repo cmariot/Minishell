@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 22:23:23 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/09 22:55:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 15:45:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,3 @@ char	*ft_realloc(void *previous, char *new)
 	}
 	return (str);
 }
-
-/*
-int	main(int argc, char **argv, char **env)
-{
-	char	*lol;
-
-	if (argc && *argv && *env)
-	{
-		lol = ft_strdup("lol");
-		printf("1 : %s\n", lol);
-		lol = ft_realloc(lol, "lol2");
-		printf("2 : %s\n", lol);
-		free(lol);
-	}
-	return (0);
-}
-*/

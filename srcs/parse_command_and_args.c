@@ -1,0 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_command_and_args.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/06 16:36:27 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/06 16:47:21 by cmariot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+int	fill_command_and_args(t_simple *command)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (command->command_array[i] != NULL)
+	{
+		while (command->command_array[i])
+		{
+			if (is_redirection(command->command_array[i]))
+			{
+				if (command->command_array[i + 1] != NULL)
+					i += 2;
+				else if (command->command_array[i + 1] == NULL)
+					return (-1);
+			}
+			else
+				command->command_and_args[j++]
+					= ft_strdup(command->command_array[i++]);
+		}
+	}
+	return (0);
+}
+
+int	get_len(char **command_array)
+{
+	int		len;
+	size_t	i;
+
+	i = 0;
+	len = 0;
+	while (command_array[i] != NULL)
+	{
+		if (is_redirection(command_array[i]))
+		{
+			if (command_array[i + 1] != NULL)
+				i += 2;
+			else if (command_array[i + 1] == NULL)
+			{
+				return (len + 1);
+			}
+		}
+		else
+		{
+			len++;
+			i++;
+		}
+	}
+	return (len);
+}
+
+int	get_command_and_args(t_command_line *command_line)
+{
+	int		len;
+	size_t	i;
+
+	i = 0;
+	while (i < command_line->number_of_simple_commands)
+	{
+		len = get_len(command_line->command[i].command_array);
+		if (len == 0)
+			return (0);
+		command_line->command[i].command_and_args
+			= ft_calloc(len + 1, sizeof(char *));
+		if (!command_line->command[i].command_and_args)
+			return (-1);
+		fill_command_and_args(&command_line->command[i]);
+		return (0);
+		i++;
+	}
+	return (0);
+}

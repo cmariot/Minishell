@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/06 02:14:01 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/06 16:45:23 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRCS			= main.c \
 				  env_list_utils.c \
 				  env_array_utils.c \
 				  execute.c \
+				  expansion.c \
 				  expand_env_variable.c \
 				  get_command_line.c \
 				  global_exit_status.c \
@@ -73,10 +74,13 @@ SRCS			= main.c \
 				  parse.c \
 				  parse_pipes.c \
 				  parse_simple_commands.c \
+				  parse_command_and_args.c \
 				  parse_redirections.c \
 				  pipeline.c \
 				  print_structure.c \
-				  split_command_line.c \
+				  tokens_get.c \
+				  tokens_count.c \
+				  tokens_fill.c \
 				  trim_quote_space_del.c \
 				  signal.c
 

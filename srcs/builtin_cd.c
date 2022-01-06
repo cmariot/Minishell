@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/05 11:58:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:54:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,6 @@ int	cd_error(int error_id, char *directory)
 		ft_putstr_fd(": invalid option\n", 2);
 	}
 	return (1);
-}
-
-//gestion d'erreur a voir ?
-char	*expand_tilde(t_shell *minishell, char *path)
-{
-	char	*home;
-	char	*new_path;
-	size_t	size;
-
-	home = get_env_value("HOME", minishell->env);
-	size = ft_strlen(path) - 1;
-	path = ft_substr((const char *)path, 1, size);
-	new_path = ft_strjoin(home, path);
-	if (path)
-		free(path);
-	if (home)
-		free(home);
-	return (new_path);
 }
 
 //valeur de retour ?
@@ -122,8 +104,6 @@ int	go_to_dir(char *directory_path, t_shell *minishell)
 		else
 			return (cd_error(INVALID_OPTION, directory_path));
 	}
-	else if (directory_path[0] == '~')
-		directory_path = expand_tilde(minishell, directory_path);
 	else if (ft_strcmp("#", directory_path) == 0)
 		go_home(minishell);
 	if (access(directory_path, F_OK) != 0)

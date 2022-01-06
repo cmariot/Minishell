@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/01 23:40:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/06 15:25:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ char	*get_prompt(void)
 		return (ft_strdup("Minishell ➤ "));
 	cur_dir_len = current_directory_len(pwd);
 	if (cur_dir_len == 0)
+	{
+		free(pwd);
 		return (ft_strdup("/ ➤ "));
+	}
 	current_directory = ft_calloc(cur_dir_len + 1, sizeof(char));
 	if (!current_directory)
 		return (ft_strdup("Minishell ➤ "));
