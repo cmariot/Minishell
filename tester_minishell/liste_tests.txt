@@ -154,37 +154,9 @@ unset VEGER PWD
 unset $PWD ergergrg
 unset *
 unset /
-unset %
 unset >
 unset <
 export A
 export =
 export B
-export #
-export %
-export + 
-export -
 export A=
-export B=
-export #=
-export %=
-export += 
-export -=
-export A=b B=c
-export A=b B=
-export A= B=c
-#Test du builtin cd
-cd
-cd - #ok, juste que OLDPWD n'est pas def direct dans bash
-cd -l
-cd ..
-cd ........
-cd /tmp
-cd /tmp/~/lol
-cd /
-cd +
-cd #
-cd ~/42
-cd ../Makefile
-cd /sgoinfre/goinfre/Perso/cmariot
-cd /sgoinfre/goinfre/Perso/abensett
