@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/04 10:39:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:20:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ char	*execute_with_bash(char *commande, int number, char **env)
 	char	*command_and_args[4];
 
 	tmp = ft_itoa(number);
-	new_file = ft_strjoin(".test_bash_", tmp);
+	new_file = ft_strjoin("log_tests/test_", tmp);
 	free(tmp);
+	tmp = ft_strjoin(new_file, "_bash");
+	free(new_file);
+	new_file = tmp;
 	fd_new_file = open(new_file, O_RDWR | O_CREAT, 0644);
 	command_and_args[0] = "/bin/bash";
 	command_and_args[1] = "-c";
@@ -101,8 +104,11 @@ char	*execute_with_minishell(char *commande, int number, char **env)
 	char	*command_and_args[4];
 
 	tmp = ft_itoa(number);
-	new_file = ft_strjoin(".test_minishell_", tmp);
+	new_file = ft_strjoin("log_tests/test_", tmp);
 	free(tmp);
+	tmp = ft_strjoin(new_file, "_minishell");
+	free(new_file);
+	new_file = tmp;
 	fd_new_file = open(new_file, O_RDWR | O_CREAT, 0644);
 	command_and_args[0] = "../minishell";
 	command_and_args[1] = "-c";
@@ -158,10 +164,10 @@ int	check_diff(char *file_bash, char *file_minishell)
 	char	*minishell_output;
 
 	bash_output = file_to_str(file_bash);
-	unlink(file_bash);
+	//unlink(file_bash);
 
 	minishell_output = file_to_str(file_minishell);
-	unlink(file_minishell);
+	//unlink(file_minishell);
 	if (ft_strcmp(bash_output, minishell_output) == 0)
 	{
 		printf("✅ OK\n");

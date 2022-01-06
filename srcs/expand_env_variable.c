@@ -6,11 +6,45 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:30:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/04 08:45:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/05 10:44:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	save_in_env(char *str, size_t i, t_env *env)
+{
+	char	*name;
+	char	*value;
+
+	name = ft_substr(str, 0, i);
+	value = ft_strdup(str + i + 1);
+	add_to_env(env, name, value);
+	free(name);
+	free(value);
+}
+
+/* During the parsing, if an argument conains an equal -> save in env */
+bool	contains_equal(char *str, t_env *env)
+{
+	int	i;
+	int	min_len;
+
+	min_len = ft_strlen(str) - 2;
+	if (min_len <= 0)
+		return (FALSE);
+	i = 1;
+	while (i <= min_len)
+	{
+		if (str[i] == '=')
+		{
+			save_in_env(str, i, env);
+			return (TRUE);
+		}
+		i++;
+	}
+	return (FALSE);
+}
 
 void	remove_from_array(char **splitted_line, int i)
 {
