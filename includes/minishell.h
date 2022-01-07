@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 16:51:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:14:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void			add_to_env(t_env *env, char *name, char *value);
 //expansion.c
 int				expansion(t_command_line *command_line, t_env *env);
 void			expand_env_variable(char **splitted_line, t_env *env);
+int				expand_tilde(char **command_array, t_env *env);
 
 // signal.c
 int				signal_catcher(void);
@@ -163,8 +164,18 @@ bool			is_a_metacharacter(char *line, size_t *i, bool opt);
 void			parse_word(char *line, size_t *i);
 
 bool			ft_isadirectory(char *path);
+void			add_to_env(t_env *env, char *name, char *value);
+
+//global_exit_status.c
 int				return_global_exit_status(void);
 void			change_global_exit_status(int new_value);
-void			add_to_env(t_env *env, char *name, char *value);
+void			expand_exit_status(char **str, size_t *i, char *name);
+
+//str_and_array_modification.c
+void			remove_name_from_str(char *name, char *str, size_t *i);
+void			add_value_to_str(char **str, char *name, char *value,
+					size_t *i);
+void			remove_from_str(char **str, size_t *i, size_t name_len);
+void			remove_from_array(char **splitted_line, int i);
 
 #endif

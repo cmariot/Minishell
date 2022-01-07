@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/06 16:54:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:04:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	cd_error(int error_id, char *directory)
 	return (1);
 }
 
-//valeur de retour ?
 int	go_home(t_shell *minishell)
 {
 	char		*home;

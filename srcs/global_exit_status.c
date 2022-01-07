@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:50:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 13:50:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 13:01:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,20 @@ int	return_global_exit_status(void)
 void	change_global_exit_status(int new_value)
 {
 	g_exit_status = new_value;
+}
+
+void	expand_exit_status(char **str, size_t *i, char *name)
+{
+	int		exit_status;
+	char	*value;
+
+	exit_status = return_global_exit_status();
+	value = ft_itoa(exit_status);
+	if (ft_strlen(*str) - 1 == ft_strlen(name))
+	{
+		free(*str);
+		*str = ft_strdup(value);
+	}
+	else
+		add_value_to_str(str, name, value, i);
 }

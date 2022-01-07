@@ -1,28 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion.c                                        :+:      :+:    :+:   */
+/*   expansion_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 16:22:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 14:15:25 by cmariot          ###   ########.fr       */
+/*   Created: 2022/01/07 14:11:04 by cmariot           #+#    #+#             */
+/*   Updated: 2022/01/07 14:11:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expansion(t_command_line *command_line, t_env *env)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < command_line->number_of_simple_commands)
-	{
-		expand_tilde(command_line->command[i].command_array, env);
-		expand_env_variable(command_line->command[i].command_array, env);
-		//expand_quotes();
-		i++;
-	}
-	return (0);
-}

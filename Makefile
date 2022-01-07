@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/06 16:45:23 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/07 14:13:43 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,9 @@ SRCS			= main.c \
 				  env_array_utils.c \
 				  execute.c \
 				  expansion.c \
-				  expand_env_variable.c \
+				  expansion_env.c \
+				  expansion_quotes.c \
+				  expansion_tilde.c \
 				  get_command_line.c \
 				  global_exit_status.c \
 				  init_minishell.c \
@@ -78,11 +80,12 @@ SRCS			= main.c \
 				  parse_redirections.c \
 				  pipeline.c \
 				  print_structure.c \
+				  signal.c \
+				  str_and_array_modification.c \
 				  tokens_get.c \
 				  tokens_count.c \
 				  tokens_fill.c \
-				  trim_quote_space_del.c \
-				  signal.c
+				  trim_quote_space_del.c
 
 SRC			:= $(notdir $(SRCS))
 
