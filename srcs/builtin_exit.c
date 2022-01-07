@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 02:01:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:57:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exit_error_num_arg(char *arg)
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-	change_global_exit_status(2);
+	change_global_exit_status(255);
 }
 
 void	builtin_exit(t_shell *minishell, char **args)

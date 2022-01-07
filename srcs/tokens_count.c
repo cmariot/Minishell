@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:28:13 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 15:53:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:54:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ void	parse_quotes(char *line, size_t *i)
 	(*i)++;
 	while (line[*i] != '\0')
 	{
-		if (line[*i] == quote_type && is_blank(line, (*i) + 1) == TRUE)
+		if (line[*i] == quote_type)
+		{
+			while (line[*i] != '\0' && is_blank(line, (*i)) == FALSE)
+				(*i)++;
 			break ;
+		}
 		i_plus_un = *i + 1;
 		if (line[*i] == quote_type
 			&& is_a_metacharacter(line, &i_plus_un, FALSE) == TRUE)
@@ -34,8 +38,6 @@ void	parse_quotes(char *line, size_t *i)
 		}
 		(*i)++;
 	}
-	if (line[*i] == quote_type)
-		(*i)++;
 }
 
 /* while the word isn't finished, i++ 
