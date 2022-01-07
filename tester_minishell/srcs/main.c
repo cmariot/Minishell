@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 21:15:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:02:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,16 @@ int	check_diff(char *file_bash, char *file_minishell)
 	}
 	else
 	{
+		//Pour l'affichage des caracteres des output
+		/*size_t i = 0;
+		while (bash_output[i] != '\0' || minishell_output[i] != '\0')
+		{
+			if (bash_output[i] != '\0')
+				printf("bash_output[%lu] = \t[%c]=[%d]\n", i, bash_output[i], bash_output[i]);
+			if (minishell_output[i] != '\0')
+				printf("minishell_output[%lu] = \t[%c]=[%d]\n\n", i, minishell_output[i], minishell_output[i]);
+			i++;
+		}*/
 		printf("\n❌ KO\n\n");
 		printf("bash_output =\n[%s]\n", bash_output);
 		printf("\nminishell_output =\n[%s]\n\n", minishell_output);

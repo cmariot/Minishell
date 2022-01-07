@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 14:14:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:32:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void			get_command_line(t_shell *minishell,
 char			*get_prompt(void);
 char			*get_env_value(char *name, t_env *env);
 
+//parse_command_and_args.c
 int				get_command_and_args(t_command_line *command_line);
 
 // env_list_utils.c
@@ -106,6 +107,7 @@ size_t			count_commands(char **splitted_line);
 // parse_simple_commands.c
 int				get_simple_commands(t_command_line *command_line,
 					char **splitted_line);
+
 // parse_redirections.c
 int				parse_redirections(t_command_line *command_line);
 int				is_redirection(char *element);
@@ -114,8 +116,6 @@ int				is_redirection(char *element);
 void			print_command_line(t_command_line *command_line);
 
 // builtin.c
-
-// env_builtin.c
 int				builtin(char *command, t_shell *minishell);
 int				builtin_env(t_env *env);
 int				builtin_export(t_env *env, char **args);
@@ -129,26 +129,19 @@ int				builtin_echo(char **command_and_args);
 void			create_pipeline(t_command_line *command_line,
 					t_shell *minishell);
 
-// split.c
-char			**get_tokens_array(char *line);
-char			**trim_quote_space_del(char **array);
-char			**del_quote_command(char **array);
-
 //execute.c
 void			execute(t_shell *minishell, t_command_line *command_line);
 void			search_exec(t_shell *minishell, t_command_line *command_line,
 					size_t i);
-char			**envlist_to_array(t_env *envlist);
-void			make_pipe(t_shell *minishell, t_command_line *command_line);
 
 // check quote
 int				check_quote(char *line);
-void			add_to_env(t_env *env, char *name, char *value);
 
 //expansion.c
 int				expansion(t_command_line *command_line, t_env *env);
-void			expand_env_variable(char **splitted_line, t_env *env);
 int				expand_tilde(char **command_array, t_env *env);
+void			expand_env_variable(char **splitted_line, t_env *env);
+void			quotes_removal(char **array);
 
 // signal.c
 int				signal_catcher(void);
@@ -177,5 +170,12 @@ void			add_value_to_str(char **str, char *name, char *value,
 					size_t *i);
 void			remove_from_str(char **str, size_t *i, size_t name_len);
 void			remove_from_array(char **splitted_line, int i);
+
+// a placer dans les bons fichiers / verifier si les fonctions existent tjs 
+void			add_to_env(t_env *env, char *name, char *value);
+char			**envlist_to_array(t_env *envlist);
+void			make_pipe(t_shell *minishell, t_command_line *command_line);
+char			**trim_quote_space_del(char **array);
+char			**del_quote_command(char **array);
 
 #endif

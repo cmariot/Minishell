@@ -1,4 +1,10 @@
 #Test du builtin echo
+echo ""
+echo ''
+echo "" "" ""
+echo '' '' ''
+echo "" "" "" test
+echo '' '' '' test
 echo $PWD
 echo $PWD $HOME
 echo $PWD$HOME

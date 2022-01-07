@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 14:11:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:18:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 		return (0);
 	}
 	len = 0;
-	while ((*str)[*i + len + 1] != '\0' && (*str)[*i + len + 1] != '$'
-		&& (*str)[*i + len + 1] != '\'' && (*str)[*i + len + 1] != '\"')
+	while (ft_isalnum((*str)[*i + len + 1]) == TRUE)
 		len++;
 	if (len == 0)
 		return (0);

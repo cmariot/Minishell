@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:22:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 14:15:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:31:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	expansion(t_command_line *command_line, t_env *env)
 	{
 		expand_tilde(command_line->command[i].command_array, env);
 		expand_env_variable(command_line->command[i].command_array, env);
-		//expand_quotes();
+		quotes_removal(command_line->command[i].command_array);
 		i++;
 	}
 	return (0);

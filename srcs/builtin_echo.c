@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 10:35:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 18:36:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:53:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	builtin_echo(char **command_and_args)
 	while (command_and_args[i] != NULL)
 	{
 		ft_putstr(command_and_args[i]);
-		if (i != last_index)
+		if (i != last_index && command_and_args[i][0] != 32)
 			ft_putchar(' ');
 		i++;
 	}
