@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 16:57:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/09 18:22:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,21 @@ void	exit_error_num_arg(char *arg)
 
 void	builtin_exit(t_shell *minishell, char **args)
 {
+	long long	exit;
+	char		*verif;
+
 	if (args[0] == NULL)
 		change_global_exit_status(0);
 	else if (args[1] == NULL)
 	{
-		//faire unsigned long itoa 
-		if (is_a_number(args[0]) == TRUE)
-			change_global_exit_status(ft_atoi(args[0]));
+		verif = ft_strdup(args[0]);
+		exit = ft_strtoll(verif, &verif);
+		if (*verif == '\0')
+		{
+			if (exit > 255)
+				exit -= 256;
+			change_global_exit_status(exit);
+		}
 		else
 			exit_error_num_arg(args[0]);
 	}

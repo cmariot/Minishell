@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 13:34:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/02 23:23:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/09 16:53:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strnstr(const char *str, const char *to_find, size_t len);
+long long	ft_strtoll(const char *restrict str, char **restrict endptr);
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);

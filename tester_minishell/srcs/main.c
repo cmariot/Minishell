@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 16:02:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/08 18:42:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	fork_command(char *command, char **command_and_args, char **env)
 {
 	pid_t	pid;
 	int		status;
-	int		exit_status;
 
 	pid = fork();
 	if (pid == -1)
@@ -26,21 +25,18 @@ int	fork_command(char *command, char **command_and_args, char **env)
 	}
 	else if (pid == 0)
 	{
-		execve(command, command_and_args, env);
+		status = execve(command, command_and_args, env);
 		ft_putstr_fd("Command execution error\n", 2);
-		exit(1);
+		exit(status);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
-		usleep(10000);
 		if (WIFEXITED(status))
-		{
-			exit_status = WEXITSTATUS(status);
-			return (exit_status);
-		}
-		else
-			return (0);
+			return (WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			return (WTERMSIG(status));
+		return (-1);
 	}
 }
 

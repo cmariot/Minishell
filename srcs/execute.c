@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/04 16:51:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 20:54:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,24 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 			command_line->command[i].command_and_args) != 127)
 		return ;
 	env_array = envlist_to_array(minishell->env);
+	if (env_array == NULL)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(command_line->command[i].command_and_args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		change_global_exit_status(127);
+		return ;
+	}
 	path_value = get_env_value("PATH", minishell->env);
+	if (path_value == NULL)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(command_line->command[i].command_and_args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		change_global_exit_status(127);
+		free(env_array);
+		return ;
+	}
 	path_array = ft_split(path_value, ':');
 	if (try_command_with_path(path_array, command_line, i, env_array) == 127)
 	{

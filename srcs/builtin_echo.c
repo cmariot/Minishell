@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 10:35:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 15:53:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 21:23:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ bool	check_n_option(char *str_option, bool *n_option)
 	size_t	i;
 
 	i = 0;
-	*n_option = FALSE;
 	if (str_option[i] != '-')
 		return (FALSE);
 	i++;
@@ -54,7 +53,9 @@ int	builtin_echo(char **command_and_args)
 		ft_putchar('\n');
 		return (0);
 	}
-	if (check_n_option(*command_and_args, &n_option) == TRUE)
+	n_option = FALSE;
+	while (*command_and_args != NULL
+		&& check_n_option(*command_and_args, &n_option) == TRUE)
 		command_and_args++;
 	last_index = ft_arraylen(command_and_args) - 1;
 	i = 0;

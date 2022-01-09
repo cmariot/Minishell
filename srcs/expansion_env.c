@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 15:18:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/07 20:43:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,21 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 		return (0);
 	}
 	len = 0;
-	while (ft_isalnum((*str)[*i + len + 1]) == TRUE)
-		len++;
+	if (ft_isdigit((*str)[*i + len + 1]) == TRUE)
+		while (ft_isdigit((*str)[*i + len + 1]) == TRUE)
+			len++;
+	else if ((*str)[*i + 1] == '?')
+		len = 1;
+	else
+		while (ft_isalnum((*str)[*i + len + 1]) == TRUE)
+			len++;
 	if (len == 0)
 		return (0);
 	name = ft_substr((*str), *i + 1, len);
 	if (ft_strcmp(name, "?") == 0)
 		expand_exit_status(str, i, name);
-	else
-		if (search_value(str, i, name, env) == -1)
-			return (-1);
+	else if (search_value(str, i, name, env) == -1)
+		return (-1);
 	return (0);
 }
 
@@ -133,7 +138,10 @@ void	expand_env_variable(char **array, t_env *env)
 	while (array[i] != NULL)
 	{
 		if (search_dollar_in_str(&array[i], env) == -1)
+		{
 			remove_from_array(array, i);
+			continue ;
+		}
 		i++;
 	}
 }

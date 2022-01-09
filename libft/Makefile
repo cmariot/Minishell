@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2021/12/31 15:05:23 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/09 14:49:53 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRCS	= ft_atoi.c \
 		  ft_strncmp.c \
 		  ft_strnstr.c \
 		  ft_strrchr.c \
+		  ft_strtoll.c \
 		  ft_strtrim.c \
 		  ft_substr.c \
 		  ft_tolower.c \
@@ -152,7 +153,7 @@ fclean:
 		@printf "Done\n"
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
-		@printf "Done\n)"
+		@printf "Done\n"
 
 # Remove all and recompile
 re :	 fclean all

@@ -6,8 +6,17 @@ A FAIRE :
 	- export
 	- unset
 	- cd
+- [ ] Ne pas interpreter les \ ; " et ' non fermes -> exit status 1 dans ce cas
+- [ ] Verifier les pipelines: cat
+- [ ] Afficher toutes les erreurs sur STDERR
+- [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ?
 - [ ] redirection de l'output > et >>
 - [ ] redirection de l'input < et <<
+- [ ] Couleur du prompt
+- [ ] Diminuer les leaks de readline ? rl_clear_history
+- [ ] Vider env completement
+- [ ] Leaks
+
 
 DONE :
 - [X] les commandes d'un seul caractere ne renvoient pas de message d'erreur : fix

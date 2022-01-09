@@ -34,11 +34,9 @@ echo A
 echo -n A
 echo 1 2 3 
 echo -n 1 2 3 
-echo (1 2 3) 
 echo "(1 2 3)" 
 echo [1 2 3] 
 echo {1 2 3} 
-echo $PWD
 echo 'test'
 ech""o test
 ""echo test
@@ -66,8 +64,6 @@ echo test""test
 echo test ""test
 echo test"" test
 echo test "'"test
-echo $$USER
-echo $$$USER
 echo $USER$USER
 echo $USER""$USER
 echo $USER" "$USER
@@ -77,12 +73,7 @@ echo $GTGRTGRT
 echo "$USER>>"
 echo "$USER11111:"
 echo "test$<test"
-echo $\"echo 
-echo "test$<test"
 echo test$<test
-echo "test$-r"
-echo "test$-?"
-echo $-1$USER
 echo $1
 echo "$1"
 echo  $"USER"
@@ -98,10 +89,32 @@ echo " $ " | cat -e
 echo $:$= | cat -e
 export FOO=' " '
 echo " $FOO " | cat -e
-export var="      folder     bbdfvb  "
-echo$var
-echo$var$HOME
+echo$PWD
+echo""$PWD$HOME
 echo$HOME
+echo test tout
+echo test      tout
+echo -n test tout
+echo -n -n -n test tout
+echo test     \    test
+echo \"test
+echo $PWD
+echo "$PWD"
+echo '$PWD'
+echo "$PWD$PWD$PWD"
+echo "$PWD$PWD=lol$PWD"
+echo "   $PWD lol $PWD"
+echo $PWD$PWD$PWD
+echo $PWD$PWD=lol$PWD""lol
+echo    $PWD lol $PWD
+echo test "" test "" test
+echo "\$PWD"
+echo "$=PWD"
+echo "$"
+echo "$?PWD"
+echo $TEST $PWD
+echo "$1PWD"
+echo "$T1PW"
 #Test des valeurs de retour
 ls
 #Test du builtin pwd
@@ -141,8 +154,25 @@ ls exit
 exit fkjdfhfjg
 exit a b c 
 exit 1
+exit 254
 exit 255
-exit 130
+exit 256
+exit 257
+exit 258
+exit 259
+exit 260
+exit 300
+exit 400
+exit 510
+exit 511
+exit 512
+exit 513
+exit 1020
+exit 4020
+exit 50020
+exit 94643
+exit 4836390
+exit 4438484
 exit -5
 exit +9
 exit 1000
