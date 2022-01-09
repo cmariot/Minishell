@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 16:46:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/09 19:30:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	check_quotes(char *line)
 	ok = TRUE;
 	while (line[i] != '\0')
 	{
+		if (line[i] == '\\' || line[i] == ';')
+		{
+			ok = FALSE;
+			break ;
+		}
 		if ((line[i] == '\"' || line[i] == '\''))
 		{
 			ok = FALSE;
@@ -38,7 +43,11 @@ int	check_quotes(char *line)
 	if (ok == TRUE)
 		return (1);
 	else
-		printf("minishell does not interpret unclosed quotes.\n");
+	{
+		ft_putstr_fd("minishell does not interpret unclosed quotes ", 2);
+		ft_putstr_fd("or unspecified special characters like \\ or ;.\n", 2);
+		change_global_exit_status(1);
+	}
 	return (0);
 }
 
