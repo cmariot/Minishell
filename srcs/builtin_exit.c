@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/09 18:22:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/10 14:20:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	is_a_number(char *str_number)
 	return (TRUE);
 }
 
-void	exit_error_num_arg(char *arg)
+void	exit_error_not_num(char *arg)
 {
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(arg, 2);
@@ -40,32 +40,35 @@ void	exit_error_num_arg(char *arg)
 
 void	builtin_exit(t_shell *minishell, char **args)
 {
-	long long	exit;
-	char		*verif;
+	long long	exit_status;
+	char		*first_arg;
 
 	if (args[0] == NULL)
 		change_global_exit_status(0);
-	else if (args[1] == NULL)
-	{
-		verif = ft_strdup(args[0]);
-		exit = ft_strtoll(verif, &verif);
-		if (*verif == '\0')
-		{
-			if (exit > 255)
-				exit -= 256;
-			change_global_exit_status(exit);
-		}
-		else
-			exit_error_num_arg(args[0]);
-	}
 	else
 	{
-		if (is_a_number(args[0]) == FALSE)
-			exit_error_num_arg(args[0]);
+		first_arg = args[0];
+		exit_status = ft_strtoll(first_arg, &first_arg);
+		if (args[1] == NULL)
+		{
+			if (*first_arg != '\0')
+				exit_error_not_num(args[0]);
+			else
+			{
+				if (exit_status > 255)
+					exit_status -= 256;
+				change_global_exit_status(exit_status);
+			}
+		}
 		else
 		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-			change_global_exit_status(1);
+			if (*first_arg != '\0')
+				exit_error_not_num(args[0]);
+			else
+			{
+				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+				change_global_exit_status(1);
+			}
 		}
 	}
 	free_minishell(minishell);

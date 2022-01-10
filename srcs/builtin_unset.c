@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:39:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/05 13:42:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/10 19:47:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_env	*builtin_unset(t_env *env, char **names)
 	t_env	*tmp;
 	bool	error;
 
-	if (*names == NULL)
+	if (*names == NULL || env == NULL)
 	{
 		change_global_exit_status(0);
 		return (env);

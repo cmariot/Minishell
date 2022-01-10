@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/07 14:13:43 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/10 17:34:58 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,16 @@
 # **************************************************************************** #
 
 NAME			= minishell
+
 SRCS_DIR		= srcs
 INCL_DIR		= includes
 OBJS_DIR		= objs/
+
 LIBFT			= libft
 LIBFT_INCL		= $(LIBFT)/includes/
+
+READLINE_LIB	= /opt/homebrew/opt/readline/lib
+READLINE_INCL	= /opt/homebrew/opt/readline/include
 
 
 # **************************************************************************** #
@@ -32,11 +37,14 @@ CC				= clang
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
+CFLAGS			+= -I $(READLINE_INCL)
 
 
 LFLAGS			= -Wall -Wextra -Werror -g3
+
 LIB_LFLAGS		= -L $(LIBFT) -lft
-LIB_LFLAGS		+= -lreadline
+LIB_LFLAGS		+= -L $(READLINE_LIB) -lreadline
+
 
 # Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)
@@ -49,6 +57,7 @@ ifeq ($(OPTI), 1)
 	CFLAGS		+= -O2 -O3
 	LFLAGS		+= -O2 -O3
 endif
+
 
 # **************************************************************************** #
 #                                SOURCE FILES                                  #
@@ -74,7 +83,6 @@ SRCS			= main.c \
 				  init_minishell.c \
 				  free_minishell.c \
 				  parse.c \
-				  parse_pipes.c \
 				  parse_simple_commands.c \
 				  parse_command_and_args.c \
 				  parse_redirections.c \
@@ -87,16 +95,17 @@ SRCS			= main.c \
 				  tokens_fill.c \
 				  trim_quote_space_del.c
 
-SRC			:= $(notdir $(SRCS))
+SRC				:= $(notdir $(SRCS))
 
-OBJ			:= $(SRC:.c=.o)
+OBJ				:= $(SRC:.c=.o)
 
 OBJS			:= $(addprefix $(OBJS_DIR), $(OBJ))
 
 VPATH			:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
 
+
 # **************************************************************************** #
-#							 	   COLORS                                      #
+#                                  COLORS                                      #
 # **************************************************************************** #
 
 GR	= \033[32;1m
@@ -131,6 +140,11 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 		@$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
+# Compile and launch
+test : all
+		@./minishell
+
+#Check the leaks with valgrind and some useful flags
 leaks : all
 		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=tests/.ignore_readline --track-origins=yes ./minishell
 
@@ -140,18 +154,18 @@ norm :
 
 # Remove object files
 clean :
-		@printf "$(RE)make clean in $(LIBFT) ... "
+		@printf "$(RE)make clean in $(LIBFT) ... \n"
 		@make clean -C $(LIBFT)
-		@printf "Done\n"
+		@printf "Done\n\n"
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n$(RC)"
 
 # Remove object and binary files
 fclean :
-		@printf "$(RE)make fclean in $(LIBFT) ... "
+		@printf "$(RE)make fclean in $(LIBFT) ... \n"
 		@make fclean -C $(LIBFT)
-		@printf "Done\n"
+		@printf "Done\n\n"
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
 		@printf "Done\n"

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 14:32:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:49:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,11 @@ void			print_command_line(t_command_line *command_line);
 
 // builtin.c
 int				builtin(char *command, t_shell *minishell);
-int				builtin_env(t_env *env);
-int				builtin_export(t_env *env, char **args);
+int				builtin_env(t_env *env, char *first_arg);
+int				builtin_export(t_shell **minishell, char **args);
 t_env			*builtin_unset(t_env *env, char **names);
 void			builtin_exit(t_shell *minishell, char **args);
-int				builtin_pwd(t_shell *minishell);
+int				builtin_pwd(t_shell *minishell, char *first_arg);
 int				builtin_cd(t_shell *minishell);
 int				builtin_echo(char **command_and_args);
 
@@ -172,7 +172,6 @@ void			remove_from_str(char **str, size_t *i, size_t name_len);
 void			remove_from_array(char **splitted_line, int i);
 
 // a placer dans les bons fichiers / verifier si les fonctions existent tjs 
-void			add_to_env(t_env *env, char *name, char *value);
 char			**envlist_to_array(t_env *envlist);
 void			make_pipe(t_shell *minishell, t_command_line *command_line);
 char			**trim_quote_space_del(char **array);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/09 19:30:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/10 17:33:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ int	check_quotes(char *line)
 	ok = TRUE;
 	while (line[i] != '\0')
 	{
-		if (line[i] == '\\' || line[i] == ';')
-		{
-			ok = FALSE;
-			break ;
-		}
 		if ((line[i] == '\"' || line[i] == '\''))
 		{
 			ok = FALSE;
@@ -44,11 +39,10 @@ int	check_quotes(char *line)
 		return (1);
 	else
 	{
-		ft_putstr_fd("minishell does not interpret unclosed quotes ", 2);
-		ft_putstr_fd("or unspecified special characters like \\ or ;.\n", 2);
-		change_global_exit_status(1);
+		ft_putstr_fd("minishell does not interpret unclosed quotes\n", 2);
+		change_global_exit_status(2);
+		return (0);
 	}
-	return (0);
 }
 
 int	parse(t_command_line *command_line, t_shell *minishell)

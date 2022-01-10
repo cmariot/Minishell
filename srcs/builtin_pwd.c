@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/06 12:18:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:28:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,18 @@
  * if it fails try to get the pwd value with the getcdw function,
  * else return -1. */
 
-int	builtin_pwd(t_shell *minishell)
+int	builtin_pwd(t_shell *minishell, char *first_arg)
 {
 	char	*pwd;
 
+	if (first_arg != NULL)
+	{
+		if (first_arg[0] == '-' && first_arg[1] != '\0')
+		{
+			ft_putstr_fd("minishell: pwd: invalid option\n", 2);
+			return (1);
+		}
+	}
 	pwd = get_env_value("PWD", minishell->env);
 	if (pwd != NULL)
 	{

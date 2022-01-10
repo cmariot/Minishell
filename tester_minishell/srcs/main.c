@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 19:37:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/08 18:42:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/10 18:16:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*execute_with_bash(char *commande, int number, char **env)
 	tmp = ft_strjoin(new_file, "_bash");
 	free(new_file);
 	new_file = tmp;
-	fd_new_file = open(new_file, O_RDWR | O_CREAT, 0644);
+	fd_new_file = open(new_file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	command_and_args[0] = "/bin/bash";
 	command_and_args[1] = "-c";
 	command_and_args[2] = commande;
@@ -105,7 +105,7 @@ char	*execute_with_minishell(char *commande, int number, char **env)
 	tmp = ft_strjoin(new_file, "_minishell");
 	free(new_file);
 	new_file = tmp;
-	fd_new_file = open(new_file, O_RDWR | O_CREAT, 0644);
+	fd_new_file = open(new_file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	command_and_args[0] = "../minishell";
 	command_and_args[1] = "-c";
 	command_and_args[2] = commande;
@@ -119,7 +119,7 @@ char	*file_to_str(char *file)
 {
 	int		file_descriptor;
 	int		read_return;
-	char	buf[255];
+	char	buf[10000];
 	char	*str;
 	char	*tmp;
 

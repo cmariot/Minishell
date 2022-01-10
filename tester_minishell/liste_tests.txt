@@ -60,6 +60,11 @@ echo $""
 echo "" "" ""
 echo """"""
 echo $USER"" ''
+echo $USER "" ''
+echo ""''
+echo $FDGDF''
+echo $FDGDF""
+echo $USER ""''
 echo test""test
 echo test ""test
 echo test"" test
@@ -127,6 +132,8 @@ p""wd
  pwd
 	pwd
 pwd ~
+pwd -FGDG
+pwd -s
 #Test du builtin export
 export A=1
 export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8

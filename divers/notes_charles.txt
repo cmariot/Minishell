@@ -1,21 +1,21 @@
 A FAIRE :
 - [ ] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
-	- echo (depend du parsing)
-	- pwd
-	- env
-	- export
-	- unset
-	- cd
-- [ ] Ne pas interpreter les \ ; " et ' non fermes -> exit status 1 dans ce cas
-- [ ] Verifier les pipelines: cat
+	- [X] echo
+	- [X] pwd
+	- [X] env
+	- [ ] export
+	- [X] unset
+	- [ ] cd
+- [ ] Lancer minishell sans env : env -i ./minishell ; puis ajouter des elements a l'env
+- [ ] Message d'erreur en cas de pipe vide
 - [ ] Afficher toutes les erreurs sur STDERR
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ?
 - [ ] redirection de l'output > et >>
 - [ ] redirection de l'input < et <<
-- [ ] Couleur du prompt
+- [ ] Message d'erreur en cas de redirection sans fichier
 - [ ] Diminuer les leaks de readline ? rl_clear_history
-- [ ] Vider env completement
-- [ ] Leaks
+- [ ] Finaliser parsing sur cas particuliers (voir notre testeur sur echo, afficher caractere par caractere)
+- [ ] Verifier leaks, segfault, protections de malloc ...
 
 
 DONE :
@@ -28,3 +28,5 @@ DONE :
 - [X] verifier leaks export et unset
 - [X] cas particuliers d'execution de commande avec chemin absolu, check le ./ et execution dans des dossiers distants
 - [X] valeurs de retour
+- [X] Couleur du prompt
+- [X] Ne pas interpreter les \ ; " et ' non fermes -> exit status 1 dans ce cas

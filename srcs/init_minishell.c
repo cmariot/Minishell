@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 11:59:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/10 00:35:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ t_env	*save_env(char **env)
 // Initialize the value of the structure to default value
 void	init_minishell(t_shell *minishell, char **env)
 {
-	minishell->env = save_env(env);
+	if (env != NULL)
+		minishell->env = save_env(env);
+	else
+		minishell->env = NULL;
 	minishell->command_line.line = NULL;
 	minishell->command_line.splitted_line = NULL;
 	minishell->command_line.number_of_simple_commands = 0;
