@@ -24,15 +24,15 @@ OBJS_DIR		= objs/
 LIBFT			= libft
 LIBFT_INCL		= $(LIBFT)/includes/
 
-READLINE_LIB	= /opt/homebrew/opt/readline/lib
-READLINE_INCL	= /opt/homebrew/opt/readline/include
+READLINE_LIB		= /opt/homebrew/opt/readline/lib
+READLINE_INCL		= /opt/homebrew/opt/readline/include
 
 
 # **************************************************************************** #
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC				= clang
+CC			= clang
 
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
@@ -64,40 +64,40 @@ endif
 # **************************************************************************** #
 
 SRCS			= main.c \
-				  builtin_cd.c \
-				  builtin_echo.c \
-				  builtin_env.c \
-				  builtin_exit.c \
-				  builtin_export.c \
-				  builtin_pwd.c \
-				  builtin_unset.c \
-				  env_list_utils.c \
-				  env_array_utils.c \
-				  execute.c \
-				  expansion.c \
-				  expansion_env.c \
-				  expansion_quotes.c \
-				  expansion_tilde.c \
-				  get_command_line.c \
-				  global_exit_status.c \
-				  init_minishell.c \
-				  free_minishell.c \
-				  parse.c \
-				  parse_simple_commands.c \
-				  parse_command_and_args.c \
-				  parse_redirections.c \
-				  pipeline.c \
-				  print_structure.c \
-				  signal.c \
-				  str_and_array_modification.c \
-				  tokens_get.c \
-				  tokens_count.c \
-				  tokens_fill.c \
-				  trim_quote_space_del.c
+			  builtin_cd.c \
+			  builtin_echo.c \
+			  builtin_env.c \
+			  builtin_exit.c \
+			  builtin_export.c \
+			  builtin_pwd.c \
+			  builtin_unset.c \
+			  env_list_utils.c \
+			  env_array_utils.c \
+			  execute.c \
+			  expansion.c \
+			  expansion_env.c \
+			  expansion_quotes.c \
+			  expansion_tilde.c \
+			  get_command_line.c \
+			  global_exit_status.c \
+			  init_minishell.c \
+			  free_minishell.c \
+			  parse.c \
+			  parse_simple_commands.c \
+			  parse_command_and_args.c \
+			  parse_redirections.c \
+			  pipeline.c \
+			  print_structure.c \
+			  signal.c \
+			  str_and_array_modification.c \
+			  tokens_get.c \
+			  tokens_count.c \
+			  tokens_fill.c \
+			  trim_quote_space_del.c
 
-SRC				:= $(notdir $(SRCS))
+SRC			:= $(notdir $(SRCS))
 
-OBJ				:= $(SRC:.c=.o)
+OBJ			:= $(SRC:.c=.o)
 
 OBJS			:= $(addprefix $(OBJS_DIR), $(OBJ))
 
