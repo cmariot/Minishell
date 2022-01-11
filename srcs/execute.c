@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/10 16:51:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/11 12:25:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	command_is_builtin(t_shell **minishell, char **command_and_args)
 	else if (ft_strcmp(command_and_args[0], "unset") == 0)
 		(*minishell)->env = builtin_unset((*minishell)->env, command_and_args + 1);
 	else if (ft_strcmp(command_and_args[0], "export") == 0)
-		change_global_exit_status(builtin_export(minishell,
+		change_global_exit_status(builtin_export(*minishell,
 				command_and_args + 1));
 	else
 	{

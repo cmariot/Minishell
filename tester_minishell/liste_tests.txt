@@ -137,7 +137,14 @@ pwd -s
 #Test du builtin export
 export A=1
 export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+export 6 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+export B=2 C=3 lol#=4 E=5 F=6 G=7 H=8
+export A=1 Bjhebejhrbf C=3 D=4 E=5 F=6 G=7 H=8
+export A=1 B=2 C=3 D=4 E=5 F=6 G=7 ......
+export A=1 B=2 //// D=4 E=5 F=6 G=7 H=8
 export A=1 B
+export PWD=NULL a=5
+export a=5 PWD=NULL
 export A=1 ls
 export A=2 | ls
 export A=
@@ -147,6 +154,14 @@ export	=2
 export "=3
 export '=3
 export -
+export A
+export !=1
+export lol#=1
+export lol-=1
+export _=1
+export =
+export B
+export A=
 #Test des pipelines
 ls -la .. | grep l | wc -l 
 #Test du builtin exit
@@ -214,7 +229,14 @@ unset *
 unset /
 unset >
 unset <
-export A
-export =
-export B
-export A=
+#Test du builtin cd
+cd /bin
+cd /Users/cmariot
+cd /trucquinexistepas
+cd
+cd ~
+cd -
+cd ../../../../..
+cd ..
+cd ../Minishell
+cd .

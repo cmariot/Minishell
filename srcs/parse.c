@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/10 17:33:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/11 13:39:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		get_command_and_args(command_line);
 		if (parse_redirections(command_line) == -1)
 			return (-1);
+		//check pipe vide
+		//check redir vide
 		//print_command_line(command_line);
 	}
 	return (0);

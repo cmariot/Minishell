@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/10 16:49:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/11 12:28:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void			print_command_line(t_command_line *command_line);
 // builtin.c
 int				builtin(char *command, t_shell *minishell);
 int				builtin_env(t_env *env, char *first_arg);
-int				builtin_export(t_shell **minishell, char **args);
+int				builtin_export(t_shell *minishell, char **args);
 t_env			*builtin_unset(t_env *env, char **names);
 void			builtin_exit(t_shell *minishell, char **args);
 int				builtin_pwd(t_shell *minishell, char *first_arg);

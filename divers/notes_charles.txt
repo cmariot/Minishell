@@ -1,24 +1,31 @@
 A FAIRE :
+---------
+
+MARDI :
 - [ ] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
 	- [X] echo
 	- [X] pwd
 	- [X] env
-	- [ ] export
+	- [X] export
 	- [X] unset
-	- [ ] cd
-- [ ] Lancer minishell sans env : env -i ./minishell ; puis ajouter des elements a l'env
+	- [X] cd
+- [X] Lancer minishell sans env : env -i ./minishell ; puis ajouter des elements a l'env -> export a rendre fonctionnel
+MERCREDI :
+- [ ] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
+JEUDI :
+- [ ] redirection de l'input < et <<
 - [ ] Message d'erreur en cas de pipe vide
+- [ ] Message d'erreur en cas de redirection input sans fichier
+VENDREDI :
 - [ ] Afficher toutes les erreurs sur STDERR
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ?
-- [ ] redirection de l'output > et >>
-- [ ] redirection de l'input < et <<
-- [ ] Message d'erreur en cas de redirection sans fichier
+WEEKEND :
 - [ ] Diminuer les leaks de readline ? rl_clear_history
 - [ ] Finaliser parsing sur cas particuliers (voir notre testeur sur echo, afficher caractere par caractere)
 - [ ] Verifier leaks, segfault, protections de malloc ...
 
-
 DONE :
+------
 - [X] les commandes d'un seul caractere ne renvoient pas de message d'erreur : fix
 - [X] commentaires : si un mot commence par # on ignore la fin de la ligne
 - [X] env a sauvegarder dans le cas ou on a un ou plusieurs 'name=value' dans les premiers elements de la ligne de commande
