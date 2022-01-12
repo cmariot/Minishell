@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/12 11:28:34 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/12 16:18:56 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,9 +36,16 @@ CFLAGS			+= -I $(LIBFT_INCL)
 
 LFLAGS			= -Wall -Wextra -Werror -g3
 
-LIB_LFLAGS		= -lreadline
-LIB_LFLAGS		+= -L $(LIBFT) -lft
+LIB_LFLAGS		= -L $(LIBFT) -lft
 
+# Select the correct path of readline library and includes depending the system
+UNAME := $(shell uname -m)
+ifeq ($(UNAME), arm64)
+	CFLAGS			+= -I /opt/homebrew/opt/readline/include
+	LIB_LFLAGS		+= -L /opt/homebrew/opt/readline/lib -lreadline
+else
+	LIB_LFLAGS		+= -lreadline
+endif
 
 # Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)

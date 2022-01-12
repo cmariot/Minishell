@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 15:31:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 16:34:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 {
 	pid_t	pid;
 	int		status;
-	int		fd;
 	int		stdout_backup;
 
+	//sauvegarde du fd STDOUT
 	stdout_backup = dup(1);
-	fd = output_redirection(command_line->command[command_index], STDOUT);
+	//ouverture des fichiers et redirection fd->stdout
+	output_redirection(command_line->command[command_index], 1);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -32,15 +33,17 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	}
 	else if (pid == 0)
 	{
-		// redirection ici semble ok, on va faire de meme pour les builtins
+		//execution des commandes 
 		status = execve(*command_path,
 				command_line->command[command_index].command_and_args, env);
 		return (status);
 	}
+	//attente du processus enfant
 	waitpid(pid, &status, 0);
-	//restaurer redirection
+	//restaurer STDOUT a partir de la backup, 
 	dup2(stdout_backup, 1);
 	close(stdout_backup);
+	//fermer les fd qui ne sont plus utilises
 	if (*command_path != NULL)
 		free(*command_path);
 	change_global_exit_status(0);
@@ -126,9 +129,10 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
  * Else return 0. */
 int	command_is_builtin(t_shell **minishell, char **command_and_args, t_command_line *command_line, size_t command_index)
 {
-	int	fd;
+	int		stdout_backup;
 
-	fd = output_redirection(command_line->command[command_index], STDOUT);
+	stdout_backup = dup(1);
+	output_redirection(command_line->command[command_index], STDOUT);
 	if (ft_strcmp(command_and_args[0], "cd") == 0)
 		change_global_exit_status(builtin_cd(*minishell));
 	else if (ft_strcmp(command_and_args[0], "echo") == 0)
@@ -147,11 +151,12 @@ int	command_is_builtin(t_shell **minishell, char **command_and_args, t_command_l
 	else
 	{
 		change_global_exit_status(127);
-		//restore redirection
+		dup2(stdout_backup, 1);
+		close(stdout_backup);
 		return (127);
 	}
-	//restore redirection
-	close(fd);
+	dup2(stdout_backup, 1);
+	close(stdout_backup);
 	return (0);
 }
 

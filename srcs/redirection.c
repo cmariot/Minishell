@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 15:31:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 16:23:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,8 @@ int	output_redirection(t_simple command, int previous_stdout)
 			if (fd == -1)
 				return (output_error());
 			if (i == command.number_of_redirections - 1)
-			{
-				dup2(fd, 1);
-				break ;
-			}
-			else
-				close(fd);
+				dup2(fd, previous_stdout);
+			close(fd);
 			i++;
 		}
 	}
