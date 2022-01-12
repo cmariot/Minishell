@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 12:25:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 08:39:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,15 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	}
 	else if (pid == 0)
 	{
+		// redirection ?
+		int	backup;
+		int new = create_redirection(command_line->command[command_index], STDIN, STDOUT);
+		backup = dup(STDOUT);
+		dup2(new, STDOUT);
 		status = execve(*command_path,
 				command_line->command[command_index].command_and_args, env);
+		printf("FIN\n");
+		dup2(STDOUT, backup);
 		return (status);
 	}
 	waitpid(pid, &status, 0);
@@ -192,7 +199,11 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 void	execute(t_shell *minishell, t_command_line *command_line)
 {
 	if (command_line->number_of_simple_commands == 1)
+	{
+		//create_redirection(command_line->command[0], STDIN, STDOUT);
 		search_exec(minishell, command_line, 0);
+		//restore redirection
+	}
 	else
 		create_pipeline(command_line, minishell);
 	return ;

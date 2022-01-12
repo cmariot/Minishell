@@ -14,8 +14,8 @@ MERCREDI :
 - [ ] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
 JEUDI :
 - [ ] redirection de l'input < et <<
-- [ ] Message d'erreur en cas de pipe vide
-- [ ] Message d'erreur en cas de redirection input sans fichier
+- [X] Message d'erreur en cas de pipe vide
+- [X] Message d'erreur en cas de redirection input sans fichier
 VENDREDI :
 - [ ] Afficher toutes les erreurs sur STDERR
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ?
