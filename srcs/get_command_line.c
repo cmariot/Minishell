@@ -82,7 +82,7 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 {
 	char	*prompt;
 	char	*tmp;
-
+	
 	prompt = get_prompt();
 	if (command_line->line != NULL)
 		free(command_line->line);
@@ -92,6 +92,8 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 	command_line->line = readline(prompt);
 	if (prompt)
 		free(prompt);
+	if (tmp)
+		free(tmp);
 	if (!minishell->command_line.line)
 	{
 		//Verifier que l'exit est clean ici

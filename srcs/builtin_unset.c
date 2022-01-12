@@ -57,7 +57,7 @@ t_env	*builtin_unset(t_env *env, char **names)
 				change_global_exit_status(2);
 				return (env);
 			}
-			else if (ft_isalnum(names[i][j]) == FALSE)
+			else if (ft_isalnum(names[i][j]) == FALSE && names[i][j] != '_')
 			{
 				ft_putstr_fd("minishell: unset: '", 2);
 				ft_putstr_fd(names[i], 2);

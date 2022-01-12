@@ -146,7 +146,7 @@ test : all
 
 #Check the leaks with valgrind and some useful flags
 leaks : all
-		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=tests/.ignore_readline --track-origins=yes ./minishell
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=divers/.ignore_readline --track-origins=yes ./minishell
 
 # Check 42 norm 
 norm :
