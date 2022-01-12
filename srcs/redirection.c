@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 16:23:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 19:04:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	create_heredoc(char *filename)
 	limiter = ft_strjoin(filename, "\n");
 	while (1)
 	{
-		ft_putstr_fd("heredoc> ", STDOUT);
-		line = get_next_line(STDIN);
+		ft_putstr_fd("heredoc ➤ ", 1);
+		line = get_next_line(0);
 		if (ft_strcmp(line, limiter) == 0)
 			break ;
 		else
@@ -45,31 +45,29 @@ int	input_error(void)
 	return (1);
 }
 
-int	input_redirection(t_simple command, int previous_stdin)
+int	input_redirection(t_simple command)
 {
 	size_t	i;
 	int		fd;
 
-	fd = previous_stdin;
 	if (command.number_of_redirections)
 	{
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
 			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
-				create_heredoc(command.redir[i].filename);
+				fd = create_heredoc(command.redir[i].filename);
 			else if (ft_strcmp(command.redir[i].redir_type, "<") == 0)
 				fd = open(command.redir[i].filename, O_RDONLY);
 			if (fd == -1)
 				return (input_error());
 			if (i == command.number_of_redirections - 1)
 				dup2(fd, STDIN);
-			else
-				close(fd);
+			close(fd);
 			i++;
 		}
 	}
-	return (fd);
+	return (0);
 }
 
 int	output_error(void)
@@ -79,12 +77,11 @@ int	output_error(void)
 	return (1);
 }
 
-int	output_redirection(t_simple command, int previous_stdout)
+int	output_redirection(t_simple command)
 {
 	size_t	i;
 	int		fd;
 
-	fd = previous_stdout;
 	if (command.number_of_redirections)
 	{
 		i = 0;
@@ -99,10 +96,10 @@ int	output_redirection(t_simple command, int previous_stdout)
 			if (fd == -1)
 				return (output_error());
 			if (i == command.number_of_redirections - 1)
-				dup2(fd, previous_stdout);
+				dup2(fd, STDOUT);
 			close(fd);
 			i++;
 		}
 	}
-	return (fd);
+	return (0);
 }

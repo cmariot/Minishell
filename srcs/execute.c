@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 16:34:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 19:09:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 {
 	pid_t	pid;
 	int		status;
+	int		stdin_backup;
 	int		stdout_backup;
 
-	//sauvegarde du fd STDOUT
+	//sauvegarde des fd STDIN/STDOUT
+	stdin_backup = dup(0);
 	stdout_backup = dup(1);
 	//ouverture des fichiers et redirection fd->stdout
-	output_redirection(command_line->command[command_index], 1);
+	input_redirection(command_line->command[command_index]);
+	output_redirection(command_line->command[command_index]);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -33,17 +36,19 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	}
 	else if (pid == 0)
 	{
-		//execution des commandes 
+		//execution de la commande
 		status = execve(*command_path,
 				command_line->command[command_index].command_and_args, env);
 		return (status);
 	}
 	//attente du processus enfant
 	waitpid(pid, &status, 0);
-	//restaurer STDOUT a partir de la backup, 
+	//restaurer les redirections a partir des backups
+	dup2(stdin_backup, 0);
 	dup2(stdout_backup, 1);
+	//fermer des backups
+	close(stdin_backup);
 	close(stdout_backup);
-	//fermer les fd qui ne sont plus utilises
 	if (*command_path != NULL)
 		free(*command_path);
 	change_global_exit_status(0);
@@ -130,9 +135,14 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 int	command_is_builtin(t_shell **minishell, char **command_and_args, t_command_line *command_line, size_t command_index)
 {
 	int		stdout_backup;
+	int		stdin_backup;
 
+	//sauvegarde des fd STDIN/STDOUT
+	stdin_backup = dup(0);
 	stdout_backup = dup(1);
-	output_redirection(command_line->command[command_index], STDOUT);
+	//ouverture des fichiers et redirection fd->stdout
+	input_redirection(command_line->command[command_index]);
+	output_redirection(command_line->command[command_index]);
 	if (ft_strcmp(command_and_args[0], "cd") == 0)
 		change_global_exit_status(builtin_cd(*minishell));
 	else if (ft_strcmp(command_and_args[0], "echo") == 0)
@@ -151,11 +161,19 @@ int	command_is_builtin(t_shell **minishell, char **command_and_args, t_command_l
 	else
 	{
 		change_global_exit_status(127);
+		//restaurer les redirections a partir des backups
+		dup2(stdin_backup, 0);
 		dup2(stdout_backup, 1);
+		//fermer des backups
+		close(stdin_backup);
 		close(stdout_backup);
 		return (127);
 	}
+	//restaurer les redirections a partir des backups
+	dup2(stdin_backup, 0);
 	dup2(stdout_backup, 1);
+	//fermer des backups
+	close(stdin_backup);
 	close(stdout_backup);
 	return (0);
 }
