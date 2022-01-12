@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 14:27:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:31:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 {
 	pid_t	pid;
 	int		status;
+	int		fd;
 	int		stdout_backup;
 
-	stdout_backup = dup(STDOUT);
+	stdout_backup = dup(1);
+	fd = output_redirection(command_line->command[command_index], STDOUT);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -31,14 +33,14 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	else if (pid == 0)
 	{
 		// redirection ici semble ok, on va faire de meme pour les builtins
-		output_redirection(command_line->command[command_index], STDOUT);
 		status = execve(*command_path,
 				command_line->command[command_index].command_and_args, env);
 		return (status);
 	}
-	STDOUT = dup(stdout_backup);
 	waitpid(pid, &status, 0);
 	//restaurer redirection
+	dup2(stdout_backup, 1);
+	close(stdout_backup);
 	if (*command_path != NULL)
 		free(*command_path);
 	change_global_exit_status(0);
