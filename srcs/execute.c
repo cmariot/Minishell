@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 19:09:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 19:33:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	stdin_backup = dup(0);
 	stdout_backup = dup(1);
 	//ouverture des fichiers et redirection fd->stdout
-	input_redirection(command_line->command[command_index]);
+	input_redirection(command_line->command[command_index], FALSE);
 	output_redirection(command_line->command[command_index]);
 	pid = fork();
 	if (pid == -1)
@@ -141,7 +141,7 @@ int	command_is_builtin(t_shell **minishell, char **command_and_args, t_command_l
 	stdin_backup = dup(0);
 	stdout_backup = dup(1);
 	//ouverture des fichiers et redirection fd->stdout
-	input_redirection(command_line->command[command_index]);
+	input_redirection(command_line->command[command_index], TRUE);
 	output_redirection(command_line->command[command_index]);
 	if (ft_strcmp(command_and_args[0], "cd") == 0)
 		change_global_exit_status(builtin_cd(*minishell));

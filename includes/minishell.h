@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 19:04:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 19:37:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,8 @@ void			remove_from_str(char **str, size_t *i, size_t name_len);
 void			remove_from_array(char **splitted_line, int i);
 
 //redirection.c
-int				input_redirection(t_simple command);
-int				create_heredoc(char *filename);
+int				input_redirection(t_simple command, bool heredoc_opt);
+int				create_heredoc(char *filename, bool heredoc_opt);
 int				output_redirection(t_simple command);
 
 // a placer dans les bons fichiers / verifier si les fonctions existent tjs 
