@@ -1,11 +1,12 @@
 [1;36mMinishell ➤ [0m
 [1;36mMinishell ➤ [0m
 [1;36mMinishell ➤ [0m
-[1;36mMinishell ➤ [0mcat file1
 [1;36mMinishell ➤ [0mexit
-2021_paris    4096 Jan 12 10:31 divers
+n 12 11:00 ..
+drwxr-xr-x 2 cmariot 2021_paris    4096 Jan 12 10:31 divers
 -rw-r--r-- 1 cmariot 2021_paris 1430287 Jan 12 10:31 en.subject.pdf
--rw-r--r-- 1 cmariot 2021_paris       0 Jan 12 11:01 file1
+-rw-r--r-- 1 cmariot 2021_paris     863 Jan 12 11:01 file1
+-rw-r--r-- 1 cmariot 2021_paris       0 Jan 12 11:01 file2
 drwxr-xr-x 8 cmariot 2021_paris    4096 Jan 12 10:31 .git
 -rw-r--r-- 1 cmariot 2021_paris      69 Jan 12 10:31 .gitignore
 drwxr-xr-x 2 cmariot 2021_paris    4096 Jan 12 10:31 includes
