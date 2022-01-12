@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 08:39:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 09:10:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,47 @@ int	create_heredoc(char *filename)
 	return (heredoc_fd);
 }
 
-int	create_redirection(t_simple command, int previous_stdin, int previous_stdout)
+int	input_error(void)
+{
+	ft_putstr_fd("minishell: error\n", 2);
+	return (1);
+}
+
+int	input_redirection(t_simple command, int previous_stdin)
+{
+	size_t	i;
+	int		fd;
+
+	fd = previous_stdin;
+	if (command.number_of_redirections)
+	{
+		i = 0;
+		while (i < command.number_of_redirections)
+		{
+			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
+				create_heredoc(command.redir[i].filename);
+			else if (ft_strcmp(command.redir[i].redir_type, "<") == 0)
+				fd = open(command.redir[i].filename, O_RDONLY);
+			if (fd == -1)
+				return (input_error());
+			if (i == command.number_of_redirections - 1)
+				dup2(fd, STDIN);
+			else
+				close(fd);
+			i++;
+		}
+	}
+	return (fd);
+}
+
+int	output_error(void)
+{
+	//erreur a mettre a jour : pas le droit de creation dans le dossier 
+	ft_putstr_fd("minishell: error\n", 2);
+	return (1);
+}
+
+int	output_redirection(t_simple command, int previous_stdout)
 {
 	size_t	i;
 	int		fd;
@@ -50,21 +90,18 @@ int	create_redirection(t_simple command, int previous_stdin, int previous_stdout
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
-			printf("STDIN = %d et STDOUT = %d\n", previous_stdin, previous_stdout);
 			if (ft_strcmp(command.redir[i].redir_type, ">>") == 0)
-				fd = open(command.redir[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
+				fd = open(command.redir[i].filename,
+						O_RDWR | O_CREAT | O_APPEND, 0644);
 			else if (ft_strcmp(command.redir[i].redir_type, ">") == 0)
-				fd = open(command.redir[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			else if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
-				fd = create_heredoc(command.redir[i].filename);
-			else if (ft_strcmp(command.redir[i].redir_type, "<") == 0)
-				fd = open(command.redir[i].filename, O_RDONLY);
+				fd = open(command.redir[i].filename,
+						O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (fd == -1)
-			{
-				//gerer erreur
-				ft_putstr_fd("error\n", 2);
-				return (1);
-			}
+				return (output_error());
+			if (i == command.number_of_redirections - 1)
+				dup2(fd, STDOUT);
+			else
+				close(fd);
 			i++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 17:13:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 08:56:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,7 @@ void			remove_from_str(char **str, size_t *i, size_t name_len);
 void			remove_from_array(char **splitted_line, int i);
 
 //redirection.c
-int				create_redirection(t_simple command, int previous_stdin,
-					int previous_stdout);
+int				output_redirection(t_simple command, int previous_stdout);
 
 // a placer dans les bons fichiers / verifier si les fonctions existent tjs 
 char			**envlist_to_array(t_env *envlist);

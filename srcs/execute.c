@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 08:39:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 09:23:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,10 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 	}
 	else if (pid == 0)
 	{
-		// redirection ?
-		int	backup;
-		int new = create_redirection(command_line->command[command_index], STDIN, STDOUT);
-		backup = dup(STDOUT);
-		dup2(new, STDOUT);
+		// redirection ici semble ok, on va faire de meme pour les builtins
+		output_redirection(command_line->command[command_index], STDOUT);
 		status = execve(*command_path,
 				command_line->command[command_index].command_and_args, env);
-		printf("FIN\n");
-		dup2(STDOUT, backup);
 		return (status);
 	}
 	waitpid(pid, &status, 0);
@@ -123,8 +118,11 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 /* If the command is a builtin execute it and return 1,
  * if it's the exit builtin, return 2.
  * Else return 0. */
-int	command_is_builtin(t_shell **minishell, char **command_and_args)
+int	command_is_builtin(t_shell **minishell, char **command_and_args, t_command_line *command_line, size_t command_index)
 {
+	int	fd;
+
+	fd = output_redirection(command_line->command[command_index], STDOUT);
 	if (ft_strcmp(command_and_args[0], "cd") == 0)
 		change_global_exit_status(builtin_cd(*minishell));
 	else if (ft_strcmp(command_and_args[0], "echo") == 0)
@@ -143,8 +141,11 @@ int	command_is_builtin(t_shell **minishell, char **command_and_args)
 	else
 	{
 		change_global_exit_status(127);
+		//restore redirection
 		return (127);
 	}
+	//restore redirection
+	close(fd);
 	return (0);
 }
 
@@ -159,7 +160,7 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 	if (command_line->command[i].command_and_args == NULL)
 		return ;
 	if (command_is_builtin(&minishell,
-			command_line->command[i].command_and_args) != 127)
+			command_line->command[i].command_and_args, command_line, i) != 127)
 		return ;
 	env_array = envlist_to_array(minishell->env);
 	if (env_array == NULL)
@@ -199,11 +200,7 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i)
 void	execute(t_shell *minishell, t_command_line *command_line)
 {
 	if (command_line->number_of_simple_commands == 1)
-	{
-		//create_redirection(command_line->command[0], STDIN, STDOUT);
 		search_exec(minishell, command_line, 0);
-		//restore redirection
-	}
 	else
 		create_pipeline(command_line, minishell);
 	return ;
