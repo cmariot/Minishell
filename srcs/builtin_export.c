@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 13:22:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 11:11:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,12 @@ int	builtin_export(t_shell *minishell, char **args)
 			return (1);
 		}
 		j++;
-		while (args[i][j] != '\0' && args[i][j] != '=' && ft_isalnum(args[i][j]) == TRUE)
+		while (args[i][j] != '\0' && args[i][j] != '=')
 		{
-			j++;
+			if (args[i][j] == '_' || ft_isalnum(args[i][j]) == TRUE)
+				j++;
+			else
+				break ;
 		}
 		if (args[i][j] != '=')
 		{

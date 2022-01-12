@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/10 17:34:58 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/11 18:28:11 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,7 @@ SRCS			= main.c \
 			  parse_redirections.c \
 			  pipeline.c \
 			  print_structure.c \
+			  redirection.c \
 			  signal.c \
 			  str_and_array_modification.c \
 			  tokens_get.c \

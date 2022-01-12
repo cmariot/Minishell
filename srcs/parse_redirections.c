@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/03 21:18:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/11 15:18:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array)
 			(*array_index)++;
 	if (array[(*array_index) + 1] == NULL)
 	{
-		printf("minishell: syntax error near redirection.\n");
-		change_global_exit_status(2);
-		return (-1);
+		//printf("minishell: syntax error near redirection.\n");
+		//change_global_exit_status(258);
+		return (0);
 	}
 	else
 	{

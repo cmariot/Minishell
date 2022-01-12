@@ -1,3 +1,12 @@
+#Syntax error
+echo |
+echo | > f1
+echo >
+echo > f1
+echo | | | ls
+echo > | ls
+echo | > | ls
+echo > | > ls
 #Test du builtin echo
 echo ""
 echo ''

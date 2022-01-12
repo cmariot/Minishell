@@ -11,11 +11,11 @@ MARDI :
 	- [X] cd
 - [X] Lancer minishell sans env : env -i ./minishell ; puis ajouter des elements a l'env -> export a rendre fonctionnel
 MERCREDI :
-- [ ] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
-JEUDI :
+- [X] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
 - [ ] redirection de l'input < et <<
-- [ ] Message d'erreur en cas de pipe vide
-- [ ] Message d'erreur en cas de redirection input sans fichier
+JEUDI :
+- [X] Message d'erreur en cas de pipe vide
+- [X] Message d'erreur en cas de redirection input sans fichier
 VENDREDI :
 - [ ] Afficher toutes les erreurs sur STDERR
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ?
@@ -23,6 +23,10 @@ WEEKEND :
 - [ ] Diminuer les leaks de readline ? rl_clear_history
 - [ ] Finaliser parsing sur cas particuliers (voir notre testeur sur echo, afficher caractere par caractere)
 - [ ] Verifier leaks, segfault, protections de malloc ...
+
+SEMAINE PRO :
+- [ ] Test de toutes les fonctionnalites, recherche de bugs et verifications : trouver ce qui doit etre corrige.
+- [ ] Push final.
 
 DONE :
 ------

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 13:39:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:24:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,64 @@ int	check_quotes(char *line)
 	}
 }
 
+int	check_empty_redir(t_command_line *command_line,
+		size_t number_of_simple_commands)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < number_of_simple_commands)
+	{
+		j = 0;
+		if (command_line->command[i].number_of_redirections)
+		{
+			while (j < command_line->command[i].number_of_redirections)
+			{
+				if (!(command_line->command[i].redir[j].filename))
+				{
+					ft_putstr_fd("minishell: syntax error ", 2);
+					ft_putstr_fd("near redirection\n", 2);
+					change_global_exit_status(258);
+					return (1);
+				}
+				j++;
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	check_empty_pipe(t_command_line *command_line,
+		size_t number_of_simple_commands)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < number_of_simple_commands)
+	{
+		if (!command_line->command[i].command_and_args
+			&& command_line->command[i].number_of_redirections == 0)
+		{
+			ft_putstr_fd("minishell: syntax error ", 2);
+			ft_putstr_fd("near unexpected token '|'\n", 2);
+			change_global_exit_status(258);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	parse(t_command_line *command_line, t_shell *minishell)
 {
 	if (command_line->line)
 	{
 		if (!check_quotes(command_line->line))
 			return (-1);
+		if (command_line->line[0] == '\0')
+			return (0);
 		command_line->splitted_line = get_tokens_array(command_line->line);
 		if (command_line->splitted_line == NULL)
 			return (-1);
@@ -61,8 +113,12 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		get_command_and_args(command_line);
 		if (parse_redirections(command_line) == -1)
 			return (-1);
-		//check pipe vide
-		//check redir vide
+		if (check_empty_pipe(command_line,
+				command_line->number_of_simple_commands))
+			return (-1);
+		if (check_empty_redir(command_line,
+				command_line->number_of_simple_commands))
+			return (-1);
 		//print_command_line(command_line);
 	}
 	return (0);
