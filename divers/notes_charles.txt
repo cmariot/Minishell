@@ -2,7 +2,7 @@ A FAIRE :
 ---------
 
 MARDI :
-- [ ] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
+- [X] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
 	- [X] echo
 	- [X] pwd
 	- [X] env
@@ -11,11 +11,11 @@ MARDI :
 	- [X] cd
 - [X] Lancer minishell sans env : env -i ./minishell ; puis ajouter des elements a l'env -> export a rendre fonctionnel
 MERCREDI :
-- [X] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
-- [ ] redirection de l'input < et <<
+- [ ] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
 JEUDI :
 - [X] Message d'erreur en cas de pipe vide
 - [X] Message d'erreur en cas de redirection input sans fichier
+- [ ] redirection de l'input < et <<
 VENDREDI :
 - [ ] Afficher toutes les erreurs sur STDERR
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ?

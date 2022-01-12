@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/10 16:28:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 12:47:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	builtin_pwd(t_shell *minishell, char *first_arg)
 		if (first_arg[0] == '-' && first_arg[1] != '\0')
 		{
 			ft_putstr_fd("minishell: pwd: invalid option\n", 2);
-			return (1);
+			return (2);
 		}
 	}
 	pwd = get_env_value("PWD", minishell->env);

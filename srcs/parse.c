@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 17:24:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 13:42:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_quotes(char *line)
 	else
 	{
 		ft_putstr_fd("minishell does not interpret unclosed quotes\n", 2);
-		change_global_exit_status(2);
+		change_global_exit_status(1);
 		return (0);
 	}
 }
@@ -63,7 +63,7 @@ int	check_empty_redir(t_command_line *command_line,
 				{
 					ft_putstr_fd("minishell: syntax error ", 2);
 					ft_putstr_fd("near redirection\n", 2);
-					change_global_exit_status(258);
+					change_global_exit_status(1);
 					return (1);
 				}
 				j++;
@@ -87,7 +87,7 @@ int	check_empty_pipe(t_command_line *command_line,
 		{
 			ft_putstr_fd("minishell: syntax error ", 2);
 			ft_putstr_fd("near unexpected token '|'\n", 2);
-			change_global_exit_status(258);
+			change_global_exit_status(1);
 			return (1);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 09:23:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 14:27:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 {
 	pid_t	pid;
 	int		status;
+	int		stdout_backup;
 
+	stdout_backup = dup(STDOUT);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -34,7 +36,9 @@ int	execute_cmnd(char **command_path, t_command_line *command_line,
 				command_line->command[command_index].command_and_args, env);
 		return (status);
 	}
+	STDOUT = dup(stdout_backup);
 	waitpid(pid, &status, 0);
+	//restaurer redirection
 	if (*command_path != NULL)
 		free(*command_path);
 	change_global_exit_status(0);

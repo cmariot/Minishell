@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/07 14:04:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 13:46:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	go_to_oldpwd(t_shell *minishell)
 			cd_error(PERMISSION, oldpwd);
 		else if (chdir(oldpwd) == 0)
 		{
+			ft_putstr_fd(oldpwd, 1);
+			ft_putchar('\n');
 			free(oldpwd);
 			return (0);
 		}

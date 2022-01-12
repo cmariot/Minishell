@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/11 18:28:11 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/12 11:28:34 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,26 +24,20 @@ OBJS_DIR		= objs/
 LIBFT			= libft
 LIBFT_INCL		= $(LIBFT)/includes/
 
-READLINE_LIB		= /opt/homebrew/opt/readline/lib
-READLINE_INCL		= /opt/homebrew/opt/readline/include
-
-
 # **************************************************************************** #
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC			= clang
+CC				= clang
 
 CFLAGS			= -Wall -Wextra -Werror
 CFLAGS			+= -I $(INCL_DIR)
 CFLAGS			+= -I $(LIBFT_INCL)
-CFLAGS			+= -I $(READLINE_INCL)
-
 
 LFLAGS			= -Wall -Wextra -Werror -g3
 
-LIB_LFLAGS		= -L $(LIBFT) -lft
-LIB_LFLAGS		+= -L $(READLINE_LIB) -lreadline
+LIB_LFLAGS		= -lreadline
+LIB_LFLAGS		+= -L $(LIBFT) -lft
 
 
 # Debug flag, use with 'make DEBUG=1'

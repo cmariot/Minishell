@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 17:01:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 13:57:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	last_pipe(t_shell *minishell, t_command_line *command_line,
 		ft_putstr_fd("ERROR fork()\n", 2);
 	else if (pid == 0)
 	{
-		//create_redirection
 		search_exec(minishell, command_line, i);
-		//restore_redirection
 		close(backup_fd[0]);
 		close(backup_fd[1]);
 		free_minishell(minishell);
@@ -63,9 +61,7 @@ void	firsts_pipes(t_shell *minishell, t_command_line *command_line,
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT);
-		//create_redirection
 		search_exec(minishell, command_line, i);
-		//restore_redirection
 		close(fd[1]);
 		close(backup_fd[0]);
 		close(backup_fd[1]);

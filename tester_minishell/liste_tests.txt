@@ -1,4 +1,12 @@
 #Syntax error
+echo $USER""
+echo $USER"" 
+echo $USER ''
+echo $USER ""
+echo $USER"" ''
+echo $USER''
+echo boum"" ''
+echo boum "" ''
 echo |
 echo | > f1
 echo >
