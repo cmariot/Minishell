@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/12 13:46:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 16:10:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ int	go_to_oldpwd(t_shell *minishell)
 		return (1);
 	}
 	else
-	{
 		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-		return (1);
-	}
+	return (1);
 }
 
 int	go_to_dir(char *directory_path, t_shell *minishell)
@@ -118,18 +116,6 @@ int	go_to_dir(char *directory_path, t_shell *minishell)
 	return (1);
 }
 
-/* Dans le man cd :
- *	1- OK
- *	2- OK
- *	3- OK
- *	4-
- *	5-
- *	6-
- *	7-
- *	8-
- *	9-
- *	10-
- */
 int	builtin_cd(t_shell *minishell)
 {
 	char		*pwd;

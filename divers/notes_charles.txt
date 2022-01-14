@@ -2,8 +2,8 @@ A FAIRE :
 ---------
 
 VENDREDI :
-- [ ] Redirections dans pipes
-- [ ] heredoc : fichier temporaire, verifier que le fichier n'existe pas et le supprimer a la fin
+- [X] Redirections dans pipes
+- [ ] heredoc : fichier temporaire, verifier que le fichier n'existe pas et le supprimer a la fin, voir le fonctionnement heredoc cat << eof (heredoc s'affiche)
 - [ ] Gestion d'erreurs de redirections (input sans fichier, permissions non accordees ...)
 - [ ] Afficher toutes les erreurs sur STDERR
 SAMEDI :

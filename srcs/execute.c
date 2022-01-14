@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 11:43:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 16:07:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 /* Create a new process in which the command is execute,
  * the parent process will wait the child exit to free command_path. */
-int	execute_cmnd(char **command_path, t_simple command, char **env, int *fd)
+int	execute_cmnd(char **command_path, t_simple command, char **env,
+	int fd_output)
 {
 	pid_t	pid;
 	int		status;
 	int		stdin_backup;
 	int		stdout_backup;
 
-	stdin_backup = dup(fd[STDIN]);
-	stdout_backup = dup(fd[STDOUT]);
-	input_redirection(command, fd, FALSE);
-	output_redirection(command, fd);
+	stdin_backup = dup(STDIN);
+	stdout_backup = dup(STDOUT);
+	input_redirection(command, FALSE);
+	output_redirection(command, fd_output);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -51,7 +52,7 @@ int	execute_cmnd(char **command_path, t_simple command, char **env, int *fd)
 }
 
 int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
-		char **env, int *fd)
+		char **env, int fd_output)
 {
 	char	*command_path;
 	size_t	len;
@@ -65,7 +66,7 @@ int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
 			&& access(command_path + 2, X_OK) == 0)
 			if (ft_isadirectory(command_path + 2) == FALSE)
 				if (!execute_cmnd(&command_path,
-						command_line->command[command_index], env, fd))
+						command_line->command[command_index], env, fd_output))
 					return (0);
 	}
 	else
@@ -81,7 +82,7 @@ int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
 				if (!execute_cmnd(&command_path,
-						command_line->command[command_index], env, fd))
+						command_line->command[command_index], env, fd_output))
 					return (0);
 	}
 	if (command_path != NULL)
@@ -96,12 +97,12 @@ int	command_in_absolute_path(t_command_line *command_line, size_t command_index,
    Else try the next path.  */
 
 int	try_command_with_path(char **path_array, t_command_line *command_line,
-	int command_index, char **env, int *fd)
+	int command_index, char **env, int fd_output)
 {
 	char	*path_with_slash;
 	char	*command_path;
 
-	if (command_in_absolute_path(command_line, command_index, env, fd) == 0)
+	if (command_in_absolute_path(command_line, command_index, env, fd_output) == 0)
 		return (0);
 	while (*path_array)
 	{
@@ -113,7 +114,7 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
 				if (execute_cmnd(&command_path,
-						command_line->command[command_index], env, fd) == 0)
+						command_line->command[command_index], env, fd_output) == 0)
 					return (0);
 		if (command_path != NULL)
 			free(command_path);
@@ -125,15 +126,15 @@ int	try_command_with_path(char **path_array, t_command_line *command_line,
 /* If the command is a builtin execute it and return 1,
  * if it's the exit builtin, return 2.
  * Else return 0. */
-int	command_is_builtin(t_shell **minishell, char **command_and_args, t_simple command, int *fd)
+int	command_is_builtin(t_shell **minishell, char **command_and_args, t_simple command, int *fd, int fd_output)
 {
 	int		stdout_backup;
 	int		stdin_backup;
 
 	stdin_backup = dup(fd[STDIN]);
 	stdout_backup = dup(fd[STDOUT]);
-	input_redirection(command, fd, TRUE);
-	output_redirection(command, fd);
+	input_redirection(command, TRUE);
+	output_redirection(command, fd_output);
 	if (ft_strcmp(command_and_args[0], "cd") == 0)
 		change_global_exit_status(builtin_cd(*minishell));
 	else if (ft_strcmp(command_and_args[0], "echo") == 0)
@@ -167,7 +168,7 @@ int	command_is_builtin(t_shell **minishell, char **command_and_args, t_simple co
 
 // a verifier : modifier le path dans une commande, puis appeler une commande,
 // doit on mettre a jour path_array a chaque tour ?
-void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i, int *fd)
+void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i, int *fd, int fd_output)
 {
 	char	*path_value;
 	char	**path_array;
@@ -176,7 +177,7 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i, int
 	if (command_line->command[i].command_and_args == NULL)
 		return ;
 	if (command_is_builtin(&minishell,
-			command_line->command[i].command_and_args, command_line->command[i], fd) != 127)
+			command_line->command[i].command_and_args, command_line->command[i], fd, fd_output) != 127)
 		return ;
 	env_array = envlist_to_array(minishell->env);
 	if (env_array == NULL)
@@ -198,7 +199,7 @@ void	search_exec(t_shell *minishell, t_command_line *command_line, size_t i, int
 		return ;
 	}
 	path_array = ft_split(path_value, ':');
-	if (try_command_with_path(path_array, command_line, i, env_array, fd) == 127)
+	if (try_command_with_path(path_array, command_line, i, env_array, fd_output) == 127)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(command_line->command[i].command_and_args[0], 2);
@@ -219,11 +220,13 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 
 	fd[STDIN] = STDIN;
 	fd[STDOUT] = STDOUT;
-	printf("EXECUTE():\nFD[0] = %d\n", fd[0]);
-	printf("FD[1] = %d\n", fd[1]);
 	if (command_line->number_of_simple_commands == 1)
-		search_exec(minishell, command_line, 0, fd);
+	{
+		search_exec(minishell, command_line, 0, fd, STDOUT);
+	}
 	else
+	{
 		create_pipeline(command_line, minishell, fd);
+	}
 	return ;
 }

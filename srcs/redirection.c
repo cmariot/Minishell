@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 11:16:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:20:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	input_error(void)
 	return (1);
 }
 
-int	input_redirection(t_simple command, int *fd,  bool heredoc_opt)
+int	input_redirection(t_simple command, bool heredoc_opt)
 {
 	size_t	i;
 	int		file_fd;
@@ -66,14 +66,23 @@ int	input_redirection(t_simple command, int *fd,  bool heredoc_opt)
 		while (i < command.number_of_redirections)
 		{
 			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
+			{
 				file_fd = create_heredoc(command.redir[i].filename, heredoc_opt);
+				if (file_fd == -1)
+					return (input_error());
+				if (i == command.number_of_redirections - 1)
+					dup2(file_fd, STDIN);
+				close(file_fd);
+			}
 			else if (ft_strcmp(command.redir[i].redir_type, "<") == 0)
+			{
 				file_fd = open(command.redir[i].filename, O_RDONLY);
-			if (file_fd == -1)
-				return (input_error());
-			if (i == command.number_of_redirections - 1)
-				dup2(file_fd, fd[STDIN]);
-			close(file_fd);
+				if (file_fd == -1)
+					return (input_error());
+				if (i == command.number_of_redirections - 1)
+					dup2(file_fd, STDIN);
+				close(file_fd);
+			}
 			i++;
 		}
 	}
@@ -87,7 +96,7 @@ int	output_error(void)
 	return (1);
 }
 
-int	output_redirection(t_simple command, int *fd)
+int	output_redirection(t_simple command, int fd_stdout)
 {
 	size_t	i;
 	int		file_fd;
@@ -98,16 +107,25 @@ int	output_redirection(t_simple command, int *fd)
 		while (i < command.number_of_redirections)
 		{
 			if (ft_strcmp(command.redir[i].redir_type, ">>") == 0)
+			{
 				file_fd = open(command.redir[i].filename,
 						O_RDWR | O_CREAT | O_APPEND, 0644);
+				if (file_fd == -1)
+					return (output_error());
+				if (i == command.number_of_redirections - 1)
+					dup2(file_fd, fd_stdout);
+				close(file_fd);
+			}
 			else if (ft_strcmp(command.redir[i].redir_type, ">") == 0)
+			{
 				file_fd = open(command.redir[i].filename,
 						O_RDWR | O_CREAT | O_TRUNC, 0644);
-			if (file_fd == -1)
-				return (output_error());
-			if (i == command.number_of_redirections - 1)
-				dup2(file_fd, fd[STDOUT]);
-			close(file_fd);
+				if (file_fd == -1)
+					return (output_error());
+				if (i == command.number_of_redirections - 1)
+					dup2(file_fd, fd_stdout);
+				close(file_fd);
+			}
 			i++;
 		}
 	}

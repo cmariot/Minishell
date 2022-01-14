@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 10:35:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 13:38:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 16:13:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ bool	check_n_option(char *str_option, bool *n_option)
 	return (TRUE);
 }
 
+int	print_backslash_n(void)
+{
+	ft_putchar('\n');
+	return (0);
+}
+
 int	builtin_echo(char **command_and_args)
 {
 	size_t	i;
@@ -49,10 +55,7 @@ int	builtin_echo(char **command_and_args)
 	size_t	last_index;
 
 	if (*command_and_args == NULL)
-	{
-		ft_putchar('\n');
-		return (0);
-	}
+		return (print_backslash_n());
 	n_option = FALSE;
 	while (*command_and_args != NULL
 		&& check_n_option(*command_and_args, &n_option) == TRUE)
