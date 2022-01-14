@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 16:07:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 16:31:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,7 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 
 	fd[STDIN] = STDIN;
 	fd[STDOUT] = STDOUT;
+	signal_catcher(1);
 	if (command_line->number_of_simple_commands == 1)
 	{
 		search_exec(minishell, command_line, 0, fd, STDOUT);
@@ -228,5 +229,6 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 	{
 		create_pipeline(command_line, minishell, fd);
 	}
+	signal_catcher(0);
 	return ;
 }

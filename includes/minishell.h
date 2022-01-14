@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 15:11:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 16:31:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void			expand_env_variable(char **splitted_line, t_env *env);
 void			quotes_removal(char **array);
 
 // signal.c
-int				signal_catcher(void);
+int				signal_catcher(int status);
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
 //	tokens_get.c / tokens_count.c / tokens_fill.c
