@@ -219,11 +219,11 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 
 	fd[STDIN] = STDIN;
 	fd[STDOUT] = STDOUT;
-	printf("EXECUTE():\nFD[0] = %d\n", fd[0]);
-	printf("FD[1] = %d\n", fd[1]);
+	signal_catcher(1);
 	if (command_line->number_of_simple_commands == 1)
 		search_exec(minishell, command_line, 0, fd);
 	else
 		create_pipeline(command_line, minishell, fd);
+	signal_catcher(0);
 	return ;
 }

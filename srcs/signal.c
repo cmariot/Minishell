@@ -14,30 +14,11 @@
 
 void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
-//	size_t	size;
-//	char	buf[255];
-//	char	*cwd;
-//	int		len;
-//	size_t	i;
 
 	(void)info;
 	(void)secret;
 	if (sig == SIGINT)
 	{
-/*		i = 0;
-		size = 255;
-		cwd = getcwd(buf, size);
-		len = ft_strlen(cwd) - 1;
-		while (cwd[len] != '/' && len > -1)
-		{
-			len--;
-			i++;
-		}
-		cwd = ft_substr(cwd, ++len, i);
-		write(0, "\n", 1);
-		ft_putstr_fd(cwd, 0);
-		write(0, " ➤ ", 6);
-		free(cwd);*/
 		write(0, "\n", 1);
         rl_on_new_line();
         rl_replace_line("", 0);
@@ -45,7 +26,21 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 	}
 }
 
-int	signal_catcher(void)
+void	ft_handler2(int sig, siginfo_t *info, void *secret)
+{
+	(void)info;
+	(void)secret;
+	if (sig == SIGINT)
+	{
+		write(0, "\n", 1);
+        rl_replace_line("", 0);
+	}
+}
+
+//status = 0 catch all signal
+//status = 1 dont catch sig_int (ctrl-c)
+
+int	signal_catcher(int status)
 {
 	struct sigaction	new_act;
 	struct sigaction	act;
@@ -55,6 +50,10 @@ int	signal_catcher(void)
 	sigemptyset(&new_act.sa_mask);
 	sigemptyset(&act.sa_mask);
 	new_act.sa_flags = 0;
+	if (status == 0)
+		new_act.sa_sigaction = ft_handler;
+	else if (status == 1)
+		new_act.sa_sigaction = ft_handler2;
 	act.sa_flags = 0;
 	act.sa_handler = SIG_IGN;
 	sig = sigaction(SIGQUIT, &act, NULL);

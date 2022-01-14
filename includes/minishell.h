@@ -149,7 +149,7 @@ void			expand_env_variable(char **splitted_line, t_env *env);
 void			quotes_removal(char **array);
 
 // signal.c
-int				signal_catcher(void);
+int				signal_catcher(int status);
 void			ft_handler(int sig, siginfo_t *info, void *secret);
 
 //	tokens_get.c / tokens_count.c / tokens_fill.c
