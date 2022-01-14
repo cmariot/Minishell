@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 19:37:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:36:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,17 @@ int				builtin_echo(char **command_and_args);
 
 // pipielne.c
 void			create_pipeline(t_command_line *command_line,
-					t_shell *minishell);
+					t_shell *minishell, int *fd);
 
 //execute.c
+int				execute_cmnd(char **command_path, t_simple command, char **env, int *fd);
+void			search_exec(t_shell *minishell, t_command_line *command_line, size_t i, int *fd);
+int				command_in_absolute_path(t_command_line *command_line, size_t command_index,
+					char **env, int *fd);
+int				try_command_with_path(char **path_array, t_command_line *command_line,
+					int command_index, char **env, int *fd);
+int				command_is_builtin(t_shell **minishell, char **command_and_args, t_simple command, int *fd);
 void			execute(t_shell *minishell, t_command_line *command_line);
-void			search_exec(t_shell *minishell, t_command_line *command_line,
-					size_t i);
 
 // check quote
 int				check_quote(char *line);
@@ -172,9 +177,9 @@ void			remove_from_str(char **str, size_t *i, size_t name_len);
 void			remove_from_array(char **splitted_line, int i);
 
 //redirection.c
-int				input_redirection(t_simple command, bool heredoc_opt);
+int				input_redirection(t_simple command, int *fd,  bool heredoc_opt);
+int				output_redirection(t_simple command, int *fd);
 int				create_heredoc(char *filename, bool heredoc_opt);
-int				output_redirection(t_simple command);
 
 // a placer dans les bons fichiers / verifier si les fonctions existent tjs 
 char			**envlist_to_array(t_env *envlist);

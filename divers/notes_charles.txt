@@ -1,28 +1,17 @@
 A FAIRE :
 ---------
 
-MARDI :
-- [X] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
-	- [X] echo
-	- [X] pwd
-	- [X] env
-	- [X] export
-	- [X] unset
-	- [X] cd
-- [X] Lancer minishell sans env : env -i ./minishell ; puis ajouter des elements a l'env -> export a rendre fonctionnel
-MERCREDI :
-- [X] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
-- [X] redirection de l'input < et <<
-- [X] Message d'erreur en cas de pipe vide
-- [X] Finaliser parsing sur cas particuliers (voir notre testeur sur echo, afficher caractere par caractere)
-JEUDI :
+VENDREDI :
+- [ ] Redirections dans pipes
 - [ ] heredoc : fichier temporaire, verifier que le fichier n'existe pas et le supprimer a la fin
 - [ ] Gestion d'erreurs de redirections (input sans fichier, permissions non accordees ...)
 - [ ] Afficher toutes les erreurs sur STDERR
-VENDREDI :
+SAMEDI :
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ?
+- [ ] Signaux dans cat / heredoc
 - [ ] Diminuer les leaks de readline ? rl_clear_history
-WEEKEND :
+DIMANCHE :
+- [ ] Forks concurrentiels : cat | cat | echo test
 - [ ] Verifier leaks, segfault, protections de malloc ...
 - [ ] Norme OK
 SEMAINE PRO :
@@ -42,3 +31,15 @@ DONE :
 - [X] valeurs de retour
 - [X] Couleur du prompt
 - [X] Ne pas interpreter les \ ; " et ' non fermes -> exit status 1 dans ce cas
+- [X] faire un check de tous les builtins, verifier les cas particuliers, les valeurs de retour, la gestion des arguments supplementaires et les leaks
+	- [X] echo
+	- [X] pwd
+	- [X] env
+	- [X] export
+	- [X] unset
+	- [X] cd
+- [X] Lancer minishell sans env : env -i ./minishell ; puis ajouter des elements a l'env -> export a rendre fonctionnel
+- [X] redirection de l'output > et >> : ouverture/creation des fichiers et tunnel de redirection
+- [X] redirection de l'input < et <<
+- [X] Message d'erreur en cas de pipe vide
+- [X] Finaliser parsing sur cas particuliers (voir notre testeur sur echo, afficher caractere par caractere)

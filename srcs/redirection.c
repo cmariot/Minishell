@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 19:39:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:16:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	input_error(void)
 	return (1);
 }
 
-int	input_redirection(t_simple command, bool heredoc_opt)
+int	input_redirection(t_simple command, int *fd,  bool heredoc_opt)
 {
 	size_t	i;
-	int		fd;
+	int		file_fd;
 
 	if (command.number_of_redirections)
 	{
@@ -66,14 +66,14 @@ int	input_redirection(t_simple command, bool heredoc_opt)
 		while (i < command.number_of_redirections)
 		{
 			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
-				fd = create_heredoc(command.redir[i].filename, heredoc_opt);
+				file_fd = create_heredoc(command.redir[i].filename, heredoc_opt);
 			else if (ft_strcmp(command.redir[i].redir_type, "<") == 0)
-				fd = open(command.redir[i].filename, O_RDONLY);
-			if (fd == -1)
+				file_fd = open(command.redir[i].filename, O_RDONLY);
+			if (file_fd == -1)
 				return (input_error());
 			if (i == command.number_of_redirections - 1)
-				dup2(fd, STDIN);
-			close(fd);
+				dup2(file_fd, fd[STDIN]);
+			close(file_fd);
 			i++;
 		}
 	}
@@ -87,10 +87,10 @@ int	output_error(void)
 	return (1);
 }
 
-int	output_redirection(t_simple command)
+int	output_redirection(t_simple command, int *fd)
 {
 	size_t	i;
-	int		fd;
+	int		file_fd;
 
 	if (command.number_of_redirections)
 	{
@@ -98,16 +98,16 @@ int	output_redirection(t_simple command)
 		while (i < command.number_of_redirections)
 		{
 			if (ft_strcmp(command.redir[i].redir_type, ">>") == 0)
-				fd = open(command.redir[i].filename,
+				file_fd = open(command.redir[i].filename,
 						O_RDWR | O_CREAT | O_APPEND, 0644);
 			else if (ft_strcmp(command.redir[i].redir_type, ">") == 0)
-				fd = open(command.redir[i].filename,
+				file_fd = open(command.redir[i].filename,
 						O_RDWR | O_CREAT | O_TRUNC, 0644);
-			if (fd == -1)
+			if (file_fd == -1)
 				return (output_error());
 			if (i == command.number_of_redirections - 1)
-				dup2(fd, STDOUT);
-			close(fd);
+				dup2(file_fd, fd[STDOUT]);
+			close(file_fd);
 			i++;
 		}
 	}

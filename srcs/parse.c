@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 19:39:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/12 22:39:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	check_empty_pipe(t_command_line *command_line,
 {
 	size_t	i;
 
+	if (number_of_simple_commands == 1)
+		return (0);
 	i = 0;
 	while (i < number_of_simple_commands)
 	{
