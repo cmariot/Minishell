@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/10 17:36:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:32:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 {
 	char	*prompt;
 	char	*tmp;
-	
+
 	prompt = get_prompt();
 	if (command_line->line != NULL)
 		free(command_line->line);
@@ -96,7 +96,6 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 		free(tmp);
 	if (!minishell->command_line.line)
 	{
-		//Verifier que l'exit est clean ici
 		printf("exit\n");
 		ft_lstclear_env(&minishell->env, free);
 		close(0);

@@ -6,25 +6,32 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 18:28:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:24:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*join_array(char **array, char *sep)
+int	get_new_str_len(char *sep, char **array)
 {
-	char	*str;
 	int		str_len;
-	size_t	i;
-	size_t	j;
-	size_t	k;
+	int		i;
 
 	str_len = -ft_strlen(sep);
 	i = 0;
 	while (array[i] != NULL)
 		str_len += ft_strlen(array[i++]) + ft_strlen(sep);
-	str = ft_calloc(str_len + 1, sizeof(char));
+	return (str_len);
+}
+
+char	*join_array(char **array, char *sep)
+{
+	char	*str;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+
+	str = ft_calloc(get_new_str_len(sep, array) + 1, sizeof(char));
 	if (!str)
 		return (NULL);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 15:20:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:44:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	create_heredoc(char *filename, bool get_heredoc)
 
 	if (get_heredoc == TRUE)
 	{
-		heredoc_fd = open("here_doc", O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
+		heredoc_fd = open("here_doc", O_RDWR | O_CREAT | O_TRUNC | O_APPEND,
+				0644);
 		if (heredoc_fd == -1)
 			return (-1);
 		limiter = ft_strjoin(filename, "\n");
@@ -67,7 +68,8 @@ int	input_redirection(t_simple command, bool heredoc_opt)
 		{
 			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
 			{
-				file_fd = create_heredoc(command.redir[i].filename, heredoc_opt);
+				file_fd = create_heredoc(command.redir[i].filename,
+						heredoc_opt);
 				if (file_fd == -1)
 					return (input_error());
 				if (i == command.number_of_redirections - 1)
@@ -89,9 +91,9 @@ int	input_redirection(t_simple command, bool heredoc_opt)
 	return (0);
 }
 
+//erreur a mettre a jour : pas le droit de creation dans le dossier 
 int	output_error(void)
 {
-	//erreur a mettre a jour : pas le droit de creation dans le dossier 
 	ft_putstr_fd("minishell: error\n", 2);
 	return (1);
 }

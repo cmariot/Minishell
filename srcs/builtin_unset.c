@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:39:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/10 19:47:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/15 14:00:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,45 +28,51 @@ void	remove_first_element(t_env **env)
 	*env = tmp;
 }
 
+int	check_unset_error(char **names, size_t i)
+{
+	size_t	j;
+
+	j = 0;
+	while (names[i][j] != '\0')
+	{
+		if (i == 0 && names[i][j] == '-' && names[i][j + 1] != '\0')
+		{
+			ft_putstr_fd("minishell: unset: '", 2);
+			ft_putstr_fd(names[i], 2);
+			ft_putstr_fd("': invalid option.\n", 2);
+			global_exit_status(2);
+			return (1);
+		}
+		else if (ft_isalnum(names[i][j]) == FALSE && names[i][j] != '_')
+		{
+			ft_putstr_fd("minishell: unset: '", 2);
+			ft_putstr_fd(names[i], 2);
+			ft_putstr_fd("': not a valid identifier.\n", 2);
+			global_exit_status(1);
+			return (1);
+		}
+		j++;
+	}
+	return (0);
+}
+
 t_env	*builtin_unset(t_env *env, char **names)
 {
 	size_t	i;
-	size_t	j;
 	t_env	*env_backup;
 	t_env	*tmp;
-	bool	error;
 
 	if (*names == NULL || env == NULL)
 	{
-		change_global_exit_status(0);
+		global_exit_status(0);
 		return (env);
 	}
 	i = 0;
-	error = FALSE;
 	env_backup = env;
 	while (names[i] != NULL)
 	{
-		j = 0;
-		while (names[i][j] != '\0')
-		{
-			if (i == 0 && names[i][j] == '-' && names[i][j + 1] != '\0')
-			{
-				ft_putstr_fd("minishell: unset: '", 2);
-				ft_putstr_fd(names[i], 2);
-				ft_putstr_fd("': invalid option.\n", 2);
-				change_global_exit_status(2);
-				return (env);
-			}
-			else if (ft_isalnum(names[i][j]) == FALSE && names[i][j] != '_')
-			{
-				ft_putstr_fd("minishell: unset: '", 2);
-				ft_putstr_fd(names[i], 2);
-				ft_putstr_fd("': not a valid identifier.\n", 2);
-				error = TRUE;
-				break ;
-			}
-			j++;
-		}
+		if (check_unset_error(names, i) == 1)
+			return (env);
 		if (ft_strcmp(env->name, names[i]) == 0)
 		{
 			remove_first_element(&env);
@@ -91,9 +97,6 @@ t_env	*builtin_unset(t_env *env, char **names)
 		env = env_backup;
 		i++;
 	}
-	if (error == FALSE)
-		change_global_exit_status(0);
-	if (error == TRUE)
-		change_global_exit_status(1);
+	global_exit_status(0);
 	return (env);
 }

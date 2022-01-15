@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 16:31:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/15 14:00:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,16 @@ void			create_pipeline(t_command_line *command_line,
 					t_shell *minishell, int *fd);
 
 //execute.c
-int				execute_cmnd(char **command_path, t_simple command, char **env, int fd_output);
-void			search_exec(t_shell *minishell, t_command_line *command_line, size_t i, int *fd, int fd_output);
-int				command_in_absolute_path(t_command_line *command_line, size_t command_index,
+int				execute_cmnd(char **command_path, t_simple command, char **env,
+					int fd_output);
+void			search_exec(t_shell *minishell, t_simple command, int *fd,
+					int fd_output);
+int				try_command_with_path(char **path_array, t_simple command,
 					char **env, int fd_output);
-int				try_command_with_path(char **path_array, t_command_line *command_line,
-					int command_index, char **env, int fd_output);
-int				command_is_builtin(t_shell **minishell, char **command_and_args, t_simple command, int *fd, int fd_output);
+int				command_in_absolute_path(t_simple command, char **env,
+					int fd_output);
+int				command_is_builtin(t_shell **minishell, t_simple command,
+					int *fd, int fd_output);
 void			execute(t_shell *minishell, t_command_line *command_line);
 
 // check quote
@@ -166,7 +169,7 @@ void			add_to_env(t_env *env, char *name, char *value);
 
 //global_exit_status.c
 int				return_global_exit_status(void);
-void			change_global_exit_status(int new_value);
+int				global_exit_status(int new_value);
 void			expand_exit_status(char **str, size_t *i, char *name);
 
 //str_and_array_modification.c

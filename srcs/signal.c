@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/10 15:56:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:36:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
-
 	(void)info;
 	(void)secret;
 	if (sig == SIGINT)
 	{
 		write(0, "\n", 1);
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
@@ -33,7 +32,7 @@ void	ft_handler2(int sig, siginfo_t *info, void *secret)
 	if (sig == SIGINT)
 	{
 		write(0, "\n", 1);
-        rl_replace_line("", 0);
+		rl_replace_line("", 0);
 	}
 }
 
