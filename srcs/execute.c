@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 17:21:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/15 18:16:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,11 @@ int	command_in_absolute_path(t_simple command, char **env, int fd_output)
 		return (127);
 	}
 	if (ft_strlen(command_path) > 2 && command_path[0] == '.' && command_path[0] == '/')
-		execute_command_in_current_directory(command_path,
-			command, env, fd_output);
+	{
+		if (!execute_command_in_current_directory(command_path,
+				command, env, fd_output))
+			return (0);
+	}
 	else
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)

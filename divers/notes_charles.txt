@@ -1,7 +1,6 @@
 A FAIRE :
 ---------
 
-- [ ] Execution de commandes a distance ../../bin/ls ou ./minishell
 - [ ] Heredoc : creer fichier tmp, sauvegarder nom, ecrire a l'interieur, fermer, ouvrir, dup2, exec
 - [ ] Gestion d'erreurs de redirections (input sans fichier, permissions non accordees ...)
 - [ ] Forks concurrentiels : cat | cat | echo test
@@ -41,3 +40,4 @@ DONE :
 - [X] Message d'erreur en cas de pipe vide
 - [X] Finaliser parsing sur cas particuliers (voir notre testeur sur echo, afficher caractere par caractere)
 - [X] Redirections dans pipes
+- [X] Execution de commandes a distance ../../bin/ls ou ./minishell
