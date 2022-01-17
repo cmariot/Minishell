@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 17:06:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:41:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,30 +127,27 @@ int				builtin_echo(char **command_and_args);
 
 // pipeline.c
 void			create_pipeline(t_command_line *command_line,
-					t_shell *minishell, int *fd);
+					t_shell *minishell);
 
 //execute.c
 void			execute(t_shell *minishell, t_command_line *command_line);
 
 //execute_builtin.c
-int				command_is_builtin(t_shell **minishell, t_simple command,
-					int *fd, int fd_output);
+int				command_is_builtin(t_shell **minishell, t_simple command);
 
 //execute_simple_command.c
-void			execute_simple_command(t_shell *minishell, t_simple command,
-					int *fd, int fd_output);
+void			execute_simple_command(t_shell *minishell, t_simple command);
 
 //execute_with_path.c
-int				command_with_path(t_simple command, char **env, int fd_output);
+int				command_with_absolute_path(t_simple command, char **env);
 
 //execute_without_path.c
 
 int				command_without_path(t_shell *minishell, t_simple command,
-					char **env_array, int fd_output);
+					char **env_array);
 
 //execution.c
-int				execution(char **command_path, t_simple command, char **env,
-					int fd_output);
+int				execution(char **command_path, t_simple command, char **env);
 
 // check quote
 int				check_quote(char *line);
@@ -175,7 +172,8 @@ bool			is_a_metacharacter(char *line, size_t *i, bool opt);
 void			parse_word(char *line, size_t *i);
 
 bool			ft_isadirectory(char *path);
-void			add_to_env(t_env *env, char *name, char *value);
+void			add_to_env(t_shell *minishell, t_env *env, char *name,
+					char *value);
 
 //global_exit_status.c
 int				return_global_exit_status(void);
@@ -191,7 +189,9 @@ void			remove_from_array(char **splitted_line, int i);
 
 //redirection.c
 int				input_redirection(t_simple command, bool heredoc_opt);
-int				output_redirection(t_simple command, int fd_output);
+int				output_redirection(t_simple command);
+
+//heredoc.c
 int				create_heredoc(char *filename, bool heredoc_opt);
 
 // a placer dans les bons fichiers / verifier si les fonctions existent tjs 

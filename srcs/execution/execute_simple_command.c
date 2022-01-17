@@ -6,29 +6,28 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 17:08:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 19:46:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-void	execute_simple_command(t_shell *minishell, t_simple command, int *fd,
-	int fd_output)
+void	execute_simple_command(t_shell *minishell, t_simple command)
 {
 	char	**env_array;
 
 	if (command.command_and_args == NULL)
 		return ;
-	if (command_is_builtin(&minishell, command, fd, fd_output)
+	if (command_is_builtin(&minishell, command)
 		!= 127)
 		return ;
 	env_array = envlist_to_array(minishell->env);
-	if (command_with_path(command, env_array, fd_output) == 0)
+	if (command_with_absolute_path(command, env_array) == 0)
 	{
 		ft_free_array(env_array);
 		return ;
 	}
-	if (command_without_path(minishell, command, env_array, fd_output) == 127)
+	if (command_without_path(minishell, command, env_array) == 127)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(command.command_and_args[0], 2);
@@ -36,4 +35,5 @@ void	execute_simple_command(t_shell *minishell, t_simple command, int *fd,
 		global_exit_status(127);
 	}
 	ft_free_array(env_array);
+	return ;
 }

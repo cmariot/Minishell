@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/17 16:51:04 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/17 21:44:56 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,43 +64,55 @@ endif
 #                                SOURCE FILES                                  #
 # **************************************************************************** #
 
-SRCS			= main.c \
-			  builtin_cd.c \
-			  builtin_echo.c \
-			  builtin_env.c \
-			  builtin_exit.c \
-			  builtin_export.c \
-			  builtin_pwd.c \
-			  builtin_unset.c \
-			  env_list_utils.c \
-			  env_array_utils.c \
-			  execute.c \
-			  execute_builtin.c \
-			  execute_simple_command.c \
-			  execute_with_path.c \
-			  execute_without_path.c \
-			  execution.c \
-			  expansion.c \
-			  expansion_env.c \
-			  expansion_quotes.c \
-			  expansion_tilde.c \
-			  get_command_line.c \
-			  global_exit_status.c \
-			  init_minishell.c \
-			  free_minishell.c \
-			  parse.c \
-			  parse_simple_commands.c \
-			  parse_command_and_args.c \
-			  parse_redirections.c \
-			  pipeline.c \
-			  print_structure.c \
-			  redirection.c \
-			  signal.c \
-			  str_and_array_modification.c \
-			  tokens_get.c \
-			  tokens_count.c \
-			  tokens_fill.c \
-			  trim_quote_space_del.c
+BUILTINS	= builtins/builtin_cd.c \
+			  builtins/builtin_echo.c \
+			  builtins/builtin_env.c \
+			  builtins/builtin_exit.c \
+			  builtins/builtin_export.c \
+			  builtins/builtin_pwd.c \
+			  builtins/builtin_unset.c
+
+EXECUTION	= execution/execute.c \
+			  execution/execute_builtin.c \
+			  execution/execute_simple_command.c \
+			  execution/execute_with_path.c \
+			  execution/execute_without_path.c \
+			  execution/execution.c \
+			  execution/heredoc.c \
+			  execution/pipeline.c \
+			  execution/redirection.c
+
+EXIT		= exit/free_minishell.c \
+			  exit/global_exit_status.c
+
+EXPANSION	= expansion/expansion.c \
+			  expansion/expansion_env.c \
+			  expansion/expansion_quotes.c \
+			  expansion/expansion_tilde.c
+
+INIT		= init/init_minishell.c \
+			  init/main.c \
+			  init/signal.c
+
+PARSING		= parsing/env_array_utils.c \
+			  parsing/env_list_utils.c \
+			  parsing/get_command_line.c \
+			  parsing/parse.c \
+			  parsing/parse_command_and_args.c \
+			  parsing/parse_redirections.c \
+			  parsing/parse_simple_commands.c \
+			  parsing/print_structure.c \
+			  parsing/str_and_array_modification.c \
+			  parsing/tokens_count.c \
+			  parsing/tokens_fill.c \
+			  parsing/tokens_get.c
+
+SRCS		= $(INIT) \
+			  $(PARSING) \
+			  $(EXPANSION) \
+			  $(EXECUTION) \
+			  $(BUILTINS) \
+			  $(EXIT)
 
 SRC			:= $(notdir $(SRCS))
 

@@ -6,41 +6,44 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:07:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 16:18:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:15:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_redirection(int *fd, int *fd_backup, t_simple command,
-	int fd_output)
+void	builtin_redirection(int *fd_backup, t_simple command)
 {
-	fd_backup[0] = dup(fd[STDIN]);
-	fd_backup[1] = dup(fd[STDOUT]);
+	if (command.number_of_redirections == 0)
+		return ;
+	fd_backup[0] = dup(STDIN);
+	fd_backup[1] = dup(STDOUT);
 	input_redirection(command, TRUE);
-	output_redirection(command, fd_output);
+	output_redirection(command);
 }
 
-void	restore_builtin_redirection(int stdin_backup, int stdout_backup)
+void	restore_builtin_redirection(t_simple command,
+	int stdin_backup, int stdout_backup)
 {
+	if (command.number_of_redirections == 0)
+		return ;
 	dup2(stdin_backup, STDIN);
 	dup2(stdout_backup, STDOUT);
 	close(stdin_backup);
 	close(stdout_backup);
 }
 
-int	its_not_builtin(int *fd_backup)
+int	its_not_builtin(t_simple command, int *fd_backup)
 {
-	restore_builtin_redirection(fd_backup[0], fd_backup[1]);
+	restore_builtin_redirection(command, fd_backup[0], fd_backup[1]);
 	return (global_exit_status(127));
 }
 
-int	command_is_builtin(t_shell **minishell, t_simple command, int *fd,
-	int fd_output)
+int	command_is_builtin(t_shell **minishell, t_simple command)
 {
 	int		fd_backup[2];
 
-	builtin_redirection(fd, fd_backup, command, fd_output);
+	builtin_redirection(fd_backup, command);
 	if (ft_strcmp(command.command_and_args[0], "cd") == 0)
 		global_exit_status(builtin_cd(*minishell));
 	else if (ft_strcmp(command.command_and_args[0], "echo") == 0)
@@ -60,7 +63,7 @@ int	command_is_builtin(t_shell **minishell, t_simple command, int *fd,
 		global_exit_status(builtin_export(*minishell,
 				command.command_and_args + 1));
 	else
-		return (its_not_builtin(fd_backup));
-	restore_builtin_redirection(fd_backup[0], fd_backup[1]);
+		return (its_not_builtin(command, fd_backup));
+	restore_builtin_redirection(command, fd_backup[0], fd_backup[1]);
 	return (0);
 }

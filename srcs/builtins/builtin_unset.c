@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:39:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 14:00:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:51:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,30 @@ int	check_unset_error(char **names, size_t i)
 	return (0);
 }
 
+void	remove_from_env(t_env *env, char **names, size_t i)
+{
+	t_env	*tmp;
+
+	while (env->next != NULL)
+	{
+		tmp = env->next;
+		if (ft_strcmp(tmp->name, names[i]) == 0)
+		{
+			env->next = tmp->next;
+			free(tmp->name);
+			tmp->name = NULL;
+			free(tmp->value);
+			tmp->value = NULL;
+			free(tmp);
+			break ;
+		}
+		env = env->next;
+	}
+}
+
 t_env	*builtin_unset(t_env *env, char **names)
 {
 	size_t	i;
-	t_env	*env_backup;
-	t_env	*tmp;
 
 	if (*names == NULL || env == NULL)
 	{
@@ -68,7 +87,6 @@ t_env	*builtin_unset(t_env *env, char **names)
 		return (env);
 	}
 	i = 0;
-	env_backup = env;
 	while (names[i] != NULL)
 	{
 		if (check_unset_error(names, i) == 1)
@@ -79,22 +97,7 @@ t_env	*builtin_unset(t_env *env, char **names)
 			i++;
 			continue ;
 		}
-		while (env->next != NULL)
-		{
-			tmp = env->next;
-			if (ft_strcmp(tmp->name, names[i]) == 0)
-			{
-				env->next = tmp->next;
-				free(tmp->name);
-				tmp->name = NULL;
-				free(tmp->value);
-				tmp->value = NULL;
-				free(tmp);
-				break ;
-			}
-			env = env->next;
-		}
-		env = env_backup;
+		remove_from_env(env, names, i);
 		i++;
 	}
 	global_exit_status(0);

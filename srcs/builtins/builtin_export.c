@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 14:23:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:23:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,30 @@
 
 // If the element name is in the linked list env, change its value,
 // else add name and value
-void	add_to_env(t_env *env, char *name, char *value)
+void	add_to_env(t_shell *minishell, t_env *env, char *name, char *value)
 {
 	t_env	*tmp;
 
-	tmp = env;
-	while (env)
+	if (minishell->env == NULL)
 	{
-		if (ft_strcmp(env->name, name) == 0)
-		{
-			free(env->value);
-			env->value = ft_strdup(value);
-			return ;
-		}
-		env = env->next;
+		minishell->env = ft_lstnew_env(name, value);
 	}
-	env = tmp;
-	ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
+	else
+	{
+		tmp = env;
+		while (env)
+		{
+			if (ft_strcmp(env->name, name) == 0)
+			{
+				free(env->value);
+				env->value = ft_strdup(value);
+				return ;
+			}
+			env = env->next;
+		}
+		env = tmp;
+		ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
+	}
 }
 
 int	error_invalid_identifier(char **args, size_t i)
@@ -82,12 +89,11 @@ int	builtin_export(t_shell *minishell, char **args)
 		if (name)
 		{
 			value = ft_strdup(args[i] + name_len + 1);
-			if (value && minishell->env == NULL)
-				minishell->env = ft_lstnew_env(name, value);
-			else if (value && minishell->env != NULL)
-				add_to_env(minishell->env, name, value);
 			if (value)
+			{
+				add_to_env(minishell, minishell->env, name, value);
 				free(value);
+			}
 			free(name);
 		}
 		i++;

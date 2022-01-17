@@ -6,19 +6,19 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 16:46:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 19:51:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	file_redirection(int *stdin_backup, int *stdout_backup,
-		t_simple command, int fd_output)
+		t_simple command)
 {
 	*stdin_backup = dup(STDIN);
 	*stdout_backup = dup(STDOUT);
 	input_redirection(command, FALSE);
-	output_redirection(command, fd_output);
+	output_redirection(command);
 }
 
 void	restore_file_redirection(int stdin_backup, int stdout_backup)
@@ -31,15 +31,14 @@ void	restore_file_redirection(int stdin_backup, int stdout_backup)
 
 /* Create a new process in which the command is execute,
  * the parent process will wait the child exit to free command_path. */
-int	execution(char **command_path, t_simple command, char **env,
-	int fd_output)
+int	execution(char **command_path, t_simple command, char **env)
 {
 	pid_t	pid;
 	int		status;
 	int		stdin_backup;
 	int		stdout_backup;
 
-	file_redirection(&stdin_backup, &stdout_backup, command, fd_output);
+	file_redirection(&stdin_backup, &stdout_backup, command);
 	pid = fork();
 	if (pid < 0)
 		ft_putstr_fd("Error, fork() failed.\n", 2);

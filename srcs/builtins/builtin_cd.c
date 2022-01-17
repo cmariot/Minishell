@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/14 16:10:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:25:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,11 @@ int	builtin_cd(t_shell *minishell)
 				minishell);
 	else
 		cd_return = go_home(minishell);
-	add_to_env(minishell->env, "OLDPWD", oldpwd);
+	add_to_env(minishell, minishell->env, "OLDPWD", oldpwd);
 	if (oldpwd)
 		free(oldpwd);
 	pwd = getcwd(NULL, 255);
-	add_to_env(minishell->env, "PWD", pwd);
+	add_to_env(minishell, minishell->env, "PWD", pwd);
 	if (pwd)
 		free(pwd);
 	return (cd_return);
