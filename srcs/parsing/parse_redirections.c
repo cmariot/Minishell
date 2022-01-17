@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 16:23:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 22:42:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array)
 		if (array[(*array_index) + 1])
 		{
 			redir->filename = ft_strdup(array[(*array_index) + 1]);
+			if (ft_strcmp(redir->redir_type, "<<") == 0)
+				create_heredoc(redir->filename, TRUE);
 			*array_index += 2;
 		}
 		else

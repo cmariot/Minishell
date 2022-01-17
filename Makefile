@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/17 21:44:56 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/17 22:26:07 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,20 +31,21 @@ LIBFT_INCL		= $(LIBFT)/includes/
 CC				= clang
 
 CFLAGS			= -Wall -Wextra -Werror
-CFLAGS			+= -I $(INCL_DIR)
-CFLAGS			+= -I $(LIBFT_INCL)
 
-LFLAGS			= -Wall -Wextra -Werror -g3
+INCLUDES		= -I $(INCL_DIR)
+INCLUDES		+= -I $(LIBFT_INCL)
 
-LIB_LFLAGS		= -L $(LIBFT) -lft
+LFLAGS			= -Wall -Wextra -Werror
+
+LIBRARIES		= -L $(LIBFT) -lft
 
 # Select the correct path of readline library and includes depending the system
 UNAME := $(shell uname -m)
 ifeq ($(UNAME), arm64)
-	CFLAGS			+= -I /opt/homebrew/opt/readline/include
-	LIB_LFLAGS		+= -L /opt/homebrew/opt/readline/lib -lreadline
+	INCLUDES		+= -I /opt/homebrew/opt/readline/include
+	LIBRARIES		+= -L /opt/homebrew/opt/readline/lib -lreadline
 else
-	LIB_LFLAGS		+= -lreadline
+	LIBRARIES		+= -lreadline
 endif
 
 # Debug flag, use with 'make DEBUG=1'
@@ -146,17 +147,18 @@ srcs_compil :
 
 $(OBJS_DIR)%.o : %.c
 		@mkdir -p $(OBJS_DIR)
-		@$(CC) $(CFLAGS) -c $< -o $@
-		@printf "$(CC) $(CFLAGS) -c $< -o $@\n"
+		@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+		@printf "$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@\n"
 		
 # Linking
 obj_link :
 		@printf "$(YE)$(NAME) compilation success.\n\n"
 		@make -C $(LIBFT)
-		@printf "$(GR)Linking $(NAME) objects ...\n$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)$(RC)\n"
+		@printf "$(GR)Linking $(NAME) objects ...\n"
+		@printf "$(CC) $(LFLAGS) $(OBJS) $(LIBRARIES) -o $(NAME)$(RC)\n"
 
 $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
-		@$(CC) $(LFLAGS) $(OBJS) $(LIB_LFLAGS) -o $(NAME)
+		@$(CC) $(LFLAGS) $(OBJS) $(LIBRARIES) -o $(NAME)
 		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
 
 # Compile and launch
@@ -170,6 +172,8 @@ leaks : all
 # Check 42 norm 
 norm :
 		@norminette
+
+bonus : all
 
 # Remove object files
 clean :
