@@ -1,7 +1,7 @@
 A FAIRE :
 ---------
 
-- [ ] Heredoc : creer fichier tmp, sauvegarder nom, ecrire a l'interieur, fermer, ouvrir, dup2, exec
+- [ ] Heredoc : nom temporaire unique, supprimer fichier apres exec
 - [ ] Forks concurrentiels : cat | cat | echo test
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ? + Signaux dans cat / heredoc
 
