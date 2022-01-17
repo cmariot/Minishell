@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 13:44:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 13:22:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,19 @@ int	create_heredoc(char *filename, bool get_heredoc)
 	}
 }
 
-int	input_error(void)
+int	redirection_error(char *file)
 {
-	ft_putstr_fd("minishell: error\n", 2);
+	ft_putstr_fd("minishell: ", 2);
+	if (access(file, F_OK) != 0)
+	{
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else if (access(file, R_OK) != 0)
+	{
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
 	return (1);
 }
 
@@ -71,7 +81,7 @@ int	input_redirection(t_simple command, bool heredoc_opt)
 				file_fd = create_heredoc(command.redir[i].filename,
 						heredoc_opt);
 				if (file_fd == -1)
-					return (input_error());
+					return (redirection_error(command.redir[i].filename));
 				if (i == command.number_of_redirections - 1)
 					dup2(file_fd, STDIN);
 				close(file_fd);
@@ -80,7 +90,7 @@ int	input_redirection(t_simple command, bool heredoc_opt)
 			{
 				file_fd = open(command.redir[i].filename, O_RDONLY);
 				if (file_fd == -1)
-					return (input_error());
+					return (redirection_error(command.redir[i].filename));
 				if (i == command.number_of_redirections - 1)
 					dup2(file_fd, STDIN);
 				close(file_fd);
@@ -89,13 +99,6 @@ int	input_redirection(t_simple command, bool heredoc_opt)
 		}
 	}
 	return (0);
-}
-
-//erreur a mettre a jour : pas le droit de creation dans le dossier 
-int	output_error(void)
-{
-	ft_putstr_fd("minishell: error\n", 2);
-	return (1);
 }
 
 int	output_redirection(t_simple command, int fd_stdout)
@@ -113,7 +116,7 @@ int	output_redirection(t_simple command, int fd_stdout)
 				file_fd = open(command.redir[i].filename,
 						O_RDWR | O_CREAT | O_APPEND, 0644);
 				if (file_fd == -1)
-					return (output_error());
+					return (redirection_error(command.redir[i].filename));
 				if (i == command.number_of_redirections - 1)
 					dup2(file_fd, fd_stdout);
 				close(file_fd);
@@ -123,7 +126,7 @@ int	output_redirection(t_simple command, int fd_stdout)
 				file_fd = open(command.redir[i].filename,
 						O_RDWR | O_CREAT | O_TRUNC, 0644);
 				if (file_fd == -1)
-					return (output_error());
+					return (redirection_error(command.redir[i].filename));
 				if (i == command.number_of_redirections - 1)
 					dup2(file_fd, fd_stdout);
 				close(file_fd);
