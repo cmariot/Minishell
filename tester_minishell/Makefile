@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/17 23:31:36 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/17 23:40:56 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,7 @@ srcs_compil :
 
 $(OBJS_DIR)%.o : %.c
 		@mkdir -p $(OBJS_DIR)
+		@mkdir -p log_tests
 		@$(CC) $(CFLAGS) -c $< -o $@
 		@printf "$(CC) $(CFLAGS) -c $< -o $@\n"
 		
@@ -125,6 +126,7 @@ fclean :
 		@printf "Done\n"
 		@printf "Removing $(OBJS_DIR) ... "
 		@rm -rf $(OBJS_DIR)
+		@rm -rf log_tests
 		@printf "Done\n"
 		@printf "Removing $(NAME) ... "
 		@rm -f $(NAME)

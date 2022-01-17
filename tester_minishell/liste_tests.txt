@@ -266,4 +266,5 @@ cd ..
 cd ../Minishell
 cd .
 #fork concurrentiel
-echo lol | sleep 10 | ls | sleep 10 | echo prout | cat #prout doit s'afficher direct
+sleep 3 | echo prout #prout doit s'afficher direct
+rm f1
