@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/12 22:19:20 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/17 16:51:04 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,11 @@ SRCS			= main.c \
 			  env_list_utils.c \
 			  env_array_utils.c \
 			  execute.c \
+			  execute_builtin.c \
+			  execute_simple_command.c \
+			  execute_with_path.c \
+			  execute_without_path.c \
+			  execution.c \
 			  expansion.c \
 			  expansion_env.c \
 			  expansion_quotes.c \

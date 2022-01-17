@@ -6,17 +6,31 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 14:04:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 17:20:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+bool	skip_verif_inside_quotes(char *line, int *i)
+{
+	bool	ok;
+	char	c;
+
+	ok = FALSE;
+	c = line[*i];
+	(*i)++;
+	while (line[*i] != c && line[*i] != '\0')
+		(*i)++;
+	if (line[*i] == c)
+		ok = TRUE;
+	return (ok);
+}
+
 // Minishell should not interpret unclosed quotes
 int	check_quotes(char *line)
 {
 	int		i;
-	char	c;
 	bool	ok;
 
 	i = 0;
@@ -24,15 +38,7 @@ int	check_quotes(char *line)
 	while (line[i] != '\0')
 	{
 		if ((line[i] == '\"' || line[i] == '\''))
-		{
-			ok = FALSE;
-			c = line[i];
-			i++;
-			while (line[i] != c && line[i] != '\0')
-				i++;
-			if (line[i] == c)
-				ok = TRUE;
-		}
+			ok = skip_verif_inside_quotes(line, &i);
 		if (line[i] == '#')
 			break ;
 		i++;

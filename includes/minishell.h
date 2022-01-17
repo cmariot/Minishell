@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 14:00:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 17:06:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,22 +125,32 @@ int				builtin_pwd(t_shell *minishell, char *first_arg);
 int				builtin_cd(t_shell *minishell);
 int				builtin_echo(char **command_and_args);
 
-// pipielne.c
+// pipeline.c
 void			create_pipeline(t_command_line *command_line,
 					t_shell *minishell, int *fd);
 
 //execute.c
-int				execute_cmnd(char **command_path, t_simple command, char **env,
-					int fd_output);
-void			search_exec(t_shell *minishell, t_simple command, int *fd,
-					int fd_output);
-int				try_command_with_path(char **path_array, t_simple command,
-					char **env, int fd_output);
-int				command_in_absolute_path(t_simple command, char **env,
-					int fd_output);
+void			execute(t_shell *minishell, t_command_line *command_line);
+
+//execute_builtin.c
 int				command_is_builtin(t_shell **minishell, t_simple command,
 					int *fd, int fd_output);
-void			execute(t_shell *minishell, t_command_line *command_line);
+
+//execute_simple_command.c
+void			execute_simple_command(t_shell *minishell, t_simple command,
+					int *fd, int fd_output);
+
+//execute_with_path.c
+int				command_with_path(t_simple command, char **env, int fd_output);
+
+//execute_without_path.c
+
+int				command_without_path(t_shell *minishell, t_simple command,
+					char **env_array, int fd_output);
+
+//execution.c
+int				execution(char **command_path, t_simple command, char **env,
+					int fd_output);
 
 // check quote
 int				check_quote(char *line);

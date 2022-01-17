@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 23:25:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:08:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	last_pipe(t_shell *minishell, t_simple command, int *backup_fd, int *fd)
 	else if (pid == 0)
 	{
 		fd_output = STDOUT;
-		search_exec(minishell, command, fd, fd_output);
+		execute_simple_command(minishell, command, fd, fd_output);
 		close(backup_fd[0]);
 		close(backup_fd[1]);
 		free_minishell(minishell);
@@ -67,7 +67,7 @@ void	firsts_pipes(t_shell *minishell, t_simple command,
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT);
 		fd_output = STDOUT;
-		search_exec(minishell, command, fd, fd_output);
+		execute_simple_command(minishell, command, fd, fd_output);
 		close(pipe_fd[1]);
 		close(backup_fd[0]);
 		close(backup_fd[1]);
