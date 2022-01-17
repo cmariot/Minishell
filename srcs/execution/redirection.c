@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 21:44:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 00:40:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	redirection_error(char *file)
 	return (1);
 }
 
-int	do_input_redirection(t_redir redir, int number_of_redirections,
+int	do_input_redirection(t_redir redir, int last_redir_index,
 	int i, bool heredoc_opt)
 {
 	int		file_fd;
@@ -38,7 +38,7 @@ int	do_input_redirection(t_redir redir, int number_of_redirections,
 		file_fd = create_heredoc(redir.filename, heredoc_opt);
 		if (file_fd == -1)
 			return (redirection_error(redir.filename));
-		if (i == number_of_redirections - 1)
+		if (i == last_redir_index)
 			dup2(file_fd, STDIN);
 		close(file_fd);
 	}
@@ -47,7 +47,7 @@ int	do_input_redirection(t_redir redir, int number_of_redirections,
 		file_fd = open(redir.filename, O_RDONLY);
 		if (file_fd == -1)
 			return (redirection_error(redir.filename));
-		if (i == number_of_redirections - 1)
+		if (i == last_redir_index)
 			dup2(file_fd, STDIN);
 		close(file_fd);
 	}
@@ -57,21 +57,29 @@ int	do_input_redirection(t_redir redir, int number_of_redirections,
 int	input_redirection(t_simple command, bool heredoc_opt)
 {
 	size_t	i;
+	int		last_redir_index;
 
 	if (command.number_of_redirections)
 	{
+		last_redir_index = command.number_of_redirections - 1;
+		while (ft_strcmp(command.redir[last_redir_index].redir_type, "<<")
+			&& ft_strcmp(command.redir[last_redir_index].redir_type, "<")
+			&& last_redir_index >= 0)
+		{
+			last_redir_index--;
+		}
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
 			do_input_redirection(command.redir[i],
-				command.number_of_redirections, i, heredoc_opt);
+				last_redir_index, i, heredoc_opt);
 			i++;
 		}
 	}
 	return (0);
 }
 
-int	do_output_redirection(t_redir redir, int number_of_redirections, int i)
+int	do_output_redirection(t_redir redir, int i, int last_redir_index)
 {
 	int		file_fd;
 
@@ -81,7 +89,7 @@ int	do_output_redirection(t_redir redir, int number_of_redirections, int i)
 				O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (file_fd == -1)
 			return (redirection_error(redir.filename));
-		if (i == number_of_redirections - 1)
+		if (i == last_redir_index)
 			dup2(file_fd, STDOUT);
 		close(file_fd);
 	}
@@ -91,7 +99,7 @@ int	do_output_redirection(t_redir redir, int number_of_redirections, int i)
 				O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (file_fd == -1)
 			return (redirection_error(redir.filename));
-		if (i == number_of_redirections - 1)
+		if (i == last_redir_index)
 			dup2(file_fd, STDOUT);
 		close(file_fd);
 	}
@@ -101,14 +109,21 @@ int	do_output_redirection(t_redir redir, int number_of_redirections, int i)
 int	output_redirection(t_simple command)
 {
 	size_t	i;
+	int		last_redir_index;
 
 	if (command.number_of_redirections)
 	{
+		last_redir_index = command.number_of_redirections - 1;
+		while (ft_strcmp(command.redir[last_redir_index].redir_type, ">>")
+			&& ft_strcmp(command.redir[last_redir_index].redir_type, ">")
+			&& last_redir_index >= 0)
+		{
+			last_redir_index--;
+		}
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
-			do_output_redirection(command.redir[i],
-				command.number_of_redirections, i);
+			do_output_redirection(command.redir[i], i, last_redir_index);
 			i++;
 		}
 	}
