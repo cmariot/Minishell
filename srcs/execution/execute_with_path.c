@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 19:58:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 00:58:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ bool	contains_slash(char **command_path)
 	}
 	return (TRUE);
 }
+
+/* For the command with absolut path, like './minishell' or '/bin/ls' */
 
 int	command_with_absolute_path(t_simple command, char **env)
 {

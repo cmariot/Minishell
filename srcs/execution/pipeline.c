@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 20:48:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:07:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	firsts_pipes(t_shell *minishell, t_simple command)
 		free_minishell(minishell);
 		exit(return_global_exit_status());
 	}
-	waitpid(pid, &pid, 0);
+	waitpid(0, &pid, 0);
 	close(pipe_fd[1]);
 	dup2(pipe_fd[0], STDIN);
 	close(pipe_fd[0]);

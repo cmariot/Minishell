@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:07:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 22:44:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:45:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	builtin_redirection(int *fd_backup, t_simple command)
 		return ;
 	fd_backup[0] = dup(STDIN);
 	fd_backup[1] = dup(STDOUT);
-	input_redirection(command, FALSE);
+	input_redirection(command);
 	output_redirection(command);
 }
 

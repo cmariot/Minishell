@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 00:40:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:44:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,12 @@ int	redirection_error(char *file)
 }
 
 int	do_input_redirection(t_redir redir, int last_redir_index,
-	int i, bool heredoc_opt)
+	int i)
 {
 	int		file_fd;
 
-	if (ft_strcmp(redir.redir_type, "<<") == 0)
-	{
-		file_fd = create_heredoc(redir.filename, heredoc_opt);
-		if (file_fd == -1)
-			return (redirection_error(redir.filename));
-		if (i == last_redir_index)
-			dup2(file_fd, STDIN);
-		close(file_fd);
-	}
-	else if (ft_strcmp(redir.redir_type, "<") == 0)
+	if (ft_strcmp(redir.redir_type, "<") == 0
+		|| ft_strcmp(redir.redir_type, "<<") == 0)
 	{
 		file_fd = open(redir.filename, O_RDONLY);
 		if (file_fd == -1)
@@ -54,7 +46,7 @@ int	do_input_redirection(t_redir redir, int last_redir_index,
 	return (0);
 }
 
-int	input_redirection(t_simple command, bool heredoc_opt)
+int	input_redirection(t_simple command)
 {
 	size_t	i;
 	int		last_redir_index;
@@ -72,7 +64,7 @@ int	input_redirection(t_simple command, bool heredoc_opt)
 		while (i < command.number_of_redirections)
 		{
 			do_input_redirection(command.redir[i],
-				last_redir_index, i, heredoc_opt);
+				last_redir_index, i);
 			i++;
 		}
 	}

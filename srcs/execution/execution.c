@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 19:51:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:50:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,24 @@ void	file_redirection(int *stdin_backup, int *stdout_backup,
 {
 	*stdin_backup = dup(STDIN);
 	*stdout_backup = dup(STDOUT);
-	input_redirection(command, FALSE);
+	input_redirection(command);
 	output_redirection(command);
 }
 
-void	restore_file_redirection(int stdin_backup, int stdout_backup)
+void	restore_file_redirection(t_simple command, int stdin_backup,
+		int stdout_backup)
 {
+	size_t	i;
+
+	i = 0;
+	while (i < command.number_of_redirections)
+	{
+		if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
+		{
+			unlink(command.redir[i].filename);
+		}
+		i++;
+	}
 	dup2(stdin_backup, 0);
 	dup2(stdout_backup, 1);
 	close(stdin_backup);
@@ -51,7 +63,7 @@ int	execution(char **command_path, t_simple command, char **env)
 		return (status);
 	}
 	waitpid(pid, &status, 0);
-	restore_file_redirection(stdin_backup, stdout_backup);
+	restore_file_redirection(command, stdin_backup, stdout_backup);
 	if (*command_path != NULL)
 		free(*command_path);
 	global_exit_status(0);
