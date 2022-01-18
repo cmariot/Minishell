@@ -6,19 +6,16 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:42:04 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 16:16:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:34:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	file_redirection(int *stdin_backup, int *stdout_backup,
-		t_simple command)
+int	file_redirection(t_simple command)
 {
 	if (command.number_of_redirections == 0)
 		return (0);
-	*stdin_backup = dup(STDIN);
-	*stdout_backup = dup(STDOUT);
 	if (input_redirection(command) == 1)
 		return (1);
 	if (output_redirection(command) == 1)
