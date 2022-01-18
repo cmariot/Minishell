@@ -6,39 +6,15 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:07:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 14:06:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:24:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_redirection(int *fd_backup, t_simple command)
-{
-	if (command.number_of_redirections == 0)
-		return (0);
-	fd_backup[0] = dup(STDIN);
-	fd_backup[1] = dup(STDOUT);
-	if (input_redirection(command) == 1)
-		return (global_exit_status(1));
-	if (output_redirection(command) == 1)
-		return (global_exit_status(1));
-	return (0);
-}
-
-void	restore_builtin_redirection(t_simple command,
-	int stdin_backup, int stdout_backup)
-{
-	if (command.number_of_redirections == 0)
-		return ;
-	dup2(stdin_backup, STDIN);
-	dup2(stdout_backup, STDOUT);
-	close(stdin_backup);
-	close(stdout_backup);
-}
-
 int	its_not_builtin(t_simple command, int *fd_backup)
 {
-	restore_builtin_redirection(command, fd_backup[0], fd_backup[1]);
+	restore_file_redirection(command, fd_backup[0], fd_backup[1], FALSE);
 	return (global_exit_status(127));
 }
 
@@ -46,7 +22,7 @@ int	command_is_builtin(t_shell **minishell, t_simple command)
 {
 	int		fd_backup[2];
 
-	if (builtin_redirection(fd_backup, command))
+	if (file_redirection(&fd_backup[0], &fd_backup[1], command))
 		return (0);
 	if (ft_strcmp(command.command_and_args[0], "cd") == 0)
 		builtin_cd(*minishell);
@@ -65,6 +41,6 @@ int	command_is_builtin(t_shell **minishell, t_simple command)
 		builtin_export(*minishell, command.command_and_args + 1);
 	else
 		return (its_not_builtin(command, fd_backup));
-	restore_builtin_redirection(command, fd_backup[0], fd_backup[1]);
+	restore_file_redirection(command, fd_backup[0], fd_backup[1], TRUE);
 	return (0);
 }

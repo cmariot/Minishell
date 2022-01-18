@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 13:51:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:25:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	file_redirection(int *stdin_backup, int *stdout_backup,
 		t_simple command)
 {
+	if (command.number_of_redirections == 0)
+		return (0);
 	*stdin_backup = dup(STDIN);
 	*stdout_backup = dup(STDOUT);
 	if (input_redirection(command) == 1)
@@ -25,16 +27,21 @@ int	file_redirection(int *stdin_backup, int *stdout_backup,
 }
 
 void	restore_file_redirection(t_simple command, int stdin_backup,
-		int stdout_backup)
+		int stdout_backup, bool del_heredoc)
 {
 	size_t	i;
 
+	if (command.number_of_redirections == 0)
+		return ;
 	i = 0;
-	while (i < command.number_of_redirections)
+	if (del_heredoc == TRUE)
 	{
-		if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
-			unlink(command.redir[i].filename);
-		i++;
+		while (i < command.number_of_redirections)
+		{
+			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
+				unlink(command.redir[i].filename);
+			i++;
+		}
 	}
 	dup2(stdin_backup, STDIN);
 	dup2(stdout_backup, STDOUT);
@@ -63,7 +70,7 @@ int	execution(char **command_path, t_simple command, char **env)
 		return (status);
 	}
 	waitpid(pid, &status, 0);
-	restore_file_redirection(command, stdin_backup, stdout_backup);
+	restore_file_redirection(command, stdin_backup, stdout_backup, TRUE);
 	if (*command_path != NULL)
 		free(*command_path);
 	global_exit_status(0);

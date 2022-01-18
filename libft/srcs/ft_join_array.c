@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 12:32:40 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 12:33:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:29:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,3 @@ char	*join_array(char **array, char *sep)
 	}
 	return (str);
 }
-
-
