@@ -6,52 +6,15 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 14:25:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:16:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	file_redirection(int *stdin_backup, int *stdout_backup,
-		t_simple command)
-{
-	if (command.number_of_redirections == 0)
-		return (0);
-	*stdin_backup = dup(STDIN);
-	*stdout_backup = dup(STDOUT);
-	if (input_redirection(command) == 1)
-		return (1);
-	if (output_redirection(command) == 1)
-		return (1);
-	return (0);
-}
-
-void	restore_file_redirection(t_simple command, int stdin_backup,
-		int stdout_backup, bool del_heredoc)
-{
-	size_t	i;
-
-	if (command.number_of_redirections == 0)
-		return ;
-	i = 0;
-	if (del_heredoc == TRUE)
-	{
-		while (i < command.number_of_redirections)
-		{
-			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
-				unlink(command.redir[i].filename);
-			i++;
-		}
-	}
-	dup2(stdin_backup, STDIN);
-	dup2(stdout_backup, STDOUT);
-	close(stdin_backup);
-	close(stdout_backup);
-}
-
 /* Create a new process in which the command is execute,
  * the parent process will wait the child exit to free command_path. */
-int	execution(char **command_path, t_simple command, char **env)
+int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 {
 	pid_t	pid;
 	int		status;
@@ -65,8 +28,9 @@ int	execution(char **command_path, t_simple command, char **env)
 		return (write(2, "minishell: fork failed.\n", 24));
 	else if (pid == 0)
 	{
-		status = execve(*command_path,
-				command.command_and_args, env);
+		close(backup_fd[0]);
+		close(backup_fd[1]);
+		status = execve(*command_path, command.command_and_args, env);
 		return (status);
 	}
 	waitpid(pid, &status, 0);

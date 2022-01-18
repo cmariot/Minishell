@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/17 22:26:07 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/18 15:20:26 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,8 @@ EXECUTION	= execution/execute.c \
 			  execution/execution.c \
 			  execution/heredoc.c \
 			  execution/pipeline.c \
-			  execution/redirection.c
+			  execution/redirection.c \
+			  execution/redirection_utils.c
 
 EXIT		= exit/free_minishell.c \
 			  exit/global_exit_status.c

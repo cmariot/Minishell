@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 19:58:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:19:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
    If it's execute, the child process stops.
    Else try the next path.  */
 
-int	find_correct_path(char **path_array, t_simple command, char **env)
+int	find_correct_path(char **path_array, t_simple command, char **env,
+		int *backup_fd)
 {
 	char	*path_with_slash;
 	char	*command_path;
@@ -32,7 +33,7 @@ int	find_correct_path(char **path_array, t_simple command, char **env)
 			free(path_with_slash);
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
-				if (execution(&command_path, command, env) == 0)
+				if (execution(&command_path, command, env, backup_fd) == 0)
 					return (0);
 		if (command_path != NULL)
 			free(command_path);
@@ -42,7 +43,7 @@ int	find_correct_path(char **path_array, t_simple command, char **env)
 }
 
 int	command_without_path(t_shell *minishell, t_simple command,
-	char **env_array)
+	char **env_array, int *backup_fd)
 {
 	char	*path_value;
 	char	**path_array;
@@ -58,7 +59,7 @@ int	command_without_path(t_shell *minishell, t_simple command,
 	if (path_array == NULL)
 		not_found = TRUE;
 	if (not_found == FALSE && find_correct_path(path_array,
-			command, env_array) == 127)
+			command, env_array, backup_fd) == 127)
 		not_found = TRUE;
 	if (path_value)
 		free(path_value);

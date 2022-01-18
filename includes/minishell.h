@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 14:24:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:24:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int		builtin_echo(char **command_and_args);
 
 // pipeline.c
 void	create_pipeline(t_command_line *command_line,
-			t_shell *minishell);
+			t_shell *minishell, int *backup_fd);
 
 //execute.c
 void	execute(t_shell *minishell, t_command_line *command_line);
@@ -142,18 +142,21 @@ void	execute(t_shell *minishell, t_command_line *command_line);
 int		command_is_builtin(t_shell **minishell, t_simple command);
 
 //execute_simple_command.c
-void	execute_simple_command(t_shell *minishell, t_simple command);
+void	execute_simple_command(t_shell *minishell, t_simple command,
+			int *backup_fd);
 
 //execute_with_path.c
-int		command_with_absolute_path(t_simple command, char **env);
+int		command_with_absolute_path(t_simple command, char **env,
+			int *backup_fd);
 
 //execute_without_path.c
 
 int		command_without_path(t_shell *minishell, t_simple command,
-			char **env_array);
+			char **env_array, int *backup_fd);
 
 //execution.c
-int		execution(char **command_path, t_simple command, char **env);
+int		execution(char **command_path, t_simple command, char **env,
+			int *backup_fd);
 int		file_redirection(int *stdin_backup, int *stdout_backup,
 			t_simple command);
 void	restore_file_redirection(t_simple command, int stdin_backup,
