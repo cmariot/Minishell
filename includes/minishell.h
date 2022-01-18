@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 15:24:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:32:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int		builtin(char *command, t_shell *minishell);
 int		builtin_env(t_env *env, char *first_arg);
 int		builtin_export(t_shell *minishell, char **args);
 t_env	*builtin_unset(t_env *env, char **names);
-void	builtin_exit(t_shell *minishell, char **args);
+void	builtin_exit(t_shell *minishell, char **args, int *backup_fd);
 int		builtin_pwd(t_shell *minishell, char *first_arg);
 int		builtin_cd(t_shell *minishell);
 int		builtin_echo(char **command_and_args);
@@ -139,7 +139,8 @@ void	create_pipeline(t_command_line *command_line,
 void	execute(t_shell *minishell, t_command_line *command_line);
 
 //execute_builtin.c
-int		command_is_builtin(t_shell **minishell, t_simple command);
+int		command_is_builtin(t_shell **minishell, t_simple command,
+			int *backup_fd);
 
 //execute_simple_command.c
 void	execute_simple_command(t_shell *minishell, t_simple command,

@@ -6,19 +6,20 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 15:21:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:29:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-void	execute_simple_command(t_shell *minishell, t_simple command, int *backup_fd)
+void	execute_simple_command(t_shell *minishell, t_simple command,
+		int *backup_fd)
 {
 	char	**env_array;
 
 	if (command.command_and_args == NULL)
 		return ;
-	if (command_is_builtin(&minishell, command)
+	if (command_is_builtin(&minishell, command, backup_fd)
 		!= 127)
 		return ;
 	env_array = envlist_to_array(minishell->env);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 14:01:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:35:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	exit_error_not_num(char *arg)
 void	exit_error(char *first_arg, char**args)
 {
 	if (*first_arg != '\0')
-	{
 		exit_error_not_num(args[0]);
-	}
 	else
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
@@ -33,20 +31,18 @@ void	exit_error(char *first_arg, char**args)
 	}
 }
 
-void	builtin_exit(t_shell *minishell, char **args)
+void	builtin_exit(t_shell *minishell, char **args, int *backup_fd)
 {
 	long long	exit_status;
-	char		*first_arg;
 
 	if (args[0] == NULL)
 		global_exit_status(0);
 	else
 	{
-		first_arg = args[0];
-		exit_status = ft_strtoll(first_arg, &first_arg);
+		exit_status = ft_strtoll(args[0], &(args[0]));
 		if (args[1] == NULL)
 		{
-			if (*first_arg != '\0')
+			if (args[0][0] != '\0')
 				exit_error_not_num(args[0]);
 			else
 			{
@@ -56,7 +52,9 @@ void	builtin_exit(t_shell *minishell, char **args)
 			}
 		}
 		else
-			exit_error(first_arg, args);
+			exit_error(args[0], args);
 	}
+	close(backup_fd[0]);
+	close(backup_fd[1]);
 	free_minishell(minishell);
 }

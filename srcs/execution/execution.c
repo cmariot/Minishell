@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 15:16:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:35:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /* Create a new process in which the command is execute,
  * the parent process will wait the child exit to free command_path. */
+
 int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 {
 	pid_t	pid;
