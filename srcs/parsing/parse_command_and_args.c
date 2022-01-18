@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:36:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 13:02:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:04:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ int	fill_command_and_args(t_simple *command)
 		}
 		else
 		{
-			command->command_and_args[j++]
-				= ft_strdup(command->command_array[i++]);
-			if (!command->command_and_args[j - 1])
+			command->command_and_args[j]
+				= ft_strdup(command->command_array[i]);
+			if (command->command_and_args[j] == NULL)
 				return (-1);
+			j++;
+			i++;
 		}
 	}
 	return (0);

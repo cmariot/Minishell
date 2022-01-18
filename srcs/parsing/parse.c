@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 01:52:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:05:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	check_empty_pipe(t_command_line *command_line,
 	return (0);
 }
 
+//print_command_line(command_line);
 int	parse(t_command_line *command_line, t_shell *minishell)
 {
 	if (command_line->line)
@@ -130,4 +131,3 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 	}
 	return (0);
 }
-//print_command_line(command_line);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 15:35:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:22:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,28 @@ void	exit_error(char *first_arg, char**args)
 void	builtin_exit(t_shell *minishell, char **args, int *backup_fd)
 {
 	long long	exit_status;
+	char		*first_arg;
 
-	if (args[0] == NULL)
-		global_exit_status(0);
-	else
-	{
-		exit_status = ft_strtoll(args[0], &(args[0]));
-		if (args[1] == NULL)
-		{
-			if (args[0][0] != '\0')
-				exit_error_not_num(args[0]);
-			else
-			{
-				if (exit_status > 255)
-					exit_status -= 256;
-				global_exit_status(exit_status);
-			}
-		}
-		else
-			exit_error(args[0], args);
-	}
 	close(backup_fd[0]);
 	close(backup_fd[1]);
+	if (args[0] == NULL)
+		global_exit_status(0);
+	if (args[0] == NULL)
+		free_minishell(minishell);
+	first_arg = args[0];
+	exit_status = ft_strtoll(args[0], &first_arg);
+	if (args[1] == NULL)
+	{
+		if (*first_arg != '\0')
+			exit_error_not_num(args[0]);
+		else
+		{
+			if (exit_status > 255)
+				exit_status -= 256;
+			global_exit_status(exit_status);
+		}
+	}
+	else
+		exit_error(first_arg, args);
 	free_minishell(minishell);
 }
