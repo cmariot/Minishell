@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 11:37:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:33:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 char	*new_heredoc_name(void)
 {
 	char	*name;
+	char	*str_itoa;
 	int		number;
 
 	number = 0;
-	name = ft_strjoin("heredoc_", ft_itoa(number));
-	if (name == NULL)
-		return (NULL);
-	if (access(name, F_OK) == 0)
+	while (1)
 	{
-		while (access(name, F_OK) == 0)
-		{
-			if (name)
-				free(name);
-			number++;
-			name = ft_strjoin("heredoc_", ft_itoa(number));
-			if (name == NULL)
-				return (NULL);
-		}
+		str_itoa = ft_itoa(number);
+		if (str_itoa == NULL)
+			return (NULL);
+		name = ft_strjoin("heredoc_", str_itoa);
+		free(str_itoa);
+		if (name == NULL)
+			return (NULL);
+		if (access(name, F_OK) != 0)
+			break ;
+		free(name);
+		number++;
 	}
 	return (name);
 }
@@ -45,27 +45,24 @@ int	heredoc_error(void)
 int	create_heredoc(char *file, char *limiter)
 {
 	int		fd;
-	char	*limiter_with_bn;
 	char	*line;
 
-	if (file == NULL)
-		return (heredoc_error());
+	if (file == NULL || limiter == NULL)
+		return (-1);
 	fd = open(file, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
 	if (fd == -1)
 		return (heredoc_error());
-	limiter_with_bn = ft_strjoin(limiter, "\n");
-	if (limiter_with_bn == NULL)
-		return (-1);
 	while (1)
 	{
 		ft_putstr_fd("heredoc ➤ ", STDOUT);
-		line = get_next_line(STDIN);
-		if (ft_strcmp(line, limiter_with_bn) == 0)
+		line = gnl_without_bn(STDIN);
+		if (ft_strcmp(line, limiter) == 0)
 			break ;
 		ft_putstr_fd(line, fd);
+		ft_putstr_fd("\n", fd);
 		free(line);
 	}
 	free(line);
-	free(limiter_with_bn);
-	return (fd);
+	close(fd);
+	return (0);
 }
