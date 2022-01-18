@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:36:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 12:33:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 13:02:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,21 @@ int	fill_command_and_args(t_simple *command)
 
 	i = 0;
 	j = 0;
-	if (command->command_array[i] != NULL)
+	while (command->command_array[i] != NULL)
 	{
-		while (command->command_array[i])
+		if (is_redirection(command->command_array[i]))
 		{
-			if (is_redirection(command->command_array[i]))
-			{
-				if (command->command_array[i + 1] != NULL)
-					i += 2;
-				else if (command->command_array[i + 1] == NULL)
-					return (-1);
-			}
-			else
-				command->command_and_args[j++]
-					= ft_strdup(command->command_array[i++]);
+			if (command->command_array[i + 1] != NULL)
+				i += 2;
+			else if (command->command_array[i + 1] == NULL)
+				return (-1);
+		}
+		else
+		{
+			command->command_and_args[j++]
+				= ft_strdup(command->command_array[i++]);
+			if (!command->command_and_args[j - 1])
+				return (-1);
 		}
 	}
 	return (0);
@@ -52,9 +53,7 @@ int	get_command_and_args_len(char **command_array)
 			if (command_array[i + 1] != NULL)
 				i += 2;
 			else if (command_array[i + 1] == NULL)
-			{
 				return (len + 1);
-			}
 		}
 		else
 		{

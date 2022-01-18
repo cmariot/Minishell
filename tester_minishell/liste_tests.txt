@@ -1,3 +1,26 @@
+#Test des erreurs de syntaxe
+echo |
+echo >
+echo <
+echo >>
+echo <<
+>|
+<|
+|<
+|>
+ls >
+cat <
+ls -la | wc -l |
+ls -la | wc -l >
+echo | >>
+echo << |
+|
+<
+>
+<<
+>>
+< | lol
+#Test de base
 /bin/ls
 
         
@@ -5,8 +28,6 @@
 					      
 /bin/ls -la
 /bin/ls trucquinexistepas
-
-#Syntax error
 echo $USER""
 echo $USER"" 
 echo $USER ''

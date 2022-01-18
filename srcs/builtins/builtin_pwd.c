@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 17:12:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:28:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	builtin_pwd(t_shell *minishell, char *first_arg)
 	else
 	{
 		pwd = getcwd(NULL, 255);
+		if (!pwd)
+			return (1);
 		ft_putstr(pwd);
 		ft_putchar('\n');
 		free(pwd);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 08:21:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:19:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+# define NO_SUCH_FILE 0
+# define NOT_A_DIR 1 
+# define PERMISSION 2
+# define INVALID_OPTION 3
 
 //Liste chainée dans laquelle on sauvegarde le char **env
 typedef struct s_env {

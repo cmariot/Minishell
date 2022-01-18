@@ -6,16 +6,11 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/17 21:25:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:19:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#define NO_SUCH_FILE 0
-#define NOT_A_DIR 1 
-#define PERMISSION 2
-#define INVALID_OPTION 3
 
 int	cd_error(int error_id, char *directory)
 {

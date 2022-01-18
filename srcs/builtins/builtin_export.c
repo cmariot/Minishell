@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/17 21:23:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:27:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void	add_to_env(t_shell *minishell, t_env *env, char *name, char *value)
 	t_env	*tmp;
 
 	if (minishell->env == NULL)
-	{
 		minishell->env = ft_lstnew_env(name, value);
-	}
 	else
 	{
 		tmp = env;

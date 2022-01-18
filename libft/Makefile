@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/17 22:22:48 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/18 12:34:08 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCS	= ft_atoi.c \
 		  ft_isascii.c \
 		  ft_isdigit.c \
 		  ft_isprint.c \
+		  ft_join_array.c \
 		  ft_memccpy.c \
 		  ft_memchr.c \
 		  ft_memcmp.c \
