@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 15:32:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:55:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int		execution(char **command_path, t_simple command, char **env,
 int		file_redirection(int *stdin_backup, int *stdout_backup,
 			t_simple command);
 void	restore_file_redirection(t_simple command, int stdin_backup,
-			int stdout_backup, bool del_heredoc);
+			int stdout_backup);
 
 // check quote
 int		check_quote(char *line);

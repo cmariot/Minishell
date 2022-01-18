@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 15:08:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:03:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ int	input_redirection(t_simple command)
 	if (command.number_of_redirections)
 	{
 		last_redir_index = command.number_of_redirections - 1;
-		while (last_redir_index >= 0
+		while (last_redir_index > 0
 			&& ft_strcmp(command.redir[last_redir_index].redir_type, "<<")
 			&& ft_strcmp(command.redir[last_redir_index].redir_type, "<"))
 			last_redir_index--;
 		i = 0;
-		while (i < command.number_of_redirections - 1)
+		while (i < command.number_of_redirections)
 		{
 			if (do_input_redirection(command.redir[i],
 					last_redir_index, i) == 1)
@@ -105,7 +105,7 @@ int	output_redirection(t_simple command)
 	if (command.number_of_redirections)
 	{
 		last_redir_index = command.number_of_redirections - 1;
-		while (last_redir_index >= 0
+		while (last_redir_index > 0
 			&& ft_strcmp(command.redir[last_redir_index].redir_type, ">>")
 			&& ft_strcmp(command.redir[last_redir_index].redir_type, ">"))
 			last_redir_index--;

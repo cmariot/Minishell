@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 14:42:04 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 14:43:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:16:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,18 @@ int	file_redirection(int *stdin_backup, int *stdout_backup,
 }
 
 void	restore_file_redirection(t_simple command, int stdin_backup,
-		int stdout_backup, bool del_heredoc)
+		int stdout_backup)
 {
 	size_t	i;
 
 	if (command.number_of_redirections == 0)
 		return ;
 	i = 0;
-	if (del_heredoc == TRUE)
+	while (i < command.number_of_redirections)
 	{
-		while (i < command.number_of_redirections)
-		{
-			if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
-				unlink(command.redir[i].filename);
-			i++;
-		}
+		if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
+			unlink(command.redir[i].filename);
+		i++;
 	}
 	dup2(stdin_backup, STDIN);
 	dup2(stdout_backup, STDOUT);
