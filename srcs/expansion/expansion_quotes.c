@@ -6,23 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:11:04 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/15 13:31:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:59:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	remove_closing_quote(char *str, size_t j)
-{
-	while (str[j + 1] != '\0')
-	{
-		str[j] = str[j + 1];
-		j++;
-	}
-	str[j] = '\0';
-}
-
-void	remove_opening_quote(char *str, size_t j)
+void	remove_quote(char *str, size_t j)
 {
 	while (str[j + 1] != '\0')
 	{
@@ -43,15 +33,13 @@ void	remove_quotes_in_str(char *str)
 		if (str[i] == '"' || str[i] == '\'')
 		{
 			quote_type = str[i];
-			remove_opening_quote(str, i);
+			remove_quote(str, i);
 			while (str[i] != quote_type && str[i])
 				i++;
 			if (i == 0 && str[i + 1] == '\0')
-			{
 				str[i] = 32;
-			}
 			else
-				remove_closing_quote(str, i);
+				remove_quote(str, i);
 			i--;
 		}
 		i++;

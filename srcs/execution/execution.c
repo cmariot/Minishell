@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 01:50:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:34:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ void	restore_file_redirection(t_simple command, int stdin_backup,
 	while (i < command.number_of_redirections)
 	{
 		if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
-		{
 			unlink(command.redir[i].filename);
-		}
 		i++;
 	}
-	dup2(stdin_backup, 0);
-	dup2(stdout_backup, 1);
+	dup2(stdin_backup, STDIN);
+	dup2(stdout_backup, STDOUT);
 	close(stdin_backup);
 	close(stdout_backup);
 }
@@ -53,9 +51,7 @@ int	execution(char **command_path, t_simple command, char **env)
 	file_redirection(&stdin_backup, &stdout_backup, command);
 	pid = fork();
 	if (pid < 0)
-		ft_putstr_fd("Error, fork() failed.\n", 2);
-	if (pid < 0)
-		return (1);
+		return (write(2, "minishell: fork failed.\n", 24));
 	else if (pid == 0)
 	{
 		status = execve(*command_path,

@@ -6,19 +6,39 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:13 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 14:12:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:10:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	replace_tilde(char **str, char **home)
+{
+	size_t	size;
+	char	*path;
+	char	*new_path;
+
+	size = ft_strlen(*str) - 1;
+	path = ft_substr(*str, 1, size);
+	if (!path)
+	{
+		free(home);
+		return (1);
+	}
+	new_path = ft_strjoin(*home, path);
+	free(path);
+	free(*home);
+	if (!new_path)
+		return (1);
+	free(*str);
+	*str = new_path;
+	return (0);
+}
+
 int	expand_tilde(char **command_array, t_env *env)
 {
 	size_t	i;
 	char	*home;
-	char	*path;
-	char	*new_path;
-	size_t	size;
 
 	i = 0;
 	while (command_array[i] != NULL)
@@ -26,15 +46,10 @@ int	expand_tilde(char **command_array, t_env *env)
 		if (command_array[i][0] == '~')
 		{
 			home = get_env_value("HOME", env);
-			size = ft_strlen(command_array[i]) - 1;
-			path = ft_substr(command_array[i], 1, size);
-			new_path = ft_strjoin(home, path);
-			if (path)
-				free(path);
-			if (home)
-				free(home);
-			free(command_array[i]);
-			command_array[i] = new_path;
+			if (!home)
+				return (1);
+			if (replace_tilde(&(command_array[i]), &home))
+				return (1);
 		}
 		i++;
 	}

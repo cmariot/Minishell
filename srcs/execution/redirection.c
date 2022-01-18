@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 08:34:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:57:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ int	input_redirection(t_simple command)
 		while (ft_strcmp(command.redir[last_redir_index].redir_type, "<<")
 			&& ft_strcmp(command.redir[last_redir_index].redir_type, "<")
 			&& last_redir_index >= 0)
-		{
 			last_redir_index--;
-		}
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
@@ -109,9 +107,7 @@ int	output_redirection(t_simple command)
 		while (ft_strcmp(command.redir[last_redir_index].redir_type, ">>")
 			&& ft_strcmp(command.redir[last_redir_index].redir_type, ">")
 			&& last_redir_index >= 0)
-		{
 			last_redir_index--;
-		}
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
