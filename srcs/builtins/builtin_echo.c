@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 10:35:53 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/14 16:13:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:02:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	builtin_echo(char **command_and_args)
 	size_t	last_index;
 
 	if (*command_and_args == NULL)
-		return (print_backslash_n());
+		return (global_exit_status(print_backslash_n()));
 	n_option = FALSE;
 	while (*command_and_args != NULL
 		&& check_n_option(*command_and_args, &n_option) == TRUE)
@@ -72,5 +72,5 @@ int	builtin_echo(char **command_and_args)
 	}
 	if (n_option == FALSE)
 		ft_putchar('\n');
-	return (0);
+	return (global_exit_status(0));
 }

@@ -6,20 +6,23 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:07:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 01:45:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:06:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_redirection(int *fd_backup, t_simple command)
+int	builtin_redirection(int *fd_backup, t_simple command)
 {
 	if (command.number_of_redirections == 0)
-		return ;
+		return (0);
 	fd_backup[0] = dup(STDIN);
 	fd_backup[1] = dup(STDOUT);
-	input_redirection(command);
-	output_redirection(command);
+	if (input_redirection(command) == 1)
+		return (global_exit_status(1));
+	if (output_redirection(command) == 1)
+		return (global_exit_status(1));
+	return (0);
 }
 
 void	restore_builtin_redirection(t_simple command,
@@ -43,25 +46,23 @@ int	command_is_builtin(t_shell **minishell, t_simple command)
 {
 	int		fd_backup[2];
 
-	builtin_redirection(fd_backup, command);
+	if (builtin_redirection(fd_backup, command))
+		return (0);
 	if (ft_strcmp(command.command_and_args[0], "cd") == 0)
-		global_exit_status(builtin_cd(*minishell));
+		builtin_cd(*minishell);
 	else if (ft_strcmp(command.command_and_args[0], "echo") == 0)
-		global_exit_status(builtin_echo(command.command_and_args + 1));
+		builtin_echo(command.command_and_args + 1);
 	else if (ft_strcmp(command.command_and_args[0], "exit") == 0)
 		builtin_exit(*minishell, command.command_and_args + 1);
 	else if (ft_strcmp(command.command_and_args[0], "pwd") == 0)
-		global_exit_status(builtin_pwd(*minishell,
-				command.command_and_args[1]));
+		builtin_pwd(*minishell, command.command_and_args[1]);
 	else if (ft_strcmp(command.command_and_args[0], "env") == 0)
-		global_exit_status(builtin_env((*minishell)->env,
-				command.command_and_args[1]));
+		builtin_env((*minishell)->env, command.command_and_args[1]);
 	else if (ft_strcmp(command.command_and_args[0], "unset") == 0)
 		(*minishell)->env = builtin_unset((*minishell)->env,
 				command.command_and_args + 1);
 	else if (ft_strcmp(command.command_and_args[0], "export") == 0)
-		global_exit_status(builtin_export(*minishell,
-				command.command_and_args + 1));
+		builtin_export(*minishell, command.command_and_args + 1);
 	else
 		return (its_not_builtin(command, fd_backup));
 	restore_builtin_redirection(command, fd_backup[0], fd_backup[1]);

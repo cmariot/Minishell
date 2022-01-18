@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 12:28:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 13:59:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	error_invalid_option(void)
 {
 	ft_putstr_fd("minishell: pwd: invalid option\n", 2);
-	return (2);
+	return (global_exit_status(2));
 }
 
 int	builtin_pwd(t_shell *minishell, char *first_arg)
@@ -35,16 +35,16 @@ int	builtin_pwd(t_shell *minishell, char *first_arg)
 		ft_putstr(pwd);
 		ft_putchar('\n');
 		free(pwd);
-		return (0);
+		return (global_exit_status(0));
 	}
 	else
 	{
 		pwd = getcwd(NULL, 255);
 		if (!pwd)
-			return (1);
+			return (global_exit_status(1));
 		ft_putstr(pwd);
 		ft_putchar('\n');
 		free(pwd);
-		return (0);
+		return (global_exit_status(0));
 	}
 }

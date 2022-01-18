@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 12:54:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:09:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,20 @@ char	*colorized_prompt(char **prompt)
 {
 	char	*tmp;
 
+	if (ft_strcmp(*prompt, "/") == 0)
+	{
+		free(*prompt);
+		*prompt = ft_strdup("/ ➤ ");
+		if (*prompt == NULL)
+			return (NULL);
+	}
 	tmp = ft_strjoin("\033[1;36m", *prompt);
 	if (!tmp)
 		return (*prompt);
 	free(*prompt);
 	*prompt = ft_strjoin(tmp, "\033[0m");
 	if (!(*prompt))
-		return (tmp);
+		return (NULL);
 	free(tmp);
 	return (*prompt);
 }
@@ -73,16 +80,13 @@ char	*get_prompt(void)
 
 	pwd = getcwd(NULL, 255);
 	if (pwd == NULL)
-		return (ft_strdup("\033[1;36mMinishell ➤ \033[0m"));
+		return (NULL);
 	cur_dir_len = current_directory_len(pwd);
 	if (cur_dir_len == 0)
-	{
-		free(pwd);
-		return (ft_strdup("\033[1;36m/ ➤ \033[0m"));
-	}
+		return (colorized_prompt(&pwd));
 	current_directory = ft_calloc(cur_dir_len + 1, sizeof(char));
 	if (!current_directory)
-		return (ft_strdup("\033[1;36mMinishell ➤ \033[0m"));
+		return (NULL);
 	pwd_last_index = ft_strlen(pwd) - 1;
 	while (cur_dir_len - 1 >= 0)
 		current_directory[cur_dir_len-- - 1] = pwd[pwd_last_index--];

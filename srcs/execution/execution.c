@@ -6,19 +6,22 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 11:34:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 13:51:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	file_redirection(int *stdin_backup, int *stdout_backup,
+int	file_redirection(int *stdin_backup, int *stdout_backup,
 		t_simple command)
 {
 	*stdin_backup = dup(STDIN);
 	*stdout_backup = dup(STDOUT);
-	input_redirection(command);
-	output_redirection(command);
+	if (input_redirection(command) == 1)
+		return (1);
+	if (output_redirection(command) == 1)
+		return (1);
+	return (0);
 }
 
 void	restore_file_redirection(t_simple command, int stdin_backup,
@@ -48,7 +51,8 @@ int	execution(char **command_path, t_simple command, char **env)
 	int		stdin_backup;
 	int		stdout_backup;
 
-	file_redirection(&stdin_backup, &stdout_backup, command);
+	if (file_redirection(&stdin_backup, &stdout_backup, command))
+		return (1);
 	pid = fork();
 	if (pid < 0)
 		return (write(2, "minishell: fork failed.\n", 24));

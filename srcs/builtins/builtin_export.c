@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 12:27:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 14:04:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	builtin_export(t_shell *minishell, char **args)
 	{
 		name_len = get_name_len(args, i);
 		if (name_len == -1)
-			return (1);
+			return (global_exit_status(1));
 		name = ft_substr(args[i], 0, name_len);
 		if (name)
 		{
@@ -96,5 +96,5 @@ int	builtin_export(t_shell *minishell, char **args)
 		}
 		i++;
 	}
-	return (0);
+	return (global_exit_status(0));
 }

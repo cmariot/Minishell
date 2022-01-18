@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 11:57:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 13:49:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ int	input_redirection(t_simple command)
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
-			do_input_redirection(command.redir[i],
-				last_redir_index, i);
+			if (do_input_redirection(command.redir[i],
+					last_redir_index, i) == 1)
+				return (1);
 			i++;
 		}
 	}
@@ -111,7 +112,9 @@ int	output_redirection(t_simple command)
 		i = 0;
 		while (i < command.number_of_redirections)
 		{
-			do_output_redirection(command.redir[i], i, last_redir_index);
+			if (do_output_redirection(command.redir[i], i,
+					last_redir_index) == 1)
+				return (1);
 			i++;
 		}
 	}
