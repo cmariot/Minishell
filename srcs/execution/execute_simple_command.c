@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 17:37:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:52:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	execute_simple_command(t_shell *minishell, t_simple command,
 
 	if (command.command_and_args == NULL)
 		return ;
-	if (file_redirection(command) == 1)
+	if (file_redirection(command))
 		return ;
 	if (command_is_builtin(&minishell, command, backup_fd) != 127)
 	{

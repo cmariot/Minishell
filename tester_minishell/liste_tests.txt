@@ -26,6 +26,8 @@ echo << |
         
 				
 					      
+/ls
+./ls
 /bin/ls -la
 /bin/ls trucquinexistepas
 echo $USER""
