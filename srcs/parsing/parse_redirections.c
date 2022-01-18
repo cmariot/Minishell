@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 01:41:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/18 08:18:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,24 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array)
 			(*array_index)++;
 	if (array[(*array_index) + 1] == NULL)
 		return (0);
-	else
+	if (array[*array_index])
+		redir->redir_type = ft_strdup(array[*array_index]);
+	if (array[(*array_index) + 1])
 	{
-		if (array[*array_index])
-			redir->redir_type = ft_strdup(array[*array_index]);
-		if (array[(*array_index) + 1])
+		if (ft_strcmp(redir->redir_type, "<<") == 0)
 		{
-			if (ft_strcmp(redir->redir_type, "<<") == 0)
-			{
-				redir->filename = new_heredoc_name();
-				create_heredoc(redir->filename, TRUE,
-					array[(*array_index) + 1]);
-			}
-			else
-				redir->filename = ft_strdup(array[(*array_index) + 1]);
-			*array_index += 2;
+			redir->filename = new_heredoc_name();
+			if (create_heredoc(redir->filename,
+					array[(*array_index) + 1]) == -1)
+				return (-1);
 		}
 		else
-			*array_index += 1;
-		return (0);
+			redir->filename = ft_strdup(array[(*array_index) + 1]);
+		*array_index += 2;
 	}
+	else
+		*array_index += 1;
+	return (0);
 }
 
 //pour chaque redirection d'une commande simple, remplir la structure
