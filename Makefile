@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/18 15:20:26 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/19 08:50:52 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ EXIT		= exit/free_minishell.c \
 EXPANSION	= expansion/expansion.c \
 			  expansion/expansion_env.c \
 			  expansion/expansion_quotes.c \
+			  expansion/variable_declaration.c \
 			  expansion/expansion_tilde.c
 
 INIT		= init/init_minishell.c \

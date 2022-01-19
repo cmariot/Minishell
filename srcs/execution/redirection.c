@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 16:03:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/19 08:46:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	redirection_error(char *file)
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
-	return (1);
+	return (global_exit_status(1));
 }
 
 int	do_input_redirection(t_redir redir, int last_redir_index,
