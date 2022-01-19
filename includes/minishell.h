@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/19 09:09:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/19 14:42:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,10 @@ int		expansion(t_command_line *command_line, t_env *env);
 int		expand_tilde(char **command_array, t_env *env);
 void	expand_env_variable(char **splitted_line, t_env *env);
 void	quotes_removal(char **array);
-void	variable_declaration(char **command_array, t_env *env);
+
+int		error_invalid_identifier(char **args, size_t i);
+void	add_to_env(t_shell *minishell, t_env *env, char *name, char *value);
+int		get_name_len(char **args, size_t i);
 
 // signal.c
 int		signal_catcher(int status);

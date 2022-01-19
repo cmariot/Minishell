@@ -289,5 +289,5 @@ cd ..
 cd ../Minishell
 cd .
 #fork concurrentiel
-sleep 3 | echo prout #prout doit s'afficher direct
-rm f1
+sleep 3 | echo prout #KO :( prout doit s'afficher direct
+rm f1 #OK, f1 ne peut pas etre suprime deux fois ;)

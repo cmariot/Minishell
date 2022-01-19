@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 14:04:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/19 15:37:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,17 @@ int	get_name_len(char **args, size_t i)
 	return (j);
 }
 
+int	export_without_args(t_env *env)
+{
+	while (env != NULL)
+	{
+		if (env->name && env->value)
+			printf("declare -x %s=\"%s\"\n", env->name, env->value);
+		env = env->next;
+	}
+	return (global_exit_status(0));
+}
+
 int	builtin_export(t_shell *minishell, char **args)
 {
 	size_t	i;
@@ -78,22 +89,31 @@ int	builtin_export(t_shell *minishell, char **args)
 	char	*value;
 
 	i = 0;
+	if (args[i] == NULL)
+		return (export_without_args(minishell->env));
 	while (args[i] != NULL)
 	{
 		name_len = get_name_len(args, i);
 		if (name_len == -1)
 			return (global_exit_status(1));
-		name = ft_substr(args[i], 0, name_len);
-		if (name)
+		else if (name_len == 0)
 		{
-			value = ft_strdup(args[i] + name_len + 1);
-			if (value)
-			{
-				add_to_env(minishell, minishell->env, name, value);
-				free(value);
-			}
-			free(name);
+			i++;
+			continue ;
 		}
+		name = ft_substr(args[i], 0, name_len);
+		if (name == NULL)
+			return (global_exit_status(1));
+		value = ft_strdup(args[i] + name_len + 1);
+		if (!value)
+		{
+			free(name);
+			i++;
+			continue ;
+		}
+		add_to_env(minishell, minishell->env, name, value);
+		free(value);
+		free(name);
 		i++;
 	}
 	return (global_exit_status(0));
