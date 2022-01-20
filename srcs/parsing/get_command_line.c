@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:08:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 14:13:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/20 20:11:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*colorized_prompt(char **prompt)
 	if (!tmp)
 		return (*prompt);
 	free(*prompt);
-	*prompt = ft_strjoin(tmp, "\033[0m");
+	*prompt = ft_strjoin(tmp, "\033[0m\n");
 	if (!(*prompt))
 		return (NULL);
 	free(tmp);
@@ -108,7 +108,7 @@ void	get_command_line(t_shell *minishell, t_command_line *command_line)
 	free(prompt);
 	if (!minishell->command_line.line)
 	{
-		printf("exit\n");
+		ft_putstr("exit\n");
 		ft_lstclear_env(&minishell->env, free);
 		close(0);
 		close(1);
