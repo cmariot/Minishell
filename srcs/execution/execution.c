@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 15:54:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/20 16:20:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	if (pid < 0)
@@ -27,14 +26,18 @@ int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 	{
 		close(backup_fd[0]);
 		close(backup_fd[1]);
-		status = execve(*command_path, command.command_and_args, env);
-		return (status);
+		execve(*command_path, command.command_and_args, env);
 	}
-	waitpid(pid, &status, 0);
+	waitpid(pid, &pid, 0);
+	if (WIFEXITED(pid))
+		global_exit_status(WEXITSTATUS(pid));
+	if (WIFSIGNALED(pid))
+	{
+		global_exit_status(WTERMSIG(pid));
+		if (return_global_exit_status() != 131)
+			global_exit_status(return_global_exit_status() + 128);
+	}
 	if (*command_path != NULL)
 		free(*command_path);
-	global_exit_status(0);
-	if (WIFEXITED(status))
-		global_exit_status(WEXITSTATUS(status));
 	return (0);
 }

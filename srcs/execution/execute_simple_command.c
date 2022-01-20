@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 17:52:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/20 14:36:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ void	execute_simple_command(t_shell *minishell, t_simple command,
 		command_not_found(command.command_and_args[0]);
 	restore_file_redirection(command, backup_fd[STDIN], backup_fd[STDOUT]);
 	ft_free_array(env_array);
+	return ;
 }

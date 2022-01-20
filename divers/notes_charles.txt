@@ -1,10 +1,9 @@
 A FAIRE :
 ---------
 
-- [ ] Forks concurrentiels : cat | echo test
 - [ ] Verifier le bon fonctionnement des signaux, supprimer le buffer de readline ? + Signaux dans cat / heredoc
-
 - [ ] Verifier leaks, segfault, protections de malloc ...
 - [ ] Test de toutes les fonctionnalites, recherche de bugs et verifications : trouver ce qui doit etre corrige.
+
 - [ ] Ajouter seulement les fichiers necessaires au repo de rendu
 - [ ] Push final.

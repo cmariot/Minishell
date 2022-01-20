@@ -6,11 +6,37 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:58:50 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/30 13:59:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:22:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// If the element name is in the linked list env, change its value,
+// else add name and value
+void	add_to_env(t_shell *minishell, t_env *env, char *name, char *value)
+{
+	t_env	*tmp;
+
+	if (minishell->env == NULL)
+		minishell->env = ft_lstnew_env(name, value);
+	else
+	{
+		tmp = env;
+		while (env)
+		{
+			if (ft_strcmp(env->name, name) == 0)
+			{
+				free(env->value);
+				env->value = ft_strdup(value);
+				return ;
+			}
+			env = env->next;
+		}
+		env = tmp;
+		ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
+	}
+}
 
 // Return the size of the linked list env
 int	ft_envlstsize(t_env *env)

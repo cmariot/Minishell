@@ -6,37 +6,11 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/19 15:37:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:21:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// If the element name is in the linked list env, change its value,
-// else add name and value
-void	add_to_env(t_shell *minishell, t_env *env, char *name, char *value)
-{
-	t_env	*tmp;
-
-	if (minishell->env == NULL)
-		minishell->env = ft_lstnew_env(name, value);
-	else
-	{
-		tmp = env;
-		while (env)
-		{
-			if (ft_strcmp(env->name, name) == 0)
-			{
-				free(env->value);
-				env->value = ft_strdup(value);
-				return ;
-			}
-			env = env->next;
-		}
-		env = tmp;
-		ft_lstadd_back_env(&env, ft_lstnew_env(name, value));
-	}
-}
 
 int	error_invalid_identifier(char **args, size_t i)
 {
@@ -81,12 +55,30 @@ int	export_without_args(t_env *env)
 	return (global_exit_status(0));
 }
 
+int	export(t_shell *minishell, char **args, size_t i, size_t name_len)
+{
+	char	*name;
+	char	*value;
+
+	name = ft_substr(args[i], 0, name_len);
+	if (name == NULL)
+		return (global_exit_status(1));
+	value = ft_strdup(args[i] + name_len + 1);
+	if (!value)
+	{
+		free(name);
+		return (0);
+	}
+	add_to_env(minishell, minishell->env, name, value);
+	free(value);
+	free(name);
+	return (0);
+}
+
 int	builtin_export(t_shell *minishell, char **args)
 {
 	size_t	i;
 	int		name_len;
-	char	*name;
-	char	*value;
 
 	i = 0;
 	if (args[i] == NULL)
@@ -101,19 +93,8 @@ int	builtin_export(t_shell *minishell, char **args)
 			i++;
 			continue ;
 		}
-		name = ft_substr(args[i], 0, name_len);
-		if (name == NULL)
-			return (global_exit_status(1));
-		value = ft_strdup(args[i] + name_len + 1);
-		if (!value)
-		{
-			free(name);
-			i++;
-			continue ;
-		}
-		add_to_env(minishell, minishell->env, name, value);
-		free(value);
-		free(name);
+		if (export(minishell, args, i, name_len) == 1)
+			return (1);
 		i++;
 	}
 	return (global_exit_status(0));
