@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 19:13:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:47:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,16 @@ void	pipe_exit_status(int pid)
 /* For the last pipe, STDIN is already redirect, so just fork.
  * In the child, execute command and exit.
  * In the parent, restore the file_descriptor */
-int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd, int pid)
+int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 {
 	execute_simple_command(minishell, command, backup_fd);
-	return (pid);
+	return (command.pid);
 }
 
 /* For the firsts pipes, create a pipe and fork the program
  * In the child redirect output into the pipe, execute command and exit.
  * In the parent, close the fd and redirect STDIN. */
-void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd,
-	int pid)
+void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd)
 {
 	int		pipe_fd[2];
 
@@ -51,10 +50,10 @@ void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd,
 		ft_putstr_fd("minishell: error: pipe failed.\n", 2);
 		return ;
 	}
-	pid = fork();
-	if (pid == -1)
+	command.pid = fork();
+	if (command.pid == -1)
 		return (fork_error());
-	else if (pid == 0)
+	else if (command.pid == 0)
 	{
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT);
@@ -75,28 +74,23 @@ void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd,
 void	create_pipeline(t_command_line *command_line, t_shell *minishell,
 		int *backup_fd)
 {
-	int		*pid;
 	size_t	i;
 
-	pid = ft_calloc(sizeof(int), command_line->number_of_simple_commands);
-	if (!pid)
-		return ;
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
 		if (i < command_line->number_of_simple_commands - 1)
-			firsts_pipes(minishell, command_line->command[i],
-				backup_fd, pid[i]);
+			firsts_pipes(minishell, command_line->command[i], backup_fd);
 		else
-			last_pipe(minishell, command_line->command[i], backup_fd, pid[i]);
+			last_pipe(minishell, command_line->command[i], backup_fd);
 		i++;
 	}
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
-		waitpid(pid[i], &pid[i], 0);
-		pipe_exit_status(pid[i]);
+		waitpid(command_line->command[i].pid,
+			&(command_line->command[i].pid), 0);
+		pipe_exit_status(command_line->command[i].pid);
 		i++;
 	}
-	free(pid);
 }
