@@ -1,13 +1,11 @@
 A FAIRE :
 ---------
 
-- [ ] ctrl-C apres ls affiche \n en trop
+- [ ] ctrl-C apres ls affiche \n en trop, de meme pour ctrl-D exit
 - [ ] ctrl-\ dans cat
 - [ ] ctrl-\ dans heredoc
 - [ ] ctrl-C dans heredoc
 - [ ] ctrl-D dans heredoc
 - [ ] penser a unlink fichier heredoc en cas de signal !
-- [ ] ls -la >>>>>> lol SEGFAULT
-- [ ] norme
 - [ ] Ajouter seulement les fichiers necessaires au repo de rendu
 - [ ] Push final.
