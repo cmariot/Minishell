@@ -291,3 +291,10 @@ cd .
 #fork concurrentiel
 sleep 3 | echo prout #KO :( prout doit s'afficher direct
 rm f1 #OK, f1 ne peut pas etre suprime deux fois ;)
+ls -la | grep srcs | wc -l
+ls -la > file1
+cat < Makefile | ls -la
+cat < Makefile | grep srcs | wc -l
+cat < Makefile > file1
+cat < file1 | grep a | wc -l > file2
+

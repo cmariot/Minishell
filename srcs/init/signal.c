@@ -6,33 +6,43 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/20 20:19:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 10:51:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//ctrl-C normal
 void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
+//	char	*prompt;
+
 	(void)info;
 	(void)secret;
 	if (sig == SIGINT)
 	{
-		write(0, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		dprintf(2, "Hello 2 !\n");
+		write(1, "\n", 1);
+	//	rl_on_new_line();
+	//	rl_replace_line("", 0);
+	//	prompt = get_prompt();
+	//	if (!prompt)
+	//		exit(1);
+	//	rl_redisplay();
+	//	ft_putstr(prompt);
 	}
 }
 
+//ctrl-C cat
 void	ft_handler2(int sig, siginfo_t *info, void *secret)
 {
 	(void)info;
 	(void)secret;
 	if (sig == SIGINT)
 	{
-		write(0, "\n", 1);
-		rl_replace_line("", 0);
+		dprintf(2, "Hello 1 !\n");
+		write(1, "\n", 1);
+	//	rl_replace_line("", 0);
 	}
 }
 
@@ -45,6 +55,7 @@ int	signal_catcher(int status)
 	struct sigaction	act;
 	int					sig;
 
+	dprintf(2, "Test\n");
 	new_act.sa_sigaction = ft_handler;
 	sigemptyset(&new_act.sa_mask);
 	sigemptyset(&act.sa_mask);
