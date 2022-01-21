@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 14:18:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 15:45:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,22 @@ void	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 		ft_putstr_fd("minishell: error: pipe failed.\n", 2);
 		return ;
 	}
+	command.pid = fork();
+	if (command.pid == -1)
+		return (fork_error());
+	else if (command.pid == 0)
+	{
+		execute_simple_command(minishell, command, backup_fd);
+		close(command.pipe_fd[0]);
+		close(command.pipe_fd[1]);
+		close(backup_fd[0]);
+		close(backup_fd[1]);
+		free_minishell(minishell);
+		exit(return_global_exit_status());
+	}
 	close(command.pipe_fd[1]);
 	dup2(command.pipe_fd[0], STDIN);
 	close(command.pipe_fd[0]);
-	execute_simple_command(minishell, command, backup_fd);
 }
 
 /* For the firsts pipes, create a pipe and fork the program
