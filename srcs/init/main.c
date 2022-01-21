@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **env)
 		init_minishell(&minishell, env);
 		while (1)
 		{
-		//	signal_catcher(0);
+			signal_catcher(0);
 			get_command_line(&minishell, &minishell.command_line);
 			if (parse(&minishell.command_line, &minishell) == -1)
 			{

@@ -15,21 +15,17 @@
 //ctrl-C normal
 void	ft_handler(int sig, siginfo_t *info, void *secret)
 {
-//	char	*prompt;
+	char	*prompt;
 
 	(void)info;
 	(void)secret;
 	if (sig == SIGINT)
 	{
-		dprintf(2, "Hello 2 !\n");
 		write(1, "\n", 1);
-	//	rl_on_new_line();
-	//	rl_replace_line("", 0);
-	//	prompt = get_prompt();
-	//	if (!prompt)
-	//		exit(1);
-	//	rl_redisplay();
-	//	ft_putstr(prompt);
+		prompt = get_prompt();
+		if (!prompt)
+			exit(1);
+		ft_putstr(prompt);
 	}
 }
 
@@ -40,9 +36,7 @@ void	ft_handler2(int sig, siginfo_t *info, void *secret)
 	(void)secret;
 	if (sig == SIGINT)
 	{
-		dprintf(2, "Hello 1 !\n");
 		write(1, "\n", 1);
-	//	rl_replace_line("", 0);
 	}
 }
 
@@ -55,7 +49,6 @@ int	signal_catcher(int status)
 	struct sigaction	act;
 	int					sig;
 
-	dprintf(2, "Test\n");
 	new_act.sa_sigaction = ft_handler;
 	sigemptyset(&new_act.sa_mask);
 	sigemptyset(&act.sa_mask);
