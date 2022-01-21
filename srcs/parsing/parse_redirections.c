@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 08:18:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 19:35:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	is_redirection(char *element)
 // put the redirection values in the t_redir *redir structure
 int	fill_redirections(t_redir *redir, int *array_index, char **array)
 {
+	if (array[(*array_index) + 1] == NULL)
+		return (-1);
 	while (array[(*array_index) + 1] != NULL
 		&& is_redirection(array[*array_index]) != 1)
 			(*array_index)++;
@@ -70,10 +72,10 @@ int	fill_redirection_array(t_command_line *command_line, size_t i)
 	return (0);
 }
 
-size_t	get_number_of_redir(char **command_array)
+ssize_t	get_number_of_redir(char **command_array)
 {
-	size_t	number_of_redirections;
-	size_t	j;
+	ssize_t	number_of_redirections;
+	ssize_t	j;
 
 	number_of_redirections = 0;
 	j = 0;
@@ -81,7 +83,13 @@ size_t	get_number_of_redir(char **command_array)
 	{
 		if (is_redirection(command_array[j]) == 1)
 		{
-			number_of_redirections++;
+			if (is_redirection(command_array[j + 1]) == 1)
+			{
+				ft_putstr_fd("minishell: syntax error near redirection.\n", 2);
+				return (-1);
+			}
+			else
+				number_of_redirections++;
 		}
 		j++;
 	}
@@ -94,19 +102,22 @@ size_t	get_number_of_redir(char **command_array)
 int	parse_redirections(t_command_line *command_line)
 {
 	size_t	i;
+	ssize_t	len;
 
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
-		command_line->command[i].number_of_redirections
-			= get_number_of_redir(command_line->command[i].command_array);
-		if (command_line->command[i].number_of_redirections == 0)
+		len = get_number_of_redir(command_line->command[i].command_array);
+		if (len == -1)
+			return (-1);
+		command_line->command[i].number_of_redirections = len;
+		if (len == 0)
 		{
 			i++;
 			continue ;
 		}
-		command_line->command[i].redir = ft_calloc(sizeof(t_redir),
-				command_line->command[i].number_of_redirections + 1);
+		command_line->command[i].number_of_redirections = len;
+		command_line->command[i].redir = ft_calloc(sizeof(t_redir), len + 1);
 		if (!command_line->command[i].redir)
 			return (-1);
 		if (fill_redirection_array(command_line, i) == -1)
