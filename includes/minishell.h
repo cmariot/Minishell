@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 19:44:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 13:59:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_simple {
 	char	**command_and_args;
 	size_t	number_of_redirections;
 	int		pid;
+	int		pipe_fd[2];
 	t_redir	*redir;
 }	t_simple;
 

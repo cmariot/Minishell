@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 19:47:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 14:18:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,17 @@ void	pipe_exit_status(int pid)
 /* For the last pipe, STDIN is already redirect, so just fork.
  * In the child, execute command and exit.
  * In the parent, restore the file_descriptor */
-int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
+void	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 {
+	if (pipe(command.pipe_fd) == -1)
+	{
+		ft_putstr_fd("minishell: error: pipe failed.\n", 2);
+		return ;
+	}
+	close(command.pipe_fd[1]);
+	dup2(command.pipe_fd[0], STDIN);
+	close(command.pipe_fd[0]);
 	execute_simple_command(minishell, command, backup_fd);
-	return (command.pid);
 }
 
 /* For the firsts pipes, create a pipe and fork the program
@@ -43,9 +50,7 @@ int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
  * In the parent, close the fd and redirect STDIN. */
 void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd)
 {
-	int		pipe_fd[2];
-
-	if (pipe(pipe_fd) == -1)
+	if (pipe(command.pipe_fd) == -1)
 	{
 		ft_putstr_fd("minishell: error: pipe failed.\n", 2);
 		return ;
@@ -55,18 +60,18 @@ void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd)
 		return (fork_error());
 	else if (command.pid == 0)
 	{
-		close(pipe_fd[0]);
-		dup2(pipe_fd[1], STDOUT);
+		close(command.pipe_fd[0]);
+		dup2(command.pipe_fd[1], STDOUT);
 		execute_simple_command(minishell, command, backup_fd);
-		close(pipe_fd[1]);
+		close(command.pipe_fd[1]);
 		close(backup_fd[0]);
 		close(backup_fd[1]);
 		free_minishell(minishell);
 		exit(return_global_exit_status());
 	}
-	close(pipe_fd[1]);
-	dup2(pipe_fd[0], STDIN);
-	close(pipe_fd[0]);
+	close(command.pipe_fd[1]);
+	dup2(command.pipe_fd[0], STDIN);
+	close(command.pipe_fd[0]);
 }
 
 /* For each simple command, connect the input and the output to the pipe,
