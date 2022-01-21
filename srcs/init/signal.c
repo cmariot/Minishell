@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/21 10:51:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 18:02:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_handler(int sig, siginfo_t *info, void *secret)
 		if (!prompt)
 			exit(1);
 		ft_putstr(prompt);
+		rl_replace_line("", 0);
 	}
 }
 

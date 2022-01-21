@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 16:33:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 18:00:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	create_heredoc(char *file, char *limiter)
 	fd = open(file, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
 	if (fd == -1)
 		return (heredoc_error());
+	signal_catcher(1);
 	while (1)
 	{
 		ft_putstr_fd("heredoc ➤ ", STDOUT);
@@ -62,6 +63,7 @@ int	create_heredoc(char *file, char *limiter)
 		ft_putstr_fd("\n", fd);
 		free(line);
 	}
+	signal_catcher(0);
 	free(line);
 	close(fd);
 	return (0);

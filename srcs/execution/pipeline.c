@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 15:45:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 16:34:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	create_pipeline(t_command_line *command_line, t_shell *minishell,
 	{
 		waitpid(command_line->command[i].pid,
 			&(command_line->command[i].pid), 0);
-		pipe_exit_status(command_line->command[i].pid);
 		i++;
 	}
+	pipe_exit_status(command_line->command[i].pid);
 }
