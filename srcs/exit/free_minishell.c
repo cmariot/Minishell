@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 17:23:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:28:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	free_simple_commands(t_command_line *command_line)
 	command_line->number_of_simple_commands = 0;
 }
 
+//Free the structure but keep env, history, fd ...
 void	reset_minishell(t_command_line *command_line)
 {
 	if (command_line->line)

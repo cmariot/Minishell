@@ -6,11 +6,26 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 16:27:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:25:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	remove_heredocs(t_simple command)
+{
+	size_t	i;
+
+	if (command.number_of_redirections == 0)
+		return ;
+	i = 0;
+	while (i < command.number_of_redirections)
+	{
+		if (ft_strcmp(command.redir[i].redir_type, "<<") == 0)
+			unlink(command.redir[i].filename);
+		i++;
+	}
+}
 
 char	*new_heredoc_name(void)
 {
@@ -42,6 +57,17 @@ int	heredoc_error(void)
 	return (-1);
 }
 
+int	heredoc_return(char *file)
+{
+	if (return_global_exit_status() == 128 + SIGINT)
+	{
+		unlink(file);
+		return (-1);
+	}
+	catch_signal(COMMAND);
+	return (0);
+}
+
 int	create_heredoc(char *file, char *limiter)
 {
 	int		fd;
@@ -63,13 +89,8 @@ int	create_heredoc(char *file, char *limiter)
 		ft_putstr_fd("\n", fd);
 		free(line);
 	}
-	if (return_global_exit_status() >= 128)
-	{
-		printf("KO\n");
-		return (-1);
-	}
-	catch_signal(COMMAND);
-	free(line);
 	close(fd);
-	return (0);
+	if (line)
+		free(line);
+	return (heredoc_return(file));
 }

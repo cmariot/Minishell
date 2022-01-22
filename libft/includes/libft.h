@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 13:34:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 12:33:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:40:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,8 @@ int			ft_toupper(int c);
 /* GET NEXT LINE */
 char		*get_next_line(int fd);
 char		*gnl_without_bn(int fd);
+
+/* PRINT */
+int			print(int fd, const char *format, ...);
 
 #endif

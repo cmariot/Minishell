@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 14:36:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:13:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_simple_command(t_shell *minishell, t_simple command,
 	char	**env_array;
 
 	if (command.command_and_args == NULL)
-		return ;
+		return (remove_heredocs(command));
 	if (file_redirection(command))
 		return ;
 	if (command_is_builtin(&minishell, command, backup_fd) != 127)

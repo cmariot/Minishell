@@ -1,18 +1,7 @@
 A FAIRE :
 ---------
 
-<<<<<<< HEAD
 - [ ] ctrl-\ dans heredoc essayer de suprimer l'affichage du '^\'
-- [ ] ctrl-C dans heredoc : unlink fichier et retrourne dans le main
-- [ ] verifier exit status
-- [ ] norme
-=======
-- [ ] ctrl-C apres ls affiche \n en trop, de meme pour ctrl-D exit
-- [ ] ctrl-\ dans cat
-- [ ] ctrl-\ dans heredoc
-- [ ] ctrl-C dans heredoc
-- [ ] ctrl-D dans heredoc
-- [ ] penser a unlink fichier heredoc en cas de signal !
->>>>>>> eae5c9e7bcc9fe352920a7bba1ba1e2cb9faf5df
+- [ ] verifier les exit status signaux + exit status commandes
 - [ ] Ajouter seulement les fichiers necessaires au repo de rendu
 - [ ] Push final.

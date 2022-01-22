@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/22 16:34:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:19:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ void	heredoc_handler(int signal)
  * 3 comportements :
  *	- Interactive (prompt)
  *		ctrl-\ : do nothing
- *		ctrl-D : quit minishell (if empty prompt)
+ *		ctrl-D : eof -> if line == NULL : quit
  *		ctrl-C : show a new line with a new prompt
  *	- Blocking command (cat)
  *		ctrl-\ : quit crash
- *		ctrl-D : quit don't crash
+ *		ctrl-D : eof -> end of cat
  *		ctrl-C : quit 
  *	- Heredoc (<< eof)
  *		ctrl-\ : do nothing
- *		ctrl-D : quit heredoc but without '\n'
+ *		ctrl-D : eof -> line == NULL 
  *		ctrl-C : quit heredoc with '\n'
  */
 

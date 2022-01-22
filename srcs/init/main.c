@@ -6,11 +6,19 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 14:27:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:33:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	usage(void)
+{
+	printf("USAGE:\n");
+	printf("./minishell (for interactive mode)\n");
+	printf("./minishell -c [command] (for non-interactive mode)\n");
+	return (1);
+}
 
 /* Pour lancer minishell en mode non interactif :
  * ./minishell -c "commande a executer" */
@@ -45,9 +53,8 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc > 2 && ft_strcmp(argv[1], "-c") == 0)
 		non_interactive_mode(argv + 2, env);
-	else
+	else if (argc == 1)
 	{
-		//signal_catcher(0);
 		catch_signal(INTERACTIVE);
 		init_minishell(&minishell, env);
 		while (1)
@@ -62,5 +69,7 @@ int	main(int argc, char **argv, char **env)
 			reset_minishell(&minishell.command_line);
 		}
 	}
+	else
+		return (usage());
 	return (0);
 }
