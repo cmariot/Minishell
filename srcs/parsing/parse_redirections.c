@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 19:54:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:32:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ ssize_t	get_number_of_redir(char **command_array)
 	{
 		if (is_redirection(command_array[j]) == 1)
 		{
-			if (is_redirection(command_array[j + 1]) == 1)
+			if (is_redirection(command_array[j + 1]) == 1
+				|| command_array[j + 1] == NULL)
 			{
-				ft_putstr_fd("minishell: syntax error near redirection.\n", 2);
+				print(2, "minishell: syntax error near redirection.\n");
 				global_exit_status(1);
 				return (-1);
 			}
@@ -102,15 +103,15 @@ ssize_t	get_number_of_redir(char **command_array)
 //remplir le tableau avec le type de redirection et le filename
 int	parse_redirections(t_command_line *command_line)
 {
-	size_t	i;
-	ssize_t	len;
+	int	i;
+	int	len;
 
 	i = 0;
-	while (i < command_line->number_of_simple_commands)
+	while (i < (int)command_line->number_of_simple_commands)
 	{
 		len = get_number_of_redir(command_line->command[i].command_array);
 		if (len == -1)
-			return (-1);
+			return (1);
 		command_line->command[i].number_of_redirections = len;
 		if (len == 0)
 		{
@@ -120,9 +121,9 @@ int	parse_redirections(t_command_line *command_line)
 		command_line->command[i].number_of_redirections = len;
 		command_line->command[i].redir = ft_calloc(sizeof(t_redir), len + 1);
 		if (!command_line->command[i].redir)
-			return (-1);
+			return (1);
 		if (fill_redirection_array(command_line, i) == -1)
-			return (-1);
+			return (1);
 		i++;
 	}
 	return (0);

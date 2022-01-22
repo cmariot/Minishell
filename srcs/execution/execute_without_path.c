@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 18:16:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:47:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ bool	contains_slash_no_such_file(char *command)
 	{
 		if (command[i] == '/')
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(command, 2);
-			ft_putstr_fd(": no such file or directory.\n", 2);
+			print(2, "minishell: %s", command);
+			print(2, ": no such file or directory.\n");
 			return (TRUE);
 		}
 		i++;

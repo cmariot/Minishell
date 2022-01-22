@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:13 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 12:10:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:45:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ int	replace_tilde(char **str, char **home)
 
 	size = ft_strlen(*str) - 1;
 	path = ft_substr(*str, 1, size);
+	free(*str);
 	if (!path)
 	{
-		free(home);
+		free(*home);
 		return (1);
 	}
 	new_path = ft_strjoin(*home, path);
@@ -30,7 +31,6 @@ int	replace_tilde(char **str, char **home)
 	free(*home);
 	if (!new_path)
 		return (1);
-	free(*str);
 	*str = new_path;
 	return (0);
 }

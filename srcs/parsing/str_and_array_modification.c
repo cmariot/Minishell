@@ -6,13 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 13:02:13 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/19 14:30:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:35:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	remove_name_from_str(char *name, char *str, size_t *i)
+int	remove_name_from_str(char *name, char *str, size_t *i)
 {
 	size_t	name_len;
 	size_t	j;
@@ -25,9 +25,10 @@ void	remove_name_from_str(char *name, char *str, size_t *i)
 		str[name_len + j] = '\0';
 		j++;
 	}
+	return (0);
 }
 
-void	add_value_to_str(char **str, char *name, char *value, size_t *i)
+int	add_value_to_str(char **str, char *name, char *value, size_t *i)
 {
 	size_t	new_len;
 	char	*new_str;
@@ -37,7 +38,7 @@ void	add_value_to_str(char **str, char *name, char *value, size_t *i)
 	new_len = ft_strlen(*str) - (ft_strlen(name) + 1) + ft_strlen(value) + 1;
 	new_str = ft_calloc(new_len, sizeof(char));
 	if (!new_str)
-		return ;
+		return (1);
 	j = 0;
 	while (j < *i)
 	{
@@ -53,9 +54,10 @@ void	add_value_to_str(char **str, char *name, char *value, size_t *i)
 	free(*str);
 	*str = new_str;
 	*i = ft_strlen(value) + *i - 1;
+	return (0);
 }
 
-void	remove_from_str(char **str, size_t *i, size_t name_len)
+int	remove_from_str(char **str, size_t *i, size_t name_len)
 {
 	size_t	j;
 	char	*new_str;
@@ -64,7 +66,7 @@ void	remove_from_str(char **str, size_t *i, size_t name_len)
 	new_len = ft_strlen(*str) - name_len;
 	new_str = ft_calloc(new_len, sizeof(char));
 	if (!new_str)
-		return ;
+		return (1);
 	j = 0;
 	if (*i > 0)
 	{
@@ -80,9 +82,10 @@ void	remove_from_str(char **str, size_t *i, size_t name_len)
 	free(*str);
 	*str = new_str;
 	(*i)--;
+	return (0);
 }
 
-void	remove_from_array(char **splitted_line, int i)
+int	remove_from_array(char **splitted_line, int i)
 {
 	int	j;
 
@@ -92,15 +95,18 @@ void	remove_from_array(char **splitted_line, int i)
 		splitted_line[i] = NULL;
 		if (i == 0)
 			free(splitted_line);
-		return ;
+		return (0);
 	}
 	j = i;
 	while (splitted_line[j + 1] != NULL)
 	{
 		free(splitted_line[j]);
 		splitted_line[j] = ft_strdup(splitted_line[j + 1]);
+		if (!splitted_line[j])
+			return (1);
 		j++;
 	}
 	free(splitted_line[j]);
 	splitted_line[j] = NULL;
+	return (0);
 }

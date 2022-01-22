@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/19 08:46:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:55:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int	redirection_error(char *file)
 {
-	ft_putstr_fd("minishell: ", 2);
+	print(2, "minishell: ");
 	if (access(file, F_OK) != 0)
 	{
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		print(2, "%s: No such file or directory\n", file);
 	}
 	else if (access(file, R_OK) != 0)
 	{
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		print(2, "%s: Permission denied\n", file);
 	}
 	return (global_exit_status(1));
 }

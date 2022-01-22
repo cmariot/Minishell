@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 17:25:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:50:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*new_heredoc_name(void)
 
 int	heredoc_error(void)
 {
-	ft_putstr_fd("minishell: here_doc: read-only file system.\n", 2);
+	print(2, "minishell: here_doc: read-only file system.\n");
 	return (-1);
 }
 
@@ -64,7 +64,6 @@ int	heredoc_return(char *file)
 		unlink(file);
 		return (-1);
 	}
-	catch_signal(COMMAND);
 	return (0);
 }
 
@@ -81,14 +80,14 @@ int	create_heredoc(char *file, char *limiter)
 	catch_signal(HEREDOC);
 	while (1)
 	{
-		ft_putstr_fd("heredoc ➤ ", STDOUT);
+		print(STDOUT, "heredoc ➤ ");
 		line = gnl_without_bn(STDIN);
 		if (ft_strcmp(line, limiter) == 0 || line == NULL)
 			break ;
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
+		print(fd, "%s\n", line);
 		free(line);
 	}
+	catch_signal(INTERACTIVE);
 	close(fd);
 	if (line)
 		free(line);

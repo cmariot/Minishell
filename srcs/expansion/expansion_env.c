@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/07 20:43:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:42:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 	char	*name;
 
 	if ((*str)[*i + 1] == '\'' || (*str)[*i + 1] == '"')
-	{
-		remove_from_str(str, i, 0);
-		return (0);
-	}
+		return (remove_from_str(str, i, 0));
 	len = 0;
 	if (ft_isdigit((*str)[*i + len + 1]) == TRUE)
 		while (ft_isdigit((*str)[*i + len + 1]) == TRUE)
@@ -75,7 +72,7 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 	if (ft_strcmp(name, "?") == 0)
 		expand_exit_status(str, i, name);
 	else if (search_value(str, i, name, env) == -1)
-		return (-1);
+		return (1);
 	return (0);
 }
 
@@ -92,7 +89,7 @@ int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
 			return (0);
 		}
 		if ((*str)[*i] == '$')
-			if (get_name_to_expand(str, i, env) == -1)
+			if (get_name_to_expand(str, i, env) == 1)
 				return (-1);
 		(*i)++;
 	}
@@ -130,18 +127,21 @@ int	search_dollar_in_str(char **str, t_env *env)
 /* For all the str of the array, search if an environement expansion 
  * is required.*/
 
-void	expand_env_variable(char **array, t_env *env)
+int	expand_env_variable(char **array, t_env *env)
 {
 	size_t	i;
+	int		ret;
 
 	i = 0;
 	while (array[i] != NULL)
 	{
-		if (search_dollar_in_str(&array[i], env) == -1)
+		ret = search_dollar_in_str(&array[i], env);
+		if (ret == -1)
 		{
 			remove_from_array(array, i);
 			continue ;
 		}
 		i++;
 	}
+	return (0);
 }

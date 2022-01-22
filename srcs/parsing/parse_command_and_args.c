@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:36:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 17:04:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:29:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	fill_command_and_args(t_simple *command)
 			if (command->command_array[i + 1] != NULL)
 				i += 2;
 			else if (command->command_array[i + 1] == NULL)
-				return (-1);
+				return (0);
 		}
 		else
 		{
 			command->command_and_args[j]
 				= ft_strdup(command->command_array[i]);
-			if (command->command_and_args[j] == NULL)
-				return (-1);
+			if (!command->command_and_args[j])
+				return (1);
 			j++;
 			i++;
 		}
@@ -83,8 +83,9 @@ int	get_command_and_args(t_command_line *command_line)
 		command_line->command[i].command_and_args
 			= ft_calloc(len + 1, sizeof(char *));
 		if (!command_line->command[i].command_and_args)
-			return (-1);
-		fill_command_and_args(&command_line->command[i]);
+			return (1);
+		if (fill_command_and_args(&command_line->command[i]))
+			return (1);
 		i++;
 	}
 	return (0);

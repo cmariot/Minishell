@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 17:33:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:57:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	usage(void)
 {
-	printf("USAGE:\n");
-	printf("./minishell (for interactive mode)\n");
-	printf("./minishell -c [command] (for non-interactive mode)\n");
+	print(1, "USAGE:\n");
+	print(1, "./minishell (for interactive mode)\n");
+	print(1, "./minishell -c [command] (for non-interactive mode)\n");
 	return (1);
 }
 
@@ -34,14 +34,13 @@ void	non_interactive_mode(char **array, char **env)
 		free_minishell(&minishell);
 		return ;
 	}
-	if (parse(&minishell.command_line, &minishell) == -1)
+	if (parse(&minishell.command_line, &minishell))
 	{
 		free_minishell(&minishell);
 		return ;
 	}
 	execute(&minishell, &minishell.command_line);
 	free_minishell(&minishell);
-	return ;
 }
 
 /* En comportement interactif, un prompt est afiche et
@@ -60,7 +59,7 @@ int	main(int argc, char **argv, char **env)
 		while (1)
 		{
 			get_command_line(&minishell, &minishell.command_line);
-			if (parse(&minishell.command_line, &minishell) == -1)
+			if (parse(&minishell.command_line, &minishell))
 			{
 				reset_minishell(&minishell.command_line);
 				continue ;

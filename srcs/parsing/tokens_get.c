@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:27:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 12:20:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:13:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,16 @@
 /* Return an array of tokens
  * Count the number of tokens, allocate memory and fill the array */
 
-char	**get_tokens_array(char *line)
+int	get_tokens_array(char *line, char ***array)
 {
-	char	**array;
 	size_t	number_of_tokens;
 
 	if (line == NULL)
-		return (NULL);
+		return (1);
 	number_of_tokens = count_number_of_tokens(line);
-	array = ft_calloc(number_of_tokens + 1, sizeof(char *));
-	if (!array)
-		return (NULL);
-	fill_tokens_array(array, line, number_of_tokens);
-	return (array);
+	*array = ft_calloc(number_of_tokens + 1, sizeof(char *));
+	if (!(*array))
+		return (1);
+	fill_tokens_array(*array, line, number_of_tokens);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 16:20:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:47:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 
 	pid = fork();
 	if (pid < 0)
-		return (write(2, "minishell: fork failed.\n", 24));
+		return (print(2, "minishell: fork failed.\n"));
 	else if (pid == 0)
 	{
 		close(backup_fd[0]);

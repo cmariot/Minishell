@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 16:34:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:53:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fork_error(void)
 {
-	ft_putstr_fd("minishell: error: fork failed.\n", 2);
+	print(2, "minishell: error: fork failed.\n");
 }
 
 void	pipe_exit_status(int pid)
@@ -36,7 +36,7 @@ void	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 {
 	if (pipe(command.pipe_fd) == -1)
 	{
-		ft_putstr_fd("minishell: error: pipe failed.\n", 2);
+		print(2, "minishell: error: pipe failed.\n");
 		return ;
 	}
 	command.pid = fork();
@@ -64,7 +64,7 @@ void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd)
 {
 	if (pipe(command.pipe_fd) == -1)
 	{
-		ft_putstr_fd("minishell: error: pipe failed.\n", 2);
+		print(2, "minishell: error: pipe failed.\n");
 		return ;
 	}
 	command.pid = fork();
