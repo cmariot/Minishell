@@ -6,63 +6,104 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/21 18:02:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 16:34:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//ctrl-C normal
-void	ft_handler(int sig, siginfo_t *info, void *secret)
+void	interactive_handler(int signal)
 {
 	char	*prompt;
 
-	(void)info;
-	(void)secret;
-	if (sig == SIGINT)
+	if (signal == SIGINT)
 	{
-		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
+		rl_on_new_line();
 		prompt = get_prompt();
 		if (!prompt)
-			exit(1);
+			return ;
 		ft_putstr(prompt);
-		rl_replace_line("", 0);
+		free(prompt);
 	}
-}
-
-//ctrl-C cat
-void	ft_handler2(int sig, siginfo_t *info, void *secret)
-{
-	(void)info;
-	(void)secret;
-	if (sig == SIGINT)
+	else if (signal == SIGQUIT)
 	{
-		write(1, "\n", 1);
+		return ;
 	}
 }
 
-//status = 0 catch all signal
-//status = 1 dont catch sig_int (ctrl-c)
-
-int	signal_catcher(int status)
+void	command_handler(int signal)
 {
-	struct sigaction	new_act;
-	struct sigaction	act;
-	int					sig;
+	if (signal == SIGINT)
+	{
+		ft_putchar('\n');
+		return ;
+	}
+	else if (signal == SIGQUIT)
+	{
+		printf("Quit: %d\n", signal);
+		global_exit_status(signal + 128);
+		return ;
+	}
+}
 
-	new_act.sa_sigaction = ft_handler;
-	sigemptyset(&new_act.sa_mask);
-	sigemptyset(&act.sa_mask);
-	new_act.sa_flags = 0;
-	if (status == 0)
-		new_act.sa_sigaction = ft_handler;
-	else if (status == 1)
-		new_act.sa_sigaction = ft_handler2;
-	act.sa_flags = 0;
-	act.sa_handler = SIG_IGN;
-	sig = sigaction(SIGQUIT, &act, NULL);
-	sig = sigaction(SIGINT, &new_act, NULL);
-	if (sig == -1)
-		return (0);
-	return (1);
+void	heredoc_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		ft_putchar('\n');
+		global_exit_status(signal + 128);
+	}
+	else if (signal == SIGQUIT)
+	{
+		return ;
+	}
+}
+
+/* 
+ * 3 comportements :
+ *	- Interactive (prompt)
+ *		ctrl-\ : do nothing
+ *		ctrl-D : quit minishell (if empty prompt)
+ *		ctrl-C : show a new line with a new prompt
+ *	- Blocking command (cat)
+ *		ctrl-\ : quit crash
+ *		ctrl-D : quit don't crash
+ *		ctrl-C : quit 
+ *	- Heredoc (<< eof)
+ *		ctrl-\ : do nothing
+ *		ctrl-D : quit heredoc but without '\n'
+ *		ctrl-C : quit heredoc with '\n'
+ */
+
+#define INTERACTIVE 0
+#define COMMAND 1
+#define HEREDOC 2
+
+int	catch_signal(int comportement)
+{
+	struct sigaction	ctrl_c_primitive;
+	struct sigaction	ctrl_slash_primitive;
+
+	ctrl_c_primitive.sa_flags = 0;
+	ctrl_slash_primitive.sa_flags = 0;
+	if (comportement == INTERACTIVE)
+	{
+		ctrl_c_primitive.sa_handler = &interactive_handler;
+		ctrl_slash_primitive.sa_handler = SIG_IGN;
+	}
+	else if (comportement == COMMAND)
+	{
+		ctrl_c_primitive.sa_handler = &command_handler;
+		ctrl_slash_primitive.sa_handler = &command_handler;
+	}
+	else if (comportement == HEREDOC)
+	{
+		ctrl_c_primitive.sa_handler = &heredoc_handler;
+		ctrl_slash_primitive.sa_handler = SIG_IGN;
+	}
+	sigaction(SIGINT, &ctrl_c_primitive, 0);
+	sigaction(SIGQUIT, &ctrl_slash_primitive, 0);
+	return (0);
 }

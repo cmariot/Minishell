@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 18:00:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 16:27:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,23 @@ int	create_heredoc(char *file, char *limiter)
 	fd = open(file, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
 	if (fd == -1)
 		return (heredoc_error());
-	signal_catcher(1);
+	catch_signal(HEREDOC);
 	while (1)
 	{
 		ft_putstr_fd("heredoc ➤ ", STDOUT);
 		line = gnl_without_bn(STDIN);
-		if (ft_strcmp(line, limiter) == 0)
+		if (ft_strcmp(line, limiter) == 0 || line == NULL)
 			break ;
 		ft_putstr_fd(line, fd);
 		ft_putstr_fd("\n", fd);
 		free(line);
 	}
-	signal_catcher(0);
+	if (return_global_exit_status() >= 128)
+	{
+		printf("KO\n");
+		return (-1);
+	}
+	catch_signal(COMMAND);
 	free(line);
 	close(fd);
 	return (0);

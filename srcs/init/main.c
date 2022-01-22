@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:25:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 16:25:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 14:27:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	main(int argc, char **argv, char **env)
 		non_interactive_mode(argv + 2, env);
 	else
 	{
-		signal_catcher(0);
+		//signal_catcher(0);
+		catch_signal(INTERACTIVE);
 		init_minishell(&minishell, env);
 		while (1)
 		{

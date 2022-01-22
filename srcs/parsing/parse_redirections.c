@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 19:35:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/21 19:54:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ ssize_t	get_number_of_redir(char **command_array)
 			if (is_redirection(command_array[j + 1]) == 1)
 			{
 				ft_putstr_fd("minishell: syntax error near redirection.\n", 2);
+				global_exit_status(1);
 				return (-1);
 			}
 			else

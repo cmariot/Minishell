@@ -1,13 +1,9 @@
 A FAIRE :
 ---------
 
-- [ ] ctrl-C apres ls affiche \n en trop
-- [ ] ctrl-\ dans cat
-- [ ] ctrl-\ dans heredoc
-- [ ] ctrl-C dans heredoc
-- [ ] ctrl-D dans heredoc
-- [ ] penser a unlink fichier heredoc en cas de signal !
-- [ ] ls -la >>>>>> lol SEGFAULT
+- [ ] ctrl-\ dans heredoc essayer de suprimer l'affichage du '^\'
+- [ ] ctrl-C dans heredoc : unlink fichier et retrourne dans le main
+- [ ] verifier exit status
 - [ ] norme
 - [ ] Ajouter seulement les fichiers necessaires au repo de rendu
 - [ ] Push final.

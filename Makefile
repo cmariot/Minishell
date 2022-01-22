@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/19 14:41:29 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/20 20:33:22 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,26 +42,36 @@ LIBRARIES		= -L $(LIBFT) -lft
 
 
 # Select the correct path of readline library and includes depending the system
+
 UNAME := $(shell uname -m)
+
 ifeq ($(UNAME), arm64)
+
 	INCLUDES	+= -I /opt/homebrew/opt/readline/include
 	LIBRARIES	+= -L /opt/homebrew/opt/readline/lib -lreadline
+
 else
+
 	LIBRARIES	+= -lreadline
+
 endif
 
 
 # Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)
+
 	CFLAGS		+= -g
-	LFLAGS		+= -g 
+	LFLAGS		+= -g
+
 endif
 
 
 # Optimisation flag, use with 'make OPTI=1'
 ifeq ($(OPTI), 1)
+
 	CFLAGS		+= -O2 -O3
 	LFLAGS		+= -O2 -O3
+
 endif
 
 
@@ -69,36 +79,11 @@ endif
 #                                SOURCE FILES                                  #
 # **************************************************************************** #
 
-BUILTINS	= builtins/builtin_cd.c \
-		builtins/builtin_echo.c \
-		builtins/builtin_env.c \
-		builtins/builtin_exit.c \
-		builtins/builtin_export.c \
-		builtins/builtin_pwd.c \
-		builtins/builtin_unset.c
-
-EXECUTION	= execution/execute.c \
-		execution/execute_builtin.c \
-		execution/execute_simple_command.c \
-		execution/execute_with_path.c \
-		execution/execute_without_path.c \
-		execution/execution.c \
-		execution/heredoc.c \
-		execution/pipeline.c \
-		execution/redirection.c \
-		execution/redirection_utils.c
-
-EXIT		= exit/free_minishell.c \
-		exit/global_exit_status.c
-
-EXPANSION	= expansion/expansion.c \
-		expansion/expansion_env.c \
-		expansion/expansion_quotes.c \
-		expansion/expansion_tilde.c
 
 INIT		= init/init_minishell.c \
 		init/main.c \
 		init/signal.c
+
 
 PARSING		= parsing/env_array_utils.c \
 		parsing/env_list_utils.c \
@@ -113,6 +98,38 @@ PARSING		= parsing/env_array_utils.c \
 		parsing/tokens_fill.c \
 		parsing/tokens_get.c
 
+
+EXPANSION	= expansion/expansion.c \
+		expansion/expansion_env.c \
+		expansion/expansion_quotes.c \
+		expansion/expansion_tilde.c
+
+
+BUILTINS	= builtins/builtin_cd.c \
+		builtins/builtin_echo.c \
+		builtins/builtin_env.c \
+		builtins/builtin_exit.c \
+		builtins/builtin_export.c \
+		builtins/builtin_pwd.c \
+		builtins/builtin_unset.c
+
+
+EXECUTION	= execution/execute.c \
+		execution/execute_builtin.c \
+		execution/execute_simple_command.c \
+		execution/execute_with_path.c \
+		execution/execute_without_path.c \
+		execution/execution.c \
+		execution/heredoc.c \
+		execution/pipeline.c \
+		execution/redirection.c \
+		execution/redirection_utils.c
+
+
+EXIT		= exit/free_minishell.c \
+		exit/global_exit_status.c
+
+
 SRCS		= $(INIT) \
 		$(PARSING) \
 		$(EXPANSION) \
@@ -120,11 +137,15 @@ SRCS		= $(INIT) \
 		$(BUILTINS) \
 		$(EXIT)
 
+
 SRC		:= $(notdir $(SRCS))
+
 
 OBJ		:= $(SRC:.c=.o)
 
+
 OBJS		:= $(addprefix $(OBJS_DIR), $(OBJ))
+
 
 VPATH		:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
 

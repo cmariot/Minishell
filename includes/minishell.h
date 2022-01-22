@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 13:59:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/22 15:48:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@
 # define NOT_A_DIR 1 
 # define PERMISSION 2
 # define INVALID_OPTION 3
+
+# define INTERACTIVE 0
+# define COMMAND 1
+# define HEREDOC 2
 
 //Liste chainée dans laquelle on sauvegarde le char **env
 typedef struct s_env {
@@ -212,5 +216,9 @@ int		output_redirection(t_simple command);
 //heredoc.c
 char	*new_heredoc_name(void);
 int		create_heredoc(char *filename, char *limiter);
+
+int		catch_signal(int comportement);
+
+void	rl_replace_line(const char *str, int nb);
 
 #endif
