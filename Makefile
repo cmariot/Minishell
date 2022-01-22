@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/20 20:33:22 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/22 17:57:59 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ LIBFT_INCL		= $(LIBFT)/includes/
 
 CC			= clang
 
-CFLAGS			= -Wall -Wextra -Werror -g3
+CFLAGS			= -Wall -Wextra -Werror
 
 INCLUDES		= -I $(INCL_DIR)
 INCLUDES		+= -I $(LIBFT_INCL)
