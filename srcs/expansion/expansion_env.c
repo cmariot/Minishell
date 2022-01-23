@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 18:38:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 18:42:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	search_value(char **str, size_t *i, char **name, t_env *env)
 	if (value == NULL)
 	{
 		if (ft_strlen(*str) - 1 == ft_strlen(*name))
+		{
+			free(*name);
 			return (-1);
+		}
 		else
 			remove_from_str(str, i, ft_strlen(*name));
 	}
@@ -37,12 +40,14 @@ int	search_value(char **str, size_t *i, char **name, t_env *env)
 		{
 			free(*str);
 			*str = ft_strdup(value);
-			free(*name);
-			free(value);
 		}
 		else
 			add_value_to_str(str, *name, value, i);
 	}
+	if (*name)
+		free(*name);
+	if (value)
+		free(value);
 	return (0);
 }
 
