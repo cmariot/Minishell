@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/23 14:39:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:36:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	interactive_handler(int signal)
 			return ;
 		ft_putstr(prompt);
 		free(prompt);
+		global_exit_status(1);
 	}
 	else if (signal == SIGQUIT)
 	{
@@ -38,6 +39,7 @@ void	command_handler(int signal)
 	if (signal == SIGINT)
 	{
 		ft_putchar('\n');
+		global_exit_status(signal + 128);
 		return ;
 	}
 	else if (signal == SIGQUIT)

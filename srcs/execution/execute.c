@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:42:55 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:45:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:30:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 		execute_simple_command(minishell, command_line->command[0], backup_fd);
 	else
 		create_pipeline(command_line, minishell, backup_fd);
-	catch_signal(INTERACTIVE);
-	catch_signal(INTERACTIVE);
 	dup2(backup_fd[STDIN], STDIN);
 	dup2(backup_fd[STDOUT], STDOUT);
 	close(backup_fd[STDIN]);

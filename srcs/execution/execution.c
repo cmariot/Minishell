@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 15:10:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:32:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,13 @@ int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 		exit(pid);
 	}
 	waitpid(pid, &pid, 0);
-	if (WIFEXITED(pid))
-		global_exit_status(WEXITSTATUS(pid));
-	else if (WIFSIGNALED(pid))
-		global_exit_status(WTERMSIG(pid));
+	if (return_global_exit_status() < 128)
+	{
+		if (WIFEXITED(pid))
+			global_exit_status(WEXITSTATUS(pid));
+		else if (WIFSIGNALED(pid))
+			global_exit_status(WTERMSIG(pid));
+	}
 	if (*command_path != NULL)
 		free(*command_path);
 	return (0);
