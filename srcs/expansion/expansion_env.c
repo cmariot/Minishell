@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 18:42:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 18:45:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,14 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 		while (ft_isdigit((*str)[*i + len + 1]) == TRUE)
 			len++;
 	else if ((*str)[*i + 1] == '?')
-		len = 1;
+		return (expand_exit_status(str, i));
 	else
 		while (ft_isalnum((*str)[*i + len + 1]) == TRUE)
 			len++;
 	if (len == 0)
 		return (0);
 	name = ft_substr((*str), *i + 1, len);
-	if (ft_strcmp(name, "?") == 0)
-		expand_exit_status(str, i, name);
-	else if (search_value(str, i, &name, env) == -1)
+	if (search_value(str, i, &name, env) == -1)
 		return (1);
 	return (0);
 }

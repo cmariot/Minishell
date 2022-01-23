@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 13:51:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 18:47:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void	add_to_env(t_shell *minishell, t_env *env, char *name,
 //global_exit_status.c
 int		return_global_exit_status(void);
 int		global_exit_status(int new_value);
-void	expand_exit_status(char **str, size_t *i, char *name);
+int		expand_exit_status(char **str, size_t *i);
 
 //str_and_array_modification.c
 int		remove_name_from_str(char *name, char *str, size_t *i);
