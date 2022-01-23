@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 18:45:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 19:03:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@
  *		- else $NAME is removed from the str
  * - Else if there is a value, $NAME is replaced by its value */
 
-int	search_value(char **str, size_t *i, char **name, t_env *env)
+int	search_value(char **str, size_t *i, char **name, char **value)
 {
-	char	*value;
-
-	value = get_env_value(*name, env);
-	if (value == NULL)
+	if (*value == NULL)
 	{
 		if (ft_strlen(*str) - 1 == ft_strlen(*name))
 		{
@@ -39,15 +36,15 @@ int	search_value(char **str, size_t *i, char **name, t_env *env)
 		if (ft_strlen(*str) - 1 == ft_strlen(*name))
 		{
 			free(*str);
-			*str = ft_strdup(value);
+			*str = ft_strdup(*value);
 		}
 		else
-			add_value_to_str(str, *name, value, i);
+			add_value_to_str(str, *name, *value, i);
 	}
 	if (*name)
 		free(*name);
-	if (value)
-		free(value);
+	if (*value)
+		free(*value);
 	return (0);
 }
 
@@ -61,6 +58,7 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 {
 	int		len;
 	char	*name;
+	char	*value;
 
 	if ((*str)[*i + 1] == '\'' || (*str)[*i + 1] == '"')
 		return (remove_from_str(str, i, 0));
@@ -76,7 +74,8 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 	if (len == 0)
 		return (0);
 	name = ft_substr((*str), *i + 1, len);
-	if (search_value(str, i, &name, env) == -1)
+	value = get_env_value(name, env);
+	if (search_value(str, i, &name, &value) == -1)
 		return (1);
 	return (0);
 }
