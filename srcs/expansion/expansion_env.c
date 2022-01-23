@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:42:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 13:31:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
 int	search_dollar_in_str(char **str, t_env *env)
 {
 	size_t	i;
+	int		ret;
 
 	i = 0;
 	while ((*str)[i])
@@ -115,10 +116,15 @@ int	search_dollar_in_str(char **str, t_env *env)
 				i++;
 		}
 		else if ((*str)[i] == '"')
+		{
 			expand_in_double_quotes(&i, str, env);
+		}
 		else if ((*str)[i] == '$')
-			if (get_name_to_expand(str, &i, env) == -1)
+		{
+			ret = get_name_to_expand(str, &i, env);
+			if (ret == -1)
 				return (-1);
+		}
 		i++;
 	}
 	return (0);

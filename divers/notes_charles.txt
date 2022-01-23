@@ -2,6 +2,7 @@ A FAIRE :
 ---------
 
 - [ ] ctrl-\ dans heredoc essayer de suprimer l'affichage du '^\'
-- [ ] verifier les exit status signaux + exit status commandes
+- [ ] verifier exit status commandes dans pipe
+- [ ] verifier les exit status commande + signal
 - [ ] Ajouter seulement les fichiers necessaires au repo de rendu
 - [ ] Push final.
