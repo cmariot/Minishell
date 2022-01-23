@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/22 17:39:05 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/23 14:25:39 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -141,9 +141,7 @@ obj_link :
 		@printf "ar rc $(NAME) $(OBJS) $(RC)\n"
 
 $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
-		@ar rc lib.a $(OBJS)
-		@libtool -static -D -o libft.a - lib.a srcs/print/libprint.a 
-		@rm lib.a
+		@ar rc $(NAME) $(OBJS)
 		@printf "$(GR)Success, $(NAME) is ready.\n\n"
 
 # Check 42 norm

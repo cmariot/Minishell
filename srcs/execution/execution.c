@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 14:07:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 14:34:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 		global_exit_status(WTERMSIG(pid));
 	if (*command_path != NULL)
 		free(*command_path);
-	return (return_global_exit_status());
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:47:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 14:32:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	find_correct_path(char **path_array, t_simple command, char **env,
 
 	if (contains_slash_no_such_file(command.command_and_args[0]) == TRUE)
 		return (0);
-	while (*path_array)
+	while (*path_array != NULL)
 	{
 		path_with_slash = ft_strjoin(*path_array, "/");
 		command_path = ft_strjoin(path_with_slash,

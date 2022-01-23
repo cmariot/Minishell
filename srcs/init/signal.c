@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/22 17:19:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 14:39:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	catch_signal(int comportement)
 	struct sigaction	ctrl_c_primitive;
 	struct sigaction	ctrl_slash_primitive;
 
+	ft_memset(&ctrl_c_primitive, 0, sizeof(ctrl_c_primitive));
+	ft_memset(&ctrl_slash_primitive, 0, sizeof(ctrl_slash_primitive));
 	ctrl_c_primitive.sa_flags = 0;
 	ctrl_slash_primitive.sa_flags = 0;
 	if (comportement == INTERACTIVE)
