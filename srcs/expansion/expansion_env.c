@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 19:03:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 19:09:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	search_dollar_in_str(char **str, t_env *env)
 		else if ((*str)[i] == '$')
 		{
 			ret = get_name_to_expand(str, &i, env);
-			if (ret == -1)
+			if (ret == 1)
 				return (-1);
 		}
 		i++;

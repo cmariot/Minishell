@@ -2,6 +2,5 @@ A FAIRE :
 ---------
 
 - [ ] ctrl-\ dans heredoc essayer de suprimer l'affichage du '^\'
-- [ ] leaks au niveau de l'expansion de l'exit status (itoa) + env_variable a partir de search_dollar_in_str()
 - [ ] Ajouter seulement les fichiers necessaires au repo de rendu
 - [ ] Push final.

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:50:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 18:48:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 18:50:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int	expand_exit_status(char **str, size_t *i)
 	}
 	else
 		add_value_to_str(str, "?", value, i);
+	free(value);
 	return (0);
 }
