@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:50:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 14:10:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	remove_heredocs(t_simple command)
 			unlink(command.redir[i].filename);
 		i++;
 	}
+	return ;
 }
 
 char	*new_heredoc_name(void)

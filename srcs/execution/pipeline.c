@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:53:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 14:13:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 	else if (command.pid == 0)
 	{
 		execute_simple_command(minishell, command, backup_fd);
+		print(2, "EXIT_STATUS = %d\n", return_global_exit_status());
 		close(command.pipe_fd[0]);
 		close(command.pipe_fd[1]);
 		close(backup_fd[0]);
@@ -75,6 +76,7 @@ void	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd)
 		close(command.pipe_fd[0]);
 		dup2(command.pipe_fd[1], STDOUT);
 		execute_simple_command(minishell, command, backup_fd);
+		print(2, "EXIT_STATUS = %d\n", return_global_exit_status());
 		close(command.pipe_fd[1]);
 		close(backup_fd[0]);
 		close(backup_fd[1]);
@@ -109,5 +111,5 @@ void	create_pipeline(t_command_line *command_line, t_shell *minishell,
 			&(command_line->command[i].pid), 0);
 		i++;
 	}
-	pipe_exit_status(command_line->command[i].pid);
+	//pipe_exit_status(command_line->command[i].pid);
 }

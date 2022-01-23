@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:45:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:47:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 14:07:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,15 @@ int	execution(char **command_path, t_simple command, char **env, int *backup_fd)
 	{
 		close(backup_fd[0]);
 		close(backup_fd[1]);
-		execve(*command_path, command.command_and_args, env);
+		pid = execve(*command_path, command.command_and_args, env);
+		exit(pid);
 	}
 	waitpid(pid, &pid, 0);
 	if (WIFEXITED(pid))
 		global_exit_status(WEXITSTATUS(pid));
-	if (WIFSIGNALED(pid))
-	{
+	else if (WIFSIGNALED(pid))
 		global_exit_status(WTERMSIG(pid));
-		if (return_global_exit_status() != 131)
-			global_exit_status(return_global_exit_status() + 128);
-	}
 	if (*command_path != NULL)
 		free(*command_path);
-	return (0);
+	return (return_global_exit_status());
 }

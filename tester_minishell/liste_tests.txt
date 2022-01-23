@@ -297,4 +297,5 @@ cat < Makefile | ls -la
 cat < Makefile | grep srcs | wc -l
 cat < Makefile > file1
 cat < file1 | grep a | wc -l > file2
-
+ls -la | wc -G
+wc -G < Makefile | ls -la
