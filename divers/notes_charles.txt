@@ -2,5 +2,5 @@ A FAIRE :
 ---------
 
 - [ ] ctrl-\ dans heredoc essayer de suprimer l'affichage du '^\'
-- [ ] Ajouter seulement les fichiers necessaires au repo de rendu
+- [ ] Dernieres verifications
 - [ ] Push final.
