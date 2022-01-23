@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 18:14:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/23 18:18:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ int	create_heredoc(char *file, char *limiter)
 	{
 		print(STDOUT, "heredoc ➤ ");
 		line = gnl_without_bn(STDIN);
-		if (ft_strcmp(line, limiter) == 0
-			|| line == NULL
-			|| return_global_exit_status() == 128 + SIGINT)
+		if (ft_strcmp(line, limiter) == 0 || line == NULL)
 			break ;
 		print(fd, "%s\n", line);
 		free(line);
