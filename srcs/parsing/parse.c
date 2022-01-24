@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:31:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 17:12:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,6 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		return (1);
 	if (get_simple_commands(command_line, command_line->splitted_line))
 		return (1);
-	if (expansion(command_line, minishell->env))
-		return (1);
 	if (get_command_and_args(command_line))
 		return (1);
 	if (parse_redirections(command_line))
@@ -124,6 +122,8 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 	if (check_empty_redir(command_line,
 			command_line->number_of_simple_commands))
 		return (1);
+	if (expansion(command_line, minishell->env))
+		return (1);
 	return (0);
 }
-//print_command_line(command_line);
+//	print_command_line(command_line);

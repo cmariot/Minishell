@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 18:47:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 17:09:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,5 +221,10 @@ void	remove_heredocs(t_simple command);
 int		catch_signal(int comportement);
 
 void	rl_replace_line(const char *str, int nb);
+
+int		search_dollar_in_str(char **str, t_env *env);
+void	remove_quotes_in_str(char *str);
+int		replace_tilde(char **str, char **home);
+void	remove_quote(char *str, size_t j);
 
 #endif

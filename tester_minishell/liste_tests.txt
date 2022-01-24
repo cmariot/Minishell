@@ -149,8 +149,6 @@ echo test tout
 echo test      tout
 echo -n test tout
 echo -n -n -n test tout
-echo test     \    test
-echo \"test
 echo $PWD
 echo "$PWD"
 echo '$PWD'
@@ -274,7 +272,6 @@ unset GERGERGEG
 unset VEGER PWD
 unset $PWD ergergrg
 unset *
-unset /
 unset >
 unset <
 #Test du builtin cd
@@ -289,7 +286,7 @@ cd ..
 cd ../Minishell
 cd .
 #fork concurrentiel
-sleep 3 | echo prout #KO :( prout doit s'afficher direct
+sleep 3 | echo prout 
 rm f1 #OK, f1 ne peut pas etre suprime deux fois ;)
 ls -la | grep srcs | wc -l
 ls -la > file1
