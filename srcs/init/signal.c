@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/24 13:11:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 15:24:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	interactive_handler(int signal)
 			return ;
 		ft_putstr(prompt);
 		free(prompt);
-		global_exit_status(1);
 	}
 	else if (signal == SIGQUIT)
 	{

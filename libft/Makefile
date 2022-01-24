@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/23 14:25:39 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/24 15:17:31 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,7 +135,7 @@ $(OBJS_DIR)%.o : %.c
 
 # Linking
 obj_link :
-		@printf "$(YE)Libft compilation success.\n\n$(RC)"
+		@printf "$(YE)Libft compilation success.\n\n"
 		@make -C $(PRINT_DIR)
 		@printf "$(GR)Linking Libft objects ...\n"
 		@printf "ar rc $(NAME) $(OBJS) $(RC)\n"
