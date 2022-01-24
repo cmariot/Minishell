@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 19:34:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 12:31:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 		close(backup_fd[1]);
 		free_minishell(minishell);
 	}
-	wait(&status);
+	waitpid(command.pid, &status, 0);
 	close(command.pipe_fd[1]);
 	dup2(command.pipe_fd[0], STDIN);
 	close(command.pipe_fd[0]);
@@ -91,6 +91,7 @@ void	create_pipeline(t_command_line *command_line, t_shell *minishell,
 	int		status;
 
 	i = 0;
+	status = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
 		if (i < command_line->number_of_simple_commands - 1)
@@ -100,13 +101,12 @@ void	create_pipeline(t_command_line *command_line, t_shell *minishell,
 		i++;
 	}
 	i = 0;
-	while (i < command_line->number_of_simple_commands)
+	while (i < command_line->number_of_simple_commands - 1)
 	{
 		waitpid(command_line->command[i].pid,
 			&(command_line->command[i].pid), 0);
 		i++;
 	}
-	wait(&status);
 	if (WIFEXITED(status))
 		global_exit_status(WEXITSTATUS(status));
 	else if WIFSIGNALED(status)
