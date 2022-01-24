@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 19:21:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 13:37:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	error_invalid_identifier(char **args, size_t i)
 {
-	ft_putstr_fd("minishell: export: '", 2);
-	ft_putstr_fd(args[i], 2);
-	ft_putstr_fd("': not a valid identifier.\n", 2);
+	print(2, "minishell: export: '%s'", args[i]);
+	print(2, ": not a valid identifier.\n");
 	return (-1);
 }
 
@@ -49,7 +48,7 @@ int	export_without_args(t_env *env)
 	while (env != NULL)
 	{
 		if (env->name && env->value)
-			printf("declare -x %s=\"%s\"\n", env->name, env->value);
+			print(1, "declare -x %s=\"%s\"\n", env->name, env->value);
 		env = env->next;
 	}
 	return (global_exit_status(0));

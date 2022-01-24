@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/21 17:31:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 13:35:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	exit_error_not_num(char *arg)
 {
-	ft_putstr_fd("minishell: exit: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(": numeric argument required\n", 2);
+	print(2, "minishell: exit: %s", arg);
+	print(2, ": numeric argument required\n");
 	global_exit_status(2);
 }
 
@@ -26,7 +25,7 @@ void	exit_error(char *first_arg, char**args)
 		exit_error_not_num(args[0]);
 	else
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		print(2, "minishell: exit: too many arguments\n");
 		global_exit_status(1);
 	}
 }

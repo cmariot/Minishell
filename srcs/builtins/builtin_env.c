@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:03:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 14:03:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 13:33:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	builtin_env(t_env *env, char *first_arg)
 	if (first_arg != NULL)
 	{
 		if (first_arg[0] == '-' && first_arg[1] != '\0')
-			ft_putstr_fd("minishell: env: invalid option.\n", 2);
+			print(2, "minishell: env: invalid option.\n");
 		else
-			ft_putstr_fd("minishell: env: invalid argument.\n", 2);
+			print(2, "minishell: env: invalid argument.\n");
 		return (global_exit_status(1));
 	}
 	if (!env)

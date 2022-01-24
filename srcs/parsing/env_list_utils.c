@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 08:32:45 by cmariot           #+#    #+#             */
-/*   Updated: 2021/12/14 14:29:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 13:23:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_env	*ft_lstnew_env(void *name, char *value)
 	if (new)
 	{
 		new->name = ft_strdup(name);
+		if (!(new->name))
+			return (NULL);
 		new->value = ft_strdup(value);
 		new->next = NULL;
 		return (new);

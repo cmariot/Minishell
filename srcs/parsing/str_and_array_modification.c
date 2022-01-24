@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 13:02:13 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:35:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 13:19:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ int	remove_from_array(char **splitted_line, int i)
 	{
 		free(splitted_line[i]);
 		splitted_line[i] = NULL;
-		if (i == 0)
-			free(splitted_line);
 		return (0);
 	}
 	j = i;

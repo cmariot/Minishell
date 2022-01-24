@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:58:43 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 13:59:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 13:37:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int	error_invalid_option(void)
 {
-	ft_putstr_fd("minishell: pwd: invalid option\n", 2);
+	print(2, "minishell: pwd: invalid option\n");
 	return (global_exit_status(2));
 }
 

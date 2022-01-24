@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/18 14:00:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 13:33:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,15 @@
 
 int	cd_error(int error_id, char *directory)
 {
-	ft_putstr_fd("minishell: cd: ", 2);
+	print(2, "minishell: cd: ");
 	if (error_id == NO_SUCH_FILE)
-	{
-		ft_putstr_fd(directory, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-	}
+		print(2, "%s : No such file or directory\n", directory);
 	else if (error_id == NOT_A_DIR)
-	{
-		ft_putstr_fd("Not a directory: ", 2);
-		ft_putstr_fd(directory, 2);
-		ft_putstr_fd("\n", 2);
-	}
+		print(2, "Not a directory: %s\n", directory);
 	else if (error_id == PERMISSION)
-	{
-		ft_putstr_fd(directory, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
+		print(2, "%s: Permission denied\n", directory);
 	else if (error_id == INVALID_OPTION)
-	{
-		ft_putstr_fd(directory, 2);
-		ft_putstr_fd(": invalid option\n", 2);
-	}
+		print(2, "%s: invalid option\n", directory);
 	return (1);
 }
 
@@ -85,7 +72,7 @@ int	go_to_oldpwd(t_shell *minishell)
 		return (1);
 	}
 	else
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+		print(2, "minishell: cd: OLDPWD not set\n");
 	return (1);
 }
 
