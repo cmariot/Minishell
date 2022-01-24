@@ -6,23 +6,32 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:03:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 13:33:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 15:15:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	env_error(char *first_arg)
+{
+	if (first_arg[0] == '-' && first_arg[1] != '\0')
+	{
+		print(2, "minishell: env: invalid option.\n");
+		global_exit_status(125);
+	}
+	else
+	{
+		print(2, "minishell: env: invalid argument.\n");
+		global_exit_status(127);
+	}
+	return (1);
+}
+
 // print "name=value" for all the values of the linked list t_env
 int	builtin_env(t_env *env, char *first_arg)
 {
 	if (first_arg != NULL)
-	{
-		if (first_arg[0] == '-' && first_arg[1] != '\0')
-			print(2, "minishell: env: invalid option.\n");
-		else
-			print(2, "minishell: env: invalid argument.\n");
-		return (global_exit_status(1));
-	}
+		return (env_error(first_arg));
 	if (!env)
 		return (global_exit_status(0));
 	while (env)

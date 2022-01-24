@@ -1,52 +1,32 @@
-#Test des erreurs de syntaxe
-echo |
-echo >
-echo <
-echo >>
-echo <<
->|
-<|
-|<
-|>
-ls >
-cat <
-ls -la | wc -l |
-ls -la | wc -l >
-echo | >>
-echo << |
-|
-<
->
-<<
->>
-< | lol
-#Test de base
+#Simple command
 /bin/ls
-
-        
-				
-					      
-/ls
+/bin/calendar
+/bin/clear
+/bin/hostname
+/truc
+/
 ./ls
-/bin/ls -la
-/bin/ls trucquinexistepas
-echo $USER""
-echo $USER"" 
-echo $USER ''
-echo $USER ""
-echo $USER"" ''
-echo $USER''
-echo boum"" ''
-echo boum "" ''
-echo |
-echo | > f1
-echo >
-echo > f1
-echo | | | ls
-echo > | ls
-echo | > | ls
-echo > | > ls
-#Test du builtin echo
+#Empty commands
+
+ 
+	
+			       
+#Command with arguments
+/bin/ls -1
+/bin/ls -l
+/bin/cat Makefile
+/bin/man bash
+/bin/cat -e Makefile
+/bin/cat -eu Makefile
+/bin/cat -e -u Makefile
+/bin/ls truc
+/bin/ls -6
+#Command without path
+ls
+cat Makefle
+cat -e Makefile
+ls -1
+#Builtin echo
 echo ""
 echo ''
 echo "" "" ""
@@ -62,7 +42,7 @@ echo "$PWD"
 echo '$PWD'
 echo "'$PWD'"
 echo '"$PWD"'
-exho test""$PWD
+echo test""$PWD
 echo "$PWD"test
 echo test'$PWD'
 echo "test'$PWD'"
@@ -116,6 +96,7 @@ echo $USER ""''
 echo test""test
 echo test ""test
 echo test"" test
+echo "cat | lol | test > file << test >> pas < de | redir"
 echo test "'"test
 echo $USER$USER
 echo $USER""$USER
@@ -159,58 +140,34 @@ echo $PWD$PWD$PWD
 echo $PWD$PWD=lol$PWD""lol
 echo    $PWD lol $PWD
 echo test "" test "" test
-echo "\$PWD"
 echo "$=PWD"
 echo "$"
 echo "$?PWD"
 echo $TEST $PWD
 echo "$1PWD"
 echo "$T1PW"
-#Test des valeurs de retour
-ls
-#Test du builtin pwd
-pwd
-pwd -
-pwd arg
-pwd pwd pwd
-PWD
-p""wd
- pwd
-	pwd
-pwd ~
-pwd -FGDG
-pwd -s
-#Test du builtin export
-export A=1
-export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
-export 6 B=2 C=3 D=4 E=5 F=6 G=7 H=8
-export B=2 C=3 lol#=4 E=5 F=6 G=7 H=8
-export A=1 Bjhebejhrbf C=3 D=4 E=5 F=6 G=7 H=8
-export A=1 B=2 C=3 D=4 E=5 F=6 G=7 ......
-export A=1 B=2 //// D=4 E=5 F=6 G=7 H=8
-export A=1 B
-export PWD=NULL a=5
-export a=5 PWD=NULL
-export A=1 ls
-export A=2 | ls
-export A=
-export A 1
-export A1
-export	=2
-export "=3
-export '=3
-export -
-export A
-export !=1
-export lol#=1
-export lol-=1
-export _=1
-export =
-export B
-export A=
-#Test des pipelines
-ls -la .. | grep l | wc -l 
-#Test du builtin exit
+echo $USER""
+echo $USER"" 
+echo $USER ''
+echo $USER ""
+echo $USER"" ''
+echo $USER''
+echo boum"" ''
+echo boum "" ''
+echo |
+echo | > f1
+echo >
+echo > f1
+echo | | | ls
+echo > | ls
+echo | > | ls
+echo > | > ls
+echo |
+echo >
+echo <
+echo >>
+echo <<
+#Builtin exit
 exit
 exit -
 exit -f
@@ -252,8 +209,45 @@ exit 3 2 4
 exit +3
 exit 99999999999999999999999
 exit 999999999999999999999999999999999999999999999999999999
+exit 0 999999999999999999999999999999999999999999999999999999
+exit 999999999999999999999999999999999999999999999999999999 0
 exit -99999999999999999999999
-#Test du builtin unset
+#Builtin env
+env
+env argument
+env -option
+#Builtin export
+export A=1
+export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+export 6 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+export B=2 C=3 lol#=4 E=5 F=6 G=7 H=8
+export A=1 Bjhebejhrbf C=3 D=4 E=5 F=6 G=7 H=8
+export A=1 B=2 C=3 D=4 E=5 F=6 G=7 ......
+export A=1 B=2 //// D=4 E=5 F=6 G=7 H=8
+export A=1 B
+export PWD=NULL a=5
+export a=5 PWD=NULL
+export A=1 ls
+export A=2 | ls
+export A=
+export A 1
+export A1
+export	=2
+export "=3
+export '=3
+export -
+export A
+export !=1
+export lol#=1
+export lol-=1
+export _=1
+export =
+export B
+export A=
+export $PWD=lol
+export $PWD=$BLA
+export PWD=$BLA
+#Builtin unset
 unset
 unset PWD
 unset $PWD
@@ -274,7 +268,7 @@ unset $PWD ergergrg
 unset *
 unset >
 unset <
-#Test du builtin cd
+#Builtin cd
 cd /bin
 cd /Users/cmariot
 cd /trucquinexistepas
@@ -285,9 +279,42 @@ cd ../../../../..
 cd ..
 cd ../Minishell
 cd .
-#fork concurrentiel
-sleep 3 | echo prout 
-rm f1 #OK, f1 ne peut pas etre suprime deux fois ;)
+cd Makefile
+cd ~/../root
+#Builtin pwd
+pwd
+pwd -
+pwd arg
+pwd pwd pwd
+PWD
+p""wd
+ pwd
+	pwd
+pwd ~
+pwd -FGDG
+pwd -s
+#Syntax error
+|
+<
+>
+<<
+>>
+>|
+<|
+|<
+|>
+ls >
+cat <
+ls -la | wc -l |
+ls -la | wc -l >
+echo | >>
+echo << |
+< | lol
+echo "lol
+echo 'lol
+#Test des pipelines
+ls -la .. | grep l | wc -l 
+sleep 1 | echo prout
 ls -la | grep srcs | wc -l
 ls -la > file1
 cat < Makefile | ls -la
@@ -296,3 +323,10 @@ cat < Makefile > file1
 cat < file1 | grep a | wc -l > file2
 ls -la | wc -G
 wc -G < Makefile | ls -la
+ls | truc
+ls | ls -truc6
+ls | ls
+truc | ls
+ls -truc6 | ls
+#Menage 
+rm f1 file1 file2 #OK, f1 ne peut pas etre suprime deux fois ;)
