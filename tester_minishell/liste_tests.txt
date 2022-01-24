@@ -162,6 +162,16 @@ echo | | | ls
 echo > | ls
 echo | > | ls
 echo > | > ls
+echo '>'
+echo "<"
+echo "|"
+echo ">>"
+echo "<<"
+echo ">"
+echo "<"
+echo "|"
+echo "<<"
+echo ">>"
 echo |
 echo >
 echo <
@@ -333,4 +343,4 @@ ls -la > $HOME/42/Minishell/file1
 ls -la > ~/42/Minishell/file1
 ls -la > "$PWD/file1"
 #Menage 
-rm f1 file1 file2 #OK, f1 ne peut pas etre suprime deux fois ;)
+rm -f f1 file1 file2 #OK, f1 ne peut pas etre suprime deux fois ;)

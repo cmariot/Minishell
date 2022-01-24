@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:27:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 21:13:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:43:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	get_tokens_array(char *line, char ***array)
 	if (line == NULL)
 		return (1);
 	number_of_tokens = count_number_of_tokens(line);
+	if (number_of_tokens == 0)
+		return (1);
 	*array = ft_calloc(number_of_tokens + 1, sizeof(char *));
 	if (!(*array))
 		return (1);
