@@ -328,5 +328,9 @@ ls | ls -truc6
 ls | ls
 truc | ls
 ls -truc6 | ls
+#Redirections
+ls -la > $HOME/42/Minishell/file1
+ls -la > ~/42/Minishell/file1
+ls -la > "$PWD/file1"
 #Menage 
 rm f1 file1 file2 #OK, f1 ne peut pas etre suprime deux fois ;)

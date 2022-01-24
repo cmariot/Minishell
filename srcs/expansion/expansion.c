@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:22:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 17:08:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/24 17:19:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int	str_tilde_expansion(char **str, t_env *env)
 int	redir_expansion(t_redir *redir, t_env *env)
 {
 	search_dollar_in_str(&(redir->redir_type), env);
-	str_tilde_expansion(&redir->redir_type, env);
 	str_quotes_removal(&redir->redir_type);
+	str_tilde_expansion(&redir->redir_type, env);
 	search_dollar_in_str(&(redir->filename), env);
-	str_tilde_expansion(&redir->filename, env);
 	str_quotes_removal(&redir->filename);
+	str_tilde_expansion(&redir->filename, env);
 	return (0);
 }
 
