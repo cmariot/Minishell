@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 17:09:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 16:36:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		get_simple_commands(t_command_line *command_line,
 			char **splitted_line);
 
 // parse_redirections.c
-int		parse_redirections(t_command_line *command_line);
+int		parse_redirections(t_command_line *command_line, t_env *env);
 int		is_redirection(char *element);
 
 // print_structure.c
@@ -226,5 +226,7 @@ int		search_dollar_in_str(char **str, t_env *env);
 void	remove_quotes_in_str(char *str);
 int		replace_tilde(char **str, char **home);
 void	remove_quote(char *str, size_t j);
+int		str_quotes_removal(char **str);
+int		str_tilde_expansion(char **str, t_env *env);
 
 #endif

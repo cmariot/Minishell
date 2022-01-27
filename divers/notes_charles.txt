@@ -2,12 +2,12 @@ A FAIRE :
 ---------
 
 - [X] cat << l;s
-- [ ] $DFGDFG
+- [X] $DFGDFG
+- [X] << eof
 - [ ] export LS="s -la" puis l$LS
 - [ ] echo salut > $truc
 - [ ] sdfsd | dsdfsdsf | dgdgrr | dfgfgfd
-- [ ] exit (139 ?)
-- [ ] exit sans args
 - [ ] CDPATH
+- [ ] Heredoc avec readline plutot que gnl
 - [ ] Dernieres verifications
 - [ ] Push final.
