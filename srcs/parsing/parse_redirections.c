@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 17:06:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 17:19:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,17 @@ char	*filename_expand(char *filename, t_env *env)
 	char	**array;
 
 	final = ft_strdup(filename);
+	if (!final)
+		return (NULL);
 	search_dollar_in_str(&final, env);
 	str_quotes_removal(&final);
 	str_tilde_expansion(&final, env);
 	array = ft_split(final, ' ');
-	if (!array)
-		return (NULL);
-	else if (array && array[1] != NULL)
+	if (!array || array[1] != NULL || array[0][0] == '$')
 	{
 		ft_free_array(array);
-		if (final)
-			free(final);
+		free(final);
 		print(2, "minishell: %s: ambiguous redirect\n", filename);
-		return (NULL);
-	}
-	else if (array[0][0] == '$')
-	{
 		return (NULL);
 	}
 	ft_free_array(array);
@@ -140,7 +135,6 @@ int	parse_redirections(t_command_line *command_line, t_env *env)
 {
 	int	i;
 	int	len;
-	int	ret;
 
 	i = 0;
 	while (i < (int)command_line->number_of_simple_commands)
@@ -158,8 +152,7 @@ int	parse_redirections(t_command_line *command_line, t_env *env)
 		command_line->command[i].redir = ft_calloc(sizeof(t_redir), len + 1);
 		if (!command_line->command[i].redir)
 			return (1);
-		ret = fill_redirection_array(command_line, i, env);
-		if (ret == -1 || ret == 1)
+		if (fill_redirection_array(command_line, i, env) != 0)
 			return (1);
 		i++;
 	}

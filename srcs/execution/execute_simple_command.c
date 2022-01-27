@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 14:18:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 17:52:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	command_not_found(char *command)
 {
-	print(2, "minishell: %s", command);
-	print(2, ": command not found\n");
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	global_exit_status(127);
 }
 
