@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 16:23:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:02:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 	while (splitted_line[array_index + len] != NULL)
 	{
 		if (ft_strcmp(splitted_line[array_index + len], "|") == 0)
-			break ;
-		else if (ft_strcmp(splitted_line[array_index + len], ";") == 0)
 			break ;
 		len++;
 	}
@@ -61,8 +59,6 @@ size_t	count_commands(char **splitted_line)
 	{
 		if (ft_strcmp(splitted_line[i], "|") == 0)
 			number_of_commands++;
-		else if (ft_strcmp(splitted_line[i], ";") == 0)
-			break ;
 		i++;
 	}
 	return (number_of_commands);

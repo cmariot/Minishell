@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:28:49 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/12 12:21:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:01:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ size_t	len_of_metacharacter(char *line, size_t *i)
 		(*i) += 2;
 		return (2);
 	}
-	else if (line[*i] == '<' || line[*i] == '>')
-		(*i) += 1;
-	else if (line[*i] == '|' || line[*i] == '&' || line[*i] == ';')
-		(*i) += 1;
-	else if (line[*i] == '(' || line[*i] == ')' || line[*i] == '\n')
+	else if (line[*i] == '<' || line[*i] == '>' || line[*i] == '|')
 		(*i) += 1;
 	return (1);
 }

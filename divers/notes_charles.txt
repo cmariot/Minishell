@@ -1,6 +1,13 @@
 A FAIRE :
 ---------
 
-- [ ] ctrl-\ dans heredoc essayer de suprimer l'affichage du '^\'
+- [X] cat << l;s
+- [ ] $DFGDFG
+- [ ] export LS="s -la" puis l$LS
+- [ ] echo salut > $truc
+- [ ] sdfsd | dsdfsdsf | dgdgrr | dfgfgfd
+- [ ] exit (139 ?)
+- [ ] exit sans args
+- [ ] CDPATH
 - [ ] Dernieres verifications
 - [ ] Push final.
