@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 23:11:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 23:45:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,8 @@ int	command_expansion(t_simple *command, t_env *env)
 	char	**tmp;
 
 	i = 0;
+	if (!command->command_and_args)
+		return (0);
 	while (command->command_and_args[i] != NULL)
 	{
 		search_dollar_in_str(&command->command_and_args[i], env);
