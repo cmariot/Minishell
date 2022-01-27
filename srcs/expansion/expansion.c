@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:22:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 17:19:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:26:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ int	expansion(t_command_line *command_line, t_env *env)
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
+		if (command_line->command[i].command_and_args == NULL
+			|| command_line->command[i].command_and_args[0] == NULL)
+		{
+			i++;
+			continue ;
+		}
 		array_expansion(command_line->command[i].command_and_args, env);
 		j = 0;
 		while (j < command_line->command[i].number_of_redirections)
