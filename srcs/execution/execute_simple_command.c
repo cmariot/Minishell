@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/23 14:10:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 14:18:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	execute_simple_command(t_shell *minishell, t_simple command,
 {
 	char	**env_array;
 
-	if (command.command_and_args == NULL)
+	if (command.command_and_args == NULL || command.command_and_args[0] == NULL)
 		return (remove_heredocs(command));
 	if (file_redirection(command))
 		return ;
