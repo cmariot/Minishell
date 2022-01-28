@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 17:41:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 00:29:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	create_heredoc(char *file, char *limiter)
 	while (1)
 	{
 		line = readline("heredoc ➤ ");
-		if (ft_strcmp(line, limiter) == 0 || line == NULL)
+		if (ft_strcmp(line, limiter) == 0 || line == NULL || !line)
 			break ;
 		print(fd, "%s\n", line);
 		free(line);

@@ -9,6 +9,7 @@ A FAIRE :
 - [X] sdfsd | dsdfsdsf | dgdgrr | dfgfgfd
 - [X] export LS="s -la" puis l$LS (OK mais leaks a verifier + norme)
 - [ ] Signal ctrl-C dans heredoc
+- [ ] export TEST= ; env | grep TEST
 - [ ] CDPATH
 - [ ] norme
 - [ ] Dernieres verifications

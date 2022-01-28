@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 23:45:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/27 23:49:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,10 +225,7 @@ char	**create_new_array(t_simple *command, char **array, size_t i)
 			k++;
 		}
 		else
-		{
-			new[j] = ft_strdup(command->command_and_args[i]);
-			i++;
-		}
+			new[j] = ft_strdup(command->command_and_args[i++]);
 		j++;
 	}
 	return (new);
@@ -238,7 +235,7 @@ int	command_expansion(t_simple *command, t_env *env)
 {
 	size_t	i;
 	char	**array;
-	char	**tmp;
+	char	**new;
 
 	i = 0;
 	if (!command->command_and_args)
@@ -251,9 +248,9 @@ int	command_expansion(t_simple *command, t_env *env)
 			return (1);
 		else if (array[1] != NULL)
 		{
-			tmp = create_new_array(command, array, i);
+			new = create_new_array(command, array, i);
 			ft_free_array(command->command_and_args);
-			command->command_and_args = tmp;
+			command->command_and_args = new;
 		}
 		ft_free_array(array);
 		i++;
@@ -298,6 +295,6 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		return (1);
 	if (expansion(command_line, minishell->env))
 		return (1);
-//	print_command_line(command_line);
 	return (0);
 }
+//	print_command_line(command_line);

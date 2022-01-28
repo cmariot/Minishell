@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/27 23:41:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 00:40:09 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	heredoc_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
-
-		print(1, "SIGNAL A GERER ICI");
+		print(1, "\n");
+		print(2, "On doit sortir de readline ici\n");
 		global_exit_status(signal + 128);
 	}
 	else if (signal == SIGQUIT)
