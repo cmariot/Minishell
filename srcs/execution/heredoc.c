@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 01:39:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 17:43:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	heredoc_error(void)
 
 int	heredoc_return(char *file)
 {
+	catch_signal(INTERACTIVE);
+	rl_getc_function = rl_getc;
 	if (return_global_exit_status() == 128 + SIGINT)
 	{
 		unlink(file);
@@ -81,6 +83,7 @@ int	create_heredoc(char *file, char *limiter)
 	catch_signal(HEREDOC);
 	global_exit_status(0);
 	rl_getc_function = getc;
+	str_quotes_removal(&limiter);
 	while (1)
 	{
 		line = readline("heredoc ➤ ");
@@ -89,8 +92,6 @@ int	create_heredoc(char *file, char *limiter)
 		print(fd, "%s\n", line);
 		free(line);
 	}
-	catch_signal(INTERACTIVE);
-	rl_getc_function = rl_getc;
 	close(fd);
 	if (line)
 		free(line);

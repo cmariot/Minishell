@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 08:46:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 13:35:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 17:32:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	builtin_exit(t_shell *minishell, char **args, int *backup_fd)
 
 	close(backup_fd[0]);
 	close(backup_fd[1]);
-	if (args[0] == NULL)
-		global_exit_status(0);
 	if (args[0] == NULL)
 		free_minishell(minishell);
 	first_arg = args[0];
