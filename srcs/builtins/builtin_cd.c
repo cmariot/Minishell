@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:48:19 by flee              #+#    #+#             */
-/*   Updated: 2022/01/24 13:33:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 12:15:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,77 @@ int	go_to_oldpwd(t_shell *minishell)
 	return (1);
 }
 
+int	go_to_cdpath(char *cdpath, char *dir)
+{
+	char	*cdpath_slash;
+	char	*final_dir;
+
+	cdpath_slash = ft_strjoin(cdpath, "/");
+	final_dir = ft_strjoin(cdpath_slash, dir);
+	if (access(final_dir, F_OK) != 0)
+		;
+	else if (ft_isadirectory(final_dir) == FALSE)
+		;
+	else if (access(final_dir, X_OK) != 0)
+		;
+	else if (chdir(final_dir) == 0)
+	{
+		free(cdpath_slash);
+		free(final_dir);
+		return (0);
+	}
+	free(cdpath_slash);
+	free(final_dir);
+	return (1);
+}
+
+int	cd_final_error(char *directory_path)
+{
+	if (access(directory_path, F_OK) != 0)
+	{
+		cd_error(NO_SUCH_FILE, directory_path);
+	}
+	else if (ft_isadirectory(directory_path) == FALSE)
+	{
+		cd_error(NOT_A_DIR, directory_path);
+	}
+	else if (access(directory_path, X_OK) != 0)
+	{
+		cd_error(PERMISSION, directory_path);
+	}
+	return (1);
+}
+
+int	cdpath(t_env *env, char *dir)
+{
+	char	*cdpath;
+	char	**cdpath_array;
+	size_t	i;
+
+	cdpath = get_env_value("CDPATH", env);
+	if (cdpath)
+	{
+		cdpath_array = ft_split(cdpath, ':');
+		if (cdpath_array)
+		{
+			i = 0;
+			while (cdpath_array[i] != NULL)
+			{
+				if (go_to_cdpath(cdpath_array[i], dir) == 0)
+				{
+					ft_free_array(cdpath_array);
+					free(cdpath);
+					return (0);
+				}
+				i++;
+			}
+			ft_free_array(cdpath_array);
+		}
+		free(cdpath);
+	}
+	return (cd_final_error(dir));
+}
+
 int	go_to_dir(char *directory_path, t_shell *minishell)
 {
 	if (directory_path[0] == '-')
@@ -87,13 +158,12 @@ int	go_to_dir(char *directory_path, t_shell *minishell)
 	}
 	else if (ft_strcmp("#", directory_path) == 0)
 		go_home(minishell);
-	if (access(directory_path, F_OK) != 0)
-		cd_error(NO_SUCH_FILE, directory_path);
-	else if (ft_isadirectory(directory_path) == FALSE)
-		cd_error(NOT_A_DIR, directory_path);
-	else if (access(directory_path, X_OK) != 0)
-		cd_error(PERMISSION, directory_path);
-	else if (chdir(directory_path) == 0)
+	if (access(directory_path, F_OK) == 0)
+		if (ft_isadirectory(directory_path) == TRUE)
+			if (access(directory_path, X_OK) == 0)
+				if (chdir(directory_path) == 0)
+					return (0);
+	if (cdpath(minishell->env, directory_path) == 0)
 		return (0);
 	return (1);
 }
