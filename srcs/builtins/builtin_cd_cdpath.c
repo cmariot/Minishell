@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:15:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 15:16:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 18:42:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int	cdpath(t_env *env, char *dir)
 			i = 0;
 			while (cdpath_array[i] != NULL)
 			{
-				if (go_to_cdpath(cdpath_array[i++], dir) == 0)
-				{
-					ft_free_array(cdpath_array);
-					free(cdpath);
-					return (0);
-				}
+				if (go_to_cdpath(cdpath_array[i++], dir) != 0)
+					continue ;
+				print(1, "%s/%s\n", cdpath_array[i - 1], dir);
+				ft_free_array(cdpath_array);
+				free(cdpath);
+				return (0);
 			}
 			ft_free_array(cdpath_array);
 		}
