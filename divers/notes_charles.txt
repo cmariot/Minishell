@@ -8,8 +8,8 @@ A FAIRE :
 - [X] Heredoc avec readline plutot que gnl
 - [X] sdfsd | dsdfsdsf | dgdgrr | dfgfgfd
 - [X] export LS="s -la" puis l$LS (OK mais leaks a verifier + norme)
-- [ ] Signal ctrl-C dans heredoc
-- [ ] export TEST= ; env | grep TEST
+- [X] Signal ctrl-C dans heredoc
+- [X] export TEST= ; env | grep TEST
 - [ ] CDPATH
 - [ ] norme
 - [ ] Dernieres verifications

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 01:07:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 01:43:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	export(t_shell *minishell, char **args, size_t i, size_t name_len)
 		return (global_exit_status(1));
 	if (args[i][name_len + 1] != '\0')
 		value = ft_strdup(args[i] + name_len + 1);
-	else 
+	else
 		value = NULL;
 	add_to_env(minishell, minishell->env, name, value);
 	if (value)
