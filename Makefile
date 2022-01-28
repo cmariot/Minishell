@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/23 14:24:54 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/28 10:48:19 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,7 +103,11 @@ PARSING		= parsing/env_array_utils.c \
 EXPANSION	= expansion/expansion.c \
 		expansion/expansion_env.c \
 		expansion/expansion_quotes.c \
-		expansion/expansion_tilde.c
+		expansion/expansion_tilde.c \
+		expansion/command_expansion.c \
+		expansion/command_split_expansion.c \
+		expansion/redir_expansion.c
+
 
 
 BUILTINS	= builtins/builtin_cd.c \

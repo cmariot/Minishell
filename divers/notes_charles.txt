@@ -7,10 +7,10 @@ A FAIRE :
 - [X] echo salut > $truc
 - [X] Heredoc avec readline plutot que gnl
 - [X] sdfsd | dsdfsdsf | dgdgrr | dfgfgfd
-- [X] export LS="s -la" puis l$LS (OK mais leaks a verifier + norme)
+- [X] export LS="s -la" puis l$LS (OK mais leaks a verifier)
 - [X] Signal ctrl-C dans heredoc
 - [X] export TEST= ; env | grep TEST
+- [X] norme
 - [ ] CDPATH
-- [ ] norme
 - [ ] Dernieres verifications
 - [ ] Push final.

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 16:36:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 10:47:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,5 +228,8 @@ int		replace_tilde(char **str, char **home);
 void	remove_quote(char *str, size_t j);
 int		str_quotes_removal(char **str);
 int		str_tilde_expansion(char **str, t_env *env);
-
+int		command_and_args_expansion(t_command_line *command, t_env *env);
+char	**command_split(char const *s, char c);
+int		filename_expansion(t_redir *redir, char **array,
+			int array_index, t_env *env);
 #endif

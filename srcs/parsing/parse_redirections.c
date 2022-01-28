@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 17:29:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 17:19:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 10:46:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,6 @@ int	is_redirection(char *element)
 		return (1);
 	else
 		return (0);
-}
-
-char	*filename_expand(char *filename, t_env *env)
-{
-	char	*final;
-	char	**array;
-
-	final = ft_strdup(filename);
-	if (!final)
-		return (NULL);
-	search_dollar_in_str(&final, env);
-	str_quotes_removal(&final);
-	str_tilde_expansion(&final, env);
-	array = ft_split(final, ' ');
-	if (!array || array[1] != NULL || array[0][0] == '$')
-	{
-		ft_free_array(array);
-		free(final);
-		print(2, "minishell: %s: ambiguous redirect\n", filename);
-		return (NULL);
-	}
-	ft_free_array(array);
-	return (final);
 }
 
 // put the redirection values in the t_redir *redir structure
@@ -72,12 +49,8 @@ int	fill_redirections(t_redir *redir, int *array_index, char **array,
 					array[(*array_index) + 1]) == -1)
 				return (-1);
 		}
-		else
-		{
-			redir->filename = filename_expand(array[(*array_index) + 1], env);
-			if (redir->filename == NULL)
-				return (1);
-		}
+		else if (filename_expansion(redir, array, *array_index, env))
+			return (1);
 		*array_index += 2;
 	}
 	else
