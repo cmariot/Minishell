@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 10:46:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 10:47:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 17:58:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*filename_expand(char *filename, t_env *env)
 		ft_free_array(array);
 		free(final);
 		print(2, "minishell: %s: ambiguous redirect\n", filename);
+		global_exit_status(1);
 		return (NULL);
 	}
 	ft_free_array(array);
