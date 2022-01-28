@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/28 10:48:19 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/28 15:18:28 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,6 +111,7 @@ EXPANSION	= expansion/expansion.c \
 
 
 BUILTINS	= builtins/builtin_cd.c \
+		builtins/builtin_cd_cdpath.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_env.c \
 		builtins/builtin_exit.c \

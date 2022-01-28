@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 10:47:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/28 15:17:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ t_env	*builtin_unset(t_env *env, char **names);
 void	builtin_exit(t_shell *minishell, char **args, int *backup_fd);
 int		builtin_pwd(t_shell *minishell, char *first_arg);
 int		builtin_cd(t_shell *minishell);
+int		cd_error(int error_id, char *directory);
+int		cdpath(t_env *env, char *dir);
 int		builtin_echo(char **command_and_args);
 
 // pipeline.c
