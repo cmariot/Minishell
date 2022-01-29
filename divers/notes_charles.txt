@@ -11,6 +11,6 @@ A FAIRE :
 - [X] Signal ctrl-C dans heredoc
 - [X] export TEST= ; env | grep TEST
 - [X] norme
-- [ ] CDPATH
+- [X] CDPATH
 - [ ] Dernieres verifications
 - [ ] Push final.
