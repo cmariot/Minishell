@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 15:17:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 08:38:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void	ft_handler(int sig, siginfo_t *info, void *secret);
 //	tokens_get.c / tokens_count.c / tokens_fill.c
 int		get_tokens_array(char *line, char ***array);
 size_t	count_number_of_tokens(char *line);
-void	fill_tokens_array(char **array, char *line,
+int		fill_tokens_array(char **array, char *line,
 			size_t number_of_tokens);
 bool	is_blank(char *line, size_t i);
 bool	is_a_metacharacter(char *line, size_t *i, bool opt);

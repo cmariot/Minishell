@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:36:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/22 22:29:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 09:15:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	get_command_and_args(t_command_line *command_line)
 	while (i < command_line->number_of_simple_commands)
 	{
 		len = get_command_and_args_len(command_line->command[i].command_array);
+		print(1, "LEN COMMAND_AND_ARGS = %d\n", len);
 		if (len == 0)
 		{
 			i++;

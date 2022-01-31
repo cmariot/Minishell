@@ -6,24 +6,51 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 14:02:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 09:23:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	count_commands_len(char *str)
+{
+	size_t	i;
+	char	quote_type;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			quote_type = str[i];
+			i++;
+			while (str[i] != quote_type)
+				i++;
+		}
+		if (str[i] == '|' && str[i + 1] == '\0')
+			return (0);
+		else if (str[i] == '|' && str[i + 1] != '\0')
+			return (1);
+		i++;
+	}
+	return (-1);
+}
+
 int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 {
 	int	i;
 	int	len;
+	int	ret;
 
 	len = 0;
 	while (splitted_line[array_index + len] != NULL)
 	{
-		if (ft_strcmp(splitted_line[array_index + len], "|") == 0)
+		ret = count_commands_len(splitted_line[array_index + len]);
+		if (ret == 0 || ret == 1)
 			break ;
 		len++;
 	}
+	print(1, "LEN COMMAND_ARRAY = %d\n", len);
 	command->command_array = ft_calloc(len + 1, sizeof(char *));
 	if (!command->command_array)
 		return (-1);
@@ -36,7 +63,31 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 		i++;
 		array_index++;
 	}
-	return (array_index + 1);
+	if (ret == 0)
+		return (array_index + 1);
+	else
+		return (array_index);
+}
+
+void	count_in_str(char *splitted_line, int *number_of_commands)
+{
+	size_t	i;
+	char	quote_type;
+
+	i = 0;
+	while (splitted_line[i])
+	{
+		if (splitted_line[i] == '"' || splitted_line[i] == '\'')
+		{
+			quote_type = splitted_line[i];
+			i++;
+			while (splitted_line[i] != quote_type)
+				i++;
+		}
+		if (splitted_line[i] == '|')
+			(*number_of_commands)++;
+		i++;
+	}
 }
 
 /* count_commands() returns the number of simple commands in the line
@@ -50,15 +101,14 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
  * or 128+n if the command is terminated by signal n. */
 size_t	count_commands(char **splitted_line)
 {
-	int	number_of_commands;
-	int	i;
+	int		number_of_commands;
+	int		i;
 
 	i = 0;
 	number_of_commands = 1;
 	while (splitted_line[i])
 	{
-		if (ft_strcmp(splitted_line[i], "|") == 0)
-			number_of_commands++;
+		count_in_str(splitted_line[i], &number_of_commands);
 		i++;
 	}
 	return (number_of_commands);

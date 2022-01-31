@@ -12,5 +12,6 @@ A FAIRE :
 - [X] export TEST= ; env | grep TEST
 - [X] norme
 - [X] CDPATH
+- [ ] ls -la ""| wc -l
 - [ ] Dernieres verifications
 - [ ] Push final.

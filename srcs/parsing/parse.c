@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:11:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 10:18:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 09:14:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,6 @@ bool	skip_verif_inside_quotes(char *line, int *i)
 	if (line[*i] == c)
 		ok = TRUE;
 	return (ok);
-}
-
-// Minishell should not interpret unclosed quotes
-int	check_quotes(char *line)
-{
-	int		i;
-	bool	ok;
-
-	i = 0;
-	ok = TRUE;
-	while (line[i] != '\0')
-	{
-		if ((line[i] == '\"' || line[i] == '\''))
-			ok = skip_verif_inside_quotes(line, &i);
-		if (line[i] == '\0' || line[i] == '#')
-			break ;
-		i++;
-	}
-	if (ok == TRUE)
-		return (0);
-	else
-	{
-		print(2, "minishell does not interpret unclosed quotes\n");
-		return (global_exit_status(1));
-	}
 }
 
 int	check_empty_redir(t_command_line *command_line,
@@ -102,6 +77,31 @@ int	check_empty_pipe(t_command_line *command_line,
 	return (0);
 }
 
+// Minishell should not interpret unclosed quotes
+int	check_quotes(char *line)
+{
+	int		i;
+	bool	ok;
+
+	i = 0;
+	ok = TRUE;
+	while (line[i] != '\0')
+	{
+		if ((line[i] == '\"' || line[i] == '\''))
+			ok = skip_verif_inside_quotes(line, &i);
+		if (line[i] == '\0' || line[i] == '#')
+			break ;
+		i++;
+	}
+	if (ok == TRUE)
+		return (0);
+	else
+	{
+		print(2, "minishell does not interpret unclosed quotes\n");
+		return (global_exit_status(1));
+	}
+}
+
 int	parse(t_command_line *command_line, t_shell *minishell)
 {
 	if (command_line->line[0] == '\0')
@@ -126,6 +126,6 @@ int	parse(t_command_line *command_line, t_shell *minishell)
 		return (1);
 	if (expansion(command_line, minishell->env))
 		return (1);
+	print_command_line(command_line);
 	return (0);
 }
-//	print_command_line(command_line);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:28:49 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 14:01:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 08:38:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_token_value(char *line, size_t *index)
 
 /* a loop used to fill the array of tokens */
 
-void	fill_tokens_array(char **array, char *line, size_t number_of_tokens)
+int	fill_tokens_array(char **array, char *line, size_t number_of_tokens)
 {
 	size_t	index;
 	size_t	i;
@@ -76,6 +76,9 @@ void	fill_tokens_array(char **array, char *line, size_t number_of_tokens)
 	while (i < number_of_tokens)
 	{
 		array[i] = get_token_value(line, &index);
+		if (array[i] == NULL)
+			return (1);
 		i++;
 	}
+	return (0);
 }
