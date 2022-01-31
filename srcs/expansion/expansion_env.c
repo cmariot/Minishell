@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 16:45:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 21:17:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,19 @@ int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
 	(*i)++;
 	while ((*str)[*i] != '"' && (*str)[*i])
 	{
-		if ((*str)[*i] == '$' && (*str)[*i + 1] && (*str)[*i + 1] == '"')
+		if ((*str)[*i] == '$' && (*str)[*i + 1])
 		{
-			(*i) += 1;
-			return (0);
+			if ((*str)[*i + 1] == '"')
+			{
+				(*i) += 1;
+				return (0);
+			}
+			else if ((*str)[*i + 1] == '\'')
+			{
+				(*i) += 1;
+				while ((*str)[*i + 1] != '\'')
+					(*i) += 1;
+			}
 		}
 		if ((*str)[*i] == '$')
 			if (get_name_to_expand(str, i, env) == 1)
