@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:03:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 15:15:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 21:38:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,11 @@ int	builtin_env(t_env *env, char *first_arg)
 		return (global_exit_status(0));
 	while (env)
 	{
-		if (env->name)
+		if (env->name && env->value)
 		{
 			ft_putstr(env->name);
 			write(1, "=", 1);
-			if (env->value)
-				ft_putstr(env->value);
+			ft_putstr(env->value);
 			write(1, "\n", 1);
 		}
 		env = env->next;
