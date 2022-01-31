@@ -6,10 +6,9 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 09:23:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 11:50:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 int	count_commands_len(char *str)
@@ -50,23 +49,19 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 			break ;
 		len++;
 	}
-	print(1, "LEN COMMAND_ARRAY = %d\n", len);
 	command->command_array = ft_calloc(len + 1, sizeof(char *));
 	if (!command->command_array)
 		return (-1);
 	i = 0;
-	while (i < len)
+	while (i++ < len)
 	{
-		command->command_array[i] = ft_strdup(splitted_line[array_index]);
-		if (!command->command_array[i])
+		command->command_array[i - 1] = ft_strdup(splitted_line[array_index++]);
+		if (!command->command_array[i - 1])
 			return (-1);
-		i++;
-		array_index++;
 	}
 	if (ret == 0)
 		return (array_index + 1);
-	else
-		return (array_index);
+	return (array_index);
 }
 
 void	count_in_str(char *splitted_line, int *number_of_commands)

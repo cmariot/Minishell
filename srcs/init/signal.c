@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/01/28 01:41:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 12:04:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	interactive_handler(int signal)
 
 	if (signal == SIGINT)
 	{
+		print(1, "\b\b  \b\b");
 		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();

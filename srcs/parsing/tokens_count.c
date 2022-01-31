@@ -6,11 +6,38 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:28:13 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/27 14:01:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 11:34:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* return true if line[i] is a metacharacter,
+ * if the option opt is TRUE the value of i is increased by
+ * the len of the metacharacter */
+
+bool	is_a_metacharacter(char *line, size_t *i, bool opt)
+{
+	if (line[*i] == '<' && line[*i + 1] && line[*i + 1] == '<')
+	{
+		if (opt == TRUE)
+			(*i) += 2;
+		return (TRUE);
+	}
+	else if (line[*i] == '>' && line[*i + 1] && line[*i + 1] == '>')
+	{
+		if (opt == TRUE)
+			(*i) += 2;
+		return (TRUE);
+	}
+	else if (line[*i] == '<' || line[*i] == '>' || line[*i] == '|')
+		;
+	else
+		return (FALSE);
+	if (opt == TRUE)
+		(*i)++;
+	return (TRUE);
+}
 
 /* i++ until the end of the quote which ends the word */
 
@@ -23,13 +50,16 @@ void	parse_quotes(char *line, size_t *i)
 	(*i)++;
 	while (line[*i] != '\0')
 	{
+		i_plus_un = *i + 1;
 		if (line[*i] == quote_type)
 		{
+			if (line[(*i)++ + 1]
+				&& is_a_metacharacter(line, &i_plus_un, FALSE) == TRUE)
+				break ;
 			while (line[*i] != '\0' && is_blank(line, (*i)) == FALSE)
 				(*i)++;
 			break ;
 		}
-		i_plus_un = *i + 1;
 		if (line[*i] == quote_type
 			&& is_a_metacharacter(line, &i_plus_un, FALSE) == TRUE)
 		{
@@ -60,33 +90,6 @@ void	parse_word(char *line, size_t *i)
 			break ;
 		(*i)++;
 	}
-}
-
-/* return true if line[i] is a metacharacter,
- * if the option opt is TRUE the value of i is increased by
- * the len of the metacharacter */
-
-bool	is_a_metacharacter(char *line, size_t *i, bool opt)
-{
-	if (line[*i] == '<' && line[*i + 1] && line[*i + 1] == '<')
-	{
-		if (opt == TRUE)
-			(*i) += 2;
-		return (TRUE);
-	}
-	else if (line[*i] == '>' && line[*i + 1] && line[*i + 1] == '>')
-	{
-		if (opt == TRUE)
-			(*i) += 2;
-		return (TRUE);
-	}
-	else if (line[*i] == '<' || line[*i] == '>' || line[*i] == '|')
-		;
-	else
-		return (FALSE);
-	if (opt == TRUE)
-		(*i)++;
-	return (TRUE);
 }
 
 /* return true if line[i] == space or tab */
