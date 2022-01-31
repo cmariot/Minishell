@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 15:01:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 19:05:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ bool	contains_slash_no_such_file(char *command)
 {
 	size_t	i;
 
-	if (ft_isadirectory(command) == TRUE)
+	if (access(command, F_OK) == 0
+		&& (ft_isadirectory(command) == TRUE || access(command, X_OK) != 0))
 	{
 		print(2, "minishell: %s", command);
-		print(2, ": Is a directory\n");
+		if (ft_isadirectory(command) == TRUE)
+			print(2, ": is a directory\n");
+		else if (access(command, X_OK) != 0)
+			print(2, ": permission denied\n");
 		global_exit_status(126);
 		return (TRUE);
 	}
