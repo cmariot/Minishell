@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:41:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/29 13:23:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 22:36:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_name_len(char **args, size_t i)
 	if (args[i][j] != '=')
 	{
 		if (args[i][j] == '\0')
-			return (0);
+			return (j);
 		return (error_invalid_identifier(args, i));
 	}
 	return (j);
@@ -47,7 +47,9 @@ int	export_without_args(t_env *env)
 {
 	while (env != NULL)
 	{
-		if (env->name && env->value)
+		if (env->name && env->value == NULL)
+			print(1, "declare -x %s\n", env->name);
+		else if (env->name && env->value)
 			print(1, "declare -x %s=\"%s\"\n", env->name, env->value);
 		env = env->next;
 	}
@@ -58,23 +60,17 @@ int	export(t_shell *minishell, char **args, size_t i, size_t name_len)
 {
 	char	*name;
 	char	*value;
-	size_t	last_index;
 
 	name = ft_substr(args[i], 0, name_len);
 	if (name == NULL)
 		return (global_exit_status(1));
 	value = NULL;
-	if (args[i][name_len + 1] != '\0')
+	if (args[i][name_len] == '=')
 	{
-		value = ft_strdup(args[i] + name_len + 1);
-		last_index = ft_strlen(value) - 1;
-		while (last_index > 0)
-		{
-			if (value[last_index--] == ' ')
-				value[last_index + 1] = '\0';
-			else
-				break ;
-		}
+		if (args[i][name_len + 1] == '\0')
+			value = ft_calloc(sizeof(char), 2);
+		else
+			value = ft_strdup(args[i] + name_len + 1);
 	}
 	add_to_env(minishell, minishell->env, name, value);
 	if (value)

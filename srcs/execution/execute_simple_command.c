@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 17:00:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/01 13:32:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,22 @@
 
 void	command_not_found(char *command)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(command, 2);
-	ft_putstr_fd(": command not found\n", 2);
-	global_exit_status(127);
+	print(2, "minishell: ");
+	if (ft_isadirectory(command) == TRUE)
+	{
+		print(2, "%s: is a directory\n", command);
+		global_exit_status(126);
+	}
+	else if (access(command, F_OK) == 0 && access(command, X_OK) != 0)
+	{
+		print(2, "%s: permission denied\n", command);
+		global_exit_status(126);
+	}
+	else if (access(command, F_OK) != 0)
+	{
+		print(2, "%s: command not found\n", command);
+		global_exit_status(127);
+	}
 }
 
 void	execute_simple_command(t_shell *minishell, t_simple command,
@@ -42,7 +54,9 @@ void	execute_simple_command(t_shell *minishell, t_simple command,
 		return ;
 	}
 	if (command_without_path(minishell, command, env_array, backup_fd) == 127)
+	{
 		command_not_found(command.command_and_args[0]);
+	}
 	restore_file_redirection(command, backup_fd[STDIN], backup_fd[STDOUT]);
 	ft_free_array(env_array);
 	return ;

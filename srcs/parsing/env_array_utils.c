@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:58:50 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/20 19:22:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 22:26:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ void	add_to_env(t_shell *minishell, t_env *env, char *name, char *value)
 		{
 			if (ft_strcmp(env->name, name) == 0)
 			{
-				free(env->value);
-				env->value = ft_strdup(value);
+				if (env->value)
+					free(env->value);
+				if (value != NULL && value[0] == '\0')
+					env->value = ft_calloc(sizeof(char), 2);
+				else
+					env->value = ft_strdup(value);
 				return ;
 			}
 			env = env->next;

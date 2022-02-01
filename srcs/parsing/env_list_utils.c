@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 08:32:45 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 13:23:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 22:34:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ t_env	*ft_lstnew_env(void *name, char *value)
 		new->name = ft_strdup(name);
 		if (!(new->name))
 			return (NULL);
-		new->value = ft_strdup(value);
+		if (value != NULL && value[0] == '\0')
+			new->value = ft_calloc(sizeof(char), 2);
+		else
+			new->value = ft_strdup(value);
 		new->next = NULL;
 		return (new);
 	}
@@ -51,8 +54,10 @@ void	ft_lstadd_back_env(t_env **alst, t_env *new)
 // Apply the function del to the name and the value and free the element
 void	ft_lstdelone_env(t_env *env, void (*del)(void *))
 {
-	(del)(env->name);
-	(del)(env->value);
+	if (env->name)
+		(del)(env->name);
+	if (env->value)
+		(del)(env->value);
 	free(env);
 }
 
