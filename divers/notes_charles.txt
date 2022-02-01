@@ -9,8 +9,8 @@ A FAIRE :
 - [X] minishell: ls: command not found : chmod 0 sur executable dans le dossier
 - [X] echo $"$''"
 - [X] exit a deux chiffres ne doit pas quitter
+- [X] cat << hi'' vs cat << hi -> expansion a faire dans le heredoc
 - [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
-- [ ] cat << hi'' vs cat << hi -> expansion a faire dans le heredoc
 - [ ] A=" > " puis echo "abc" $A a (ou echo {$A})
 - [ ] export A=" a      b     c   " puis echo $A | cat -e
 - [ ] Dernieres verifications

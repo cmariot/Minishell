@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 19:05:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/01 15:32:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	find_correct_path(char **path_array, t_simple command, char **env,
 			free(command_path);
 		(path_array)++;
 	}
+	print(2, "minishell: %s: command not found\n", command.command_and_args[0]);
 	return (127);
 }
 
