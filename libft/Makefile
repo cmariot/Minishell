@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/28 10:21:13 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/01 12:07:36 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,46 +125,33 @@ RC	= \033[0m
 
 all : $(NAME)
 
-# Compiling
-srcs_compil :
-		@printf "$(YE)Libft compilation ... \n$(RC)"
+create_obj_dir :
+		mkdir -p $(OBJS_DIR)
 
 $(OBJS_DIR)%.o : %.c
-		@mkdir -p $(OBJS_DIR)
-		@$(CC) $(CFLAGS) -c $< -o $@
-		@printf "$(YE)$(CC) $(CFLAGS) -c $< -o $@\n$(RC)"
+		$(CC) $(CFLAGS) -c $< -o $@
 
 # Linking
 obj_link :
-		@printf "$(YE)Libft compilation success.\n\n"
-		@make -C $(PRINT_DIR)
-		@printf "$(GR)Linking Libft objects ...\n"
-		@printf "ar rc $(NAME) $(OBJS) $(RC)\n"
+		make -C $(PRINT_DIR)
 
-$(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
-		@ar rc $(NAME) $(OBJS)
-		@printf "$(GR)Success, $(NAME) is ready.\n\n"
+$(NAME)	: create_obj_dir $(SRCS) $(OBJS) obj_link
+		ar rc $(NAME) $(OBJS)
 
 # Check 42 norm
 norm :
-		@norminette srcs includes
+		@norminette
 
 # Remove object files
 clean :
-		@printf "Removing libft.a $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
-		@make -C $(PRINT_DIR) clean
+		rm -rf $(OBJS_DIR)
+		make -C $(PRINT_DIR) clean
 
 # Remove object and binary files
 fclean:
-		@printf "Removing ${NAME} ... "
-		@rm -f ${NAME}
-		@printf "Done\n"
-		@printf "Removing libft.a $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
-		@make -C $(PRINT_DIR) fclean
+		rm -f ${NAME}
+		rm -rf $(OBJS_DIR)
+		make -C $(PRINT_DIR) fclean
 
 # Remove all and recompile
 re :	 fclean all

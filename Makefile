@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/28 15:18:28 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/01 12:20:54 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -174,32 +174,25 @@ RC		= \033[0m
 
 all : $(NAME)
 
+create_objs_dir:
+		mkdir -p $(OBJS_DIR)
 
 # Compiling
-srcs_compil :
-		@printf "$(YE)Source code compilation ... \n"
-
 $(OBJS_DIR)%.o : %.c
-		@mkdir -p $(OBJS_DIR)
-		@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-		@printf "$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@\n"
+		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	
 	
 # Linking
 obj_link :
-		@printf "$(YE)$(NAME) compilation success.\n\n"
-		@make -C $(LIBFT)
-		@printf "$(GR)Linking $(NAME) objects ...\n"
-		@printf "$(CC) $(LFLAGS) $(OBJS) $(LIBRARIES) -o $(NAME)$(RC)\n"
+		make -C $(LIBFT)
 
-$(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
-		@$(CC) $(LFLAGS) $(OBJS) $(LIBRARIES) -o $(NAME)
-		@printf "$(GR)Success, $(NAME) is ready.\n\n$(RC)"
+$(NAME)	: create_objs_dir $(SRCS) $(OBJS) obj_link
+		$(CC) $(LFLAGS) $(OBJS) $(LIBRARIES) -o $(NAME)
 
 
 # Compile and launch
 test : all
-		@./minishell
+		./minishell
 
 
 #Check the leaks with valgrind and some useful flags
@@ -209,7 +202,7 @@ leaks : all
 
 # Check 42 norm 
 norm :
-		@norminette
+		norminette
 
 
 bonus : all
@@ -217,33 +210,19 @@ bonus : all
 
 # Remove object files
 clean :
-		@printf "$(RE)make clean in $(LIBFT) ... \n"
-		@make clean -C $(LIBFT)
-		@printf "Done\n\n"
-		@printf "Removing $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n$(RC)"
+		make clean -C $(LIBFT)
+		rm -rf $(OBJS_DIR)
 
 
 # Remove object and binary files
 fclean :
-		@printf "$(RE)make fclean in $(LIBFT) ... \n"
-		@make fclean -C $(LIBFT)
-		@printf "Done\n\n"
-		@printf "Removing $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
-		@printf "Removing $(NAME) ... "
-		@rm -f $(NAME)
-		@printf "Done\n$(RC)"
-
-
-print_divider :
-		@printf "\n"
+		rm -rf $(OBJS_DIR)
+		rm -f $(NAME)
+		make fclean -C $(LIBFT)
 
 
 # Remove all and recompile
-re :	 fclean print_divider all
+re :	 fclean all
 
 
 .PHONY : clean fclean

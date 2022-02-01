@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/24 15:18:07 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/01 12:11:43 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,44 +85,26 @@ RC		= \033[0m
 
 all : $(NAME)
 
+create_obj_dir:
+		mkdir -p $(OBJS_DIR)
+
 # Compiling
-srcs_compil :
-		@printf "$(YE)$(NAME) compilation ... \n"
-
 $(OBJS_DIR)%.o : %.c
-		@mkdir -p $(OBJS_DIR)
-		@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-		@printf "$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@\n"
+		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	
-# Linking
-obj_link :
-		@printf "$(YE)$(NAME) compilation success.\n\n"
-		@printf "$(GR)Creating $(NAME) library ...\n"
-		@printf "ar rc $(NAME) $(OBJS) $(RC)\n"
-
-$(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
-		@ar rc $(NAME) $(OBJS)
-		@printf "$(GR)Success, $(NAME) is ready.\n\n"
+$(NAME)	: create_obj_dir $(SRCS) $(OBJS)
+		ar rc $(NAME) $(OBJS)
 
 # Remove object files
 clean :
-		@printf "$(RE)Removing print.a $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n$(RC)"
+		rm -rf $(OBJS_DIR)
 
 # Remove object and binary files
 fclean :
-		@printf "$(RE)Removing $(NAME) ... "
-		@rm -f $(NAME)
-		@printf "Done\n"
-		@printf "Removing print.a $(OBJS_DIR) ... "
-		@rm -rf $(OBJS_DIR)
-		@printf "Done\n"
-
-print_divider :
-		@printf "\n"
+		rm -f $(NAME)
+		rm -rf $(OBJS_DIR)
 
 # Remove all and recompile
-re :	 fclean print_divider all
+re :	 fclean all
 
 .PHONY : clean fclean
