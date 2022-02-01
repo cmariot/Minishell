@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/01 13:32:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/01 13:54:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 void	command_not_found(char *command)
 {
-	print(2, "minishell: ");
 	if (ft_isadirectory(command) == TRUE)
 	{
-		print(2, "%s: is a directory\n", command);
+		print(2, "minishell: %s: is a directory\n", command);
 		global_exit_status(126);
 	}
 	else if (access(command, F_OK) == 0 && access(command, X_OK) != 0)
 	{
-		print(2, "%s: permission denied\n", command);
+		print(2, "minishell: %s: permission denied\n", command);
 		global_exit_status(126);
 	}
 	else if (access(command, F_OK) != 0)
 	{
-		print(2, "%s: command not found\n", command);
+		print(2, "minishell: %s: command not found\n", command);
 		global_exit_status(127);
 	}
 }
