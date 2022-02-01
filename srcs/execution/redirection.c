@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:02:31 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 13:39:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 16:56:09 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	redirection_error(char *file)
 {
 	print(2, "minishell: ");
-	if (access(file, F_OK) != 0)
+	if (ft_isadirectory(file) == TRUE)
+		print(2, "%s: is a directory\n", file);
+	else if (access(file, F_OK) != 0)
 		print(2, "%s: no such file or directory\n", file);
 	else if (access(file, R_OK) != 0)
 		print(2, "%s: permission denied\n", file);

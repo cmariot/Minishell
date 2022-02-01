@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/01/28 15:18:28 by cmariot          ###   ########.fr        #
+#    Updated: 2022/01/31 14:51:51 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -200,11 +200,6 @@ $(NAME)	: srcs_compil $(SRCS) $(OBJS) obj_link
 # Compile and launch
 test : all
 		@./minishell
-
-
-#Check the leaks with valgrind and some useful flags
-leaks : all
-		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=divers/.ignore_readline --track-origins=yes ./minishell
 
 
 # Check 42 norm 

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/24 12:57:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/01/31 14:45:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	free_minishell(t_shell *minishell)
 		ft_lstclear_env(&minishell->env, free);
 	reset_minishell(&minishell->command_line);
 	clear_history();
-	close(0);
-	close(1);
-	close(2);
+//	close(0);
+//	close(1);
+//	close(2);
 	exit(return_global_exit_status());
 }

@@ -1,17 +1,44 @@
 A FAIRE :
 ---------
 
-- [X] cat << l;s
-- [X] $DFGDFG
-- [X] << eof
-- [X] echo salut > $truc
-- [X] Heredoc avec readline plutot que gnl
-- [X] sdfsd | dsdfsdsf | dgdgrr | dfgfgfd
-- [X] export LS="s -la" puis l$LS (OK mais leaks a verifier)
-- [X] Signal ctrl-C dans heredoc
-- [X] export TEST= ; env | grep TEST
-- [X] norme
-- [X] CDPATH
-- [ ] ls -la ""| wc -l
+- [ ] Export : export test ; export (sans arg) doit afficher test
+- [ ] Execution : No such file or directory a la place de Permission+ verfier ordre check
+- [X] ls > .
+- [ ] < file
+- [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
+- [ ] minishell: ls: command not found : chmod 0 sur executable dans le dossier
+- [ ] echo $"$''"
+- [ ] cat << hi'' vs cat << hi
+- [ ] A=" > " puis echo "abc" $A a (ou echo {$A})
+- [ ] echo " $''"
+- [ ] export A=" a      b     c   " puis echo $A | cat -e
+- [ ] exit a deux chiffres ne doit pas quitter
 - [ ] Dernieres verifications
 - [ ] Push final.
+
+
+etran ➤
+touch mdr
+etran ➤
+chmod 000 mdr
+etran ➤
+mdr
+minishell: mdr: command not found
+etran ➤
+./mdr
+minishell: ./mdr: no such file or directory.
+etran ➤
+echo $?
+127
+etran ➤
+touch ls
+etran ➤
+chmod 000
+chmod: missing operand after ‘000’
+Try 'chmod --help' for more information.
+etran ➤
+chmod 000 ls
+etran ➤
+./ls
+minishell: ./ls: no such file or directory.
+
