@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 15:52:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/01 15:10:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int		output_redirection(t_simple command);
 
 //heredoc.c
 char	*new_heredoc_name(void);
-int		create_heredoc(char *filename, char *limiter);
+int		create_heredoc(char *filename, char *limiter, t_env *env);
 void	remove_heredocs(t_simple command);
 
 int		catch_signal(int comportement);

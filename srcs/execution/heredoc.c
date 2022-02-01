@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 16:46:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/01 15:12:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,35 @@ int	heredoc_return(char *file, int fd)
 	return (0);
 }
 
-int	create_heredoc(char *file, char *limiter)
+bool	need_to_expand_heredoc(char **limiter)
+{
+	size_t	len_before;
+	size_t	len_after;
+
+	len_before = ft_strlen(*limiter);
+	str_quotes_removal(limiter);
+	len_after = ft_strlen(*limiter);
+	if (len_before != len_after)
+		return (FALSE);
+	else
+		return (TRUE);
+}
+
+void	line_expansion(char **line, t_env *env)
+{
+	if (search_dollar_in_str(line, env))
+	{
+		if (line)
+			free(line);
+		line = NULL;
+	}
+}
+
+int	create_heredoc(char *file, char *limiter, t_env *env)
 {
 	int		fd;
 	char	*line;
+	int		expansion;
 
 	if (file == NULL || limiter == NULL)
 		return (-1);
@@ -84,7 +109,7 @@ int	create_heredoc(char *file, char *limiter)
 	catch_signal(HEREDOC);
 	global_exit_status(0);
 	rl_getc_function = getc;
-	str_quotes_removal(&limiter);
+	expansion = need_to_expand_heredoc(&limiter);
 	while (1)
 	{
 		line = readline("heredoc ➤ ");
@@ -92,6 +117,8 @@ int	create_heredoc(char *file, char *limiter)
 			print(1, "\n");
 		if (ft_strcmp(line, limiter) == 0 || line == NULL || !line)
 			break ;
+		if (expansion == TRUE)
+			line_expansion(&line, env);
 		print(fd, "%s\n", line);
 		free(line);
 	}
