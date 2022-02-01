@@ -1,7 +1,7 @@
 A FAIRE :
 ---------
 
-- [ ] Export : export test ; export (sans arg) doit afficher test
+- [X] Export : export test ; export (sans arg) doit afficher test
 - [ ] Execution : No such file or directory a la place de Permission+ verfier ordre check
 - [X] ls > .
 - [ ] < file
