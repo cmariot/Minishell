@@ -15,21 +15,22 @@ A FAIRE :
 - [X] expansion dans heredoc
 - [X] cat << eof puis heredoc ➤ '$PWD'
 - [X] Makefile relink
+- [X] Verifier les $? signaux/erreurs 
+- [X] signaux dans heredoc / pipe
+- [X] | ls |
 
 
 En cours :
 
-- [ ] A=" > " puis echo "abc" $A a (ou echo {$A})
-- [ ] export A=" a      b     c   " puis echo $A | cat -e
+- [ ] export A=" a      b     c   "
+		echo $A | cat -e
+		echo '.'$A'.' | cat -e
 
 A faire :
 
 - [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
-- [ ] Verifier les $? signaux/erreurs 
-- [ ] signaux dans heredoc / pipe
 - [ ] verifications, tests
 
-- [ ] | ls |
 
 
 
