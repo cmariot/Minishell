@@ -30,7 +30,7 @@ A faire :
 
 - [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
 - [ ] verifications, tests
-
+- [ ] norme
 
 
 
