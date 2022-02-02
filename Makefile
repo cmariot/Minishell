@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/01 16:47:17 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/02 15:32:12 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,9 @@
 
 NAME			= minishell
 
-SRCS_DIR		= srcs
-INCL_DIR		= includes
-OBJS_DIR		= objs/
+DIRSRC			= srcs/
 
-LIBFT			= libft
-LIBFT_INCL		= $(LIBFT)/includes/
-
+DIROBJ			= objs/
 
 
 # **************************************************************************** #
@@ -34,13 +30,13 @@ CC				= clang
 
 CFLAGS			= -Wall -Wextra -Werror
 
-INCLUDES		= -I $(INCL_DIR)
-INCLUDES		+= -I $(LIBFT_INCL)
+INCLUDES		= -I ./includes
+INCLUDES		+= -I ./libft/includes
 
 LFLAGS			= -Wall -Wextra -Werror
 
-LIBRARIES		= -L $(LIBFT) -lft
-LIBRARIES		+= -L $(LIBFT)/srcs/print -lprint
+LIBRARIES		= -L libft -lft
+LIBRARIES		+= -L libft/srcs/print -lprint
 
 
 # Select the correct path of readline library and includes depending the system
@@ -75,7 +71,6 @@ ifeq ($(OPTI), 1)
 	LFLAGS		+= -O2 -O3
 
 endif
-
 
 
 # **************************************************************************** #
@@ -138,27 +133,29 @@ EXIT		= exit/free_minishell.c \
 			exit/global_exit_status.c
 
 
-SRCS		= $(INIT) \
+SRC			= $(INIT) \
 			$(PARSING) \
 			$(EXPANSION) \
 			$(EXECUTION) \
 			$(BUILTINS) \
 			$(EXIT)
 
+OBJ			:= $(SRC:.c=.o)
 
-SRC			:= $(notdir $(SRCS))
+DIROBJS		= $(addprefix $(DIROBJ), $(OBJ))
+
+SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ			:= $(SRC:.c=.o)
 
-OBJS		:= $(addprefix $(OBJS_DIR), $(OBJ))
-
-VPATH		:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
+OBJS_DIRECTORIES = objs/init objs/parsing objs/expansion objs/builtins objs/execution objs/exit
 
 
 
 # **************************************************************************** #
 #                                  COLORS                                      #
 # **************************************************************************** #
+
 
 GR		= \033[32;1m
 RE		= \033[31;1m
@@ -172,44 +169,42 @@ RC		= \033[0m
 #                             MAKEFILE'S RULES                                 #
 # **************************************************************************** #
 
+
 all : $(NAME)
 
-# Compilation
-$(OBJS_DIR)%.o : %.c
+$(DIROBJ)%.o: $(DIRSRC)%.c
+		@mkdir -p $(OBJS_DIRECTORIES)
+		@printf "$(YE)"
 		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+		@printf "$(RC)"
+	
+$(NAME)	: $(DIROBJS)
+		@make -C libft
+		@printf "$(GR)"
+		$(CC) $(LFLAGS) $(DIROBJS) $(LIBRARIES) -o $(NAME)
+		@printf "$(RC)"
 
-objs_dir:
-		mkdir -p $(OBJS_DIR)
-
-# Linking
-compil_libft :
-		make -C $(LIBFT)
-
-$(NAME)	: objs_dir $(SRCS) $(OBJS) compil_libft 
-		$(CC) $(LFLAGS) $(OBJS) $(LIBRARIES) -o $(NAME)
-
-# Compile and launch
-test : all
+test :	 all
 		./minishell
 
-# Check 42 norm 
 norm :
 		norminette
 
-bonus : all
-
-# Remove object files
 clean :
-		make clean -C $(LIBFT)
-		rm -rf $(OBJS_DIR)
+		make -C libft clean
+		@printf "$(RE)"
+		rm -rf $(DIROBJ)
+		@printf "$(RC)"
 
-# Remove object and binary files
 fclean :
-		rm -rf $(OBJS_DIR)
+		@make -C libft fclean
+		@printf "$(RE)"
 		rm -f $(NAME)
-		make fclean -C $(LIBFT)
+		rm -rf $(DIROBJ)
+		@printf "$(RC)"
 
-# Remove all and recompile
 re :	 fclean all
+
+bonus : all
 
 .PHONY : clean fclean

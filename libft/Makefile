@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/01 12:07:36 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/02 15:33:14 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,107 +16,105 @@
 # **************************************************************************** #
 
 NAME		= libft.a
-SRCS_DIR	= srcs
-INCL_DIR	= includes
-OBJS_DIR	= objs/
 
 PRINT_DIR	= srcs/print
-PRINT_INCL	= srcs/print/includes
 
 # **************************************************************************** #
 #                         COMPILATION AND LINK FLAGS                           #
 # **************************************************************************** #
 
-CC		= clang
+CC			= clang
 
-CFLAGS	= -Wall -Wextra -Werror
-CFLAGS	+= -I $(INCL_DIR)
-CFLAGS	+= -I $(PRINT_INCL)
+CFLAGS		= -Wall -Wextra -Werror
+
+INCLUDES	= -I ./includes
+INCLUDES	+= -I ./srcs/print/includes
 
 # **************************************************************************** #
 #                                SOURCE FILES                                  #
 # **************************************************************************** #
 
-SRCS	= colors.c \
-		  ft_arraylen.c \
-		  ft_atoi.c \
-		  ft_atoi_base.c \
-		  ft_bzero.c \
-		  ft_calloc.c \
-		  ft_free_array.c \
-		  ft_intlen.c \
-		  ft_isadirectory.c \
-		  ft_isalnum.c \
-		  ft_isalpha.c \
-		  ft_isascii.c \
-		  ft_isdigit.c \
-		  ft_isprint.c \
-		  ft_itoa.c \
-		  ft_join_array.c \
-		  ft_lstadd_back.c \
-		  ft_lstadd_front.c \
-		  ft_lstclear.c \
-		  ft_lstdelone.c \
-		  ft_lstiter.c \
-		  ft_lstlast.c \
-		  ft_lstmap.c \
-		  ft_lstnew.c \
-		  ft_lstsize.c \
-		  ft_memccpy.c \
-		  ft_memchr.c \
-		  ft_memcmp.c \
-		  ft_memcpy.c \
-		  ft_memmove.c \
-		  ft_memset.c \
-		  ft_putarray.c \
-		  ft_putchar.c \
-		  ft_putchar_fd.c \
-		  ft_putendl_fd.c \
-		  ft_putnbr.c \
-		  ft_putnbr_base.c \
-		  ft_putnbr_fd.c \
-		  ft_putstack.c \
-		  ft_putstr.c \
-		  ft_putstr_fd.c \
-		  ft_realloc.c \
-		  ft_split.c \
-		  ft_strchr.c \
-		  ft_strcmp.c \
-		  ft_strdup.c \
-		  ft_strjoin.c \
-		  ft_strlcat.c \
-		  ft_strlcpy.c \
-		  ft_strlen.c \
-		  ft_strmapi.c \
-		  ft_strncmp.c \
-		  ft_strnstr.c \
-		  ft_strrchr.c \
-		  ft_strtoll.c \
-		  ft_strtrim.c \
-		  ft_substr.c \
-		  ft_tolower.c \
-		  ft_toupper.c \
-		  get_next_line.c \
-		  gnl_without_bn.c
+DIRSRC		= srcs/
 
-SRC		:= $(notdir $(SRCS))
+DIROBJ		= objs/
 
-OBJ		:= $(SRC:.c=.o)
+SRC			= colors.c \
+			  ft_arraylen.c \
+			  ft_atoi.c \
+			  ft_atoi_base.c \
+			  ft_bzero.c \
+			  ft_calloc.c \
+			  ft_free_array.c \
+			  ft_intlen.c \
+			  ft_isadirectory.c \
+			  ft_isalnum.c \
+			  ft_isalpha.c \
+			  ft_isascii.c \
+			  ft_isdigit.c \
+			  ft_isprint.c \
+			  ft_itoa.c \
+			  ft_join_array.c \
+			  ft_lstadd_back.c \
+			  ft_lstadd_front.c \
+			  ft_lstclear.c \
+			  ft_lstdelone.c \
+			  ft_lstiter.c \
+			  ft_lstlast.c \
+			  ft_lstmap.c \
+			  ft_lstnew.c \
+			  ft_lstsize.c \
+			  ft_memccpy.c \
+			  ft_memchr.c \
+			  ft_memcmp.c \
+			  ft_memcpy.c \
+			  ft_memmove.c \
+			  ft_memset.c \
+			  ft_putarray.c \
+			  ft_putchar.c \
+			  ft_putchar_fd.c \
+			  ft_putendl_fd.c \
+			  ft_putnbr.c \
+			  ft_putnbr_base.c \
+			  ft_putnbr_fd.c \
+			  ft_putstack.c \
+			  ft_putstr.c \
+			  ft_putstr_fd.c \
+			  ft_realloc.c \
+			  ft_split.c \
+			  ft_strchr.c \
+			  ft_strcmp.c \
+			  ft_strdup.c \
+			  ft_strjoin.c \
+			  ft_strlcat.c \
+			  ft_strlcpy.c \
+			  ft_strlen.c \
+			  ft_strmapi.c \
+			  ft_strncmp.c \
+			  ft_strnstr.c \
+			  ft_strrchr.c \
+			  ft_strtoll.c \
+			  ft_strtrim.c \
+			  ft_substr.c \
+			  ft_tolower.c \
+			  ft_toupper.c \
+			  get_next_line.c \
+			  gnl_without_bn.c
 
-OBJS	:= $(addprefix $(OBJS_DIR), $(OBJ))
+OBJ			:= $(SRC:.c=.o)
 
-VPATH	:= $(SRCS_DIR) $(OBJS_DIR) $(shell find $(SRCS_DIR) -type d)
+DIROBJS		= $(addprefix $(DIROBJ), $(OBJ))
+
+SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 
 
 # **************************************************************************** #
-#                                   COLORS                                     #
+#                                COLORS                                        #
 # **************************************************************************** #
 
-GR	= \033[32;1m
-RE	= \033[31;1m
-YE	= \033[33;1m
-CY	= \033[36;1m
-RC	= \033[0m
+GR		= \033[32;1m
+RE		= \033[31;1m
+YE		= \033[33;1m
+RC		= \033[0m
 
 
 # **************************************************************************** #
@@ -125,35 +123,35 @@ RC	= \033[0m
 
 all : $(NAME)
 
-create_obj_dir :
-		mkdir -p $(OBJS_DIR)
+$(DIROBJ)%.o: $(DIRSRC)%.c
+		@mkdir -p $(DIROBJ)
+		@printf "$(YE)"
+		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+		@printf "$(RC)"
+	
+$(NAME)	: $(DIROBJS)
+		@make -C $(PRINT_DIR)
+		@printf "$(GR)"
+		ar rcs $(NAME) $(DIROBJS)
+		ranlib $(NAME)
+		@printf "$(RC)"
 
-$(OBJS_DIR)%.o : %.c
-		$(CC) $(CFLAGS) -c $< -o $@
-
-# Linking
-obj_link :
-		make -C $(PRINT_DIR)
-
-$(NAME)	: create_obj_dir $(SRCS) $(OBJS) obj_link
-		ar rc $(NAME) $(OBJS)
-
-# Check 42 norm
 norm :
 		@norminette
 
-# Remove object files
 clean :
-		rm -rf $(OBJS_DIR)
-		make -C $(PRINT_DIR) clean
+		@make -C $(PRINT_DIR) clean
+		@printf "$(RE)"
+		rm -rf $(DIROBJ)
+		@printf "$(RC)"
 
-# Remove object and binary files
-fclean:
-		rm -f ${NAME}
-		rm -rf $(OBJS_DIR)
-		make -C $(PRINT_DIR) fclean
+fclean :
+		@make -C $(PRINT_DIR) fclean
+		@printf "$(RE)"
+		rm -f $(NAME)
+		rm -rf $(DIROBJ)
+		@printf "$(RC)"
 
-# Remove all and recompile
 re :	 fclean all
 
 .PHONY : clean fclean
