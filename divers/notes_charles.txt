@@ -14,6 +14,7 @@ A FAIRE :
 - [X] Commandes sans droits ./ls
 - [X] expansion dans heredoc
 - [X] cat << eof puis heredoc ➤ '$PWD'
+- [X] Makefile relink
 
 
 En cours :
@@ -26,9 +27,9 @@ A faire :
 - [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
 - [ ] Verifier les $? signaux/erreurs 
 - [ ] signaux dans heredoc / pipe
-- [ ] Makefile relink
 - [ ] verifications, tests
 
+- [ ] | ls |
 
 
 

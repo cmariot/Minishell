@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 11:50:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/02 15:58:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -42,6 +42,7 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 	int	ret;
 
 	len = 0;
+	ret = 0;
 	while (splitted_line[array_index + len] != NULL)
 	{
 		ret = count_commands_len(splitted_line[array_index + len]);
@@ -124,6 +125,7 @@ int	get_simple_commands(t_command_line *command_line,
 
 	command_line->number_of_simple_commands
 		= count_commands(command_line->splitted_line);
+	print(1, "number_of_simple_commands = %u\n", command_line->number_of_simple_commands);
 	command_line->command = ft_calloc(sizeof(t_simple),
 			command_line->number_of_simple_commands + 1);
 	if (!command_line->command)
