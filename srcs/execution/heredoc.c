@@ -6,11 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/01 15:12:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/02 12:40:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		search_value(char **str, size_t *i, char **name, char **value);
 
 void	remove_heredocs(t_simple command)
 {
@@ -85,13 +87,58 @@ bool	need_to_expand_heredoc(char **limiter)
 		return (TRUE);
 }
 
+int	get_name_in_line(char **str, size_t *i, t_env *env)
+{
+	int		len;
+	char	*name;
+	char	*value;
+
+	if ((*str)[*i + 1] == '\'' || (*str)[*i + 1] == '"')
+		return (0);
+	len = 0;
+	if (ft_isdigit((*str)[*i + len + 1]) == TRUE)
+		while (ft_isdigit((*str)[*i + len + 1]) == TRUE)
+			len++;
+	else if ((*str)[*i + 1] == '?')
+		return (expand_exit_status(str, i));
+	else
+		while (ft_isalnum((*str)[*i + len + 1]) == TRUE)
+			len++;
+	if (len == 0)
+		return (0);
+	name = ft_substr((*str), *i + 1, len);
+	value = get_env_value(name, env);
+	if (search_value(str, i, &name, &value) == -1)
+		return (1);
+	return (0);
+}
+
+int	search_dollar_in_line(char **str, t_env *env)
+{
+	size_t	i;
+	int		ret;
+
+	i = 0;
+	while ((*str)[i])
+	{
+		if ((*str)[i] == '$')
+		{
+			ret = get_name_in_line(str, &i, env);
+			if (ret == 1)
+				return (-1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	line_expansion(char **line, t_env *env)
 {
-	if (search_dollar_in_str(line, env))
+	if (search_dollar_in_line(line, env) == -1)
 	{
-		if (line)
-			free(line);
-		line = NULL;
+		if (*line)
+			free(*line);
+		*line = ft_calloc(sizeof(char), 1);
 	}
 }
 
@@ -120,7 +167,8 @@ int	create_heredoc(char *file, char *limiter, t_env *env)
 		if (expansion == TRUE)
 			line_expansion(&line, env);
 		print(fd, "%s\n", line);
-		free(line);
+		if (line)
+			free(line);
 	}
 	if (line)
 		free(line);

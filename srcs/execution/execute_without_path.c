@@ -6,34 +6,21 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/01 15:32:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/02 12:07:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	contains_slash_no_such_file(char *command)
+bool	contains_slash(char *command)
 {
 	size_t	i;
 
-	if (access(command, F_OK) == 0
-		&& (ft_isadirectory(command) == TRUE || access(command, X_OK) != 0))
-	{
-		print(2, "minishell: %s", command);
-		if (ft_isadirectory(command) == TRUE)
-			print(2, ": is a directory\n");
-		else if (access(command, X_OK) != 0)
-			print(2, ": permission denied\n");
-		global_exit_status(126);
-		return (TRUE);
-	}
 	i = 0;
 	while (command[i] != '\0')
 	{
 		if (command[i] == '/')
 		{
-			print(2, "minishell: %s", command);
-			print(2, ": no such file or directory.\n");
 			return (TRUE);
 		}
 		i++;
@@ -53,8 +40,6 @@ int	find_correct_path(char **path_array, t_simple command, char **env,
 	char	*path_with_slash;
 	char	*command_path;
 
-	if (contains_slash_no_such_file(command.command_and_args[0]) == TRUE)
-		return (0);
 	while (*path_array != NULL)
 	{
 		path_with_slash = ft_strjoin(*path_array, "/");
@@ -70,17 +55,18 @@ int	find_correct_path(char **path_array, t_simple command, char **env,
 			free(command_path);
 		(path_array)++;
 	}
-	print(2, "minishell: %s: command not found\n", command.command_and_args[0]);
 	return (127);
 }
 
-int	command_without_path(t_shell *minishell, t_simple command,
+int	command_in_path(t_shell *minishell, t_simple command,
 	char **env_array, int *backup_fd)
 {
 	char	*path_value;
 	char	**path_array;
 	bool	not_found;
 
+	if (contains_slash(command.command_and_args[0]) == TRUE)
+		return (127);
 	not_found = FALSE;
 	if (env_array == NULL)
 		return (127);

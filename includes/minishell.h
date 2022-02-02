@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/01 15:10:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/02 12:10:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int		command_with_absolute_path(t_simple command, char **env,
 
 //execute_without_path.c
 
-int		command_without_path(t_shell *minishell, t_simple command,
+int		command_in_path(t_shell *minishell, t_simple command,
 			char **env_array, int *backup_fd);
 
 //execution.c
@@ -234,4 +234,5 @@ int		command_and_args_expansion(t_command_line *command, t_env *env);
 char	**command_split(char const *s, char c);
 int		filename_expansion(t_redir *redir, char **array,
 			int array_index, t_env *env);
+bool	contains_slash(char *command);
 #endif

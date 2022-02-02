@@ -10,35 +10,33 @@ A FAIRE :
 - [X] echo $"$''"
 - [X] exit a deux chiffres ne doit pas quitter
 - [X] cat << hi'' vs cat << hi -> expansion a faire dans le heredoc
-- [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
+- [X] Exit status des commandes vides + redir (> file) 
+- [X] Commandes sans droits ./ls
+- [X] expansion dans heredoc
+- [X] cat << eof puis heredoc ➤ '$PWD'
+
+
+En cours :
+
 - [ ] A=" > " puis echo "abc" $A a (ou echo {$A})
 - [ ] export A=" a      b     c   " puis echo $A | cat -e
-- [ ] Dernieres verifications
-- [ ] Push final.
+
+A faire :
+
+- [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
+- [ ] Verifier les $? signaux/erreurs 
+- [ ] signaux dans heredoc / pipe
+- [ ] Makefile relink
+- [ ] verifications, tests
 
 
-etran ➤
-touch mdr
-etran ➤
-chmod 000 mdr
-etran ➤
-mdr
-minishell: mdr: command not found
-etran ➤
-./mdr
-minishell: ./mdr: no such file or directory.
-etran ➤
-echo $?
-127
-etran ➤
-touch ls
-etran ➤
-chmod 000
-chmod: missing operand after ‘000’
-Try 'chmod --help' for more information.
-etran ➤
-chmod 000 ls
-etran ➤
-./ls
-minishell: ./ls: no such file or directory.
+
+
+
+
+
+
+
+
+
 
