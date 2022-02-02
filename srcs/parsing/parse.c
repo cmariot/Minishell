@@ -70,7 +70,7 @@ int	check_empty_pipe(t_command_line *command_line,
 		{
 			print(2, "minishell: syntax error ");
 			print(2, "near unexpected token '|'\n");
-			return (global_exit_status(1));
+			return (global_exit_status(2));
 		}
 		i++;
 	}

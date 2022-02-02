@@ -42,6 +42,7 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 	int	ret;
 
 	len = 0;
+	ret = 0;
 	while (splitted_line[array_index + len] != NULL)
 	{
 		ret = count_commands_len(splitted_line[array_index + len]);
