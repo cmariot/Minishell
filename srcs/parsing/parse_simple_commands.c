@@ -6,9 +6,10 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/02 16:32:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:57:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	count_commands_len(char *str)

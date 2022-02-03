@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/02 15:32:12 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/03 20:45:18 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,12 @@ DIROBJ			= objs/
 
 CC				= clang
 
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra -Werror -g
 
 INCLUDES		= -I ./includes
 INCLUDES		+= -I ./libft/includes
 
-LFLAGS			= -Wall -Wextra -Werror
+LFLAGS			= -Wall -Wextra -Werror -g
 
 LIBRARIES		= -L libft -lft
 LIBRARIES		+= -L libft/srcs/print -lprint
@@ -186,6 +186,9 @@ $(NAME)	: $(DIROBJS)
 
 test :	 all
 		./minishell
+
+leaks :	all
+		valgrind --leak-check=full
 
 norm :
 		norminette

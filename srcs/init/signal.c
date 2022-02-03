@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/02/01 18:11:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:44:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ void	command_handler(int signal)
 void	heredoc_handler(int signal)
 {
 	if (signal == SIGINT)
-	{
-		//verifier signal
 		global_exit_status(signal + 128);
-	}
 	else if (signal == SIGQUIT)
 		return ;
 }
