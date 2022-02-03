@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/03 20:45:18 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/03 21:38:06 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -188,7 +188,7 @@ test :	 all
 		./minishell
 
 leaks :	all
-		valgrind --leak-check=full
+		valgrind --leak-check=full ./minishell
 
 norm :
 		norminette

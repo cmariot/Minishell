@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 14:58:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:39:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	create_pipeline(t_command_line *command_line, t_shell *minishell,
 		i++;
 	}
 	i = 0;
-	while (i < command_line->number_of_simple_commands - 1)
+	while (i < command_line->number_of_simple_commands)
 	{
 		waitpid(command_line->command[i].pid,
 			&(command_line->command[i].pid), 0);
