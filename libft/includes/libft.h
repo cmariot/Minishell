@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 13:34:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 10:20:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 19:25:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);
 int			ft_isdigit(int c);
+bool		ft_is_in_str(char *str, char c);
 int			ft_isprint(int c);
 char		*ft_itoa(int n);
 char		*join_array(char **array, char *sep);

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 10:11:07 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/03 14:57:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:10:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,30 @@ static void	get_next_len_command(char **strs, unsigned int *str_len, char c)
 	}
 }
 
-char	**command_split(char const *s, char c)
+char	**command_split(char *str, char c)
 {
-	char			**strs;
-	int				words;
+	char			**array;
+	int				array_len;
 	int				i;
-	char			*str;
 	unsigned int	str_len;
 
-	if (!s)
+	if (!str)
 		return (NULL);
-	words = count_words(s, c);
-	strs = malloc(sizeof(char *) * (words + 1));
-	if (strs == NULL)
+	print(1, "STR = [%s]\n", str);
+	array_len = count_words(str, c);
+	print(1, "array_len = %d\n", array_len);
+	array = ft_calloc(sizeof(char *), array_len + 1);
+	if (!array)
 		return (NULL);
 	i = 0;
-	str = (char *)s;
 	str_len = 0;
-	while (i < words)
+	while (i < array_len)
 	{
 		get_next_len_command(&str, &str_len, c);
-		strs[i] = ft_calloc(sizeof(char), (str_len + 1));
-		if (strs[i] == NULL)
+		array[i] = ft_calloc(sizeof(char), (str_len + 1));
+		if (array[i] == NULL)
 			return (NULL);
-		ft_strlcpy(strs[i++], str, str_len + 1);
+		ft_strlcpy(array[i++], str, str_len + 1);
 	}
-	strs[i] = NULL;
-	return (strs);
+	return (array);
 }

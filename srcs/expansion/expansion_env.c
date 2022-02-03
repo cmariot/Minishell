@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/31 21:17:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 19:44:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,27 @@ int	search_value(char **str, size_t *i, char **name, char **value)
 	return (0);
 }
 
+void	remove_spaces(char **str)
+{
+	char	**array;
+
+	if (*str == NULL)
+		return ;
+	array = ft_split(*str, ' ');
+	if (!array)
+		return ;
+	free(*str);
+	*str = join_array(array, " ");
+	ft_free_array(array);
+}
+
 /* Get the name to expand (= the word after the $ caracter)
  * if the $ is imediately followed by a ' or a " -> remove the $
  * else count the len of the word and get it via substr.
  * if name = "?" expand the exit status
  * else we search the value of name in the env linked list */
 
-int	get_name_to_expand(char **str, size_t *i, t_env *env)
+int	get_name_to_expand(char **str, size_t *i, t_env *env, bool opt)
 {
 	int		len;
 	char	*name;
@@ -75,6 +89,8 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env)
 		return (0);
 	name = ft_substr((*str), *i + 1, len);
 	value = get_env_value(name, env);
+	if (opt == TRUE)
+		remove_spaces(&value);
 	if (search_value(str, i, &name, &value) == -1)
 		return (1);
 	return (0);
@@ -102,7 +118,7 @@ int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
 			}
 		}
 		if ((*str)[*i] == '$')
-			if (get_name_to_expand(str, i, env) == 1)
+			if (get_name_to_expand(str, i, env, FALSE) == 1)
 				return (-1);
 		(*i)++;
 	}
@@ -134,7 +150,7 @@ int	search_dollar_in_str(char **str, t_env *env)
 		}
 		else if ((*str)[i] == '$')
 		{
-			ret = get_name_to_expand(str, &i, env);
+			ret = get_name_to_expand(str, &i, env, TRUE);
 			if (ret == 1)
 				return (-1);
 		}

@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/02 15:33:14 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/03 19:26:07 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC			= colors.c \
 			  ft_isalpha.c \
 			  ft_isascii.c \
 			  ft_isdigit.c \
+			  ft_is_in_str.c \
 			  ft_isprint.c \
 			  ft_itoa.c \
 			  ft_join_array.c \

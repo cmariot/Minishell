@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 12:32:40 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/18 14:29:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 19:19:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ char	*join_array(char **array, char *sep)
 	j = 0;
 	while (array[i] != NULL)
 	{
-		while (*array[i] != '\0')
-			str[j++] = *(array[i])++;
+		k = 0;
+		while (array[i][k] != '\0')
+			str[j++] = array[i][k++];
 		if (array[i + 1] == NULL)
 			break ;
 		k = 0;
