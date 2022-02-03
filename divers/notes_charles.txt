@@ -18,27 +18,10 @@ A FAIRE :
 - [X] Verifier les $? signaux/erreurs 
 - [X] signaux dans heredoc / pipe
 - [X] | ls |
-
-
-En cours :
-
-- [ ] export A=" a      b     c   "
+- [X] export A=" a      b     c   "
 		echo $A | cat -e
 		echo '.'$A'.' | cat -e
-
-A faire :
 
 - [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
 - [ ] verifications, tests
 - [ ] norme
-
-
-
-
-
-
-
-
-
-
-

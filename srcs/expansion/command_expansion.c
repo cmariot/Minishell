@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 10:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/03 20:31:56 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:37:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	**create_new_array(t_simple *command, char **array, size_t i)
 	}
 	return (new);
 }
-
 
 int	search_value2(char **str, size_t *i, char **name, char **value)
 {
@@ -178,9 +177,7 @@ int	search_dollar_in_str2(char **str, t_env *env)
 				i++;
 		}
 		else if ((*str)[i] == '"')
-		{
 			expand_in_double_quotes2(&i, str, env);
-		}
 		else if ((*str)[i] == '$')
 		{
 			ret = get_name_to_expand2(str, &i, env, FALSE);
@@ -191,10 +188,6 @@ int	search_dollar_in_str2(char **str, t_env *env)
 	}
 	return (0);
 }
-
-
-
-
 
 int	command_expansion(t_simple *command, t_env *env)
 {
@@ -208,34 +201,23 @@ int	command_expansion(t_simple *command, t_env *env)
 		return (0);
 	while (command->command_and_args[i] != NULL)
 	{
-		print(1, "expansion de command->command_and_arg[%d]\n", i);
-		print(1, "Avant toute expansion : command->command_and_args[%d] = [%s]\n", i, command->command_and_args[i]);
 		backup = ft_strdup(command->command_and_args[i]);
 		if (!backup)
 			return (1);
 		search_dollar_in_str2(&command->command_and_args[i], env);
-		print(1, "1ere expansion test si espaces : command->command_and_args[%d] = [%s]\n", i, command->command_and_args[i]);
 		array = command_split(command->command_and_args[i], ' ');
-
 		if (!array)
-		{
-			print(1, "CAS 0: !array\n");
 			return (1);
-		}
 		else if (array[1] != NULL)
 		{
-			print(1, "CAS 1: array[1] != NULL\n");
-			ft_putarray("ARRAY", array);
 			new = create_new_array(command, array, i);
 			ft_free_array(command->command_and_args);
 			command->command_and_args = new;
 		}
 		else
 		{
-			print(1, "CAS 2: array[1] == NULL : split non necessaire \n");
 			free(command->command_and_args[i]);
 			command->command_and_args[i] = ft_strdup(backup);
-			print(1, "command->command_and_args[0] = [%s]\n", command->command_and_args[i]);
 		}
 		ft_free_array(array);
 		if (backup)
@@ -252,7 +234,6 @@ int	command_and_args_expansion(t_command_line *command, t_env *env)
 	i = 0;
 	while (i < command->number_of_simple_commands)
 	{
-		print(1, "Expansion des variables d'env dans command[%d]\n", i);
 		command_expansion(&(command->command[i]), env);
 		i++;
 	}

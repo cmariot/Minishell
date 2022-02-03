@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 10:11:07 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/03 20:10:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:37:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ char	**command_split(char *str, char c)
 
 	if (!str)
 		return (NULL);
-	print(1, "STR = [%s]\n", str);
 	array_len = count_words(str, c);
-	print(1, "array_len = %d\n", array_len);
 	array = ft_calloc(sizeof(char *), array_len + 1);
 	if (!array)
 		return (NULL);
