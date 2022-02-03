@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 10:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 18:00:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 11:27:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	**create_new_array(t_simple *command, char **array, size_t i)
 	size_t	k;
 
 	new_len = ft_array_len(command->command_and_args) + ft_array_len(array);
+	print(1, "NEW_ARRAY_LEN = %d\n", new_len - 1);
 	new = ft_calloc(new_len, sizeof(char *));
 	if (!new)
 		return (NULL);
@@ -46,6 +47,7 @@ char	**create_new_array(t_simple *command, char **array, size_t i)
 			new[j] = ft_strdup(command->command_and_args[i++]);
 		if (new[j] == NULL)
 			return (NULL);
+		print(1, "NEW[%d] = [%s]\n", j, new[j]);
 		j++;
 	}
 	return (new);
