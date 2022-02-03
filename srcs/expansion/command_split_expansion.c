@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 10:11:07 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 17:56:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/03 14:57:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,12 @@ static int	count_words(char const *s, char c)
 static void	get_next_len_command(char **strs, unsigned int *str_len, char c)
 {
 	unsigned int	i;
-	char			quote_type;
 
 	*strs = *strs + *str_len;
 	*str_len = 0;
 	i = 0;
 	while (**strs && **strs == c)
 		(*strs)++;
-	if (**strs == '"' || **strs == '\'')
-	{
-		quote_type = **strs;
-		(*strs)++;
-		while ((**strs) && **strs != quote_type)
-			(*strs)++;
-	}
 	while ((*strs)[i])
 	{
 		if ((*strs)[i] == c)
