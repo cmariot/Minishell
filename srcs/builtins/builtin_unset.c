@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:39:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/28 17:47:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/04 12:36:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	check_unset_error(char **names, size_t i)
 			print(2, ": invalid option.\n");
 			return (global_exit_status(2));
 		}
-		else if ((!i && ft_isdigit(names[i][j]) == TRUE && names[i][j] != '_')
-				|| (ft_isalnum(names[i][j]) == FALSE && names[i][j] != '_'))
+		else if ((!i && ft_isdigit(names[i][j]) == TRUE && names[i][j] != '_' && names[i][j] != '/' && names[i][j] != '$')
+				|| (ft_isalnum(names[i][j]) == FALSE && names[i][j] != '_' && names[i][j] != '/' && names[i][j] != '$'))
 		{
 			print(2, "minishell: unset: '%s'", names[i]);
 			print(2, ": not a valid identifier.\n");

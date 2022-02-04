@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/02 12:22:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/04 12:15:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	command_with_absolute_path(t_simple command, char **env, int *backup_fd)
 
 	if (contains_slash(command.command_and_args[0]) == FALSE)
 	{
-		print(2, "minishell: command not found\n");
+		ft_putstr_fd("minishell: command not found\n", 2);
 		global_exit_status(127);
 		return (1);
 	}

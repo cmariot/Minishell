@@ -21,7 +21,8 @@ A FAIRE :
 - [X] export A=" a      b     c   "
 		echo $A | cat -e
 		echo '.'$A'.' | cat -e
+- [X] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
 
-- [ ] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
+- [ ] unset $PWD ; unset /lol/truc
 - [ ] verifications, tests
 - [ ] norme
