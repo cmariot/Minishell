@@ -23,6 +23,7 @@ A FAIRE :
 		echo '.'$A'.' | cat -e
 - [X] cat file | ls | sleep 10 ; ctrl-C -> SIGPIPE
 
-- [ ] unset $PWD ; unset /lol/truc
+- [X] unset $PWD ; unset /lol/truc
+- [ ] Affichage des \n, control c control D des signaux sans utiliser de write
 - [ ] verifications, tests
 - [ ] norme

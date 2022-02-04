@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 10:39:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/04 12:36:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/04 14:45:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ void	remove_first_element(t_env **env)
 	*env = tmp;
 }
 
+int	not_valid_identifier(char *identifier)
+{
+	print(2, "minishell: unset: '%s'", identifier);
+	print(2, ": not a valid identifier.\n");
+	return (global_exit_status(1));
+}
+
 int	check_unset_error(char **names, size_t i)
 {
 	size_t	j;
@@ -35,19 +42,23 @@ int	check_unset_error(char **names, size_t i)
 	j = 0;
 	while (names[i][j] != '\0')
 	{
-		if (i == 0 && names[i][j] == '-' && names[i][j + 1] != '\0')
+		if (j == 0)
 		{
-			print(2, "minishell: unset: '%s'", names[i]);
-			print(2, ": invalid option.\n");
-			return (global_exit_status(2));
+			if (names[i][j] == '-' && names[i][j + 1] != '\0')
+			{
+				print(2, "minishell: unset: '%s': invalid option.\n", names[i]);
+				return (global_exit_status(2));
+			}
+			else if (ft_isalnum(names[i][j]) == FALSE
+				&& names[i][j] != '_' && names[i][j] != '$')
+				return (not_valid_identifier(names[i]));
+			else if (ft_isdigit(names[i][j]) == TRUE)
+				return (not_valid_identifier(names[i]));
 		}
-		else if ((!i && ft_isdigit(names[i][j]) == TRUE && names[i][j] != '_' && names[i][j] != '/' && names[i][j] != '$')
-				|| (ft_isalnum(names[i][j]) == FALSE && names[i][j] != '_' && names[i][j] != '/' && names[i][j] != '$'))
-		{
-			print(2, "minishell: unset: '%s'", names[i]);
-			print(2, ": not a valid identifier.\n");
-			return (global_exit_status(1));
-		}
+		else
+			if (ft_isalnum(names[i][j]) == FALSE && names[i][j] != '_'
+				&& names[i][j] != '$')
+				return (not_valid_identifier(names[i]));
 		j++;
 	}
 	return (0);
