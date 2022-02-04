@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/04 02:11:45 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/04 12:02:16 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@
 
 NAME			= minishell
 
+
 DIRSRC			= srcs/
+
 
 DIROBJ			= objs/
 
@@ -28,12 +30,16 @@ DIROBJ			= objs/
 
 CC				= clang
 
+
 CFLAGS			= -Wall -Wextra -Werror -g
+
 
 INCLUDES		= -I includes
 INCLUDES		+= -I libft/includes
 
+
 LFLAGS			= -Wall -Wextra -Werror -g
+
 
 LIBRARIES		= -L libft -l ft
 LIBRARIES		+= -L libft/srcs/print -l print
@@ -44,32 +50,24 @@ LIBRARIES		+= -L libft/srcs/print -l print
 UNAME := $(shell uname -m)
 
 ifeq ($(UNAME), arm64)
-
 	INCLUDES	+= -I /opt/homebrew/opt/readline/include
 	LIBRARIES	+= -L /opt/homebrew/opt/readline/lib -l readline
-
 else
-
 	LIBRARIES	+= -l readline
-
 endif
 
 
 # Debug flag, use with 'make DEBUG=1'
 ifeq ($(DEBUG), 1)
-
 	CFLAGS		+= -g
 	LFLAGS		+= -g
-
 endif
 
 
 # Optimisation flag, use with 'make OPTI=1'
 ifeq ($(OPTI), 1)
-
 	CFLAGS		+= -O2 -O3
 	LFLAGS		+= -O2 -O3
-
 endif
 
 
@@ -106,7 +104,6 @@ EXPANSION	= expansion.c \
 			redir_expansion.c
 
 
-
 BUILTINS	= builtin_cd.c \
 			builtin_cd_cdpath.c \
 			builtin_echo.c \
@@ -140,13 +137,18 @@ SRC			= $(addprefix init/, $(INIT)) \
 			$(addprefix builtins/, $(BUILTINS)) \
 			$(addprefix exit/, $(EXIT))
 
+
 OBJ			:= $(SRC:.c=.o)
+
 
 DIROBJS		= $(addprefix $(DIROBJ), $(OBJ))
 
+
 SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 
+
 OBJ			:= $(SRC:.c=.o)
+
 
 OBJS_DIRECTORIES = objs/init objs/parsing objs/expansion \
 				   objs/builtins objs/execution objs/exit
@@ -170,7 +172,6 @@ RESET		= \033[0m
 #                             MAKEFILE'S RULES                                 #
 # **************************************************************************** #
 
-.SILENT : all
 
 all : header $(NAME) footer
 
@@ -181,7 +182,7 @@ $(DIROBJ)%.o: $(DIRSRC)%.c
 		@printf "$(RESET)"
 	
 $(NAME)	: $(DIROBJS)
-		@make --no-print-director -C libft
+		@make --no-print-directory -C libft
 		@printf "$(GREEN)"
 		$(CC) $(LFLAGS) $(DIROBJS) $(LIBRARIES) -o $(NAME)
 		@printf "$(RESET)"
@@ -190,12 +191,15 @@ test :	 all
 		./minishell
 
 leaks :	all
-		valgrind --leak-check=full ./minishell
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=divers/.ignore_readline --track-origins=yes ./minishell
 
 bonus : all
 
 norm :
 		@norminette
+
+install: all
+		cp $(NAME) ~/bin
 
 clean :
 		@make --no-print-directory -C libft clean
