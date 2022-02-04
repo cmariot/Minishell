@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/04 13:10:27 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/04 14:58:19 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,16 +128,12 @@ all : $(NAME)
 
 $(DIROBJ)%.o: $(DIRSRC)%.c
 		@mkdir -p $(DIROBJ)
-		@printf "$(YE)"
 		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-		@printf "$(RC)"
 	
 $(NAME)	: $(DIROBJS)
 		@make --no-print-directory -C $(PRINT_DIR)
-		@printf "$(GR)"
 		ar rcs $(NAME) $(DIROBJS)
 		ranlib $(NAME)
-		@printf "$(RC)"
 
 norm :
 		@norminette

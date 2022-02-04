@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/04 12:41:24 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/04 15:09:17 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,14 @@ DIROBJ			= objs/
 CC				= clang
 
 
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror
 
 
 INCLUDES		= -I includes
 INCLUDES		+= -I libft/includes
 
 
-LFLAGS			= -Wall -Wextra -Werror -g
+LFLAGS			= -Wall -Wextra -Werror
 
 
 LIBRARIES		= -L libft -l ft
@@ -178,15 +178,11 @@ all : header $(NAME) footer
 
 $(DIROBJ)%.o: $(DIRSRC)%.c
 		@mkdir -p $(OBJS_DIRECTORIES)
-		@printf "$(YELLOW)"
 		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-		@printf "$(RESET)"
 	
 $(NAME)	: $(DIROBJS)
 		@make --no-print-directory -C libft
-		@printf "$(GREEN)"
 		$(CC) $(LFLAGS) $(DIROBJS) $(LIBRARIES) -o $(NAME)
-		@printf "$(RESET)"
 
 test :	 all
 		./minishell
@@ -220,20 +216,24 @@ fclean :
 re :	divider fclean all
 
 header :
+	@printf "$(CYAN)"
 	@printf "    __  ________   ___________ __  __________    __\n"
 	@printf "   /  |/  /  _/ | / /  _/ ___// / / / ____/ /   / /\n"
 	@printf "  / /|_/ // //  |/ // / \__ \/ /_/ / __/ / /   / /\n"
 	@printf " / /  / // // /|  // / ___/ / __  / /___/ /___/ /___\n"
 	@printf "/_/  /_/___/_/ |_/___//____/_/ /_/_____/_____/_____/\n\n"
 	@printf "COMPILATION\n"
+	@printf "$(RESET)"
 
 divider :
 	@printf "\n"
 
 footer :
+	@printf "$(CYAN)"
 	@printf "SUCCESS\n"
 	@printf "\nUSAGE\n"
 	@printf "./minishell (for interactive mode)\n"
 	@printf "./minishell -c [command] (for non-interactive mode)\n\n"
+	@printf "$(RESET)"
 
 .PHONY : fclean 

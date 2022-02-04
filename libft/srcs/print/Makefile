@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/04 13:10:41 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/04 15:04:25 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 GR		= \033[32;1m
 RE		= \033[31;1m
 YE		= \033[33;1m
+CYAN	= \033[36;1m
 RC		= \033[0m
 
 
@@ -81,16 +82,14 @@ all : $(NAME)
 
 $(DIROBJ)%.o: $(DIRSRC)%.c
 		@mkdir -p $(DIROBJ)
-		@printf "$(YE)"
 		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-		@printf "$(RC)"
 	
 $(NAME)	: $(DIROBJS)
+		@printf "$(CYAN)"
 		@printf "\nLINKING\n"
-		@printf "$(GR)"
+		@printf "$(RC)"
 		ar rcs $(NAME) $(DIROBJS)
 		ranlib $(NAME)
-		@printf "$(RC)"
 
 clean :
 		@rm -rf $(DIROBJ)
