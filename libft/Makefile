@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/03 19:26:07 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/04 02:12:34 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ SRC			= colors.c \
 			  ft_tolower.c \
 			  ft_toupper.c \
 			  get_next_line.c \
-			  gnl_without_bn.c
+			  gnl_without_backslash_n.c
 
 OBJ			:= $(SRC:.c=.o)
 
@@ -131,7 +131,7 @@ $(DIROBJ)%.o: $(DIRSRC)%.c
 		@printf "$(RC)"
 	
 $(NAME)	: $(DIROBJS)
-		@make -C $(PRINT_DIR)
+		@make --no-print-directory -C $(PRINT_DIR)
 		@printf "$(GR)"
 		ar rcs $(NAME) $(DIROBJS)
 		ranlib $(NAME)
@@ -141,17 +141,13 @@ norm :
 		@norminette
 
 clean :
-		@make -C $(PRINT_DIR) clean
-		@printf "$(RE)"
-		rm -rf $(DIROBJ)
-		@printf "$(RC)"
+		@make --no-print-directory -C $(PRINT_DIR) clean
+		@rm -rf $(DIROBJ)
 
 fclean :
-		@make -C $(PRINT_DIR) fclean
-		@printf "$(RE)"
-		rm -f $(NAME)
-		rm -rf $(DIROBJ)
-		@printf "$(RC)"
+		@make --no-print-directory -C $(PRINT_DIR) fclean
+		@rm -f $(NAME)
+		@rm -rf $(DIROBJ)
 
 re :	 fclean all
 

@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/02 15:23:43 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/04 01:58:35 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,21 +84,18 @@ $(DIROBJ)%.o: $(DIRSRC)%.c
 		@printf "$(RC)"
 	
 $(NAME)	: $(DIROBJS)
+		@printf "\nLINKING\n"
 		@printf "$(GR)"
 		ar rcs $(NAME) $(DIROBJS)
 		ranlib $(NAME)
 		@printf "$(RC)"
 
 clean :
-		@printf "$(RE)"
-		rm -rf $(DIROBJ)
-		@printf "$(RC)"
+		@rm -rf $(DIROBJ)
 
 fclean :
-		@printf "$(RE)"
-		rm -f $(NAME)
-		rm -rf $(DIROBJ)
-		@printf "$(RC)"
+		@rm -f $(NAME)
+		@rm -rf $(DIROBJ)
 
 re :	 fclean all
 
