@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/04 15:04:25 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/05 01:05:38 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,6 @@ $(NAME)	: $(DIROBJS)
 		@printf "\nLINKING\n"
 		@printf "$(RC)"
 		ar rcs $(NAME) $(DIROBJS)
-		ranlib $(NAME)
 
 clean :
 		@rm -rf $(DIROBJ)

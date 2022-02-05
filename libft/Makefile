@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/04 14:58:19 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/05 01:02:52 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -133,7 +133,6 @@ $(DIROBJ)%.o: $(DIRSRC)%.c
 $(NAME)	: $(DIROBJS)
 		@make --no-print-directory -C $(PRINT_DIR)
 		ar rcs $(NAME) $(DIROBJS)
-		ranlib $(NAME)
 
 norm :
 		@norminette
