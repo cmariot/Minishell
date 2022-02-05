@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/27 18:57:32 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/05 01:02:52 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/05 13:54:44 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,6 +115,7 @@ SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 GR		= \033[32;1m
 RE		= \033[31;1m
 YE		= \033[33;1m
+CYAN	= \033[36;1m
 RC		= \033[0m
 
 
@@ -124,7 +125,7 @@ RC		= \033[0m
 
 .SILENT : all
 
-all : $(NAME)
+all : header $(NAME)
 
 $(DIROBJ)%.o: $(DIRSRC)%.c
 		@mkdir -p $(DIROBJ)
@@ -147,5 +148,10 @@ fclean :
 		@rm -rf $(DIROBJ)
 
 re :	 fclean all
+
+header :
+		@printf "$(CYAN)"
+		@printf "\nLIBFT COMPILATION\n"
+		@printf "$(RC)"
 
 .PHONY : clean fclean

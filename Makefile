@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/05 13:39:00 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/05 13:56:20 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,8 @@ CC				= clang
 CFLAGS			= -Wall -Wextra -Werror
 
 
-INCLUDES		= -I includes
-INCLUDES		+= -I libft/includes
+INCLUDES		= -I ./includes
+INCLUDES		+= -I ./libft/includes
 
 
 LFLAGS			= -Wall -Wextra -Werror
@@ -178,6 +178,7 @@ $(DIROBJ)%.o: $(DIRSRC)%.c
 $(NAME)	: $(DIROBJS)
 		@make --no-print-directory -C libft
 		$(CC) $(LFLAGS) $(DIROBJS) $(LIBRARIES) -o $(NAME)
+		@printf "\n"
 
 test :	 all
 		./minishell
@@ -218,7 +219,7 @@ header :
 	@printf " / /  / // // /|  // / ___/ / __  / /___/ /___/ /___\n"
 	@printf "/_/  /_/___/_/ |_/___//____/_/ /_/_____/_____/_____/\n"
 	@printf "\n"
-	@printf "COMPILATION\n"
+	@printf "MINISHELL COMPILATION\n"
 	@printf "$(RESET)"
 
 divider :
@@ -226,10 +227,10 @@ divider :
 
 footer :
 	@printf "$(CYAN)"
-	@printf "SUCCESS\n"
+	@printf "➤    SUCCESS\n"
 	@printf "\nUSAGE\n"
+	@printf "$(RESET)"
 	@printf "./minishell (for interactive mode)\n"
 	@printf "./minishell -c [command] (for non-interactive mode)\n\n"
-	@printf "$(RESET)"
 
 .PHONY : fclean
