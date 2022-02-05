@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:07:04 by cmariot           #+#    #+#             */
-/*   Updated: 2022/01/11 12:34:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 19:00:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,5 @@ void	init_minishell(t_shell *minishell, char **env)
 	minishell->command_line.splitted_line = NULL;
 	minishell->command_line.number_of_simple_commands = 0;
 	minishell->command_line.command = NULL;
+	minishell->env_array = NULL;
 }
