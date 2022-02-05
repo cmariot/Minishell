@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/03 20:07:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 13:33:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,4 +235,9 @@ char	**command_split(char *s, char c);
 int		filename_expansion(t_redir *redir, char **array,
 			int array_index, t_env *env);
 bool	contains_slash(char *command);
+int		search_value(char **str, size_t *i, char **name, char **value);
+void	line_expansion(char **line, t_env *env);
+bool	need_to_expand_heredoc(char **limiter);
+int		search_dollar_in_str2(char **str, t_env *env);
+
 #endif

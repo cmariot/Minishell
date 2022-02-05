@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_env.c                                    :+:      :+:    :+:   */
+/*   command_expansion_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 14:10:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/05 13:36:42 by cmariot          ###   ########.fr       */
+/*   Created: 2022/02/05 13:31:29 by cmariot           #+#    #+#             */
+/*   Updated: 2022/02/05 13:32:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Search the value of name in the env linked list,
- * - If not found, value == NULL
- *		- If there is no other caracter in str that $NAME,
- *		  str is removed from the array
- *		- else $NAME is removed from the str
- * - Else if there is a value, $NAME is replaced by its value */
-
-int	search_value(char **str, size_t *i, char **name, char **value)
+int	search_value2(char **str, size_t *i, char **name, char **value)
 {
 	if (*value == NULL)
 	{
@@ -48,7 +41,7 @@ int	search_value(char **str, size_t *i, char **name, char **value)
 	return (0);
 }
 
-void	remove_spaces(char **str)
+void	remove_spaces2(char **str)
 {
 	char	**array;
 
@@ -68,7 +61,7 @@ void	remove_spaces(char **str)
  * if name = "?" expand the exit status
  * else we search the value of name in the env linked list */
 
-int	get_name_to_expand(char **str, size_t *i, t_env *env, bool opt)
+int	get_name_to_expand2(char **str, size_t *i, t_env *env, bool opt)
 {
 	int		len;
 	char	*name;
@@ -90,15 +83,15 @@ int	get_name_to_expand(char **str, size_t *i, t_env *env, bool opt)
 	name = ft_substr((*str), *i + 1, len);
 	value = get_env_value(name, env);
 	if (opt == TRUE)
-		remove_spaces(&value);
-	if (search_value(str, i, &name, &value) == -1)
+		remove_spaces2(&value);
+	if (search_value2(str, i, &name, &value) == -1)
 		return (1);
 	return (0);
 }
 
 /* In double quote the expansion is performed, but if "$" it will print the $ */
 
-int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
+int	expand_in_double_quotes2(size_t *i, char **str, t_env *env)
 {
 	(*i)++;
 	while ((*str)[*i] != '"' && (*str)[*i])
@@ -118,7 +111,7 @@ int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
 			}
 		}
 		if ((*str)[*i] == '$')
-			if (get_name_to_expand(str, i, env, FALSE) == 1)
+			if (get_name_to_expand2(str, i, env, FALSE) == 1)
 				return (-1);
 		(*i)++;
 	}
@@ -130,7 +123,7 @@ int	expand_in_double_quotes(size_t *i, char **str, t_env *env)
  * - No expansion if quoted by '
  * - Expansion if quoted by " or not quoted */
 
-int	search_dollar_in_str(char **str, t_env *env)
+int	search_dollar_in_str2(char **str, t_env *env)
 {
 	size_t	i;
 	int		ret;
@@ -145,12 +138,10 @@ int	search_dollar_in_str(char **str, t_env *env)
 				i++;
 		}
 		else if ((*str)[i] == '"')
-		{
-			expand_in_double_quotes(&i, str, env);
-		}
+			expand_in_double_quotes2(&i, str, env);
 		else if ((*str)[i] == '$')
 		{
-			ret = get_name_to_expand(str, &i, env, TRUE);
+			ret = get_name_to_expand2(str, &i, env, FALSE);
 			if (ret == 1)
 				return (-1);
 		}

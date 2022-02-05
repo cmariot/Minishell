@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 16:12:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/03 20:57:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 13:25:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	count_commands_len(char *str)
 	return (-1);
 }
 
-int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
+int	get_commands(t_simple *command, char **splitted_line, size_t array_index,
+	int j)
 {
-	int	i;
 	int	len;
 	int	ret;
 
@@ -54,11 +54,11 @@ int	get_commands(t_simple *command, char **splitted_line, size_t array_index)
 	command->command_array = ft_calloc(len + 1, sizeof(char *));
 	if (!command->command_array)
 		return (-1);
-	i = 0;
-	while (i++ < len)
+	j = 0;
+	while (j++ < len)
 	{
-		command->command_array[i - 1] = ft_strdup(splitted_line[array_index++]);
-		if (!command->command_array[i - 1])
+		command->command_array[j - 1] = ft_strdup(splitted_line[array_index++]);
+		if (!command->command_array[j - 1])
 			return (-1);
 	}
 	if (ret == 0)
@@ -122,6 +122,7 @@ int	get_simple_commands(t_command_line *command_line,
 		char **splitted_line)
 {
 	size_t	i;
+	int		j;
 	ssize_t	array_index;
 
 	command_line->number_of_simple_commands
@@ -134,8 +135,9 @@ int	get_simple_commands(t_command_line *command_line,
 	i = 0;
 	while (i < command_line->number_of_simple_commands)
 	{
+		j = 0;
 		array_index = get_commands(&command_line->command[i],
-				splitted_line, array_index);
+				splitted_line, array_index, j);
 		if (array_index == -1)
 			return (1);
 		i++;

@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/04 15:09:17 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/05 13:37:21 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,9 @@ EXPANSION	= expansion.c \
 			expansion_tilde.c \
 			command_expansion.c \
 			command_split_expansion.c \
+			heredoc_expansion.c \
+			command_expansion_utils.c \
+			expand_env_variable.c \
 			redir_expansion.c
 
 
