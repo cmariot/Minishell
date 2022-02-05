@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/05 18:32:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:53:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	execute_command_in_current_directory(char *command_path, t_simple command,
 
 /* For the command with absolut path, like './minishell' or '/bin/ls' */
 
-int	command_with_absolute_path(t_simple command, t_shell *minishell, int *backup_fd)
+int	command_with_absolute_path(t_simple command, t_shell *minishell,
+	int *backup_fd)
 {
 	char	*command_path;
 

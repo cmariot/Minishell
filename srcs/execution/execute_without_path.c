@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/05 18:36:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:53:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	find_correct_path(char **path_array, t_simple command, t_shell *minishell,
 			free(path_with_slash);
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
-				if (execution(&command_path, command, minishell, backup_fd) == 0)
+				if (!execution(&command_path, command, minishell, backup_fd))
 					return (0);
 		if (command_path != NULL)
 			free(command_path);
