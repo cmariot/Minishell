@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/02 12:07:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:36:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	contains_slash(char *command)
    If it's execute, the child process stops.
    Else try the next path.  */
 
-int	find_correct_path(char **path_array, t_simple command, char **env,
+int	find_correct_path(char **path_array, t_simple command, t_shell *minishell,
 		int *backup_fd)
 {
 	char	*path_with_slash;
@@ -49,7 +49,7 @@ int	find_correct_path(char **path_array, t_simple command, char **env,
 			free(path_with_slash);
 		if (access(command_path, F_OK) == 0 && access(command_path, X_OK) == 0)
 			if (ft_isadirectory(command_path) == FALSE)
-				if (execution(&command_path, command, env, backup_fd) == 0)
+				if (execution(&command_path, command, minishell, backup_fd) == 0)
 					return (0);
 		if (command_path != NULL)
 			free(command_path);
@@ -59,7 +59,7 @@ int	find_correct_path(char **path_array, t_simple command, char **env,
 }
 
 int	command_in_path(t_shell *minishell, t_simple command,
-	char **env_array, int *backup_fd)
+	int *backup_fd)
 {
 	char	*path_value;
 	char	**path_array;
@@ -68,7 +68,7 @@ int	command_in_path(t_shell *minishell, t_simple command,
 	if (contains_slash(command.command_and_args[0]) == TRUE)
 		return (127);
 	not_found = FALSE;
-	if (env_array == NULL)
+	if (minishell->env_array == NULL)
 		return (127);
 	path_value = get_env_value("PATH", minishell->env);
 	if (path_value == NULL)
@@ -77,7 +77,7 @@ int	command_in_path(t_shell *minishell, t_simple command,
 	if (path_array == NULL)
 		not_found = TRUE;
 	if (not_found == FALSE
-		&& find_correct_path(path_array, command, env_array, backup_fd) == 127)
+		&& find_correct_path(path_array, command, minishell, backup_fd) == 127)
 		not_found = TRUE;
 	if (path_value)
 		free(path_value);

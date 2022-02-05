@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/05 14:03:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:39:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ typedef struct s_command_line {
 //Structure principale
 typedef struct s_shell {
 	t_env			*env;
+	char			**env_array;
 	t_command_line	command_line;
 }	t_shell;
 
 // init_minishell.c
 void	init_minishell(t_shell *ministruct, char **env);
-void	reset_minishell(t_command_line *command_line);
+void	reset_minishell(t_command_line *command_line, t_shell *minishell);
 void	free_minishell(t_shell *ministruct);
 t_env	*env_cpy(t_env *env);
 
@@ -155,16 +156,16 @@ void	execute_simple_command(t_shell *minishell, t_simple command,
 			int *backup_fd);
 
 //execute_with_path.c
-int		command_with_absolute_path(t_simple command, char **env,
+int		command_with_absolute_path(t_simple command, t_shell *minishell,
 			int *backup_fd);
 
 //execute_without_path.c
 
 int		command_in_path(t_shell *minishell, t_simple command,
-			char **env_array, int *backup_fd);
+			int *backup_fd);
 
 //execution.c
-int		execution(char **command_path, t_simple command, char **env,
+int		execution(char **command_path, t_simple command, t_shell *minishell,
 			int *backup_fd);
 int		file_redirection(t_simple command);
 void	restore_file_redirection(t_simple command, int stdin_backup,

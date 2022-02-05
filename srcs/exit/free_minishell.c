@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 14:11:32 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/01 18:07:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:44:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	free_simple_commands(t_command_line *command_line)
 }
 
 //Free the structure but keep env, history, fd ...
-void	reset_minishell(t_command_line *command_line)
+void	reset_minishell(t_command_line *command_line, t_shell *minishell)
 {
 	if (command_line->line)
 		free(command_line->line);
@@ -69,6 +69,9 @@ void	reset_minishell(t_command_line *command_line)
 	command_line->splitted_line = NULL;
 	if (command_line)
 		free_simple_commands(command_line);
+	if (minishell->env_array != NULL)
+		ft_free_array(minishell->env_array);
+	minishell->env_array = NULL;
 }
 
 // Free the structure elements before exit
@@ -76,7 +79,7 @@ void	free_minishell(t_shell *minishell)
 {
 	if (minishell->env)
 		ft_lstclear_env(&minishell->env, free);
-	reset_minishell(&minishell->command_line);
+	reset_minishell(&minishell->command_line, minishell);
 	clear_history();
 	close(0);
 	close(1);

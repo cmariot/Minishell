@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:09:46 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/04 12:13:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:24:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	command_not_found(char *command)
 void	execute_simple_command(t_shell *minishell, t_simple command,
 		int *backup_fd)
 {
-	char	**env_array;
-
 	if (file_redirection(command))
 		return ;
 	if (command.command_and_args == NULL || command.command_and_args[0] == NULL)
@@ -51,11 +49,10 @@ void	execute_simple_command(t_shell *minishell, t_simple command,
 		restore_file_redirection(command, backup_fd[STDIN], backup_fd[STDOUT]);
 		return ;
 	}
-	env_array = envlist_to_array(minishell->env);
-	if (command_in_path(minishell, command, env_array, backup_fd) == 127)
-		if (command_with_absolute_path(command, env_array, backup_fd) == 127)
+	minishell->env_array = envlist_to_array(minishell->env);
+	if (command_in_path(minishell, command, backup_fd) == 127)
+		if (command_with_absolute_path(command, minishell, backup_fd) == 127)
 			command_not_found(command.command_and_args[0]);
-	ft_free_array(env_array);
 	restore_file_redirection(command, backup_fd[STDIN], backup_fd[STDOUT]);
 	return ;
 }
