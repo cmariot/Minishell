@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/05 13:37:21 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/05 13:39:00 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ INCLUDES		+= -I libft/includes
 LFLAGS			= -Wall -Wextra -Werror
 
 
-LIBRARIES		= -L libft -l ft
-LIBRARIES		+= -L libft/srcs/print -l print
+LIBRARIES		= -L libft -lft
+LIBRARIES		+= -L libft/srcs/print -lprint
 
 
 # Select the correct path of readline library and includes depending the system
@@ -51,9 +51,9 @@ UNAME := $(shell uname -m)
 
 ifeq ($(UNAME), arm64)
 	INCLUDES	+= -I /opt/homebrew/opt/readline/include
-	LIBRARIES	+= -L /opt/homebrew/opt/readline/lib -l readline
+	LIBRARIES	+= -L /opt/homebrew/opt/readline/lib -lreadline
 else
-	LIBRARIES	+= -l readline
+	LIBRARIES	+= -lreadline
 endif
 
 
@@ -80,7 +80,6 @@ INIT		= init_minishell.c \
 			main.c \
 			signal.c
 
-
 PARSING		= env_array_utils.c \
 			env_list_utils.c \
 			get_command_line.c \
@@ -94,7 +93,6 @@ PARSING		= env_array_utils.c \
 			tokens_fill.c \
 			tokens_get.c
 
-
 EXPANSION	= expansion.c \
 			expansion_env.c \
 			expansion_quotes.c \
@@ -106,7 +104,6 @@ EXPANSION	= expansion.c \
 			expand_env_variable.c \
 			redir_expansion.c
 
-
 BUILTINS	= builtin_cd.c \
 			builtin_cd_cdpath.c \
 			builtin_echo.c \
@@ -115,7 +112,6 @@ BUILTINS	= builtin_cd.c \
 			builtin_export.c \
 			builtin_pwd.c \
 			builtin_unset.c
-
 
 EXECUTION	= execute.c \
 			execute_builtin.c \
@@ -127,7 +123,6 @@ EXECUTION	= execute.c \
 			pipeline.c \
 			redirection.c \
 			redirection_utils.c
-
 
 EXIT		= free_minishell.c \
 			global_exit_status.c
@@ -141,16 +136,13 @@ SRC			= $(addprefix init/, $(INIT)) \
 			$(addprefix exit/, $(EXIT))
 
 
-OBJ			:= $(SRC:.c=.o)
-
-
-DIROBJS		= $(addprefix $(DIROBJ), $(OBJ))
-
-
 SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 
 
 OBJ			:= $(SRC:.c=.o)
+
+
+DIROBJS		= $(addprefix $(DIROBJ), $(OBJ))
 
 
 OBJS_DIRECTORIES = objs/init objs/parsing objs/expansion \
@@ -198,12 +190,12 @@ bonus : all
 norm :
 		@norminette
 
-install: all
+install: re
 		cp $(NAME) ~/bin
 
 clean :
 		@make --no-print-directory -C libft clean
-		@-rm -rf $(DIROBJ)
+		@rm -rf $(DIROBJ)
 		@printf "$(RED)"
 		@printf "Object files removed\n"
 		@printf "$(RESET)"
@@ -220,11 +212,12 @@ re :	divider fclean all
 
 header :
 	@printf "$(CYAN)"
-	@printf "    __  ________   ___________ __  __________    __\n"
-	@printf "   /  |/  /  _/ | / /  _/ ___// / / / ____/ /   / /\n"
-	@printf "  / /|_/ // //  |/ // / \__ \/ /_/ / __/ / /   / /\n"
+	@printf "    __  ________   ___________ __  __________    __ \n"
+	@printf "   /  |/  /  _/ | / /  _/ ___// / / / ____/ /   / / \n"
+	@printf "  / /|_/ // //  |/ // / \__ \/ /_/ / __/ / /   / /  \n"
 	@printf " / /  / // // /|  // / ___/ / __  / /___/ /___/ /___\n"
-	@printf "/_/  /_/___/_/ |_/___//____/_/ /_/_____/_____/_____/\n\n"
+	@printf "/_/  /_/___/_/ |_/___//____/_/ /_/_____/_____/_____/\n"
+	@printf "\n"
 	@printf "COMPILATION\n"
 	@printf "$(RESET)"
 
@@ -239,4 +232,4 @@ footer :
 	@printf "./minishell -c [command] (for non-interactive mode)\n\n"
 	@printf "$(RESET)"
 
-.PHONY : fclean 
+.PHONY : fclean
