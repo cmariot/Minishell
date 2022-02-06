@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/06 13:29:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/06 16:59:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	pipeline_error(int error_id)
 int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 {
 	int	status;
-	
+
 	status = 1;
 	if (pipe(command.pipe_fd) == -1)
 		return (pipeline_error(2));
