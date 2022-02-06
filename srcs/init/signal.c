@@ -43,7 +43,7 @@ void	command_handler(int signal)
 	}
 	else if (signal == SIGQUIT)
 	{
-		ft_putstr_fd("Quit: 3\n", 2);
+		ft_putstr_fd("Quit: 3\n", 0);
 		global_exit_status(signal + 128);
 		return ;
 	}

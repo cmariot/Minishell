@@ -37,7 +37,8 @@ int	pipeline_error(int error_id)
 int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 {
 	int	status;
-
+	
+	status = 1;
 	if (pipe(command.pipe_fd) == -1)
 		return (pipeline_error(2));
 	command.pid = fork();

@@ -64,7 +64,9 @@ int	main(int argc, char **argv, char **env)
 				reset_minishell(&minishell.command_line, &minishell);
 				continue ;
 			}
+			catch_signal(COMMAND);
 			execute(&minishell, &minishell.command_line);
+			catch_signal(INTERACTIVE);
 			reset_minishell(&minishell.command_line, &minishell);
 		}
 	}

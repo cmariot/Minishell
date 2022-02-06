@@ -37,12 +37,12 @@ void	execute(t_shell *minishell, t_command_line *command_line)
 
 	backup_fd[STDIN] = dup(STDIN);
 	backup_fd[STDOUT] = dup(STDOUT);
-	catch_signal(COMMAND);
 	if (command_line->number_of_simple_commands <= 1)
+	{
 		execute_simple_command(minishell, command_line->command[0], backup_fd);
+	}
 	else
 		create_pipeline(command_line, minishell, backup_fd);
-	catch_signal(INTERACTIVE);
 	dup2(backup_fd[STDIN], STDIN);
 	dup2(backup_fd[STDOUT], STDOUT);
 	close(backup_fd[STDIN]);
