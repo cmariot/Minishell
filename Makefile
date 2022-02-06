@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/02/05 13:56:20 by cmariot          ###   ########.fr        #
+#    Updated: 2022/02/05 19:14:25 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -227,7 +227,7 @@ divider :
 
 footer :
 	@printf "$(CYAN)"
-	@printf "➤    SUCCESS\n"
+	@printf "➤     SUCCESS\n"
 	@printf "\nUSAGE\n"
 	@printf "$(RESET)"
 	@printf "./minishell (for interactive mode)\n"
