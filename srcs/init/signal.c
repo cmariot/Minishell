@@ -6,7 +6,7 @@
 /*   By: flee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 09:25:58 by flee              #+#    #+#             */
-/*   Updated: 2022/02/05 12:49:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/06 13:24:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	command_handler(int signal)
 	}
 	else if (signal == SIGQUIT)
 	{
-		printf("Quit: %d\n", signal);
+		ft_putstr_fd("Quit: 3\n", 2);
 		global_exit_status(signal + 128);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:23:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/05 18:53:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/06 12:31:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,8 @@ bool	contains_slash(char *command)
 
 	i = 0;
 	while (command[i] != '\0')
-	{
-		if (command[i] == '/')
-		{
+		if (command[i++] == '/')
 			return (TRUE);
-		}
-		i++;
-	}
 	return (FALSE);
 }
 

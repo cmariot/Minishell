@@ -6,21 +6,28 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:56:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/03 21:39:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/06 13:29:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	fork_error(void)
+void	pipeline_exit_status(int status)
 {
-	print(2, "minishell: error: fork failed.\n");
-	return (1);
+	if (status == 1 && return_global_exit_status() > 128)
+		return ;
+	if (WIFEXITED(status))
+		global_exit_status(WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		global_exit_status(WTERMSIG(status));
 }
 
-int	pipe_error(void)
+int	pipeline_error(int error_id)
 {
-	print(2, "minishell: error: pipe failed.\n");
+	if (error_id == 1)
+		print(2, "minishell: error: fork failed.\n");
+	else if (error_id == 2)
+		print(2, "minishell: error: pipe failed.\n");
 	return (1);
 }
 
@@ -32,10 +39,10 @@ int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 	int	status;
 
 	if (pipe(command.pipe_fd) == -1)
-		return (pipe_error());
+		return (pipeline_error(2));
 	command.pid = fork();
 	if (command.pid == -1)
-		return (fork_error());
+		return (pipeline_error(1));
 	else if (command.pid == 0)
 	{
 		execute_simple_command(minishell, command, backup_fd);
@@ -59,13 +66,10 @@ int	last_pipe(t_shell *minishell, t_simple command, int *backup_fd)
 int	firsts_pipes(t_shell *minishell, t_simple command, int *backup_fd)
 {
 	if (pipe(command.pipe_fd) == -1)
-	{
-		print(2, "minishell: error: pipe failed.\n");
-		return (1);
-	}
+		return (pipeline_error(2));
 	command.pid = fork();
 	if (command.pid == -1)
-		return (fork_error());
+		return (pipeline_error(1));
 	else if (command.pid == 0)
 	{
 		close(command.pipe_fd[0]);
@@ -107,8 +111,5 @@ void	create_pipeline(t_command_line *command_line, t_shell *minishell,
 			&(command_line->command[i].pid), 0);
 		i++;
 	}
-	if (WIFEXITED(status))
-		global_exit_status(WEXITSTATUS(status));
-	else if WIFSIGNALED(status)
-		global_exit_status(WTERMSIG(status));
+	pipeline_exit_status(status);
 }
