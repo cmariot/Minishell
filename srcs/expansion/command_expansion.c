@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 10:08:16 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/05 13:33:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/07 11:40:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,24 @@ int	expand_command_arg(t_simple *command, size_t i, t_env *env, char *backup)
 	char	**array;
 	char	**new;
 
+	if (!command->command_and_args[i])
+		return (0);
 	search_dollar_in_str2(&command->command_and_args[i], env);
 	array = command_split(command->command_and_args[i], ' ');
-	if (!array)
+	if (!array || !array[0])
+		ft_free_array(array);
+	if (!array || !array[0])
 		return (1);
+	else if (!array[0] || !array[1])
+	{
+		free(command->command_and_args[i]);
+		command->command_and_args[i] = ft_strdup(backup);
+	}
 	else if (array[1] != NULL)
 	{
 		new = create_new_array(command, array, i);
 		ft_free_array(command->command_and_args);
 		command->command_and_args = new;
-	}
-	else
-	{
-		free(command->command_and_args[i]);
-		command->command_and_args[i] = ft_strdup(backup);
 	}
 	ft_free_array(array);
 	return (0);

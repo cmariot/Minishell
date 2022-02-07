@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:40:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/02/05 12:46:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/02/07 10:52:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ int	heredoc_error(void)
 	return (-1);
 }
 
-int	heredoc_return(char *file, int fd)
+int	heredoc_return(char *file, int fd, char **line)
 {
+	if (*line)
+		free(*line);
 	close(fd);
 	catch_signal(INTERACTIVE);
 	rl_getc_function = rl_getc;
@@ -87,6 +89,8 @@ int	create_heredoc(char *file, char *limiter, t_env *env)
 	while (1)
 	{
 		line = readline("heredoc ➤ ");
+		if (!line)
+			ft_putchar('\n');
 		if (ft_strcmp(line, limiter) == 0 || line == NULL || !line)
 			break ;
 		if (expansion == TRUE)
@@ -95,7 +99,5 @@ int	create_heredoc(char *file, char *limiter, t_env *env)
 		if (line)
 			free(line);
 	}
-	if (line)
-		free(line);
-	return (heredoc_return(file, fd));
+	return (heredoc_return(file, fd, &line));
 }
